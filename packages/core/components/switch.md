@@ -59,6 +59,10 @@ disabled
 
 `core.switch` owns only the binary switch control and its state. Setting labels, descriptions, help/error text, async-save status, confirmation copy, layout, and business consequences belong to higher-level field/block/application composition.
 
+## Web implementation
+
+The canonical Web adapter uses a real `<input type="checkbox">` as the form/activation base and applies `role="switch"`. Native checked state remains authoritative; the adapter only prevents indeterminate presentation and mirrors checked state to agent-readable `data-state="off|on"`. CSS owns the visual track, logical thumb travel, pressure compression, focus, invalid, disabled, reduced-motion, and forced-colors presentation.
+
 ## Migration knowledge provenance
 
 This contract is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
@@ -67,4 +71,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 - Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists switch among reusable Core primitives and applies the full conformance/resilience gate.
 - No switch-specific Rivet implementation artifact is claimed for the pinned Rivet snapshot `bb4b641d35bc77c958b7345a3b7c0a134c7d802d`; the reviewed `components/ui/` tree contains no `switch.tsx`, so provenance is intentionally limited to evidence actually present.
 
-Maturity remains `contract-only` until NeoSmartUI-owned implementation evidence exists.
+Maturity is `implemented`: NeoSmartUI-owned Web implementation evidence exists, while public proof remains null until an exact green artifact is deployed and live-verified.

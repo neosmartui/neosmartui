@@ -58,8 +58,6 @@ Its current public proof is bound to the same exact-SHA GitHub Pages deployment 
 
 ## Slice 5: `core.switch`
 
-`core.switch` introduces a binary-setting semantic class at `contract-only` maturity. It is intentionally distinct from checkbox and radio: one control owns one immediate off/on setting, has no indeterminate state, and does not participate in a mutually-exclusive group.
+`core.switch` represents one immediate binary setting with persistent `off`/`on` semantics. The canonical Web adapter uses a native checkbox base with `role="switch"`, preserves browser form and Space-key activation behavior, forbids indeterminate presentation, and mirrors only the resulting state for agents.
 
-The family interaction law combines ordinary contact compression with persistent toggle travel. Thumb position and state color must resolve together; off maps to logical inline-start and on to logical inline-end, allowing RTL mirroring without reversing semantic meaning. The effective target remains at least 44px even when the visible track is smaller.
-
-Web implementations must expose accurate switch semantics and keyboard activation while keeping setting labels, descriptions, async-save status, confirmation copy, and business consequences in higher-level composition. No switch implementation or public proof is claimed in this contract slice.
+Its tactile surface follows pressure-not-levitation while the inner thumb travels from logical inline-start to inline-end as state color changes. Logical positioning makes physical placement mirror in RTL without changing what on/off means. The effective target remains at least 44px; reduced-motion and forced-colors behavior are explicit. Public proof remains a separate deployment gate.
