@@ -85,11 +85,20 @@ if (selectEntry.evidence.implementation !== 'packages/adapters/web/components/se
 const cardEntry = registry.components.find((entry) => entry.id === 'core.card');
 if (!cardEntry || cardEntry.maturity !== 'public-proof' || cardEntry.evidence.publicProof !== 'evidence/public/core.card.json') fail('core.card must bind current public-proof evidence');
 if (cardEntry.evidence.implementation !== 'packages/adapters/web/components/card.css') fail('core.card must bind its CSS-only implementation evidence');
+const badgeEntry = registry.components.find((entry) => entry.id === 'core.badge');
+if (!badgeEntry || badgeEntry.maturity !== 'implemented' || badgeEntry.evidence.publicProof !== null) fail('core.badge must be implemented without a public-proof claim in this slice');
+if (badgeEntry.evidence.implementation !== 'packages/adapters/web/components/badge.css') fail('core.badge must bind its CSS-only implementation evidence');
 
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light Card surface padding must resolve to the deliberate 1rem surface rhythm');
 if (values.get('border.surface.width') !== '3px') fail('Rivet Light Card surface border must resolve to 3px');
 if (values.get('radius.surface') !== '6px') fail('Rivet Light Card surface radius must resolve to 6px');
 if (values.get('font.weight.strong') !== 800) fail('Rivet Light strong text weight must resolve to 800');
+if (values.get('space.annotation.inline') !== '0.55rem' || values.get('space.annotation.block') !== '0.15rem') fail('Rivet Light Badge annotation padding must resolve to the pinned compact rhythm');
+if (values.get('border.annotation.width') !== '2px') fail('Rivet Light Badge annotation border must resolve to 2px');
+if (values.get('radius.annotation') !== '999px') fail('Rivet Light Badge annotation radius must resolve to a pill');
+if (values.get('color.state.info') !== '#c9b7ff' || values.get('color.state.success') !== '#9be3bd' || values.get('color.state.warning') !== '#f4dc78') fail('Rivet Light Badge status palette must preserve pinned Soft evidence');
+if (values.get('color.state.error') !== '#c1121f') fail('Badge implementation must not mutate the established NeoSmartUI error role');
+if (values.get('color.content.inverse') !== '#ffffff') fail('Rivet Light inverse content must resolve to white for the dark error Badge surface');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
@@ -101,5 +110,9 @@ if (!css.includes('--ns-font-weight-emphasis: 750;')) fail('generated CSS does n
 if (!css.includes('--ns-space-surface-inline: 1rem;') || !css.includes('--ns-space-surface-block: 1rem;')) fail('generated CSS does not include Card surface spacing roles');
 if (!css.includes('--ns-border-surface-width: 3px;') || !css.includes('--ns-radius-surface: 6px;')) fail('generated CSS does not include Card surface geometry roles');
 if (!css.includes('--ns-font-weight-strong: 800;')) fail('generated CSS does not include the Card strong typography role');
+if (!css.includes('--ns-space-annotation-inline: 0.55rem;') || !css.includes('--ns-space-annotation-block: 0.15rem;')) fail('generated CSS does not include Badge annotation spacing roles');
+if (!css.includes('--ns-border-annotation-width: 2px;') || !css.includes('--ns-radius-annotation: 999px;')) fail('generated CSS does not include Badge annotation geometry roles');
+if (!css.includes('--ns-color-state-info: #c9b7ff;') || !css.includes('--ns-color-state-success: #9be3bd;') || !css.includes('--ns-color-state-warning: #f4dc78;')) fail('generated CSS does not include Badge status tone roles');
+if (!css.includes('--ns-color-content-inverse: #ffffff;')) fail('generated CSS does not include Badge inverse foreground role');
 
 console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);
