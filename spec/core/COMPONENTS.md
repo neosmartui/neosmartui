@@ -22,7 +22,7 @@ If a capability cannot satisfy these rules yet, it is a `REGISTRY GAP`, not perm
 
 ## Registry maturity
 
-The first registry uses three explicit maturity states:
+The registry uses three explicit maturity states:
 
 - `contract-only` — semantic/state/token contract exists; no implementation claim.
 - `implemented` — a canonical implementation exists and is quality-validated.
@@ -30,19 +30,20 @@ The first registry uses three explicit maturity states:
 
 Promotion between states requires evidence. Tooling MUST reject a maturity claim whose evidence is absent.
 
-## First slice: `core.button`
+## Slice 1: `core.button`
 
-`core.button` is the first Core component because it exercises the permanent interaction laws without requiring business-domain semantics.
+`core.button` established the first Core path and exercises permanent press/release interaction laws. Its contract covers rest, hover, focus-visible, pressed, loading, and disabled states, and its registry maturity may advance only with matching implementation and live proof evidence.
 
-The contract requires:
+## Slice 2: `core.checkbox`
 
-```text
-rest
-hover
-focus-visible
-pressed
-loading
-disabled
-```
+`core.checkbox` is the second Core contract because it adds a different reusable state problem without introducing a business domain: persistent checked/unchecked selection, indeterminate presentation, invalid state, and contact compression.
 
-The visual implementation is intentionally deferred until a Theme can resolve concrete token values and an adapter can render platform output. That prevents Core from smuggling a default Flavor into generic component code.
+This slice is intentionally **contract-only**. It defines semantics, states, token dependencies, accessibility/resilience expectations, and migration knowledge provenance before any NeoSmartUI implementation is admitted.
+
+The checkbox contract MUST keep these boundaries explicit:
+
+- checkbox semantics are distinct from field/label/help-text composition;
+- checked, unchecked, and indeterminate state remain unambiguous after contact feedback ends;
+- the visible box may be smaller than the effective target, but the usable target honors `size.control.minimum`;
+- hover/contact compresses toward the surface and never creates generic lift;
+- keyboard, touch, RTL, reduced motion, forced colors, invalid, and disabled states are first-class contract concerns.

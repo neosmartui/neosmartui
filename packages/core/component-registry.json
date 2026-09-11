@@ -11,6 +11,15 @@
         "implementation": "packages/adapters/web/components/button.mjs",
         "publicProof": "evidence/public/core.button.json"
       }
+    },
+    {
+      "id": "core.checkbox",
+      "contract": "components/checkbox.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }

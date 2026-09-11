@@ -88,6 +88,33 @@
       "decision": "ADAPT",
       "targetLayer": "flavor",
       "note": "Preserve Rivet personality and agent-facing lessons under NeoSmartUI authority."
+    },
+    {
+      "id": "legacy.spec.checkbox-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt explicit checkbox contact-compression and immediate-selection laws into the clean core.checkbox contract."
+    },
+    {
+      "id": "legacy.soft.checkbox-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use only as capability/state-resilience evidence that checkbox belongs in reusable Core; do not copy mixed legacy implementation."
+    },
+    {
+      "id": "legacy.rivet.checkbox-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/checkbox.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use as implementation knowledge evidence only; repository metadata declares no license, so no source code is copied into NeoSmartUI."
     }
   ]
 }

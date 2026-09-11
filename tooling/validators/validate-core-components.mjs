@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 1) fail('first Core slice must contain exactly one honest registry entry');
+if (!Array.isArray(registry.components) || registry.components.length !== 2) fail('second Core slice must contain exactly two honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -25,6 +25,7 @@ for (const entry of registry.components) {
   if (contract.schema !== 'neosmartui/component@1') fail(`${entry.id} has wrong component schema`);
   if (contract.id !== entry.id || contract.domain !== 'core' || contract.layer !== 'component') fail(`${entry.id} identity mismatch`);
   if (/(commerce|saas|cart|product|checkout|plan|seat)/.test(JSON.stringify({id: contract.id, intent: contract.intent}))) fail(`${entry.id} leaked business-domain semantics into Core`);
+  if (!Array.isArray(contract.dependencies)) fail(`${entry.id} dependencies must be an array`);
   for (const dependency of contract.dependencies) if (!tokenIds.has(dependency)) fail(`${entry.id} references unknown token ${dependency}`);
   for (const support of ['keyboard', 'touch', 'rtl', 'reducedMotion', 'forcedColors']) if (contract.supports[support] !== true) fail(`${entry.id} must declare ${support} support`);
 
@@ -42,7 +43,16 @@ const button = await readJson(resolve(root, 'packages/core/components/button.jso
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'loading', 'disabled']) if (!button.states.includes(state)) fail(`core.button missing state ${state}`);
 for (const token of ['depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!button.dependencies.includes(token)) fail(`core.button missing tactile token ${token}`);
 
-const docs = await readFile(resolve(root, 'packages/core/components/button.md'), 'utf8');
-for (const marker of ['real `<button>`', 'MUST NOT increase apparent elevation', 'Loading prevents duplicate activation', 'Reduced motion removes non-essential travel/rebound']) if (!docs.includes(marker)) fail(`button.md missing marker: ${marker}`);
+const buttonDocs = await readFile(resolve(root, 'packages/core/components/button.md'), 'utf8');
+for (const marker of ['real `<button>`', 'MUST NOT increase apparent elevation', 'Loading prevents duplicate activation', 'Reduced motion removes non-essential travel/rebound']) if (!buttonDocs.includes(marker)) fail(`button.md missing marker: ${marker}`);
 
-console.log(`[core-components] validated ${registry.components.length} Core component with token/accessibility/evidence invariants`);
+const checkbox = await readJson(resolve(root, 'packages/core/components/checkbox.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'indeterminate', 'invalid', 'disabled']) if (!checkbox.states.includes(state)) fail(`core.checkbox missing state ${state}`);
+for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!checkbox.dependencies.includes(token)) fail(`core.checkbox missing semantic/tactile token ${token}`);
+
+const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
+if (!checkboxEntry || checkboxEntry.maturity !== 'contract-only') fail('core.checkbox must remain contract-only in this slice');
+const checkboxDocs = await readFile(resolve(root, 'packages/core/components/checkbox.md'), 'utf8');
+for (const marker of ['indeterminate', 'MUST NOT increase apparent elevation', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied']) if (!checkboxDocs.includes(marker)) fail(`checkbox.md missing marker: ${marker}`);
+
+console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
