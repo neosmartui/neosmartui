@@ -160,6 +160,24 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use the documented radio/choice-card capability only as evidence that mutually-exclusive choice belongs in reusable Core; no legacy implementation code is copied."
+    },
+    {
+      "id": "legacy.spec.switch-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt the explicit switch law that combines contact compression with thumb travel and synchronized state color/position into the clean core.switch contract."
+    },
+    {
+      "id": "legacy.soft.switch-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the documented reusable switch capability only as generic Core/state-resilience evidence; no legacy implementation code is copied."
     }
   ]
 }

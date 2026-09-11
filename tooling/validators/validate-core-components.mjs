@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 4) fail('fourth Core slice must contain exactly four honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 5) fail('fifth Core slice must contain exactly five honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -87,5 +87,16 @@ await access(resolve(root, 'packages/adapters/web/components/radio.css'));
 
 const radioDocs = await readFile(resolve(root, 'packages/core/components/radio.md'), 'utf8');
 for (const marker of ['real native `<input type="radio">`', 'mutually-exclusive', 'MUST NOT emulate independent checkbox behavior', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied', 'No radio-specific Rivet implementation artifact is claimed']) if (!radioDocs.includes(marker)) fail(`radio.md missing marker: ${marker}`);
+
+const switchContract = await readJson(resolve(root, 'packages/core/components/switch.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'off', 'on', 'invalid', 'disabled']) if (!switchContract.states.includes(state)) fail(`core.switch missing state ${state}`);
+for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.action.primary.content', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring']) if (!switchContract.dependencies.includes(token)) fail(`core.switch missing semantic/tactile token ${token}`);
+
+const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
+if (!switchEntry || switchEntry.maturity !== 'contract-only') fail('core.switch must remain contract-only in this slice');
+if (switchEntry.evidence.implementation !== null || switchEntry.evidence.publicProof !== null) fail('core.switch contract-only evidence must remain null');
+
+const switchDocs = await readFile(resolve(root, 'packages/core/components/switch.md'), 'utf8');
+for (const marker of ['role="switch"', 'binary setting', 'MUST NOT expose an indeterminate state', 'thumb position and state color MUST resolve together', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied', 'No switch-specific Rivet implementation artifact is claimed']) if (!switchDocs.includes(marker)) fail(`switch.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
