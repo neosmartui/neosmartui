@@ -16,9 +16,10 @@ neosmartui/token-contracts@1
 neosmartui/resolved-token-bundle@1
 neosmartui/theme-resolution@1
 neosmartui/deployment-record@1
+neosmartui/public-proof@1
 ```
 
-Core token contracts are value-free. Concrete values appear only in resolved Flavor/Theme bundles, and adapters translate those resolved values into framework/platform output. Every deployable Foundry artifact carries a source-SHA deployment record.
+Core token contracts are value-free. Concrete values appear only in resolved Flavor/Theme bundles, and adapters translate those resolved values into framework/platform output. Every deployable Foundry artifact carries a source-SHA deployment record. Public-proof records bind implementation blobs, browser evidence, deployment lineage, and canonical HTTPS endpoints.
 
 ## Stable semantic IDs
 
@@ -65,5 +66,7 @@ The ecosystem/schema name carries `neosmartui`; everyday semantic IDs stay short
 - Core token paths MUST remain business-domain-neutral and value-free at the contract layer.
 - Resolved token bundles MUST reference known Core token contracts and preserve their declared types.
 - Deployment records MUST bind generated proof surfaces to the exact canonical source SHA.
+- `public-proof` MUST have a committed proof record and a live CI verification against the declared HTTPS endpoints.
+- Public-proof records MUST bind the implementation blobs they certify; changing a bound implementation file makes the proof structurally stale until redeployed and re-proven.
 - Registry maturity MUST never exceed available implementation/public-proof evidence.
 - Missing capability is `REGISTRY GAP`, never an invented ID.

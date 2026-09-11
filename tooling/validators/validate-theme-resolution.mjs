@@ -49,8 +49,10 @@ for (const axis of ['x', 'y']) {
 if (px(values.get('size.control.minimum')) < 44) fail('size.control.minimum must preserve the 44px minimum target in this first Theme');
 
 const componentEntry = registry.components.find((entry) => entry.id === 'core.button');
-if (!componentEntry || componentEntry.maturity !== 'implemented') fail('core.button must advance only to implemented in this slice');
-if (!componentEntry.evidence.implementation || componentEntry.evidence.publicProof !== null) fail('implemented core.button must have implementation evidence and no public-proof claim yet');
+if (!componentEntry || !['implemented', 'public-proof'].includes(componentEntry.maturity)) fail('resolved core.button must be at least implemented');
+if (!componentEntry.evidence.implementation) fail('resolved core.button must retain implementation evidence');
+if (componentEntry.maturity === 'implemented' && componentEntry.evidence.publicProof !== null) fail('implemented core.button must not claim public proof');
+if (componentEntry.maturity === 'public-proof' && !componentEntry.evidence.publicProof) fail('public-proof core.button must point to proof evidence');
 await access(resolve(root, componentEntry.evidence.implementation));
 await access(resolve(root, 'packages/adapters/web/components/button.css'));
 
@@ -58,4 +60,4 @@ const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of button.dependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
 if (!css.includes('--ns-depth-hover-y: 3px;') || !css.includes('--ns-press-active-y: 5px;')) fail('generated CSS does not preserve expected pressure model');
 
-console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${button.id}; component maturity=implemented, public-proof=pending`);
+console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${button.id}; component maturity=${componentEntry.maturity}`);

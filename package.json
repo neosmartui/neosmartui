@@ -12,10 +12,12 @@
     "validate:tokens": "node tooling/validators/validate-core-tokens.mjs",
     "validate:components": "node tooling/validators/validate-core-components.mjs",
     "validate:resolution": "node tooling/validators/validate-theme-resolution.mjs",
+    "validate:proof": "node tooling/validators/validate-public-proof.mjs",
+    "validate:proof:live": "node tooling/validators/validate-public-proof-live.mjs",
     "migration:report": "node tooling/migration/report.mjs",
     "build:foundry": "node tooling/foundry/build.mjs",
     "serve:foundry": "node tooling/foundry/serve.mjs",
     "test:browser": "playwright test --config=playwright.config.mjs",
-    "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run build:foundry"
+    "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run validate:proof && npm run build:foundry"
   }
 }
