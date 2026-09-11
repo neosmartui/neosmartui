@@ -80,9 +80,9 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', '
 for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!radio.dependencies.includes(token)) fail(`core.radio missing semantic/tactile token ${token}`);
 
 const radioEntry = registry.components.find((entry) => entry.id === 'core.radio');
-if (!radioEntry || radioEntry.maturity !== 'implemented') fail('core.radio must be implemented in this slice');
+if (!radioEntry || radioEntry.maturity !== 'public-proof') fail('core.radio must be public-proof in this slice');
 if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/radio.mjs') fail('core.radio implementation evidence must bind the canonical Web adapter');
-if (radioEntry.evidence.publicProof !== null) fail('core.radio must not claim public proof before deployed evidence exists');
+if (radioEntry.evidence.publicProof !== 'evidence/public/core.radio.json') fail('public-proof core.radio must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/radio.css'));
 
 const radioDocs = await readFile(resolve(root, 'packages/core/components/radio.md'), 'utf8');
