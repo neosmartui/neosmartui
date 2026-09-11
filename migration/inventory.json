@@ -178,6 +178,33 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use the documented reusable switch capability only as generic Core/state-resilience evidence; no legacy implementation code is copied."
+    },
+    {
+      "id": "legacy.spec.tabs-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt the explicit family law that selected tabs feel seated/locked into their rail, plus shared keyboard/touch/reduced-motion conformance, into the clean core.tabs contract."
+    },
+    {
+      "id": "legacy.soft.tabs-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the documented reusable Tabs capability and keyboard-complete RTL-aware distribution claim as generic Core evidence."
+    },
+    {
+      "id": "legacy.soft.tabs-implementation",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "packages/react/src/index.js",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use pinned implementation knowledge for tablist/tab/tabpanel roles, roving focus, Arrow/Home/End navigation, disabled-tab skipping, and RTL-aware horizontal movement only; repository metadata declares no license, so no source code is copied."
     }
   ]
 }
