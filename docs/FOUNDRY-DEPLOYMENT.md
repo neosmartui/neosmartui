@@ -2,7 +2,7 @@
 
 This document is derived from the Canonical PRD. The Canonical PRD remains authoritative.
 
-## Permanent topology
+## Active development topology — GitHub first
 
 ```text
 neosmartui/neosmartui
@@ -13,18 +13,20 @@ GitHub Actions
         ↓
 neosmartui/neosmartui.github.io
         ↓
-neosmartui.com
+https://neosmartui.github.io/
 ```
 
-`neosmartui/neosmartui` owns source, contracts, tests, tooling, and history. `neosmartui/neosmartui.github.io` owns generated deploy output only.
+`neosmartui/neosmartui` owns source, contracts, tests, tooling, and history. `neosmartui/neosmartui.github.io` owns generated deploy output only. GitHub Pages is the authoritative public host throughout active development.
+
+**Custom domain is deferred until the full development roadmap is complete.** `neosmartui.com`, Cloudflare, registrar settings, DNS records, and custom-domain certificates are deliberately out of scope during active product development. They MUST NOT block roadmap execution, CI, deployment, browser QA, or a public-proof claim that is already verifiable on the GitHub Pages host.
 
 ## Foundry baseline
 
-The Foundry root is both a product landing page and a live system index. During v0.1 it deliberately exposes only architecture that actually exists. Flavor, vertical, Studio, and Lab routes must not be hand-built lookalikes before their shipping implementations exist.
+The Foundry root is both a product landing page and a live system index. During development it deliberately exposes only architecture that actually exists. Flavor, vertical, Studio, and Lab routes must not be hand-built lookalikes before their shipping implementations exist.
 
 Source lives under `apps/foundry/`. `npm run build:foundry` writes deterministic static output to `dist/foundry/`. Every generated artifact includes `deployment.json`, which records the canonical `neosmartui/neosmartui` source SHA.
 
-The build emits `CNAME` with `neosmartui.com`; the generated deployment repository should receive that file together with the rest of the build output.
+Development builds MUST NOT emit a `CNAME`. The deployment repository therefore uses its native GitHub Pages hostname until the entire development roadmap is complete and a separate custom-domain milestone is intentionally started.
 
 ## Safe CI / deployment strategy
 
@@ -33,8 +35,9 @@ The build emits `CNAME` with `neosmartui.com`; the generated deployment reposito
 3. After merge to `main`, the same Quality workflow builds and browser-tests the exact merged SHA.
 4. The generated `dist/foundry/` tree from a green merged SHA is the only valid publish input.
 5. The deployment repository must remain generated output only; do not hand-maintain a divergent implementation there.
-6. A live proof claim requires the public endpoint's `deployment.json` to match the canonical merged source SHA.
+6. A live proof claim requires the public GitHub Pages endpoint's `deployment.json` to match the canonical merged source SHA.
 7. Failed deployment must not rewrite canonical source history.
+8. Custom-domain work begins only after the full development roadmap is complete; that later migration must preserve the same source-SHA proof contract and must not weaken GitHub Pages verification.
 
 ## Deployment automation and bootstrap
 
@@ -42,4 +45,4 @@ The preferred permanent path is a dedicated cross-repository GitHub Actions depl
 
 Until that credential is configured, an authorized maintainer or connected GitHub integration MAY bootstrap-publish the exact already-green `dist/foundry/` text artifact to the deployment repository. The bootstrap path MUST preserve `deployment.json`, MUST NOT edit generated files independently, and MUST be followed by a live URL/source-SHA verification before any registry entry is promoted to `public-proof`.
 
-The connected GitHub integration can read branch protection but does not expose write operations for branch-protection/ruleset configuration or GitHub Pages custom-domain configuration. Those controls must be enabled in GitHub settings before they can be truthfully reported as enforced.
+Custom-domain configuration is intentionally excluded from every active-development milestone. After the roadmap is complete, it may be scheduled as a separate infrastructure/release milestone.

@@ -16,6 +16,10 @@ This is an operational summary derived from [`CANONICAL-PRD.md`](CANONICAL-PRD.m
 10. **v1.0 Stable** — stable contracts for Core, Theme, Flavors, Registry, Resolver, agent behavior, Commerce, CLI, and Studio.
 11. **v1.1 SaaS Discovery** — requirements → capability inventory → Core gap analysis → Core expansion → SaaS domain → SaaS Blocks → SaaS Pages.
 
+## Hosting rule during development
+
+GitHub is the permanent home and GitHub Pages is the only required public host while this roadmap is active. `neosmartui.com`, Cloudflare, registrar configuration, DNS, and custom-domain certificates are deferred until the full development roadmap is complete. Custom-domain work MUST NOT block implementation, CI, browser QA, deployment, or public-proof progression during development.
+
 ## Opening PR sequence
 
 - **PR 01:** canonical monorepo scaffold
