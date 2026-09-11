@@ -1,15 +1,93 @@
 {
   "$schema": "./inventory.schema.json",
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "capturedAt": "2026-09-11",
   "authority": "docs/CANONICAL-PRD.md",
   "principle": "RESTART THE ARCHITECTURE, NOT THE KNOWLEDGE.",
+  "scope": "selected-migration-evidence",
   "allowedDecisions": ["ADOPT", "ADAPT", "PROMOTE", "REWRITE", "RETIRE", "REFERENCE"],
   "sources": [
-    {"repository":"NeoBrutalism-shop/spec","branch":"main","sha":"fbf499397f4e9a52d6e25c13921fd5377799c626","status":"snapshot-pinned"},
-    {"repository":"NeoBrutalism-shop/NeoBrutal-Soft","branch":"main","sha":"dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a","status":"snapshot-pinned"},
-    {"repository":"NeoBrutalism-shop/NeoBrutal-Commerce","branch":"main","sha":"24563484a9993c6c994f24114dc7956d3b93f694","status":"snapshot-pinned"},
-    {"repository":"NeoBrutalRivet/NeoBrutal-Rivet","branch":"main","sha":"bb4b641d35bc77c958b7345a3b7c0a134c7d802d","status":"snapshot-pinned"}
+    {
+      "repository": "NeoBrutalism-shop/spec",
+      "branch": "main",
+      "sha": "fbf499397f4e9a52d6e25c13921fd5377799c626",
+      "status": "snapshot-pinned",
+      "legacyRole": "family-spec",
+      "targetLayers": ["spec"],
+      "licenseEvidence": {"status": "not-declared-in-repository-metadata", "path": null, "name": null},
+      "copyPolicy": "knowledge-only-until-reviewed",
+      "evidencePaths": ["README.md", "INTERACTION.md", "TOKENS.md", "COMPONENTS.md", "FLAVORS.md"]
+    },
+    {
+      "repository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "branch": "main",
+      "sha": "dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a",
+      "status": "snapshot-pinned",
+      "legacyRole": "mixed-flavor-vertical",
+      "targetLayers": ["flavor", "vertical", "tooling"],
+      "licenseEvidence": {"status": "not-declared-in-repository-metadata", "path": null, "name": null},
+      "copyPolicy": "knowledge-only-until-reviewed",
+      "evidencePaths": ["COMPONENTS.md", "DESIGN.md", "QUALITY.md", "RESILIENCE.md", "LLMS.md", "component-explorer.js"]
+    },
+    {
+      "repository": "NeoBrutalism-shop/NeoBrutal-Commerce",
+      "branch": "main",
+      "sha": "24563484a9993c6c994f24114dc7956d3b93f694",
+      "status": "snapshot-pinned",
+      "legacyRole": "commerce-system",
+      "targetLayers": ["vertical", "tooling", "applications"],
+      "licenseEvidence": {"status": "declared", "path": "LICENSE.md", "name": "PolyForm Noncommercial License 1.0.0"},
+      "copyPolicy": "license-review-required-before-code-copy",
+      "evidencePaths": ["COMPONENTS.md", "AGENTS.md", "LLMS.md", "storefront/", "tests/", "playwright.config.mjs"]
+    },
+    {
+      "repository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "branch": "main",
+      "sha": "bb4b641d35bc77c958b7345a3b7c0a134c7d802d",
+      "status": "snapshot-pinned",
+      "legacyRole": "flavor-system",
+      "targetLayers": ["flavor", "tooling"],
+      "licenseEvidence": {"status": "not-declared-in-repository-metadata", "path": null, "name": null},
+      "copyPolicy": "knowledge-only-until-reviewed",
+      "evidencePaths": ["AGENTS.md", "README.md", "components/", "docs/", "hooks/", "lib/", "index.ts"]
+    }
   ],
-  "artifacts": []
+  "artifacts": [
+    {
+      "id": "legacy.spec.family-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "README.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "spec",
+      "note": "Preserve family laws while correcting Flavor/Vertical taxonomy."
+    },
+    {
+      "id": "legacy.soft.design-language",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "DESIGN.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "flavor",
+      "note": "Extract Soft visual personality without importing SaaS domain semantics into the flavor."
+    },
+    {
+      "id": "legacy.commerce.domain-contracts",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Commerce",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "vertical",
+      "note": "Use as evidence for Commerce vertical semantics; do not classify Commerce as a flavor."
+    },
+    {
+      "id": "legacy.rivet.flavor-system",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "README.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "flavor",
+      "note": "Preserve Rivet personality and agent-facing lessons under NeoSmartUI authority."
+    }
+  ]
 }
