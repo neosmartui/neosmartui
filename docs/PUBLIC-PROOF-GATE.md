@@ -22,10 +22,13 @@ The browser gate exercises the real rendered Core primitives and currently verif
 
 - native control semantics;
 - minimum 44px effective targets where required;
-- pressure-not-levitation rest → hover → active behavior;
+- pressure-not-levitation rest → hover → active behavior for pressable controls;
+- zero spatial translation for `core.input`, which is interactive but not pressable;
 - explicit keyboard focus;
 - persistent checked/unchecked/indeterminate checkbox state;
-- checkbox invalid and disabled states against resolved Theme tokens;
+- input empty/filled state synchronization without replacing native editing;
+- invalid, read-only, and disabled states against resolved Theme tokens;
+- bidi direction resilience for text input;
 - reduced-motion behavior without loss of state feedback;
 - forced-colors visibility/focusability;
 - no console/page errors during initial render.

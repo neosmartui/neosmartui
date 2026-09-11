@@ -7,7 +7,8 @@ const proven = registry.components.filter((entry) => entry.maturity === 'public-
 
 const liveMarkers = new Map([
   ['core.button', ['NeoSmartUI Foundry', 'core.button', 'Pressure, not levitation']],
-  ['core.checkbox', ['NeoSmartUI Foundry', 'core.checkbox', 'Toggle tactile selection', 'Indeterminate presentation']]
+  ['core.checkbox', ['NeoSmartUI Foundry', 'core.checkbox', 'Toggle tactile selection', 'Indeterminate presentation']],
+  ['core.input', ['NeoSmartUI Foundry', 'core.input', 'Single-line native input', 'interactive, not pressable']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {

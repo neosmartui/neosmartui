@@ -40,9 +40,9 @@ Promotion between states requires evidence. Tooling MUST reject a maturity claim
 
 ## Slice 3: `core.input`
 
-`core.input` adds generic single-line text-like data entry and now has a canonical native Web implementation. It exercises a different interaction class: the control is interactive but not pressable.
+`core.input` adds generic single-line text-like data entry with a canonical native Web implementation and live public proof. It exercises a different interaction class: the control is interactive but not pressable.
 
-The implementation preserves native editing and selection while synchronizing only agent-readable empty/filled state. Hover, focus, and pointer contact never borrow press/depth tokens or translate the field. The resolved Theme scope expands through the exact dependency union rather than component-local values.
+The implementation preserves native editing and selection while synchronizing only agent-readable empty/filled state. Hover, focus, and pointer contact never borrow press/depth tokens or translate the field. Its live proof verifies the same exact-SHA Foundry deployment cohort as the other public Core primitives.
 
 The contract continues to require explicit focus/empty/filled/invalid/read-only/disabled states, a 44px minimum effective control height, RTL/IME resilience, reduced-motion and forced-colors support, and a strict prohibition on borrowing button pressure-depth tokens merely because the field can receive pointer or keyboard interaction.
 

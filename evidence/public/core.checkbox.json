@@ -4,7 +4,7 @@
   "component": "core.checkbox",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
-    "sha": "582146fce1da34a9246d36dd2c7a9aa806dfd8db"
+    "sha": "7354e622c3ebe4dc2c8374fb57e3058b4528f93f"
   },
   "implementationFiles": [
     {
@@ -17,14 +17,14 @@
     }
   ],
   "browserEvidence": {
-    "runId": 34605161041,
-    "artifactId": 10265079981
+    "runId": 34607994099,
+    "artifactId": 10267400041
   },
   "deployment": {
     "repository": "neosmartui/neosmartui.github.io",
-    "commitSha": "2c0835644ddd608eb781002c59ae5dce101fee70",
-    "treeSha": "3ac5de585aa862b9a057d92aa27804668cd196ed",
-    "pagesRunId": 34605556766
+    "commitSha": "365082e23d02bed41c73237526289995302e4f70",
+    "treeSha": "154733d751ae96d47711a08297b15f4c53d20ff4",
+    "pagesRunId": 34608345577
   },
   "live": {
     "pageUrl": "https://neosmartui.github.io/",
