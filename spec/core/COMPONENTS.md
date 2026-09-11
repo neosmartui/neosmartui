@@ -80,7 +80,7 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
-Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as button, checkbox, input, radio, switch, and textarea. Live verification binds that singleton cohort to source `026250b5f2400777ef2701b80990b1e9d6d0b938` and requires the canonical automatic/manual Tabs markers.
+Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92`, merged-main Quality run `34633486142`, browser artifact `10277277111`, and Pages run `34633997409`; live verification still requires the canonical automatic/manual Tabs markers.
 
 ## Slice 7: `core.textarea`
 
@@ -94,11 +94,11 @@ Rivet Light resolution includes `core.textarea` in scope. Because every textarea
 
 Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
 
-Its public proof is bound to merged-main Quality run `34628397403`, browser artifact `10275107747`, deployment tree `d7e2086855177d58b1aa57c53a8e6fdb1136356c`, and native Pages run `34628914517`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `026250b5f2400777ef2701b80990b1e9d6d0b938` and the page to expose the canonical multiline textarea, non-pressable, and resize markers. Structural proof validation also requires every public-proof component to share this one singleton cohort while preserving its own implementation blob binding.
+Its current public proof shares the singleton cohort at source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92`, merged-main Quality run `34633486142`, browser artifact `10277277111`, deployment tree `3e4491947105a96986d072ff3fce0c2813a37f7d`, and native Pages run `34633997409`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
 
 ## Slice 8: `core.select`
 
-`core.select` is the generic native single-choice picker with a canonical NeoSmartUI Web adapter at `implemented` maturity. Its semantic boundary remains intentionally narrower than custom selection widgets: the implementation preserves a real single-select `<select>`, while multi-select/listbox, combobox/autocomplete/search, async option loading, cascading selection, labels/help/error copy, and form layout remain separate capabilities or composition.
+`core.select` is the generic native single-choice picker with a canonical NeoSmartUI Web adapter and live public proof. Its semantic boundary remains intentionally narrower than custom selection widgets: the implementation preserves a real single-select `<select>`, while multi-select/listbox, combobox/autocomplete/search, async option loading, cascading selection, labels/help/error copy, and form layout remain separate capabilities or composition.
 
 The native selected option/value is authoritative. The adapter mirrors only `selected` state plus current value/index into agent-readable metadata, rejects `multiple` and multi-row/listbox-style selects, and leaves `<option>`, `<optgroup>`, form participation, required/disabled behavior, browser type-ahead, arrow-key navigation, and the browser/OS picker platform-owned. It does not invent a portable `open` state or a fake native placeholder semantic.
 
@@ -106,6 +106,8 @@ The collapsed select follows the permanent pressure-not-levitation law: rest ret
 
 Rivet Light resolution includes `core.select` in scope. Every select dependency was already present in the exact Core dependency union, so this implementation adds zero new Theme token values; only resolution scope expands.
 
-Foundry renders the native single-select and binds the canonical adapter. Browser proof for this implementation must verify native option semantics and metadata synchronization, exact 0→2→5px pressure geometry, focus/invalid/disabled states, RTL behavior, reduced motion, forced colors, and rejection of non-single-select shapes without replacing the browser picker.
+Foundry renders the native single-select and binds the canonical adapter. Merged-main browser proof verifies native option semantics and metadata synchronization, exact 0→2→5px pressure geometry, focus/invalid/disabled states, RTL behavior, reduced motion, forced colors, and rejection of non-single-select shapes without replacing the browser picker.
 
-Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed. Public proof remains null until a green merged-main Foundry artifact is deployed byte-for-byte to native GitHub Pages and live-verified.
+Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed.
+
+Its public proof is bound to merged-main Quality run `34633486142`, browser artifact `10277277111`, deployment commit `92da1d45e26e278027c3967f3748571d2b0931c5`, deployment tree `3e4491947105a96986d072ff3fce0c2813a37f7d`, and native Pages run `34633997409`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All eight public-proof components must share this singleton cohort while retaining their own implementation blob bindings.
