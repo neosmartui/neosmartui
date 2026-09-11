@@ -111,4 +111,4 @@ This implementation is a clean NeoSmartUI definition informed by pinned legacy e
 
 ## Maturity
 
-Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/breadcrumb.css`; public proof remains null until an exact merged-main Foundry artifact is deployed and the singleton proof cohort is refreshed in a separate promotion slice.
+Maturity is `public-proof`. Canonical implementation evidence remains `packages/adapters/web/components/breadcrumb.css` with exact blob SHA `7a44a3d82546f2d46ed3d6f43927ecb4fb255948` and canonical proof `evidence/public/core.breadcrumb.json`. The proof is bound to merged source `1cc08cf241dfbd977d3afd999160ff015c8e060f`, merged-main Quality run `34655777104`, browser artifact `10285945636`, Pages commit `d9a0ca1860e50ab39799d641e3b642751268fdd1`, Pages tree `d454b4fcd9ce41ee305eef2cad839e98189c4515`, and Pages run `34656190416`. Live verification uses the deployed native-link hierarchy markers and the canonical GitHub Pages HTTPS endpoints; no Breadcrumb JavaScript binder or runtime mutation is introduced by proof promotion.

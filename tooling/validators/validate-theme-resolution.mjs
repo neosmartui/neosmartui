@@ -95,9 +95,8 @@ const fieldEntry = registry.components.find((entry) => entry.id === 'core.field'
 if (!fieldEntry || fieldEntry.maturity !== 'public-proof' || fieldEntry.evidence.publicProof !== 'evidence/public/core.field.json') fail('core.field must bind current public-proof evidence');
 if (fieldEntry.evidence.implementation !== 'packages/adapters/web/components/field.css') fail('core.field must bind its CSS-only implementation evidence');
 const breadcrumbEntry = registry.components.find((entry) => entry.id === 'core.breadcrumb');
-if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'implemented') fail('core.breadcrumb must be implemented before public-proof promotion');
+if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'public-proof' || breadcrumbEntry.evidence.publicProof !== 'evidence/public/core.breadcrumb.json') fail('core.breadcrumb must bind current public-proof evidence');
 if (breadcrumbEntry.evidence.implementation !== 'packages/adapters/web/components/breadcrumb.css') fail('core.breadcrumb must bind its CSS-only implementation evidence');
-if (breadcrumbEntry.evidence.publicProof !== null) fail('implemented core.breadcrumb must not claim public proof');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
 if (values.get('space.navigation.gap') !== '0.45rem') fail('Rivet Light navigation gap must preserve the pinned Soft breadcrumb spacing value');
