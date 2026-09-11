@@ -340,6 +340,51 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use Alert/title/description anatomy and default/destructive presentation as reference-only knowledge. Do not adopt unconditional role=alert as a visual default; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.field-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared accessibility, keyboard, touch, reduced-motion, semantic-token, and agent-readable laws into a non-pressable single-control Field composition."
+    },
+    {
+      "id": "legacy.soft.field-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit label/help/invalid-field Core listing as evidence that accessible field composition belongs in reusable Core."
+    },
+    {
+      "id": "legacy.soft.field-implementation",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "registry/default/field/field.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use label/control/help anatomy and invalid metadata as reference knowledge; do not assume wrapper-label composition is universally valid and do not copy source code."
+    },
+    {
+      "id": "legacy.soft.field-visual",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "src/components/input.css",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use dedicated field-stack spacing, label/help typography, and invalid treatment as visual knowledge only; preserve NeoSmartUI semantic-token ownership and copy no source code."
+    },
+    {
+      "id": "legacy.rivet.field-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/field.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use Field/Label/Description/Error/fieldset/legend anatomy and orientation knowledge only. Do not adopt generic role=group or unconditional role=alert as defaults for one-control Field; repository metadata declares no license, so no source code is copied."
     }
   ]
 }
