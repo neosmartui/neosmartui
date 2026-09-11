@@ -64,7 +64,9 @@ if (px(values.get('size.control.minimum')) < 44) fail('size.control.minimum must
 const buttonEntry = registry.components.find((entry) => entry.id === 'core.button');
 if (!buttonEntry || buttonEntry.maturity !== 'public-proof' || !buttonEntry.evidence.publicProof) fail('core.button must retain public-proof maturity and evidence');
 const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
-if (!checkboxEntry || checkboxEntry.maturity !== 'implemented' || checkboxEntry.evidence.publicProof !== null) fail('core.checkbox must be implemented without a public-proof claim');
+if (!checkboxEntry || !['implemented', 'public-proof'].includes(checkboxEntry.maturity)) fail('core.checkbox must be at least implemented');
+if (checkboxEntry.maturity === 'implemented' && checkboxEntry.evidence.publicProof !== null) fail('implemented core.checkbox must not claim public proof');
+if (checkboxEntry.maturity === 'public-proof' && checkboxEntry.evidence.publicProof !== 'evidence/public/core.checkbox.json') fail('public-proof core.checkbox must bind its canonical proof record');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);

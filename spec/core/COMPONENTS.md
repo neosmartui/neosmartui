@@ -32,13 +32,13 @@ Promotion between states requires evidence. Tooling MUST reject a maturity claim
 
 ## Slice 1: `core.button`
 
-`core.button` established the first Core path and exercises permanent press/release interaction laws. Its contract covers rest, hover, focus-visible, pressed, loading, and disabled states, and its registry maturity may advance only with matching implementation and live proof evidence.
+`core.button` established the first Core path and exercises permanent press/release interaction laws. Its contract covers rest, hover, focus-visible, pressed, loading, and disabled states. Its current public proof is refreshed whenever the singleton development host advances to a newer exact-SHA Foundry deployment that still exercises the unchanged implementation.
 
 ## Slice 2: `core.checkbox`
 
-`core.checkbox` is the second Core primitive because it adds a different reusable state problem without introducing a business domain: persistent checked/unchecked selection, indeterminate presentation, invalid state, and contact compression.
+`core.checkbox` adds a different reusable state problem without introducing a business domain: persistent checked/unchecked selection, indeterminate presentation, invalid state, and contact compression.
 
-The contract was admitted before implementation. The canonical Web adapter is now implemented and quality-gated through the same Rivet Light Theme-resolution path as `core.button`, while public-proof maturity remains unavailable until a separately deployed exact-SHA evidence record exists.
+The contract was admitted before implementation. The canonical Web adapter is implemented through the same Rivet Light Theme-resolution path as `core.button`; public-proof maturity requires its own implementation blob binding plus the current exact-SHA browser, Pages, and live evidence cohort.
 
 The checkbox contract keeps these boundaries explicit:
 

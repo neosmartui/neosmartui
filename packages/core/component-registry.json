@@ -15,10 +15,10 @@
     {
       "id": "core.checkbox",
       "contract": "components/checkbox.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/checkbox.mjs",
-        "publicProof": null
+        "publicProof": "evidence/public/core.checkbox.json"
       }
     }
   ]
