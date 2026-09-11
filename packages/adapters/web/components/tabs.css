@@ -46,7 +46,7 @@
 }
 
 @media (hover: hover) {
-  .ns-tab[aria-selected="false"]:hover:not(:disabled):not([aria-disabled="true"]) {
+  .ns-tab[aria-selected="false"]:hover:not(:active):not(:disabled):not([aria-disabled="true"]) {
     box-shadow: var(--ns-depth-hover-x) var(--ns-depth-hover-y) 0 var(--ns-color-border-strong);
     transform: translate(var(--ns-press-hover-x), var(--ns-press-hover-y));
     transition-duration: var(--ns-motion-press-duration);
