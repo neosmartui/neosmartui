@@ -1,11 +1,12 @@
 # NeoSmartUI Schemas v1
 
-These schemas define stable identity and minimum machine-readable contracts. They intentionally do not define concrete token values, component implementations, registry counts, or vertical business models.
+These schemas define stable identity and minimum machine-readable contracts. They intentionally do not define concrete token values, component implementations, registry counts beyond committed evidence, or vertical business models.
 
 ## Schema identifiers
 
 ```text
 neosmartui/component@1
+neosmartui/component-registry@1
 neosmartui/block@1
 neosmartui/page@1
 neosmartui/theme@1
@@ -57,4 +58,5 @@ The ecosystem/schema name carries `neosmartui`; everyday semantic IDs stay short
 - Flavor IDs MUST use `flavor.`.
 - Vertical manifest IDs MUST use `vertical.` while Vertical-owned capability IDs use the domain prefix directly.
 - Core token paths MUST remain business-domain-neutral and value-free at the contract layer.
+- Registry maturity MUST never exceed available implementation/public-proof evidence.
 - Missing capability is `REGISTRY GAP`, never an invented ID.

@@ -5,6 +5,7 @@ const root = resolve(import.meta.dirname, '../..');
 const schemaFiles = [
   'stable-id.schema.json',
   'component.schema.json',
+  'component-registry.schema.json',
   'block.schema.json',
   'page.schema.json',
   'theme.schema.json',
@@ -22,6 +23,7 @@ for (const file of schemaFiles) {
 
 const expectedIds = new Map([
   ['component.schema.json', 'https://neosmartui.com/schemas/component@1.json'],
+  ['component-registry.schema.json', 'https://neosmartui.com/schemas/component-registry@1.json'],
   ['block.schema.json', 'https://neosmartui.com/schemas/block@1.json'],
   ['page.schema.json', 'https://neosmartui.com/schemas/page@1.json'],
   ['theme.schema.json', 'https://neosmartui.com/schemas/theme@1.json'],

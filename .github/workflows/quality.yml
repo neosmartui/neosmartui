@@ -26,6 +26,8 @@ jobs:
         run: npm run validate:migration
       - name: Validate Core semantic token contracts
         run: npm run validate:tokens
+      - name: Validate Core component registry and first slice
+        run: npm run validate:components
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files
