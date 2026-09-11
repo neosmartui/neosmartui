@@ -89,14 +89,14 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'selected', 'i
 for (const forbiddenState of ['open', 'read-only', 'loading']) if (select.states.includes(forbiddenState)) fail(`core.select must not invent unsupported state ${forbiddenState}`);
 for (const token of ['color.surface.interactive', 'color.content.primary', 'color.content.secondary', 'color.border.default', 'color.border.strong', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring', 'opacity.disabled', 'font.family.body']) if (!select.dependencies.includes(token)) fail(`core.select missing semantic/tactile token ${token}`);
 const selectEntry = registry.components.find((entry) => entry.id === 'core.select');
-if (!selectEntry || selectEntry.maturity !== 'implemented') fail('core.select must be implemented in this slice');
+if (!selectEntry || selectEntry.maturity !== 'public-proof') fail('core.select must be public-proof in this slice');
 if (selectEntry.evidence.implementation !== 'packages/adapters/web/components/select.mjs') fail('core.select implementation evidence must bind the canonical Web adapter');
-if (selectEntry.evidence.publicProof !== null) fail('implemented core.select must not claim public proof');
+if (selectEntry.evidence.publicProof !== 'evidence/public/core.select.json') fail('public-proof core.select must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/select.css'));
 const selectAdapter = await readFile(resolve(root, 'packages/adapters/web/components/select.mjs'), 'utf8');
 for (const marker of ['export function syncSelectState', 'export function bindSelect', "select.tagName !== 'SELECT'", 'select.multiple', 'select.size > 1', 'data', 'pointerdown', "select.addEventListener('change'"]) if (!selectAdapter.includes(marker)) fail(`select.mjs missing implementation marker: ${marker}`);
 const selectDocs = await readFile(resolve(root, 'packages/core/components/select.md'), 'utf8');
-for (const marker of ['real native single-select `<select>`', '`multiple` absent/false', 'contract intentionally does not invent a portable `open` state', 'collapsed single-select is a choice trigger', 'HTML has no native select `placeholder` attribute', 'No select-specific Rivet implementation artifact is claimed', 'Maturity is `implemented`']) if (!selectDocs.includes(marker)) fail(`select.md missing marker: ${marker}`);
+for (const marker of ['real native single-select `<select>`', '`multiple` absent/false', 'contract intentionally does not invent a portable `open` state', 'collapsed single-select is a choice trigger', 'HTML has no native select `placeholder` attribute', 'No select-specific Rivet implementation artifact is claimed', 'Maturity is `public-proof`']) if (!selectDocs.includes(marker)) fail(`select.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
