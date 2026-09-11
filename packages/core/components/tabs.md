@@ -84,4 +84,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 - Soft implementation knowledge: the same pinned Soft snapshot contains `packages/react/src/index.js` with `Tabs`, `TabList`, `Tab`, and `TabPanel`, including roving focus, Arrow/Home/End behavior, disabled-tab skipping, RTL-aware horizontal navigation, and ARIA roles. Repository metadata declares no license evidence in the migration inventory, so this is reference-only knowledge and no source code is copied.
 - No tabs-specific Rivet implementation artifact is claimed for the pinned Rivet snapshot `bb4b641d35bc77c958b7345a3b7c0a134c7d802d`; the reviewed `components/ui/` tree contains no `tabs.tsx`.
 
-Maturity remains `contract-only` until NeoSmartUI-owned implementation evidence exists.
+Maturity is `implemented`: the canonical NeoSmartUI Web adapter owns tab selection/focus synchronization and both activation modes, the Foundry exercises automatic and manual tabsets, and Rivet Light resolves the exact dependency union. Public proof remains null until a green merged-main artifact is deployed and live-verified.

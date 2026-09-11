@@ -73,10 +73,17 @@ if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/rad
 const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
 if (!switchEntry || switchEntry.maturity !== 'public-proof' || switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('core.switch must bind current public-proof evidence');
 if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch must retain the canonical Web adapter');
+const tabsEntry = registry.components.find((entry) => entry.id === 'core.tabs');
+if (!tabsEntry || tabsEntry.maturity !== 'implemented') fail('core.tabs must be implemented in this slice');
+if (tabsEntry.evidence.implementation !== 'packages/adapters/web/components/tabs.mjs') fail('core.tabs must bind the canonical Web adapter');
+if (tabsEntry.evidence.publicProof !== null) fail('implemented core.tabs must not claim public proof before deployment verification');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
 if (!css.includes('--ns-depth-hover-y: 3px;') || !css.includes('--ns-press-active-y: 5px;')) fail('generated CSS does not preserve expected pressure model');
 if (!css.includes('--ns-motion-standard-duration: 160ms;') || !css.includes('--ns-font-size-body: 1rem;')) fail('generated CSS does not include the Rivet Light input/state typography roles');
+if (!css.includes('--ns-color-surface-panel: #ffffff;')) fail('generated CSS does not include the evidence-backed Rivet Light panel surface role');
+if (!css.includes('--ns-font-size-label: 1rem;')) fail('generated CSS does not include the evidence-backed Rivet Light label size role');
+if (!css.includes('--ns-font-weight-emphasis: 750;')) fail('generated CSS does not include the evidence-backed Rivet Light emphasis weight role');
 
 console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);
