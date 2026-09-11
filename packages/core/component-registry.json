@@ -74,6 +74,15 @@
         "implementation": "packages/adapters/web/components/select.mjs",
         "publicProof": "evidence/public/core.select.json"
       }
+    },
+    {
+      "id": "core.card",
+      "contract": "components/card.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
