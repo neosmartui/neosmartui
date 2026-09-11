@@ -66,8 +66,10 @@ for (const token of ['color.surface.interactive', 'color.content.primary', 'colo
 for (const forbidden of ['depth.rest.x', 'press.hover.x', 'press.active.x']) if (input.dependencies.includes(forbidden)) fail(`core.input must not depend on press-depth token ${forbidden}`);
 
 const inputEntry = registry.components.find((entry) => entry.id === 'core.input');
-if (!inputEntry || inputEntry.maturity !== 'contract-only') fail('core.input must remain contract-only in this slice');
-if (inputEntry.evidence.implementation !== null || inputEntry.evidence.publicProof !== null) fail('core.input contract-only evidence must remain null');
+if (!inputEntry || inputEntry.maturity !== 'implemented') fail('core.input must advance only to implemented in this slice');
+if (inputEntry.evidence.implementation !== 'packages/adapters/web/components/input.mjs') fail('core.input implementation evidence must bind the canonical Web adapter');
+if (inputEntry.evidence.publicProof !== null) fail('core.input must not claim public proof before deployed evidence exists');
+await access(resolve(root, 'packages/adapters/web/components/input.css'));
 
 const inputDocs = await readFile(resolve(root, 'packages/core/components/input.md'), 'utf8');
 for (const marker of ['real native `<input>`', 'interactive, not pressable', 'placeholder MAY provide an example or hint, but MUST NOT substitute for an accessible name', 'Read-only and disabled are not interchangeable states', 'no legacy implementation code is copied']) if (!inputDocs.includes(marker)) fail(`input.md missing marker: ${marker}`);
