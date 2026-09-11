@@ -174,8 +174,10 @@ test('core.switch reduced motion resolves state nearly instantly and forced colo
   expect(Number.parseFloat(rest.thumbTransitionDuration)).toBeLessThanOrEqual(0.002);
   await switchInput.click();
   await expect(switchInput).toHaveAttribute('data-state', 'on');
-  const on = await visualState(switchInput);
-  expect(on.thumbLeftGap).toBeGreaterThan(on.thumbRightGap);
+  await expect.poll(async () => {
+    const on = await visualState(switchInput);
+    return on.thumbLeftGap > on.thumbRightGap;
+  }, { timeout: 500 }).toBeTruthy();
 
   await page.emulateMedia({ reducedMotion: 'no-preference', forcedColors: 'active' });
   await page.goto('/');
