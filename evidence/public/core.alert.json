@@ -1,0 +1,29 @@
+{
+  "$schema": "../../spec/schemas/public-proof.schema.json",
+  "schema": "neosmartui/public-proof@1",
+  "component": "core.alert",
+  "deployedSource": {
+    "repository": "neosmartui/neosmartui",
+    "sha": "5566f1812a34c3820757fad7b476a7185b24bd7b"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/alert.css",
+      "blobSha": "8d4e4aafae799a347a4d02e19e8eadfe139ca979"
+    }
+  ],
+  "browserEvidence": {
+    "runId": 34647019377,
+    "artifactId": 10282465652
+  },
+  "deployment": {
+    "repository": "neosmartui/neosmartui.github.io",
+    "commitSha": "f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f",
+    "treeSha": "31f7289c8d5cafb2c27027bfe35ac1efcfd95445",
+    "pagesRunId": 34647436787
+  },
+  "live": {
+    "pageUrl": "https://neosmartui.github.io/",
+    "deploymentRecordUrl": "https://neosmartui.github.io/deployment.json"
+  }
+}
