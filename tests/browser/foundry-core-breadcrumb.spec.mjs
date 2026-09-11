@@ -111,7 +111,10 @@ test('core.breadcrumb keeps platform link keyboard behavior and does not create 
   await expect(first).toBeFocused();
   await page.keyboard.press('Tab');
   await expect(second).toBeFocused();
-  const focused = await second.evaluate((element) => getComputedStyle(element));
+  const focused = await second.evaluate((element) => {
+    const styles = getComputedStyle(element);
+    return { outlineStyle: styles.outlineStyle, outlineWidth: styles.outlineWidth };
+  });
   expect(focused.outlineStyle).toBe('solid');
   expect(focused.outlineWidth).toBe('3px');
 
@@ -193,7 +196,10 @@ test('core.breadcrumb stays motionless with reduced motion and keeps native link
   await expect(current).toHaveAttribute('aria-current', 'page');
   expect(await current.getAttribute('role')).toBeNull();
   await first.focus();
-  const focused = await first.evaluate((element) => getComputedStyle(element));
+  const focused = await first.evaluate((element) => {
+    const styles = getComputedStyle(element);
+    return { outlineStyle: styles.outlineStyle, outlineWidth: styles.outlineWidth };
+  });
   expect(focused.outlineStyle).toBe('solid');
   expect(parseFloat(focused.outlineWidth)).toBeGreaterThanOrEqual(3);
   await expect(page.locator('.ns-breadcrumb-separator').first()).toHaveAttribute('aria-hidden', 'true');
