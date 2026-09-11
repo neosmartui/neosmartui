@@ -4,5 +4,5 @@
   "flavor": "flavor.rivet",
   "theme": "Rivet Light",
   "bundle": "tokens.json",
-  "scope": ["core.button", "core.checkbox", "core.input", "core.radio", "core.switch", "core.tabs", "core.textarea"]
+  "scope": ["core.button", "core.checkbox", "core.input", "core.radio", "core.switch", "core.tabs", "core.textarea", "core.select"]
 }
