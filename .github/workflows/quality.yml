@@ -135,8 +135,8 @@ jobs:
           grep -q "Ancestor locations stay native links" dist/foundry/index.html
           grep -q 'aria-current="page"' dist/foundry/index.html
           grep -q "core.pagination" dist/foundry/index.html
-          grep -q "Page 3 of 8 is current" dist/foundry/index.html
-          grep -q "Previous page unavailable" dist/foundry/index.html
+          grep -q "Pagination keeps page destinations as native links with 44px tactile targets." dist/foundry/index.html
+          grep -q 'aria-label="Next page"' dist/foundry/index.html
           node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/foundry/deployment.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA) throw new Error('deployment source SHA mismatch')"
 
   browser:
