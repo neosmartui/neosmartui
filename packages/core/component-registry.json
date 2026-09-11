@@ -101,6 +101,15 @@
         "implementation": "packages/adapters/web/components/alert.css",
         "publicProof": "evidence/public/core.alert.json"
       }
+    },
+    {
+      "id": "core.field",
+      "contract": "components/field.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
