@@ -430,6 +430,42 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use nav/list/item/link/current/separator/ellipsis anatomy as reference-only knowledge. Do not adopt role=link aria-disabled=true for the current page; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.pagination-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared pressure-not-levitation, explicit focus, touch, reduced-motion, minimum-target, fluid-token, and agent-readable laws into compact reachable pagination navigation controls while preserving native link behavior."
+    },
+    {
+      "id": "legacy.soft.pagination-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Pagination Navigation + discovery listing as evidence that discrete paged navigation belongs in reusable Core."
+    },
+    {
+      "id": "legacy.soft.pagination-implementation",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "components.html",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use previous/current/number/next anatomy, labelled-region knowledge, and boundary-state examples as reference only; NeoSmartUI strengthens destination semantics and copies no source code."
+    },
+    {
+      "id": "legacy.soft.pagination-visual",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "src/components/navigation.css",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use wrapped compact-control layout, structural depth, inward hover/active compression, current treatment, and disabled presentation as visual knowledge only; NeoSmartUI retains its existing 44px minimum and semantic token ownership."
     }
   ]
 }
