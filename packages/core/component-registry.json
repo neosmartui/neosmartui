@@ -24,10 +24,10 @@
     {
       "id": "core.input",
       "contract": "components/input.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/input.mjs",
-        "publicProof": null
+        "publicProof": "evidence/public/core.input.json"
       }
     }
   ]

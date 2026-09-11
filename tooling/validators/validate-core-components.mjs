@@ -66,9 +66,10 @@ for (const token of ['color.surface.interactive', 'color.content.primary', 'colo
 for (const forbidden of ['depth.rest.x', 'press.hover.x', 'press.active.x']) if (input.dependencies.includes(forbidden)) fail(`core.input must not depend on press-depth token ${forbidden}`);
 
 const inputEntry = registry.components.find((entry) => entry.id === 'core.input');
-if (!inputEntry || inputEntry.maturity !== 'implemented') fail('core.input must advance only to implemented in this slice');
+if (!inputEntry || !['implemented', 'public-proof'].includes(inputEntry.maturity)) fail('core.input must be at least implemented');
 if (inputEntry.evidence.implementation !== 'packages/adapters/web/components/input.mjs') fail('core.input implementation evidence must bind the canonical Web adapter');
-if (inputEntry.evidence.publicProof !== null) fail('core.input must not claim public proof before deployed evidence exists');
+if (inputEntry.maturity === 'implemented' && inputEntry.evidence.publicProof !== null) fail('implemented core.input must not claim public proof');
+if (inputEntry.maturity === 'public-proof' && inputEntry.evidence.publicProof !== 'evidence/public/core.input.json') fail('public-proof core.input must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/input.css'));
 
 const inputDocs = await readFile(resolve(root, 'packages/core/components/input.md'), 'utf8');
