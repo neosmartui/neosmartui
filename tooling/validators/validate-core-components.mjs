@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 2) fail('second Core slice must contain exactly two honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 3) fail('third Core slice must contain exactly three honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -59,5 +59,17 @@ await access(resolve(root, 'packages/adapters/web/components/checkbox.css'));
 
 const checkboxDocs = await readFile(resolve(root, 'packages/core/components/checkbox.md'), 'utf8');
 for (const marker of ['indeterminate', 'MUST NOT increase apparent elevation', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied']) if (!checkboxDocs.includes(marker)) fail(`checkbox.md missing marker: ${marker}`);
+
+const input = await readJson(resolve(root, 'packages/core/components/input.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'empty', 'filled', 'invalid', 'read-only', 'disabled']) if (!input.states.includes(state)) fail(`core.input missing state ${state}`);
+for (const token of ['color.surface.interactive', 'color.content.primary', 'color.content.secondary', 'color.border.default', 'color.state.error', 'size.control.minimum', 'color.focus.ring', 'opacity.disabled', 'font.family.body', 'motion.standard.duration']) if (!input.dependencies.includes(token)) fail(`core.input missing semantic token ${token}`);
+for (const forbidden of ['depth.rest.x', 'press.hover.x', 'press.active.x']) if (input.dependencies.includes(forbidden)) fail(`core.input must not depend on press-depth token ${forbidden}`);
+
+const inputEntry = registry.components.find((entry) => entry.id === 'core.input');
+if (!inputEntry || inputEntry.maturity !== 'contract-only') fail('core.input must remain contract-only in this slice');
+if (inputEntry.evidence.implementation !== null || inputEntry.evidence.publicProof !== null) fail('core.input contract-only evidence must remain null');
+
+const inputDocs = await readFile(resolve(root, 'packages/core/components/input.md'), 'utf8');
+for (const marker of ['real native `<input>`', 'interactive, not pressable', 'placeholder MAY provide an example or hint, but MUST NOT substitute for an accessible name', 'Read-only and disabled are not interchangeable states', 'no legacy implementation code is copied']) if (!inputDocs.includes(marker)) fail(`input.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);

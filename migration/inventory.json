@@ -115,6 +115,33 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use as implementation knowledge evidence only; repository metadata declares no license, so no source code is copied into NeoSmartUI."
+    },
+    {
+      "id": "legacy.spec.input-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt generic focus, keyboard, touch, reduced-motion, fluid-sizing, and agent-readable conformance laws into core.input without treating the field as a pressable control."
+    },
+    {
+      "id": "legacy.soft.input-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the documented reusable input/field capability only as state and resilience evidence; keep field composition outside the Core input primitive."
+    },
+    {
+      "id": "legacy.rivet.input-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/input.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use as implementation knowledge evidence for native input, focus, invalid, and disabled behavior only; repository metadata declares no license, so no source code is copied."
     }
   ]
 }
