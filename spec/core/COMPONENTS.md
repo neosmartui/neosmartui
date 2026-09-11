@@ -47,3 +47,9 @@ The implementation preserves native editing and selection while synchronizing on
 The contract continues to require explicit focus/empty/filled/invalid/read-only/disabled states, a 44px minimum effective control height, RTL/IME resilience, reduced-motion and forced-colors support, and a strict prohibition on borrowing button pressure-depth tokens merely because the field can receive pointer or keyboard interaction.
 
 Field labels, help/error copy, prefixes/suffixes, password reveal actions, and form layout remain composition outside this primitive.
+
+## Slice 4: `core.radio`
+
+`core.radio` introduces mutually-exclusive native choice semantics at `contract-only` maturity. Unlike checkbox, one checked radio affects its peers in the same selection set; the contract therefore makes group membership and native keyboard movement part of the semantic boundary while keeping legends, option-label content, shared help/error copy, and layout outside the primitive.
+
+The radio follows the family pressure law: contact compresses toward the surface, never upward, and checked state resolves immediately and remains unambiguous after release. The visible glyph may be smaller than the effective target, but the usable target must honor `size.control.minimum`.

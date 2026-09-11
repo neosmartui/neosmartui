@@ -29,6 +29,15 @@
         "implementation": "packages/adapters/web/components/input.mjs",
         "publicProof": "evidence/public/core.input.json"
       }
+    },
+    {
+      "id": "core.radio",
+      "contract": "components/radio.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }

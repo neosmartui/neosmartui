@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 3) fail('third Core slice must contain exactly three honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 4) fail('fourth Core slice must contain exactly four honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -74,5 +74,16 @@ await access(resolve(root, 'packages/adapters/web/components/input.css'));
 
 const inputDocs = await readFile(resolve(root, 'packages/core/components/input.md'), 'utf8');
 for (const marker of ['real native `<input>`', 'interactive, not pressable', 'placeholder MAY provide an example or hint, but MUST NOT substitute for an accessible name', 'Read-only and disabled are not interchangeable states', 'no legacy implementation code is copied']) if (!inputDocs.includes(marker)) fail(`input.md missing marker: ${marker}`);
+
+const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
+for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!radio.dependencies.includes(token)) fail(`core.radio missing semantic/tactile token ${token}`);
+
+const radioEntry = registry.components.find((entry) => entry.id === 'core.radio');
+if (!radioEntry || radioEntry.maturity !== 'contract-only') fail('core.radio must remain contract-only in this slice');
+if (radioEntry.evidence.implementation !== null || radioEntry.evidence.publicProof !== null) fail('core.radio contract-only evidence must remain null');
+
+const radioDocs = await readFile(resolve(root, 'packages/core/components/radio.md'), 'utf8');
+for (const marker of ['real native `<input type="radio">`', 'mutually-exclusive', 'MUST NOT emulate independent checkbox behavior', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied', 'No radio-specific Rivet implementation artifact is claimed']) if (!radioDocs.includes(marker)) fail(`radio.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
