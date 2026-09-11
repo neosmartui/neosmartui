@@ -80,7 +80,7 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
-Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `5566f1812a34c3820757fad7b476a7185b24bd7b`, merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`; live verification still requires the canonical automatic/manual Tabs markers.
+Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `782c853463567e2f43924b8d6f49d7a0821b360b`, merged-main Quality run `34650971583`, browser artifact `10283552494`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`; live verification still requires the canonical automatic/manual Tabs markers.
 
 ## Slice 7: `core.textarea`
 
@@ -94,7 +94,7 @@ Rivet Light resolution includes `core.textarea` in scope. Because every textarea
 
 Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
 
-Its current public proof shares the singleton cohort at source `5566f1812a34c3820757fad7b476a7185b24bd7b`, merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and native Pages run `34647436787`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
+Its current public proof shares the singleton cohort at source `782c853463567e2f43924b8d6f49d7a0821b360b`, merged-main Quality run `34650971583`, browser artifact `10283552494`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and native Pages run `34651533397`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
 
 ## Slice 8: `core.select`
 
@@ -110,7 +110,7 @@ Foundry renders the native single-select and binds the canonical adapter. Merged
 
 Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed.
 
-Its public proof is bound to merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and native Pages run `34647436787`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `5566f1812a34c3820757fad7b476a7185b24bd7b` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All eleven public-proof components share this singleton cohort while retaining their own implementation blob bindings.
+Its public proof is bound to merged-main Quality run `34650971583`, browser artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and native Pages run `34651533397`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `782c853463567e2f43924b8d6f49d7a0821b360b` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All twelve public-proof components share this singleton cohort while retaining their own implementation blob bindings.
 
 ## Slice 9: `core.card`
 
@@ -126,7 +126,7 @@ Card preserves a permanent token-model distinction: a grouped content surface is
 
 Foundry renders the Card as a semantic `<article>` chosen by the demo's document meaning, not by the primitive itself. The demo contains no whole-card interactive role or tab stop. Dedicated Chromium QA verifies token-backed geometry, stable hover/contact depth, RTL and long-content wrapping, zero-motion reduced-motion behavior, and a visible forced-colors boundary without making the Card focusable.
 
-Its public proof is bound to the same singleton cohort as the other ten public Core primitives: merged source `5566f1812a34c3820757fad7b476a7185b24bd7b`, Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
+Its public proof is bound to the same singleton cohort as the other eleven public Core primitives: merged source `782c853463567e2f43924b8d6f49d7a0821b360b`, Quality run `34650971583`, browser artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
 
 ## Slice 10: `core.badge`
 
@@ -142,7 +142,7 @@ The canonical CSS contains no hover/active/focus selectors, no structural shadow
 
 Pinned Soft explicitly lists `Badge/status` and supplies exact compact Badge/palette knowledge in its pinned CSS. Pinned Rivet uses a neutral `span` by default, pill geometry, white destructive text, and scopes hover behavior to an actual anchor host. Rivet declares no license metadata, so it remains reference-only and NeoSmartUI copies no source implementation.
 
-Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Its public proof is bound to merged source `5566f1812a34c3820757fad7b476a7185b24bd7b`, Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`; structural proof validation recomputes the Badge CSS blob and live verification requires all five visible tone markers without adding interaction semantics.
+Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Its public proof is bound to merged source `782c853463567e2f43924b8d6f49d7a0821b360b`, Quality run `34650971583`, browser artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`; structural proof validation recomputes the Badge CSS blob and live verification requires all five visible tone markers without adding interaction semantics.
 
 ## Slice 11: `core.alert`
 
@@ -162,11 +162,11 @@ Dismissal, timers, stacking, insertion/removal motion, persistence, notification
 
 Pinned Soft explicitly classifies alerts as Core, provides stable icon/title/body and semantic-tone styling, and applies `role="alert"` only to its danger tone—useful evidence that visual treatment and announcement behavior are separable. Pinned Rivet provides Alert/title/description anatomy and default/destructive presentation, but its unconditional `role="alert"` is not adopted as a default because live announcement is a semantic decision rather than a visual variant. Both implementation sources remain reference-only; no legacy source code is copied.
 
-Registry maturity is `public-proof`, with implementation evidence bound to `packages/adapters/web/components/alert.css` and canonical proof `evidence/public/core.alert.json`. Its singleton cohort binds source `5566f1812a34c3820757fad7b476a7185b24bd7b`, merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`; live verification requires all five Alert tone markers plus the explicit no-implicit-live-region copy.
+Registry maturity is `public-proof`, with implementation evidence bound to `packages/adapters/web/components/alert.css` and canonical proof `evidence/public/core.alert.json`. Its singleton cohort binds source `782c853463567e2f43924b8d6f49d7a0821b360b`, merged-main Quality run `34650971583`, browser artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`; live verification requires all five Alert tone markers plus the explicit no-implicit-live-region copy.
 
 ## Slice 12: `core.field`
 
-`core.field` is now implemented as the generic composition around one primary form control. It closes the label/help/error boundary deliberately left outside `core.input`, `core.textarea`, and `core.select`: those primitives continue to own native editing, selection, activation, focus, value, invalid, disabled, and read-only behavior, while Field owns the readable and programmatic relationships around one control.
+`core.field` is now public-proof as the generic composition around one primary form control. It closes the label/help/error boundary deliberately left outside `core.input`, `core.textarea`, and `core.select`: those primitives continue to own native editing, selection, activation, focus, value, invalid, disabled, and read-only behavior, while Field owns the readable and programmatic relationships around one control.
 
 The visible label is validly associated with the primary control; placeholder text, help copy, headings, or visual proximity do not substitute for that relationship. Supporting description/help and validation text remain explicitly associated through `aria-describedby`, `aria-errormessage`, or another valid platform mechanism when their meaning applies. Existing author-supplied description relationships remain authoritative rather than being overwritten by a Field binder.
 
@@ -174,10 +174,10 @@ A simple one-control Field does not manufacture `role="group"`, and static valid
 
 Field itself remains stable and non-interactive. Its CSS has no hover/active/focus interaction selector, uses `transform: none` and `transition: none`, and leaves focus/press behavior to nested real controls. Long localized label/help/error text wraps with logical layout, and forced-colors uses system text while semantic invalidity remains machine-readable and explicitly written.
 
-Rivet Light now includes `core.field` and resolves exactly one newly required dependency: `space.field.gap`. The value is directly pinned to Soft's exact `--nbs-space-2` decision, `clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)`. Every previously resolved Theme value remains unchanged, and Field still does not borrow control/surface/annotation geometry, target-size, focus, depth, press, or motion roles.
+Rivet Light includes `core.field` and resolves exactly one newly required dependency: `space.field.gap`. The value is directly pinned to Soft's exact `--nbs-space-2` decision, `clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)`. Every previously resolved Theme value remains unchanged, and Field still does not borrow control/surface/annotation geometry, target-size, focus, depth, press, or motion roles.
 
 Foundry renders normal/help, invalid/error, and disabled examples. The normal label uses native `<label for>` focus behavior; invalidity remains on the real input with explicit help/error relationships and no live-region role; disabled state remains on the real input rather than the Field container. Dedicated Chromium QA covers those semantics, exact token-backed gap resolution, stable pointer contact, RTL/long localization, reduced motion, and forced colors.
 
 Pinned Soft explicitly classifies `label/help/invalid field` as Core and supplies Field anatomy, invalid presentation, and exact fluid gap knowledge. Pinned Rivet provides Field/Label/Description/Error and fieldset/legend anatomy, but NeoSmartUI does not inherit its generic `role="group"` or unconditional FieldError `role="alert"` defaults. Both sources remain reference-only; no legacy source code is copied.
 
-Registry maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/field.css`; `publicProof` remains null until an exact merged-main 65-test artifact containing Field is deployed byte-for-byte and verified over live HTTPS.
+Registry maturity is `public-proof`. Canonical implementation evidence remains `packages/adapters/web/components/field.css` with canonical proof `evidence/public/core.field.json`. Its singleton cohort binds source `782c853463567e2f43924b8d6f49d7a0821b360b`, merged-main Quality run `34650971583`, browser artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`; live verification requires the deployed Field label/help/invalid/disabled markers while structural validation recomputes the Field CSS blob.
