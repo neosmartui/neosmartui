@@ -69,10 +69,10 @@
     {
       "id": "core.select",
       "contract": "components/select.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/select.mjs",
-        "publicProof": null
+        "publicProof": "evidence/public/core.select.json"
       }
     }
   ]
