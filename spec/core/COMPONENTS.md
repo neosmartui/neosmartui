@@ -111,3 +111,17 @@ Foundry renders the native single-select and binds the canonical adapter. Merged
 Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed.
 
 Its public proof is bound to merged-main Quality run `34633486142`, browser artifact `10277277111`, deployment commit `92da1d45e26e278027c3967f3748571d2b0931c5`, deployment tree `3e4491947105a96986d072ff3fce0c2813a37f7d`, and native Pages run `34633997409`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All eight public-proof components must share this singleton cohort while retaining their own implementation blob bindings.
+
+## Slice 9: `core.card`
+
+`core.card` starts as a contract-only informational grouping surface. It is intentionally not a generic clickable container: the Card itself has no built-in button/link role, tab stop, selection state, or activation behavior, and nested controls keep their own semantics and focus order.
+
+Pinned family conformance provides the decisive interaction rule: only cards with a real action or navigation role may react to hover/press; informational cards remain stable. NeoSmartUI therefore gives this initial primitive only a `rest` state. It must not translate, compress, lift, or change structural depth on hover/contact merely because neo-brutalist controls elsewhere use tactile pressure.
+
+Soft explicitly lists Card among reusable Core primitives and records default/flat/muted/accent/interactive presentation knowledge. NeoSmartUI keeps visual variants separate from semantic activation so an `interactive` look cannot silently manufacture keyboard or pointer semantics.
+
+Pinned Rivet contains `components/ui/card.tsx`, which provides useful anatomy knowledge for Card/header/title/description/action/content/footer. That repository snapshot declares no license metadata, so it remains reference-only and no source code is copied.
+
+Card also exposes a token-model distinction that should remain permanent: a grouped content surface is not a control. Slice 9 therefore adds value-free `space.surface.inline`, `space.surface.block`, `border.surface.width`, and `radius.surface` contracts instead of borrowing control padding/border/radius roles. No Theme values are introduced at contract-only maturity.
+
+The future implementation must preserve logical-direction layout, long-content wrapping, forced-colors grouping boundaries, and reduced-motion stability while keeping whole-card interaction absent unless a separately contracted action/navigation semantic owns it.
