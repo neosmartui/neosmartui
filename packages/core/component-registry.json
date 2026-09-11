@@ -87,9 +87,9 @@
     {
       "id": "core.badge",
       "contract": "components/badge.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/badge.css",
         "publicProof": null
       }
     }
