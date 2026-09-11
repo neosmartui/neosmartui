@@ -26,12 +26,18 @@ jobs:
         run: npm run validate:migration
       - name: Validate Core semantic token contracts
         run: npm run validate:tokens
-      - name: Validate Core component registry and first slice
+      - name: Validate Core component registry
         run: npm run validate:components
+      - name: Validate Flavor, Theme, and adapter resolution
+        run: npm run validate:resolution
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files
         run: |
           test -f dist/foundry/index.html
           test -f dist/foundry/styles.css
+          test -f dist/foundry/theme.css
+          test -f dist/foundry/button.css
+          grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
+          grep -q "Pressure, not levitation" dist/foundry/index.html
           test "$(cat dist/foundry/CNAME)" = "neosmartui.com"

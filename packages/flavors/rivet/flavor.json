@@ -1,0 +1,8 @@
+{
+  "$schema": "../../../spec/schemas/flavor.schema.json",
+  "schema": "neosmartui/flavor@1",
+  "id": "flavor.rivet",
+  "name": "Rivet",
+  "intent": "Mechanical neo-brutalist pressure with coherent structural depth and restrained rebound.",
+  "interactionModel": "pressure-not-levitation"
+}

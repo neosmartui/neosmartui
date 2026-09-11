@@ -6,6 +6,7 @@
   "additionalProperties": false,
   "required": ["schema", "id", "name", "intent", "interactionModel"],
   "properties": {
+    "$schema": {"type": "string"},
     "schema": {"const": "neosmartui/flavor@1"},
     "id": {"type": "string", "pattern": "^flavor\\.[a-z][a-z0-9-]*$"},
     "name": {"type": "string", "minLength": 1},
