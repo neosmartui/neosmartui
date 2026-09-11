@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 10) fail('tenth Core slice must contain exactly ten honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 11) fail('eleventh Core slice must contain exactly eleven honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -127,6 +127,17 @@ for (const marker of ['padding-block: var(--ns-space-annotation-block)', 'paddin
 for (const forbiddenSelector of [':hover', ':active', ':focus', ':focus-visible']) if (badgeCss.includes(forbiddenSelector)) fail(`badge.css must not invent interactive selector ${forbiddenSelector}`);
 const badgeDocs = await readFile(resolve(root, 'packages/core/components/badge.md'), 'utf8');
 for (const marker of ['default Badge is non-interactive', '`role="status"` is also NOT the Badge default', 'Tone MUST NOT be the sole carrier of meaning', 'MUST NOT borrow `space.control.*`', 'default `span` host', 'intentionally CSS-only', 'no legacy implementation code is copied', 'Maturity is `public-proof`']) if (!badgeDocs.includes(marker)) fail(`badge.md missing marker: ${marker}`);
+
+const alert = await readJson(resolve(root, 'packages/core/components/alert.json'));
+const alertStates = new Set(['rest', 'neutral', 'info', 'success', 'warning', 'error']);
+if (alert.states.length !== alertStates.size || !alert.states.every((state) => alertStates.has(state))) fail('core.alert must expose exactly rest plus neutral/info/success/warning/error message states');
+for (const token of ['color.surface.panel', 'color.content.primary', 'color.content.secondary', 'color.border.strong', 'color.state.info', 'color.state.success', 'color.state.warning', 'color.state.error', 'space.surface.inline', 'space.surface.block', 'border.surface.width', 'radius.surface', 'depth.rest.x', 'depth.rest.y', 'font.family.body', 'font.size.body', 'font.weight.regular', 'font.weight.strong']) if (!alert.dependencies.includes(token)) fail(`core.alert missing semantic message/surface token ${token}`);
+for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'border.control.width', 'radius.control', 'size.control.minimum', 'space.annotation.inline', 'space.annotation.block', 'border.annotation.width', 'radius.annotation', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.action.primary.surface', 'color.focus.ring', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled']) if (alert.dependencies.includes(forbiddenToken)) fail(`core.alert static message contract must not borrow control/annotation/interaction token ${forbiddenToken}`);
+const alertEntry = registry.components.find((entry) => entry.id === 'core.alert');
+if (!alertEntry || alertEntry.maturity !== 'contract-only') fail('core.alert must remain contract-only in this slice');
+if (alertEntry.evidence.implementation !== null || alertEntry.evidence.publicProof !== null) fail('core.alert contract-only evidence must remain null');
+const alertDocs = await readFile(resolve(root, 'packages/core/components/alert.md'), 'utf8');
+for (const marker of ['default Alert is not a live region', '`role="alert"` is not a visual variant', 'MUST NOT make the whole surface clickable', 'A dismiss action is a separate button', 'Tone MUST NOT be the sole carrier of meaning', 'message surfaces remain stable', 'no legacy implementation code is copied', 'Maturity is `contract-only`']) if (!alertDocs.includes(marker)) fail(`alert.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
