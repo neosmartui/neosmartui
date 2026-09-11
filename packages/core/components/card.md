@@ -24,6 +24,8 @@ Pinned family conformance is explicit: only cards with an action or navigation r
 
 A structural resting depth is allowed because depth can describe the physical surface itself. That depth remains unchanged by proximity/contact. The permanent pressure-not-levitation law is not an excuse to add compression to something that is not pressable.
 
+The canonical Web implementation is intentionally CSS-only. It does not install pointer, click, keyboard, or state-synchronization listeners and does not need a JavaScript binder merely to qualify as implemented.
+
 ## Keyboard and touch
 
 `core.card` itself does not enter the tab order and does not synthesize keyboard activation. Keyboard users reach interactive descendants in normal document order. Touch users receive no fake whole-card press response when the surface is informational.
@@ -44,13 +46,15 @@ Forced-colors/high-contrast rendering must retain a perceivable grouping boundar
 
 ## Token boundary
 
-A Card is a surface, not a control. It therefore MUST NOT borrow `border.control.width`, `radius.control`, or control padding simply because those values happen to look convenient. The contract introduces value-free surface roles for padding, border width, and radius. Concrete values remain owned by Flavor/Theme resolution and are not added at contract-only maturity.
+A Card is a surface, not a control. It therefore MUST NOT borrow `border.control.width`, `radius.control`, or control padding simply because those values happen to look convenient. The contract owns value-free surface roles for padding, border width, and radius.
 
-The initial structural dependencies are surface/background/content roles, surface geometry/padding roles, resting depth only, and body/emphasis typography. Hover/active depth and press-translation tokens are intentionally absent.
+Rivet Light resolves those roles using existing system decisions rather than introducing a second geometry language: 1rem logical surface padding, a 3px surface border, and a 6px surface radius. `font.weight.strong` resolves to 800, matching the strong emphasis already used on the Foundry surface. These are separate semantic roles even where their current concrete values coincide with control values.
+
+The structural dependency set remains surface/background/content roles, surface geometry/padding roles, resting depth only, and body/strong typography. Hover/active depth and press-translation tokens are intentionally absent.
 
 ## Migration knowledge provenance
 
-This contract is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
+This contract and implementation are clean NeoSmartUI definitions informed by pinned legacy evidence; no legacy implementation code is copied.
 
 - Family conformance: `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626` — `COMPONENTS.md` explicitly states that only cards with action/navigation semantics may react to hover/press and that informational cards remain stable.
 - Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists Card among Core primitives and documents default/flat/muted/accent/interactive presentation knowledge. NeoSmartUI keeps the generic Card informational instead of allowing a visual variant to smuggle in interaction semantics.
@@ -58,4 +62,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `contract-only`. No implementation or public-proof claim exists in this slice.
+Maturity is `implemented`. The canonical evidence is the CSS-only Web implementation at `packages/adapters/web/components/card.css`; `publicProof` remains null until an exact merged-main Foundry artifact is deployed and live HTTPS verification succeeds.
