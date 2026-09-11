@@ -15,6 +15,8 @@ const visualState = async (select) => select.evaluate((element) => {
     outlineStyle: styles.outlineStyle,
     transitionDuration: styles.transitionDuration,
     borderColor: styles.borderColor,
+    borderWidth: styles.borderWidth,
+    borderStyle: styles.borderStyle,
     opacity: styles.opacity,
     appearance: styles.appearance,
     width: rect.width,
@@ -185,7 +187,7 @@ test('core.select reduced motion keeps pressure state meaningful without release
   await page.evaluate(() => window.dispatchEvent(new PointerEvent('pointerup', { bubbles: true, pointerType: 'touch' })));
 });
 
-test('core.select forced-colors rendering retains native affordance and keyboard focus', async ({ page }) => {
+test('core.select forced-colors rendering retains visible boundary, native affordance, and keyboard focus', async ({ page }) => {
   await page.emulateMedia({ forcedColors: 'active' });
   await page.goto('/');
   await tabToSelect(page);
@@ -193,7 +195,11 @@ test('core.select forced-colors rendering retains native affordance and keyboard
   await expect(select).toBeFocused();
   const focused = await visualState(select);
   expect(focused.outlineStyle).not.toBe('none');
+  expect(Number.parseFloat(focused.outlineWidth)).toBeGreaterThanOrEqual(3);
+  expect(focused.borderStyle).not.toBe('none');
+  expect(Number.parseFloat(focused.borderWidth)).toBeGreaterThanOrEqual(3);
   expect(focused.appearance).not.toBe('none');
-  expect(focused.boxShadow).not.toBe('none');
+  expect(focused.width).toBeGreaterThanOrEqual(44);
+  expect(focused.height).toBeGreaterThanOrEqual(44);
   await page.screenshot({ path: `${evidenceDir}/core-select-forced-colors.png`, fullPage: true });
 });
