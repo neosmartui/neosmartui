@@ -105,9 +105,9 @@
     {
       "id": "core.field",
       "contract": "components/field.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/field.css",
         "publicProof": null
       }
     }

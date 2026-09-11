@@ -91,7 +91,11 @@ if (badgeEntry.evidence.implementation !== 'packages/adapters/web/components/bad
 const alertEntry = registry.components.find((entry) => entry.id === 'core.alert');
 if (!alertEntry || alertEntry.maturity !== 'public-proof' || alertEntry.evidence.publicProof !== 'evidence/public/core.alert.json') fail('core.alert must bind current public-proof evidence');
 if (alertEntry.evidence.implementation !== 'packages/adapters/web/components/alert.css') fail('core.alert must bind its CSS-only implementation evidence');
+const fieldEntry = registry.components.find((entry) => entry.id === 'core.field');
+if (!fieldEntry || fieldEntry.maturity !== 'implemented' || fieldEntry.evidence.publicProof !== null) fail('core.field must be implemented without claiming public proof in this slice');
+if (fieldEntry.evidence.implementation !== 'packages/adapters/web/components/field.css') fail('core.field must bind its CSS-only implementation evidence');
 
+if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light grouped-surface padding must resolve to the deliberate 1rem surface rhythm');
 if (values.get('border.surface.width') !== '3px') fail('Rivet Light grouped-surface border must resolve to 3px');
 if (values.get('radius.surface') !== '6px') fail('Rivet Light grouped-surface radius must resolve to 6px');
@@ -100,7 +104,7 @@ if (values.get('space.annotation.inline') !== '0.55rem' || values.get('space.ann
 if (values.get('border.annotation.width') !== '2px') fail('Rivet Light Badge annotation border must resolve to 2px');
 if (values.get('radius.annotation') !== '999px') fail('Rivet Light Badge annotation radius must resolve to a pill');
 if (values.get('color.state.info') !== '#c9b7ff' || values.get('color.state.success') !== '#9be3bd' || values.get('color.state.warning') !== '#f4dc78') fail('Rivet Light status palette must preserve pinned Soft evidence');
-if (values.get('color.state.error') !== '#c1121f') fail('Alert/Badge implementation must not mutate the established NeoSmartUI error role');
+if (values.get('color.state.error') !== '#c1121f') fail('Alert/Badge/Field implementation must not mutate the established NeoSmartUI error role');
 if (values.get('color.content.inverse') !== '#ffffff') fail('Rivet Light inverse content must remain white for dark error surfaces');
 
 const css = renderResolvedTokenCss(contracts, bundle);
@@ -110,6 +114,7 @@ if (!css.includes('--ns-motion-standard-duration: 160ms;') || !css.includes('--n
 if (!css.includes('--ns-color-surface-panel: #ffffff;')) fail('generated CSS does not include the evidence-backed Rivet Light panel surface role');
 if (!css.includes('--ns-font-size-label: 1rem;')) fail('generated CSS does not include the evidence-backed Rivet Light label size role');
 if (!css.includes('--ns-font-weight-emphasis: 750;')) fail('generated CSS does not include the evidence-backed Rivet Light emphasis weight role');
+if (!css.includes('--ns-space-field-gap: clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem);')) fail('generated CSS does not include the pinned Field gap role');
 if (!css.includes('--ns-space-surface-inline: 1rem;') || !css.includes('--ns-space-surface-block: 1rem;')) fail('generated CSS does not include grouped-surface spacing roles');
 if (!css.includes('--ns-border-surface-width: 3px;') || !css.includes('--ns-radius-surface: 6px;')) fail('generated CSS does not include grouped-surface geometry roles');
 if (!css.includes('--ns-font-weight-strong: 800;')) fail('generated CSS does not include the strong typography role used by Card/Alert');

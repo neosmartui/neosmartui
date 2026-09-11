@@ -67,6 +67,8 @@ jobs:
           test ! -e dist/foundry/badge.mjs
           test -f dist/foundry/alert.css
           test ! -e dist/foundry/alert.mjs
+          test -f dist/foundry/field.css
+          test ! -e dist/foundry/field.mjs
           test -f dist/foundry/deployment.json
           test ! -e dist/foundry/CNAME
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
@@ -76,6 +78,7 @@ jobs:
           grep -q -- "--ns-font-size-body: 1rem;" dist/foundry/theme.css
           grep -q -- "--ns-font-size-label: 1rem;" dist/foundry/theme.css
           grep -q -- "--ns-font-weight-emphasis: 750;" dist/foundry/theme.css
+          grep -q -- "--ns-space-field-gap: clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem);" dist/foundry/theme.css
           grep -q -- "--ns-space-surface-inline: 1rem;" dist/foundry/theme.css
           grep -q -- "--ns-space-surface-block: 1rem;" dist/foundry/theme.css
           grep -q -- "--ns-border-surface-width: 3px;" dist/foundry/theme.css
@@ -118,6 +121,10 @@ jobs:
           grep -q "Warning · Check this" dist/foundry/index.html
           grep -q "Error · Needs correction" dist/foundry/index.html
           grep -q "Static message surface; no implicit live region." dist/foundry/index.html
+          grep -q "core.field" dist/foundry/index.html
+          grep -q "Email address" dist/foundry/index.html
+          grep -q "This invite code has expired. Request a new code." dist/foundry/index.html
+          grep -q "The disabled state belongs to the real control, not the Field container." dist/foundry/index.html
           node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/foundry/deployment.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA) throw new Error('deployment source SHA mismatch')"
 
   browser:
