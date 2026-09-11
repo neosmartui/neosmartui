@@ -42,10 +42,10 @@
     {
       "id": "core.switch",
       "contract": "components/switch.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/switch.mjs",
-        "publicProof": null
+        "publicProof": "evidence/public/core.switch.json"
       }
     }
   ]

@@ -93,10 +93,9 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'off', 'on', '
 for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.action.primary.content', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring']) if (!switchContract.dependencies.includes(token)) fail(`core.switch missing semantic/tactile token ${token}`);
 
 const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
-if (!switchEntry || !['implemented', 'public-proof'].includes(switchEntry.maturity)) fail('core.switch must be at least implemented');
+if (!switchEntry || switchEntry.maturity !== 'public-proof') fail('core.switch must be public-proof in this slice');
 if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch implementation evidence must bind the canonical Web adapter');
-if (switchEntry.maturity === 'implemented' && switchEntry.evidence.publicProof !== null) fail('implemented core.switch must not claim public proof');
-if (switchEntry.maturity === 'public-proof' && switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind its canonical proof record');
+if (switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/switch.css'));
 
 const switchDocs = await readFile(resolve(root, 'packages/core/components/switch.md'), 'utf8');

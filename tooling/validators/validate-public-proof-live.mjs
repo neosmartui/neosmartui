@@ -9,7 +9,8 @@ const liveMarkers = new Map([
   ['core.button', ['NeoSmartUI Foundry', 'core.button', 'Pressure, not levitation']],
   ['core.checkbox', ['NeoSmartUI Foundry', 'core.checkbox', 'Toggle tactile selection', 'Indeterminate presentation']],
   ['core.input', ['NeoSmartUI Foundry', 'core.input', 'Single-line native input', 'interactive, not pressable']],
-  ['core.radio', ['NeoSmartUI Foundry', 'core.radio', 'Choose one native radio option', 'Alpha choice', 'Beta choice']]
+  ['core.radio', ['NeoSmartUI Foundry', 'core.radio', 'Choose one native radio option', 'Alpha choice', 'Beta choice']],
+  ['core.switch', ['NeoSmartUI Foundry', 'core.switch', 'Toggle immediate binary setting']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {
