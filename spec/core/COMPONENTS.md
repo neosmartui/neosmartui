@@ -114,14 +114,16 @@ Its public proof is bound to merged-main Quality run `34633486142`, browser arti
 
 ## Slice 9: `core.card`
 
-`core.card` starts as a contract-only informational grouping surface. It is intentionally not a generic clickable container: the Card itself has no built-in button/link role, tab stop, selection state, or activation behavior, and nested controls keep their own semantics and focus order.
+`core.card` is an implemented informational grouping surface with a deliberately CSS-only Web implementation. It is not a generic clickable container: the Card itself has no built-in button/link role, tab stop, selection state, activation behavior, JavaScript binder, or synthetic state synchronization, and nested controls keep their own semantics and focus order.
 
-Pinned family conformance provides the decisive interaction rule: only cards with a real action or navigation role may react to hover/press; informational cards remain stable. NeoSmartUI therefore gives this initial primitive only a `rest` state. It must not translate, compress, lift, or change structural depth on hover/contact merely because neo-brutalist controls elsewhere use tactile pressure.
+Pinned family conformance provides the decisive interaction rule: only cards with a real action or navigation role may react to hover/press; informational cards remain stable. NeoSmartUI therefore keeps the primitive at a single `rest` state. The canonical CSS has no hover/active/focus interaction selectors, sets `transform: none` and `transition: none`, and holds resting structural depth constant through pointer proximity and contact.
 
 Soft explicitly lists Card among reusable Core primitives and records default/flat/muted/accent/interactive presentation knowledge. NeoSmartUI keeps visual variants separate from semantic activation so an `interactive` look cannot silently manufacture keyboard or pointer semantics.
 
 Pinned Rivet contains `components/ui/card.tsx`, which provides useful anatomy knowledge for Card/header/title/description/action/content/footer. That repository snapshot declares no license metadata, so it remains reference-only and no source code is copied.
 
-Card also exposes a token-model distinction that should remain permanent: a grouped content surface is not a control. Slice 9 therefore adds value-free `space.surface.inline`, `space.surface.block`, `border.surface.width`, and `radius.surface` contracts instead of borrowing control padding/border/radius roles. No Theme values are introduced at contract-only maturity.
+Card preserves a permanent token-model distinction: a grouped content surface is not a control. It uses `space.surface.inline`, `space.surface.block`, `border.surface.width`, and `radius.surface` rather than control padding/border/radius roles. Rivet Light resolves the exact implemented dependency union with 1rem logical surface padding, a 3px surface border, a 6px surface radius, and `font.weight.strong` at 800 while leaving every previously resolved token value unchanged.
 
-The future implementation must preserve logical-direction layout, long-content wrapping, forced-colors grouping boundaries, and reduced-motion stability while keeping whole-card interaction absent unless a separately contracted action/navigation semantic owns it.
+Foundry renders the Card as a semantic `<article>` chosen by the demo's document meaning, not by the primitive itself. The demo contains no whole-card interactive role or tab stop. Dedicated Chromium QA verifies token-backed geometry, stable hover/contact depth, RTL and long-content wrapping, zero-motion reduced-motion behavior, and a visible forced-colors boundary without making the Card focusable.
+
+Maturity is `implemented`; `publicProof` remains null until an exact merged-main artifact is deployed byte-for-byte to native GitHub Pages and live verification succeeds. The eight previously public Core primitives remain bound to their existing singleton proof cohort during this implementation slice.
