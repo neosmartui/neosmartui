@@ -92,7 +92,7 @@ const alertEntry = registry.components.find((entry) => entry.id === 'core.alert'
 if (!alertEntry || alertEntry.maturity !== 'public-proof' || alertEntry.evidence.publicProof !== 'evidence/public/core.alert.json') fail('core.alert must bind current public-proof evidence');
 if (alertEntry.evidence.implementation !== 'packages/adapters/web/components/alert.css') fail('core.alert must bind its CSS-only implementation evidence');
 const fieldEntry = registry.components.find((entry) => entry.id === 'core.field');
-if (!fieldEntry || fieldEntry.maturity !== 'implemented' || fieldEntry.evidence.publicProof !== null) fail('core.field must be implemented without claiming public proof in this slice');
+if (!fieldEntry || fieldEntry.maturity !== 'public-proof' || fieldEntry.evidence.publicProof !== 'evidence/public/core.field.json') fail('core.field must bind current public-proof evidence');
 if (fieldEntry.evidence.implementation !== 'packages/adapters/web/components/field.css') fail('core.field must bind its CSS-only implementation evidence');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
