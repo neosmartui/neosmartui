@@ -36,14 +36,12 @@ Promotion between states requires evidence. Tooling MUST reject a maturity claim
 
 ## Slice 2: `core.checkbox`
 
-`core.checkbox` adds a different reusable state problem without introducing a business domain: persistent checked/unchecked selection, indeterminate presentation, invalid state, and contact compression.
+`core.checkbox` adds persistent checked/unchecked selection, indeterminate presentation, invalid state, and contact compression without introducing a business domain. Its native Web implementation and public proof exercise a 44px effective target plus pressure-not-levitation state feedback.
 
-The contract was admitted before implementation. The canonical Web adapter is implemented through the same Rivet Light Theme-resolution path as `core.button`; public-proof maturity requires its own implementation blob binding plus the current exact-SHA browser, Pages, and live evidence cohort.
+## Slice 3: `core.input`
 
-The checkbox contract keeps these boundaries explicit:
+`core.input` adds generic single-line text-like data entry at `contract-only` maturity. It intentionally exercises a different interaction class: the control is interactive but not pressable.
 
-- checkbox semantics are distinct from field/label/help-text composition;
-- checked, unchecked, and indeterminate state remain unambiguous after contact feedback ends;
-- the visible box may be smaller than the effective target, but the usable target honors `size.control.minimum`;
-- hover/contact compresses toward the surface and never creates generic lift;
-- keyboard, touch, RTL, reduced motion, forced colors, invalid, and disabled states are first-class contract concerns.
+The contract therefore requires native editing semantics, explicit focus/empty/filled/invalid/read-only/disabled states, a 44px minimum effective control height, RTL/IME resilience, reduced-motion and forced-colors support, and a strict prohibition on borrowing button pressure-depth tokens merely because the field can receive pointer or keyboard interaction.
+
+Field labels, help/error copy, prefixes/suffixes, password reveal actions, and form layout remain composition outside this primitive.

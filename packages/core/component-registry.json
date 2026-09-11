@@ -20,6 +20,15 @@
         "implementation": "packages/adapters/web/components/checkbox.mjs",
         "publicProof": "evidence/public/core.checkbox.json"
       }
+    },
+    {
+      "id": "core.input",
+      "contract": "components/input.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
