@@ -24,6 +24,15 @@ const visualState = async (input) => input.evaluate((element) => {
   };
 });
 
+const resolvedColor = async (page, token) => page.evaluate((name) => {
+  const probe = document.createElement('span');
+  probe.style.color = `var(${name})`;
+  document.body.append(probe);
+  const color = getComputedStyle(probe).color;
+  probe.remove();
+  return color;
+}, token);
+
 test.beforeAll(async () => {
   await mkdir(evidenceDir, { recursive: true });
 });
@@ -97,9 +106,9 @@ test('core.checkbox keyboard focus, invalid, and disabled states remain explicit
   expect(Number.parseFloat(focused.outlineWidth)).toBeGreaterThanOrEqual(3);
   expect(focused.height).toBeGreaterThanOrEqual(44);
 
+  const expectedErrorBorder = await resolvedColor(page, '--ns-color-state-error');
   await checkbox.evaluate((element) => element.setAttribute('aria-invalid', 'true'));
-  const invalid = await visualState(checkbox);
-  expect(invalid.borderColor).not.toBe(focused.borderColor);
+  await expect.poll(async () => (await visualState(checkbox)).borderColor, { timeout: 500 }).toBe(expectedErrorBorder);
 
   await checkbox.evaluate((element) => { element.disabled = true; });
   const disabled = await visualState(checkbox);
