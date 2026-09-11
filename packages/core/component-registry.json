@@ -47,6 +47,15 @@
         "implementation": "packages/adapters/web/components/switch.mjs",
         "publicProof": "evidence/public/core.switch.json"
       }
+    },
+    {
+      "id": "core.tabs",
+      "contract": "components/tabs.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }

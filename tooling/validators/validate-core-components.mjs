@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 5) fail('fifth Core slice must contain exactly five honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 6) fail('sixth Core slice must contain exactly six honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -100,5 +100,16 @@ await access(resolve(root, 'packages/adapters/web/components/switch.css'));
 
 const switchDocs = await readFile(resolve(root, 'packages/core/components/switch.md'), 'utf8');
 for (const marker of ['role="switch"', 'binary setting', 'MUST NOT expose an indeterminate state', 'thumb position and state color MUST resolve together', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'real `<input type="checkbox">`', 'no legacy implementation code is copied', 'No switch-specific Rivet implementation artifact is claimed']) if (!switchDocs.includes(marker)) fail(`switch.md missing marker: ${marker}`);
+
+const tabs = await readJson(resolve(root, 'packages/core/components/tabs.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unselected', 'selected', 'disabled']) if (!tabs.states.includes(state)) fail(`core.tabs missing state ${state}`);
+for (const token of ['color.surface.interactive', 'color.surface.panel', 'color.content.primary', 'color.border.strong', 'color.action.primary.surface', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring', 'font.size.label', 'opacity.disabled']) if (!tabs.dependencies.includes(token)) fail(`core.tabs missing semantic/tactile token ${token}`);
+
+const tabsEntry = registry.components.find((entry) => entry.id === 'core.tabs');
+if (!tabsEntry || tabsEntry.maturity !== 'contract-only') fail('core.tabs must remain contract-only in this slice');
+if (tabsEntry.evidence.implementation !== null || tabsEntry.evidence.publicProof !== null) fail('core.tabs contract-only evidence must remain null');
+
+const tabsDocs = await readFile(resolve(root, 'packages/core/components/tabs.md'), 'utf8');
+for (const marker of ['role="tablist"', 'roving focus', 'Automatic activation', 'Manual activation', 'logical inline-end', 'MUST NOT increase apparent elevation', 'selected tab SHOULD feel seated/locked into its rail', 'no legacy implementation code is copied', 'No tabs-specific Rivet implementation artifact is claimed']) if (!tabsDocs.includes(marker)) fail(`tabs.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
