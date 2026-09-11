@@ -13,7 +13,8 @@ const schemaFiles = [
   'vertical.schema.json',
   'token-contracts.schema.json',
   'resolved-token-bundle.schema.json',
-  'theme-resolution.schema.json'
+  'theme-resolution.schema.json',
+  'deployment-record.schema.json'
 ];
 
 const parsed = new Map();
@@ -33,7 +34,8 @@ const expectedIds = new Map([
   ['vertical.schema.json', 'https://neosmartui.com/schemas/vertical@1.json'],
   ['token-contracts.schema.json', 'https://neosmartui.com/schemas/token-contracts@1.json'],
   ['resolved-token-bundle.schema.json', 'https://neosmartui.com/schemas/resolved-token-bundle@1.json'],
-  ['theme-resolution.schema.json', 'https://neosmartui.com/schemas/theme-resolution@1.json']
+  ['theme-resolution.schema.json', 'https://neosmartui.com/schemas/theme-resolution@1.json'],
+  ['deployment-record.schema.json', 'https://neosmartui.com/schemas/deployment-record@1.json']
 ]);
 for (const [file, id] of expectedIds) if (parsed.get(file).$id !== id) throw new Error(`${file} has unexpected $id`);
 for (const file of ['theme.schema.json', 'flavor.schema.json']) {
@@ -66,4 +68,4 @@ for (const id of invalid) if (Object.values(patterns).some((pattern) => pattern.
 const taxonomy = await readFile(resolve(root, 'spec/architecture/TAXONOMY.md'), 'utf8');
 if (!taxonomy.includes('Commerce is a Vertical, not a Flavor.')) throw new Error('Schemas must remain aligned with corrected taxonomy.');
 
-console.log('Schema validation passed. Versioned schema identities, satisfiable Flavor/Theme contracts, and stable semantic-ID rules are coherent.');
+console.log('Schema validation passed. Versioned schema identities, deployment provenance, satisfiable Flavor/Theme contracts, and stable semantic-ID rules are coherent.');
