@@ -79,6 +79,17 @@ if (tabsEntry.evidence.implementation !== 'packages/adapters/web/components/tabs
 const textareaEntry = registry.components.find((entry) => entry.id === 'core.textarea');
 if (!textareaEntry || textareaEntry.maturity !== 'public-proof' || textareaEntry.evidence.publicProof !== 'evidence/public/core.textarea.json') fail('core.textarea must bind current public-proof evidence');
 if (textareaEntry.evidence.implementation !== 'packages/adapters/web/components/textarea.mjs') fail('core.textarea must retain the canonical Web adapter');
+const selectEntry = registry.components.find((entry) => entry.id === 'core.select');
+if (!selectEntry || selectEntry.maturity !== 'public-proof' || selectEntry.evidence.publicProof !== 'evidence/public/core.select.json') fail('core.select must bind current public-proof evidence');
+if (selectEntry.evidence.implementation !== 'packages/adapters/web/components/select.mjs') fail('core.select must retain the canonical Web adapter');
+const cardEntry = registry.components.find((entry) => entry.id === 'core.card');
+if (!cardEntry || cardEntry.maturity !== 'implemented' || cardEntry.evidence.publicProof !== null) fail('core.card must be implemented without public proof in this slice');
+if (cardEntry.evidence.implementation !== 'packages/adapters/web/components/card.css') fail('core.card must bind its CSS-only implementation evidence');
+
+if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light Card surface padding must resolve to the deliberate 1rem surface rhythm');
+if (values.get('border.surface.width') !== '3px') fail('Rivet Light Card surface border must resolve to 3px');
+if (values.get('radius.surface') !== '6px') fail('Rivet Light Card surface radius must resolve to 6px');
+if (values.get('font.weight.strong') !== 800) fail('Rivet Light strong text weight must resolve to 800');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
@@ -87,5 +98,8 @@ if (!css.includes('--ns-motion-standard-duration: 160ms;') || !css.includes('--n
 if (!css.includes('--ns-color-surface-panel: #ffffff;')) fail('generated CSS does not include the evidence-backed Rivet Light panel surface role');
 if (!css.includes('--ns-font-size-label: 1rem;')) fail('generated CSS does not include the evidence-backed Rivet Light label size role');
 if (!css.includes('--ns-font-weight-emphasis: 750;')) fail('generated CSS does not include the evidence-backed Rivet Light emphasis weight role');
+if (!css.includes('--ns-space-surface-inline: 1rem;') || !css.includes('--ns-space-surface-block: 1rem;')) fail('generated CSS does not include Card surface spacing roles');
+if (!css.includes('--ns-border-surface-width: 3px;') || !css.includes('--ns-radius-surface: 6px;')) fail('generated CSS does not include Card surface geometry roles');
+if (!css.includes('--ns-font-weight-strong: 800;')) fail('generated CSS does not include the Card strong typography role');
 
 console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);
