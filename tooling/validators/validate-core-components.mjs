@@ -81,16 +81,16 @@ for (const token of ['color.surface.interactive', 'color.content.primary', 'colo
 for (const forbidden of ['depth.rest.x', 'press.hover.x', 'press.active.x']) if (textarea.dependencies.includes(forbidden)) fail(`core.textarea must not depend on press-depth token ${forbidden}`);
 
 const textareaEntry = registry.components.find((entry) => entry.id === 'core.textarea');
-if (!textareaEntry || textareaEntry.maturity !== 'implemented') fail('core.textarea must be implemented in this slice');
+if (!textareaEntry || textareaEntry.maturity !== 'public-proof') fail('core.textarea must be public-proof in this slice');
 if (textareaEntry.evidence.implementation !== 'packages/adapters/web/components/textarea.mjs') fail('core.textarea implementation evidence must bind the canonical Web adapter');
-if (textareaEntry.evidence.publicProof !== null) fail('implemented core.textarea must not claim public proof before deployed evidence exists');
+if (textareaEntry.evidence.publicProof !== 'evidence/public/core.textarea.json') fail('public-proof core.textarea must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/textarea.css'));
 
 const textareaAdapter = await readFile(resolve(root, 'packages/adapters/web/components/textarea.mjs'), 'utf8');
 for (const marker of ['export function syncTextareaState', 'export function bindTextarea', "textarea.tagName !== 'TEXTAREA'", "textarea.value.length === 0 ? 'empty' : 'filled'", "textarea.addEventListener('input'", "textarea.addEventListener('change'"]) if (!textareaAdapter.includes(marker)) fail(`textarea.mjs missing implementation marker: ${marker}`);
 
 const textareaDocs = await readFile(resolve(root, 'packages/core/components/textarea.md'), 'utf8');
-for (const marker of ['real native `<textarea>`', 'interactive, not pressable', 'line breaks', 'Core MUST NOT globally disable resize', 'No textarea-specific Rivet implementation artifact is claimed', 'Maturity is `implemented`']) if (!textareaDocs.includes(marker)) fail(`textarea.md missing marker: ${marker}`);
+for (const marker of ['real native `<textarea>`', 'interactive, not pressable', 'line breaks', 'Core MUST NOT globally disable resize', 'No textarea-specific Rivet implementation artifact is claimed', 'Maturity is `public-proof`']) if (!textareaDocs.includes(marker)) fail(`textarea.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
