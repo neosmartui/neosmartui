@@ -96,10 +96,10 @@ test('reduced motion preserves state feedback without non-essential travel anima
   const state = await visualState(button);
   expect(Number.parseFloat(state.transitionDuration)).toBeLessThanOrEqual(0.002);
   await button.hover();
-  await page.waitForTimeout(20);
-  const hover = await visualState(button);
-  expect(hover.x).toBeCloseTo(2, 1);
-  expect(hover.y).toBeCloseTo(2, 1);
+  await expect.poll(async () => {
+    const hover = await visualState(button);
+    return [Number(hover.x.toFixed(3)), Number(hover.y.toFixed(3))];
+  }, { timeout: 500 }).toEqual([2, 2]);
 });
 
 test('forced-colors rendering keeps the button visible and focusable', async ({ page }) => {
