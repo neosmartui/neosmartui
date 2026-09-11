@@ -106,15 +106,15 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unselected', 
 for (const token of ['color.surface.interactive', 'color.surface.panel', 'color.content.primary', 'color.border.strong', 'color.action.primary.surface', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring', 'font.size.label', 'opacity.disabled']) if (!tabs.dependencies.includes(token)) fail(`core.tabs missing semantic/tactile token ${token}`);
 
 const tabsEntry = registry.components.find((entry) => entry.id === 'core.tabs');
-if (!tabsEntry || tabsEntry.maturity !== 'implemented') fail('core.tabs must be implemented in this slice');
+if (!tabsEntry || tabsEntry.maturity !== 'public-proof') fail('core.tabs must be public-proof in this slice');
 if (tabsEntry.evidence.implementation !== 'packages/adapters/web/components/tabs.mjs') fail('core.tabs implementation evidence must bind the canonical Web adapter');
-if (tabsEntry.evidence.publicProof !== null) fail('implemented core.tabs must not claim public proof before deployed evidence exists');
+if (tabsEntry.evidence.publicProof !== 'evidence/public/core.tabs.json') fail('public-proof core.tabs must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/tabs.css'));
 
 const tabsAdapter = await readFile(resolve(root, 'packages/adapters/web/components/tabs.mjs'), 'utf8');
 for (const marker of ['export function selectTab', 'export function bindTabs', "['automatic', 'manual']", 'aria-orientation', 'ArrowLeft', 'ArrowRight', "event.key === 'Home'", "event.key === 'End'", "event.key === ' ' || event.key === 'Enter'", 'aria-selected']) if (!tabsAdapter.includes(marker)) fail(`tabs.mjs missing implementation marker: ${marker}`);
 
 const tabsDocs = await readFile(resolve(root, 'packages/core/components/tabs.md'), 'utf8');
-for (const marker of ['role="tablist"', 'roving focus', 'Automatic activation', 'Manual activation', 'logical inline-end', 'MUST NOT increase apparent elevation', 'selected tab SHOULD feel seated/locked into its rail', 'no legacy implementation code is copied', 'No tabs-specific Rivet implementation artifact is claimed', 'Maturity is `implemented`']) if (!tabsDocs.includes(marker)) fail(`tabs.md missing marker: ${marker}`);
+for (const marker of ['role="tablist"', 'roving focus', 'Automatic activation', 'Manual activation', 'logical inline-end', 'MUST NOT increase apparent elevation', 'selected tab SHOULD feel seated/locked into its rail', 'no legacy implementation code is copied', 'No tabs-specific Rivet implementation artifact is claimed', 'Maturity is `public-proof`']) if (!tabsDocs.includes(marker)) fail(`tabs.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
