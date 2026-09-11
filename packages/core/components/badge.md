@@ -10,6 +10,8 @@ If the compact label truly navigates or performs an action, composition must use
 
 `role="status"` is also NOT the Badge default. ARIA `status` creates a live region intended for meaningful dynamic updates; static text such as `Active`, `Beta`, or `3 items` must not be announced as a live region merely because it is visually a status badge. Composition may opt into appropriate live-region semantics when an actual asynchronous status change needs announcement.
 
+The canonical Web implementation is intentionally CSS-only. It does not install pointer, click, keyboard, live-region, or state-synchronization listeners and does not need a JavaScript binder merely to qualify as implemented.
+
 ## State and tone model
 
 The initial contract exposes:
@@ -45,37 +47,37 @@ When a Badge is composed inside or alongside a real interactive control, that co
 
 ## RTL, localization, and long content
 
-Layout must use logical inline/block geometry. Direction is inherited from content/composition. Badge text and optional leading/trailing content must remain understandable under RTL and mixed-direction text.
+Layout uses logical inline/block geometry. Direction is inherited from content/composition. Badge text and optional leading/trailing content remain understandable under RTL and mixed-direction text.
 
-The implementation must not silently truncate essential status text. Long localized labels may wrap or be constrained by higher-level composition, but Core must avoid fixed physical-width assumptions that make translated status meaning inaccessible.
+The canonical CSS does not silently truncate essential status text. Long localized labels may wrap instead of overflowing a constrained container, and Core avoids fixed physical-width assumptions that would make translated status meaning inaccessible.
 
 ## Forced colors and contrast
 
-Forced-colors/high-contrast rendering must keep text readable and preserve a perceivable Badge boundary when the Theme's background/tone colors are overridden. Semantic status meaning cannot disappear when custom color is unavailable.
+Forced-colors/high-contrast rendering keeps text readable and preserves a perceivable Badge boundary when Theme background/tone colors are overridden. Semantic status meaning cannot disappear when custom color is unavailable.
 
-Status foreground/background pairings must meet the system's contrast requirements. `color.content.inverse` may be used when a resolved status surface requires inverse text; Theme resolution remains responsible for the concrete pairing.
+Status foreground/background pairings remain explicit. Neutral/info/success/warning use the primary readable foreground over their light surfaces, while the existing darker error role uses `color.content.inverse`.
 
 ## Token boundary
 
 A Badge is neither an ordinary pressable control nor a grouped Card surface. It MUST NOT borrow `space.control.*`, `border.control.width`, `radius.control`, `space.surface.*`, `border.surface.width`, or `radius.surface` merely because those values are already resolved.
 
-Slice 10 introduces value-free compact annotation roles instead:
+Badge owns compact annotation roles instead:
 
 - `space.annotation.inline`
 - `space.annotation.block`
 - `border.annotation.width`
 - `radius.annotation`
 
-Concrete values remain Flavor/Theme-owned and are intentionally absent while Badge maturity is contract-only. Status tones use the existing semantic `color.state.info`, `color.state.success`, `color.state.warning`, and `color.state.error` contracts rather than component-specific color names.
+Rivet Light resolves those roles from pinned Badge knowledge at `0.55rem` inline padding, `0.15rem` block padding, a `2px` annotation border, and a `999px` pill radius. Pinned Soft supplies the exact light status palette for info (`#c9b7ff`), success (`#9be3bd`), and warning (`#f4dc78`); the already-established NeoSmartUI error role remains `#c1121f` so this slice does not mutate earlier component behavior. `color.content.inverse` resolves to white for the dark error surface, consistent with pinned Rivet's destructive Badge foreground knowledge. Every previously resolved Theme value remains unchanged.
 
 ## Migration knowledge provenance
 
-This contract is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
+This contract and implementation are clean NeoSmartUI definitions informed by pinned legacy evidence; no legacy implementation code is copied.
 
 - Family conformance: `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626` — shared laws prohibit generic hover lift, require semantic-token/state documentation, and explicitly require static surfaces not to mimic interactive motion. Badge applies those family laws as a non-interactive primitive.
-- Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` explicitly lists `Badge/status` among reusable Core primitives and requires RTL/high-contrast/state resilience.
-- Rivet implementation knowledge: `NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d` — `components/ui/badge.tsx` uses a neutral `span` host by default and scopes hover styling to anchor-host usage. Repository metadata declares no license, so this is reference-only knowledge and no source code is copied.
+- Soft capability and value evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists `Badge/status`; `src/components/badge.css` and `src/tokens.css` provide compact pill geometry and exact light info/success/warning palette knowledge. NeoSmartUI re-expresses that knowledge through its own semantic contracts rather than copying source.
+- Rivet implementation knowledge: `NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d` — `components/ui/badge.tsx` uses a neutral `span` host by default, pill geometry, and scopes hover styling to anchor-host usage; its destructive variant uses a white foreground. Repository metadata declares no license, so this is reference-only knowledge and no source code is copied.
 
 ## Maturity
 
-Maturity is `contract-only`. No canonical NeoSmartUI implementation or public-proof claim exists in this slice.
+Maturity is `implemented`. The canonical evidence is the CSS-only Web implementation at `packages/adapters/web/components/badge.css`; `publicProof` remains null until an exact green merged-main Foundry artifact is deployed and live HTTPS verification succeeds.
