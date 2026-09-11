@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 13) fail('thirteenth Core slice must contain exactly thirteen honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 14) fail('fourteenth Core slice must contain exactly fourteen honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -194,6 +194,17 @@ try {
 }
 const breadcrumbDocs = await readFile(resolve(root, 'packages/core/components/breadcrumb.md'), 'utf8');
 for (const marker of ['Breadcrumb is a navigation semantic', 'real links with real destinations', '`aria-current="page"`', 'MUST NOT manufacture `role="link" aria-disabled="true"`', 'MUST NOT add structural depth', 'MUST NOT implement arrow-key roving focus', '`space.navigation.gap`', '`font.size.navigation`', '`0.45rem`', '`clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem)`', 'intentionally CSS-only', 'no legacy implementation code is copied', 'Maturity is `public-proof`']) if (!breadcrumbDocs.includes(marker)) fail(`breadcrumb.md missing marker: ${marker}`);
+
+const pagination = await readJson(resolve(root, 'packages/core/components/pagination.json'));
+const paginationStates = new Set(['rest', 'hover', 'focus-visible', 'pressed', 'current', 'disabled']);
+if (pagination.states.length !== paginationStates.size || !pagination.states.every((state) => paginationStates.has(state))) fail('core.pagination must expose exactly rest/hover/focus-visible/pressed/current/disabled navigation states');
+for (const token of ['color.surface.interactive', 'color.content.primary', 'color.border.strong', 'color.action.primary.surface', 'color.action.primary.content', 'color.focus.ring', 'space.navigation.gap', 'space.control.inline', 'space.control.block', 'border.control.width', 'radius.control', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled', 'font.family.body', 'font.size.navigation', 'font.weight.emphasis']) if (!pagination.dependencies.includes(token)) fail(`core.pagination missing semantic navigation/control token ${token}`);
+for (const forbiddenToken of ['space.field.gap', 'space.surface.inline', 'space.surface.block', 'space.annotation.inline', 'space.annotation.block', 'border.surface.width', 'border.annotation.width', 'radius.surface', 'radius.annotation', 'color.state.error', 'motion.standard.duration']) if (pagination.dependencies.includes(forbiddenToken)) fail(`core.pagination must not borrow unrelated composition/surface/status token ${forbiddenToken}`);
+const paginationEntry = registry.components.find((entry) => entry.id === 'core.pagination');
+if (!paginationEntry || paginationEntry.maturity !== 'contract-only') fail('core.pagination must remain contract-only in this slice');
+if (paginationEntry.evidence.implementation !== null || paginationEntry.evidence.publicProof !== null) fail('contract-only core.pagination evidence must remain null');
+const paginationDocs = await readFile(resolve(root, 'packages/core/components/pagination.md'), 'utf8');
+for (const marker of ['Pagination is navigation, not a row of arbitrary buttons', 'real anchor with a real `href`', '`aria-current="page"`', 'Pagination is also not Tabs', 'does not use Arrow-key roving focus', 'effective target MUST meet or exceed `size.control.minimum`', 'introduces no new token contracts', '`components/ui/pagination.tsx`', 'Maturity is `contract-only`']) if (!paginationDocs.includes(marker)) fail(`pagination.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
