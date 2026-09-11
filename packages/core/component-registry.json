@@ -96,10 +96,10 @@
     {
       "id": "core.alert",
       "contract": "components/alert.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/alert.css",
-        "publicProof": null
+        "publicProof": "evidence/public/core.alert.json"
       }
     }
   ]

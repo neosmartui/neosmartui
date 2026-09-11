@@ -71,4 +71,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `public-proof`. The canonical Web adapter remains independently implementation-blob-bound while its current singleton evidence cohort is merged-main Quality run `34643302864`, artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`. Live verification requires source `09d04bc7dc1a99c473b670a5d768c867d6da1a99` and the canonical native single-select markers.
+Maturity is `public-proof`. The canonical Web adapter remains independently implementation-blob-bound while its current singleton evidence cohort is merged-main Quality run `34647019377`, artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`. Live verification requires source `5566f1812a34c3820757fad7b476a7185b24bd7b` and the canonical native single-select markers.

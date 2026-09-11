@@ -62,4 +62,4 @@ This contract and implementation are clean NeoSmartUI definitions informed by pi
 
 ## Maturity
 
-Maturity is `public-proof`. The CSS-only Web implementation is bound by exact blob SHA `0f851c0eeb60dbbc06fa44f66e30a7fa50b8692c` to merged-main Quality run `34643302864` and artifact `10281090546`. That exact artifact is published byte-for-byte to native GitHub Pages at deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, Pages run `34643671713`, with live deployment source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`.
+Maturity is `public-proof`. The CSS-only Web implementation remains bound by exact blob SHA `0f851c0eeb60dbbc06fa44f66e30a7fa50b8692c` to the current singleton cohort: merged-main Quality run `34647019377`, artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, Pages run `34647436787`, and live deployment source `5566f1812a34c3820757fad7b476a7185b24bd7b`.
