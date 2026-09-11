@@ -51,9 +51,10 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', '
 for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!checkbox.dependencies.includes(token)) fail(`core.checkbox missing semantic/tactile token ${token}`);
 
 const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
-if (!checkboxEntry || checkboxEntry.maturity !== 'implemented') fail('core.checkbox must be implemented in this slice');
+if (!checkboxEntry || !['implemented', 'public-proof'].includes(checkboxEntry.maturity)) fail('core.checkbox must be at least implemented');
 if (checkboxEntry.evidence.implementation !== 'packages/adapters/web/components/checkbox.mjs') fail('core.checkbox implementation evidence must bind the canonical Web adapter');
-if (checkboxEntry.evidence.publicProof !== null) fail('core.checkbox must not claim public proof before deployed evidence exists');
+if (checkboxEntry.maturity === 'implemented' && checkboxEntry.evidence.publicProof !== null) fail('implemented core.checkbox must not claim public proof');
+if (checkboxEntry.maturity === 'public-proof' && checkboxEntry.evidence.publicProof !== 'evidence/public/core.checkbox.json') fail('public-proof core.checkbox must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/checkbox.css'));
 
 const checkboxDocs = await readFile(resolve(root, 'packages/core/components/checkbox.md'), 'utf8');
