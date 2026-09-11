@@ -35,6 +35,10 @@ jobs:
         run: npm run validate:components
       - name: Validate Flavor, Theme, and adapter resolution
         run: npm run validate:resolution
+      - name: Validate public-proof evidence structure
+        run: npm run validate:proof
+      - name: Verify claimed public proof against live HTTPS endpoints
+        run: npm run validate:proof:live
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files

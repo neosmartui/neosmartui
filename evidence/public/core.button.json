@@ -1,0 +1,33 @@
+{
+  "$schema": "../../spec/schemas/public-proof.schema.json",
+  "schema": "neosmartui/public-proof@1",
+  "component": "core.button",
+  "deployedSource": {
+    "repository": "neosmartui/neosmartui",
+    "sha": "7053dc4c8e0701ea39f4ad570fc10437e6391cad"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/button.mjs",
+      "blobSha": "03136809d3518d4f2051b793c64ae247325c203d"
+    },
+    {
+      "path": "packages/adapters/web/components/button.css",
+      "blobSha": "821c70154173a536de3ff8b1eeb08f8cdeec1303"
+    }
+  ],
+  "browserEvidence": {
+    "runId": 34602244265,
+    "artifactId": 10264359268
+  },
+  "deployment": {
+    "repository": "neosmartui/neosmartui.github.io",
+    "commitSha": "67b956a3fb4955632ab06e677ce0077baafb264f",
+    "treeSha": "aff0627fee9ff47f198dcb50aece5f5de7c261b7",
+    "pagesRunId": 34602602763
+  },
+  "live": {
+    "pageUrl": "https://neosmartui.github.io/",
+    "deploymentRecordUrl": "https://neosmartui.github.io/deployment.json"
+  }
+}

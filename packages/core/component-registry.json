@@ -6,10 +6,10 @@
     {
       "id": "core.button",
       "contract": "components/button.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/button.mjs",
-        "publicProof": null
+        "publicProof": "evidence/public/core.button.json"
       }
     }
   ]
