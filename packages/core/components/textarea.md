@@ -69,4 +69,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `public-proof`: the canonical NeoSmartUI Web adapter is exercised by the 39-test merged-main Chromium cohort, the exact merged-main Foundry artifact is published byte-for-byte through native GitHub Pages, and live HTTPS verification binds `core.textarea` to source `026250b5f2400777ef2701b80990b1e9d6d0b938` while checking the canonical multiline, non-pressable, and resize markers. The proof record remains implementation-blob-bound so a future adapter or CSS change makes this evidence stale automatically.
+Maturity is `public-proof`: the native Web adapter remains implementation-blob-bound to the same current singleton cohort as every public Core primitive—merged-main Quality run `34637337995`, artifact `10278097590`, deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and Pages run `34638732835`. Live HTTPS verification binds `core.textarea` to source `75449935bccead3173e8b2879f4a398b6df111c0` while checking the canonical multiline, non-pressable, and resize markers.

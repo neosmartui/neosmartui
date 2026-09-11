@@ -62,4 +62,4 @@ This contract and implementation are clean NeoSmartUI definitions informed by pi
 
 ## Maturity
 
-Maturity is `implemented`. The canonical evidence is the CSS-only Web implementation at `packages/adapters/web/components/card.css`; `publicProof` remains null until an exact merged-main Foundry artifact is deployed and live HTTPS verification succeeds.
+Maturity is `public-proof`. The CSS-only Web implementation is bound by exact blob SHA `0f851c0eeb60dbbc06fa44f66e30a7fa50b8692c` to merged-main Quality run `34637337995` and artifact `10278097590`. That exact artifact is published byte-for-byte to native GitHub Pages at deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, Pages run `34638732835`, with live deployment source `75449935bccead3173e8b2879f4a398b6df111c0`.

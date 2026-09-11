@@ -1,19 +1,15 @@
 {
   "$schema": "../../spec/schemas/public-proof.schema.json",
   "schema": "neosmartui/public-proof@1",
-  "component": "core.input",
+  "component": "core.card",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
     "sha": "75449935bccead3173e8b2879f4a398b6df111c0"
   },
   "implementationFiles": [
     {
-      "path": "packages/adapters/web/components/input.mjs",
-      "blobSha": "e148fa89218ef628f989c138a250db3af77c6f40"
-    },
-    {
-      "path": "packages/adapters/web/components/input.css",
-      "blobSha": "9eda0543ec5ea3bf1a917a175f30ea6900328b50"
+      "path": "packages/adapters/web/components/card.css",
+      "blobSha": "0f851c0eeb60dbbc06fa44f66e30a7fa50b8692c"
     }
   ],
   "browserEvidence": {
