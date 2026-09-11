@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 12) fail('twelfth Core slice must contain exactly twelve honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 13) fail('thirteenth Core slice must contain exactly thirteen honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -172,6 +172,17 @@ try {
 }
 const fieldDocs = await readFile(resolve(root, 'packages/core/components/field.md'), 'utf8');
 for (const marker of ['one primary form control', 'does **not** add `role="group"`', '`role="alert"` is **not** the default', 'intentionally CSS-only', '`space.field.gap`', 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)', 'MUST NOT borrow `space.control.*`', 'no legacy implementation code is copied', 'Maturity is `public-proof`']) if (!fieldDocs.includes(marker)) fail(`field.md missing marker: ${marker}`);
+
+const breadcrumb = await readJson(resolve(root, 'packages/core/components/breadcrumb.json'));
+const breadcrumbStates = new Set(['rest', 'current']);
+if (breadcrumb.states.length !== breadcrumbStates.size || !breadcrumb.states.every((state) => breadcrumbStates.has(state))) fail('core.breadcrumb must expose exactly rest/current hierarchy states');
+for (const token of ['color.content.primary', 'color.content.secondary', 'color.focus.ring', 'space.navigation.gap', 'focus.ring.width', 'focus.ring.offset', 'font.family.body', 'font.size.navigation', 'font.weight.regular', 'font.weight.emphasis']) if (!breadcrumb.dependencies.includes(token)) fail(`core.breadcrumb missing semantic navigation token ${token}`);
+for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'space.field.gap', 'space.surface.inline', 'space.surface.block', 'space.annotation.inline', 'space.annotation.block', 'border.control.width', 'border.surface.width', 'border.annotation.width', 'radius.control', 'radius.surface', 'radius.annotation', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.action.primary.surface', 'color.state.error', 'opacity.disabled']) if (breadcrumb.dependencies.includes(forbiddenToken)) fail(`core.breadcrumb native-link contract must not borrow control/surface/press token ${forbiddenToken}`);
+const breadcrumbEntry = registry.components.find((entry) => entry.id === 'core.breadcrumb');
+if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'contract-only') fail('core.breadcrumb must remain contract-only in this slice');
+if (breadcrumbEntry.evidence.implementation !== null || breadcrumbEntry.evidence.publicProof !== null) fail('contract-only core.breadcrumb evidence must remain null');
+const breadcrumbDocs = await readFile(resolve(root, 'packages/core/components/breadcrumb.md'), 'utf8');
+for (const marker of ['Breadcrumb is a navigation semantic', 'real links with real destinations', '`aria-current="page"`', 'MUST NOT manufacture `role="link" aria-disabled="true"`', 'MUST NOT add structural depth', 'MUST NOT implement arrow-key roving focus', '`space.navigation.gap`', '`font.size.navigation`', 'no legacy implementation code is copied', 'Maturity is `contract-only`']) if (!breadcrumbDocs.includes(marker)) fail(`breadcrumb.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
