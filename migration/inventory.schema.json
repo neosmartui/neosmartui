@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://neosmartui.com/schemas/migration-inventory@1.json",
+  "title": "NeoSmartUI Migration Inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "capturedAt", "authority", "principle", "allowedDecisions", "sources", "artifacts"],
+  "properties": {
+    "$schema": {"type":"string"},
+    "schemaVersion": {"const":1},
+    "capturedAt": {"type":"string","format":"date"},
+    "authority": {"const":"docs/CANONICAL-PRD.md"},
+    "principle": {"type":"string"},
+    "allowedDecisions": {"type":"array","uniqueItems":true,"items":{"enum":["ADOPT","ADAPT","PROMOTE","REWRITE","RETIRE","REFERENCE"]}},
+    "sources": {"type":"array","items":{"type":"object","additionalProperties":false,"required":["repository","branch","sha","status"],"properties":{"repository":{"type":"string","minLength":1},"branch":{"type":"string","minLength":1},"sha":{"type":"string","pattern":"^[0-9a-f]{40}$"},"status":{"enum":["snapshot-pinned","refresh-required"]}}}},
+    "artifacts": {"type":"array"}
+  }
+}

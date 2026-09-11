@@ -1,0 +1,12 @@
+{
+  "name": "neosmartui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "NeoSmartUI — the AI-first neo-brutalist UI system.",
+  "engines": {"node": ">=22"},
+  "scripts": {
+    "validate:foundation": "node tooling/validators/validate-foundation.mjs",
+    "build:foundry": "node tooling/foundry/build.mjs",
+    "quality": "npm run validate:foundation && npm run build:foundry"
+  }
+}
