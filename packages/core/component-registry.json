@@ -105,10 +105,10 @@
     {
       "id": "core.field",
       "contract": "components/field.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/field.css",
-        "publicProof": null
+        "publicProof": "evidence/public/core.field.json"
       }
     }
   ]

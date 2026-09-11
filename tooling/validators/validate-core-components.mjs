@@ -157,9 +157,9 @@ if (field.states.length !== fieldStates.size || !field.states.every((state) => f
 for (const token of ['color.content.primary', 'color.content.secondary', 'color.state.error', 'space.field.gap', 'font.family.body', 'font.size.body', 'font.size.label', 'font.weight.regular', 'font.weight.emphasis']) if (!field.dependencies.includes(token)) fail(`core.field missing semantic field token ${token}`);
 for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'space.surface.inline', 'space.surface.block', 'space.annotation.inline', 'space.annotation.block', 'border.control.width', 'border.surface.width', 'border.annotation.width', 'radius.control', 'radius.surface', 'radius.annotation', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring', 'focus.ring.width', 'focus.ring.offset']) if (field.dependencies.includes(forbiddenToken)) fail(`core.field composition contract must not borrow control/surface/interaction token ${forbiddenToken}`);
 const fieldEntry = registry.components.find((entry) => entry.id === 'core.field');
-if (!fieldEntry || fieldEntry.maturity !== 'implemented') fail('core.field must be implemented in this slice');
+if (!fieldEntry || fieldEntry.maturity !== 'public-proof') fail('core.field must be public-proof in this slice');
 if (fieldEntry.evidence.implementation !== 'packages/adapters/web/components/field.css') fail('core.field implementation evidence must bind the CSS-only Web implementation');
-if (fieldEntry.evidence.publicProof !== null) fail('implemented core.field must not claim public proof before deployed evidence exists');
+if (fieldEntry.evidence.publicProof !== 'evidence/public/core.field.json') fail('public-proof core.field must bind its canonical proof record');
 const fieldCss = await readFile(resolve(root, 'packages/adapters/web/components/field.css'), 'utf8');
 for (const marker of ['gap: var(--ns-space-field-gap)', 'font-family: var(--ns-font-family-body)', 'font-size: var(--ns-font-size-label)', 'font-weight: var(--ns-font-weight-emphasis)', 'color: var(--ns-color-content-secondary)', 'color: var(--ns-color-state-error)', ':has([aria-invalid="true"])', ':has(:disabled)', 'overflow-wrap: anywhere', 'transform: none', 'transition: none', '@media (forced-colors: active)']) if (!fieldCss.includes(marker)) fail(`field.css missing static-composition marker: ${marker}`);
 for (const forbiddenSelector of [':hover', ':active', ':focus', ':focus-visible']) if (fieldCss.includes(forbiddenSelector)) fail(`field.css must not invent Field interaction selector ${forbiddenSelector}`);
@@ -171,7 +171,7 @@ try {
   if (error?.code !== 'ENOENT') throw error;
 }
 const fieldDocs = await readFile(resolve(root, 'packages/core/components/field.md'), 'utf8');
-for (const marker of ['one primary form control', 'does **not** add `role="group"`', '`role="alert"` is **not** the default', 'intentionally CSS-only', '`space.field.gap`', 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)', 'MUST NOT borrow `space.control.*`', 'no legacy implementation code is copied', 'Maturity is `implemented`']) if (!fieldDocs.includes(marker)) fail(`field.md missing marker: ${marker}`);
+for (const marker of ['one primary form control', 'does **not** add `role="group"`', '`role="alert"` is **not** the default', 'intentionally CSS-only', '`space.field.gap`', 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)', 'MUST NOT borrow `space.control.*`', 'no legacy implementation code is copied', 'Maturity is `public-proof`']) if (!fieldDocs.includes(marker)) fail(`field.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);

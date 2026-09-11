@@ -1,19 +1,15 @@
 {
   "$schema": "../../spec/schemas/public-proof.schema.json",
   "schema": "neosmartui/public-proof@1",
-  "component": "core.select",
+  "component": "core.field",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
     "sha": "782c853463567e2f43924b8d6f49d7a0821b360b"
   },
   "implementationFiles": [
     {
-      "path": "packages/adapters/web/components/select.mjs",
-      "blobSha": "c2bec8c681f13e9d480858eb148d6415a9330026"
-    },
-    {
-      "path": "packages/adapters/web/components/select.css",
-      "blobSha": "0f9c9fe5b3df0b80ab25e982811c5fd73195d77b"
+      "path": "packages/adapters/web/components/field.css",
+      "blobSha": "c3d022e18a688e4a31d4225811ad6971719f6a70"
     }
   ],
   "browserEvidence": {
