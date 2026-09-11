@@ -86,7 +86,7 @@ const cardEntry = registry.components.find((entry) => entry.id === 'core.card');
 if (!cardEntry || cardEntry.maturity !== 'public-proof' || cardEntry.evidence.publicProof !== 'evidence/public/core.card.json') fail('core.card must bind current public-proof evidence');
 if (cardEntry.evidence.implementation !== 'packages/adapters/web/components/card.css') fail('core.card must bind its CSS-only implementation evidence');
 const badgeEntry = registry.components.find((entry) => entry.id === 'core.badge');
-if (!badgeEntry || badgeEntry.maturity !== 'implemented' || badgeEntry.evidence.publicProof !== null) fail('core.badge must be implemented without a public-proof claim in this slice');
+if (!badgeEntry || badgeEntry.maturity !== 'public-proof' || badgeEntry.evidence.publicProof !== 'evidence/public/core.badge.json') fail('core.badge must bind current public-proof evidence');
 if (badgeEntry.evidence.implementation !== 'packages/adapters/web/components/badge.css') fail('core.badge must bind its CSS-only implementation evidence');
 
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light Card surface padding must resolve to the deliberate 1rem surface rhythm');
