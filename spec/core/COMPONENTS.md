@@ -80,7 +80,7 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
-Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, merged-main Quality run `34643302864`, browser artifact `10281090546`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`; live verification still requires the canonical automatic/manual Tabs markers.
+Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `5566f1812a34c3820757fad7b476a7185b24bd7b`, merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`; live verification still requires the canonical automatic/manual Tabs markers.
 
 ## Slice 7: `core.textarea`
 
@@ -94,7 +94,7 @@ Rivet Light resolution includes `core.textarea` in scope. Because every textarea
 
 Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
 
-Its current public proof shares the singleton cohort at source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, merged-main Quality run `34643302864`, browser artifact `10281090546`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and native Pages run `34643671713`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
+Its current public proof shares the singleton cohort at source `5566f1812a34c3820757fad7b476a7185b24bd7b`, merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and native Pages run `34647436787`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
 
 ## Slice 8: `core.select`
 
@@ -110,7 +110,7 @@ Foundry renders the native single-select and binds the canonical adapter. Merged
 
 Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed.
 
-Its public proof is bound to merged-main Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and native Pages run `34643671713`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `09d04bc7dc1a99c473b670a5d768c867d6da1a99` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All ten public-proof components share this singleton cohort while retaining their own implementation blob bindings.
+Its public proof is bound to merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and native Pages run `34647436787`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `5566f1812a34c3820757fad7b476a7185b24bd7b` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All eleven public-proof components share this singleton cohort while retaining their own implementation blob bindings.
 
 ## Slice 9: `core.card`
 
@@ -126,7 +126,7 @@ Card preserves a permanent token-model distinction: a grouped content surface is
 
 Foundry renders the Card as a semantic `<article>` chosen by the demo's document meaning, not by the primitive itself. The demo contains no whole-card interactive role or tab stop. Dedicated Chromium QA verifies token-backed geometry, stable hover/contact depth, RTL and long-content wrapping, zero-motion reduced-motion behavior, and a visible forced-colors boundary without making the Card focusable.
 
-Its public proof is bound to the same singleton cohort as the other nine public Core primitives: merged source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
+Its public proof is bound to the same singleton cohort as the other ten public Core primitives: merged source `5566f1812a34c3820757fad7b476a7185b24bd7b`, Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
 
 ## Slice 10: `core.badge`
 
@@ -142,17 +142,17 @@ The canonical CSS contains no hover/active/focus selectors, no structural shadow
 
 Pinned Soft explicitly lists `Badge/status` and supplies exact compact Badge/palette knowledge in its pinned CSS. Pinned Rivet uses a neutral `span` by default, pill geometry, white destructive text, and scopes hover behavior to an actual anchor host. Rivet declares no license metadata, so it remains reference-only and NeoSmartUI copies no source implementation.
 
-Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Its public proof is bound to merged source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`; structural proof validation recomputes the Badge CSS blob and live verification requires all five visible tone markers without adding interaction semantics.
+Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Its public proof is bound to merged source `5566f1812a34c3820757fad7b476a7185b24bd7b`, Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`; structural proof validation recomputes the Badge CSS blob and live verification requires all five visible tone markers without adding interaction semantics.
 
 ## Slice 11: `core.alert`
 
-`core.alert` is now implemented as a CSS-only prominent inline message/callout primitive. It remains a static message surface by default, not a button, link, popup, toast controller, notification queue, or live region.
+`core.alert` is now a public-proof CSS-only prominent inline message/callout primitive. It remains a static message surface by default, not a button, link, popup, toast controller, notification queue, or live region.
 
 The core semantic correction remains explicit in implementation: a visual Alert does not automatically receive `role="alert"`. `role="alert"` represents an assertive announcement contract for important time-sensitive content that is dynamically introduced or changed, so announcement urgency remains composition-owned rather than inferred from red styling or an Alert component name. `role="status"`, `aria-live`, and other live-region choices are likewise opt-in composition semantics.
 
 The implemented tone model is `neutral`, `info`, `success`, `warning`, and `error`. Tone is message presentation, not interaction or lifecycle state, and color cannot be the sole carrier of meaning. Foundry therefore gives every example explicit tone/title text plus readable body copy.
 
-Alert reuses the existing grouped-surface spacing, border, radius, resting-depth, typography, and semantic state-color roles. Rivet Light scope now includes `core.alert`, but the exact dependency union requires zero new token contracts and zero new Theme values. Existing values remain unchanged: 1rem logical surface padding, a 3px surface border, 6px radius, 5px resting depth, strong weight 800, and the established info/success/warning/error colors.
+Alert reuses the existing grouped-surface spacing, border, radius, resting-depth, typography, and semantic state-color roles. Rivet Light scope includes `core.alert`, but the exact dependency union requires zero new token contracts and zero new Theme values. Existing values remain unchanged: 1rem logical surface padding, a 3px surface border, 6px radius, 5px resting depth, strong weight 800, and the established info/success/warning/error colors.
 
 The canonical Web implementation is `packages/adapters/web/components/alert.css`. It has no JavaScript binder, hover/active/focus selectors, press translation, focus ring, pointer cursor, or state synchronization. `transform: none` and `transition: none` keep the container physically stable through pointer proximity and direct contact while structural resting depth remains constant.
 
@@ -162,4 +162,4 @@ Dismissal, timers, stacking, insertion/removal motion, persistence, notification
 
 Pinned Soft explicitly classifies alerts as Core, provides stable icon/title/body and semantic-tone styling, and applies `role="alert"` only to its danger tone—useful evidence that visual treatment and announcement behavior are separable. Pinned Rivet provides Alert/title/description anatomy and default/destructive presentation, but its unconditional `role="alert"` is not adopted as a default because live announcement is a semantic decision rather than a visual variant. Both implementation sources remain reference-only; no legacy source code is copied.
 
-Registry maturity is `implemented`, with implementation evidence bound to `packages/adapters/web/components/alert.css` and `publicProof: null`. Public-proof promotion remains blocked until this exact implementation is merged, the merged-main 60-test browser artifact is deployed without rebuilding, native Pages succeeds, and the singleton public-proof cohort is refreshed and verified over live HTTPS.
+Registry maturity is `public-proof`, with implementation evidence bound to `packages/adapters/web/components/alert.css` and canonical proof `evidence/public/core.alert.json`. Its singleton cohort binds source `5566f1812a34c3820757fad7b476a7185b24bd7b`, merged-main Quality run `34647019377`, browser artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, deployment tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`; live verification requires all five Alert tone markers plus the explicit no-implicit-live-region copy.
