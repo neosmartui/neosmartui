@@ -68,10 +68,14 @@ Its current public proof is bound to the same exact-SHA GitHub Pages deployment 
 
 ## Slice 6: `core.tabs`
 
-`core.tabs` introduces a composite peer-panel navigation primitive at `contract-only` maturity. It owns the tablist/tab/tabpanel relationship, one-selected-panel state, roving focus model, orientation-aware keyboard navigation, activation mode, and tactile trigger behavior without importing routing or business-domain semantics.
+`core.tabs` is a composite peer-panel navigation primitive with a canonical NeoSmartUI Web adapter at `implemented` maturity. It owns the tablist/tab/tabpanel relationship, one-selected-panel state, roving focus model, orientation-aware keyboard navigation, activation mode, and tactile trigger behavior without importing routing or business-domain semantics.
 
-Horizontal navigation follows logical inline direction so next/previous reverses the physical Left/Right mapping under RTL; vertical sets use Down/Up. Home/End target the first/last enabled tab, disabled tabs are skipped, and only one enabled tab participates in the page Tab order. Automatic activation is allowed only for effectively immediate local panels; manual activation keeps focus movement separate from selection until Space/Enter.
+The adapter supports both explicit activation modes. Automatic horizontal Tabs move focus and selection together, while manual vertical Tabs allow Arrow/Home/End focus movement without changing selection until Space/Enter. Disabled tabs are skipped, only one enabled tab participates in the page Tab order, and every controlled panel remains linked through `aria-controls`/`aria-labelledby`.
 
-The family interaction law is distinct from ordinary buttons: tab triggers may compress on contact, but the persistent selected tab should feel seated/locked into its rail rather than elevated. Selected state remains legible after press feedback ends, while focus-visible remains independently visible.
+Horizontal navigation follows logical inline direction so next/previous reverses the physical Left/Right mapping under RTL; vertical sets use Down/Up. Home/End target the first/last enabled tab. Normal Tab leaves the composite rather than cycling through peer tabs.
 
-Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package includes a keyboard-complete RTL-aware Tabs implementation used as reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet implementation provenance is claimed. Adapter, Theme scope, Foundry runtime, and public proof remain future promotion steps.
+The family interaction law is distinct from ordinary buttons: unselected tab triggers compress toward the surface on contact, while the persistent selected tab remains seated/locked at active depth instead of rising above peers. Selected state remains legible after press feedback ends, and focus-visible stays independently visible.
+
+Rivet Light resolution now includes `core.tabs` and adds only the three semantic roles that were previously absent from the exact dependency union: `color.surface.panel`, `font.size.label`, and `font.weight.emphasis`. Their values reuse visual decisions already present in the Foundry rather than introducing new arbitrary Theme choices.
+
+Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed. Public proof remains null until the exact green merged-main Foundry artifact is deployed and live-verified.
