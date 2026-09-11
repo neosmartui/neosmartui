@@ -33,6 +33,11 @@ const resolvedColor = async (page, token) => page.evaluate((name) => {
   return color;
 }, token);
 
+const resolvedNumber = async (page, token) => page.evaluate((name) => {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  return Number(raw);
+}, token);
+
 test.beforeAll(async () => {
   await mkdir(evidenceDir, { recursive: true });
 });
@@ -110,9 +115,9 @@ test('core.checkbox keyboard focus, invalid, and disabled states remain explicit
   await checkbox.evaluate((element) => element.setAttribute('aria-invalid', 'true'));
   await expect.poll(async () => (await visualState(checkbox)).borderColor, { timeout: 500 }).toBe(expectedErrorBorder);
 
+  const expectedDisabledOpacity = await resolvedNumber(page, '--ns-opacity-disabled');
   await checkbox.evaluate((element) => { element.disabled = true; });
-  const disabled = await visualState(checkbox);
-  expect(Number.parseFloat(disabled.opacity)).toBeLessThan(1);
+  await expect.poll(async () => Number.parseFloat((await visualState(checkbox)).opacity), { timeout: 500 }).toBeCloseTo(expectedDisabledOpacity, 3);
   await page.screenshot({ path: `${evidenceDir}/core-checkbox-focus-invalid-disabled.png`, fullPage: true });
 });
 
