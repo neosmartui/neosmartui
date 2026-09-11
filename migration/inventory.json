@@ -142,6 +142,24 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use as implementation knowledge evidence for native input, focus, invalid, and disabled behavior only; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.radio-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt explicit radio contact-compression, immediate-selection, keyboard, touch, and reduced-motion family laws into the clean core.radio contract."
+    },
+    {
+      "id": "legacy.soft.radio-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the documented radio/choice-card capability only as evidence that mutually-exclusive choice belongs in reusable Core; no legacy implementation code is copied."
     }
   ]
 }
