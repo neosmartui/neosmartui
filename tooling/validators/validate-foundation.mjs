@@ -39,11 +39,11 @@ const expectedSources = new Map([
   ['NeoBrutalism-shop/NeoBrutal-Commerce', '24563484a9993c6c994f24114dc7956d3b93f694'],
   ['NeoBrutalRivet/NeoBrutal-Rivet', 'bb4b641d35bc77c958b7345a3b7c0a134c7d802d']
 ]);
-if (!Array.isArray(inventory.sources) || inventory.sources.length !== expectedSources.size) throw new Error('Migration inventory must pin exactly the four initial legacy sources in this foundation slice.');
+if (!Array.isArray(inventory.sources) || inventory.sources.length !== expectedSources.size) throw new Error('Migration inventory must pin exactly the four initial legacy sources.');
 for (const source of inventory.sources) {
   if (source.branch !== 'main' || source.sha !== expectedSources.get(source.repository)) throw new Error(`Unexpected legacy source pin: ${source.repository}@${source.sha}`);
 }
-if (!Array.isArray(inventory.artifacts) || inventory.artifacts.length !== 0) throw new Error('PR 01 must not pre-classify legacy artifacts before inventory tooling and destination contracts are established.');
+if (!Array.isArray(inventory.artifacts)) throw new Error('Migration inventory artifacts must be an array.');
 
 const cname = (await readFile(resolve(root, 'apps/foundry/public/CNAME'), 'utf8')).trim();
 if (cname !== 'neosmartui.com') throw new Error(`Unexpected Foundry CNAME: ${cname}`);
