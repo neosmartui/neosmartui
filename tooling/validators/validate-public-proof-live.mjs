@@ -16,7 +16,8 @@ const liveMarkers = new Map([
   ['core.select', ['NeoSmartUI Foundry', 'core.select', 'Native single-select choice', 'browser/OS option popup']],
   ['core.card', ['NeoSmartUI Foundry', 'core.card', 'Stable informational surface', 'Grouped content, not a disguised button.', 'Resting depth is structure, not hover affordance.']],
   ['core.badge', ['NeoSmartUI Foundry', 'core.badge', 'Badge tone examples', 'Neutral metadata', 'Info · Reference', 'Success · Ready', 'Warning · Needs attention', 'Error · Failed']],
-  ['core.alert', ['NeoSmartUI Foundry', 'core.alert', 'Alert tone examples', 'Neutral · Note', 'Static message surface; no implicit live region.', 'Info · Update', 'Success · Complete', 'Warning · Check this', 'Error · Needs correction']]
+  ['core.alert', ['NeoSmartUI Foundry', 'core.alert', 'Alert tone examples', 'Neutral · Note', 'Static message surface; no implicit live region.', 'Info · Update', 'Success · Complete', 'Warning · Check this', 'Error · Needs correction']],
+  ['core.field', ['NeoSmartUI Foundry', 'core.field', 'Email address', 'This invite code has expired. Request a new code.', 'The disabled state belongs to the real control, not the Field container.']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {
