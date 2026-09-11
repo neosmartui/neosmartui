@@ -3,77 +3,13 @@
   "schema": "neosmartui/component-registry@1",
   "domain": "core",
   "components": [
-    {
-      "id": "core.button",
-      "contract": "components/button.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/button.mjs",
-        "publicProof": "evidence/public/core.button.json"
-      }
-    },
-    {
-      "id": "core.checkbox",
-      "contract": "components/checkbox.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/checkbox.mjs",
-        "publicProof": "evidence/public/core.checkbox.json"
-      }
-    },
-    {
-      "id": "core.input",
-      "contract": "components/input.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/input.mjs",
-        "publicProof": "evidence/public/core.input.json"
-      }
-    },
-    {
-      "id": "core.radio",
-      "contract": "components/radio.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/radio.mjs",
-        "publicProof": "evidence/public/core.radio.json"
-      }
-    },
-    {
-      "id": "core.switch",
-      "contract": "components/switch.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/switch.mjs",
-        "publicProof": "evidence/public/core.switch.json"
-      }
-    },
-    {
-      "id": "core.tabs",
-      "contract": "components/tabs.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/tabs.mjs",
-        "publicProof": "evidence/public/core.tabs.json"
-      }
-    },
-    {
-      "id": "core.textarea",
-      "contract": "components/textarea.json",
-      "maturity": "public-proof",
-      "evidence": {
-        "implementation": "packages/adapters/web/components/textarea.mjs",
-        "publicProof": "evidence/public/core.textarea.json"
-      }
-    },
-    {
-      "id": "core.select",
-      "contract": "components/select.json",
-      "maturity": "contract-only",
-      "evidence": {
-        "implementation": null,
-        "publicProof": null
-      }
-    }
+    {"id":"core.button","contract":"components/button.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/button.mjs","publicProof":"evidence/public/core.button.json"}},
+    {"id":"core.checkbox","contract":"components/checkbox.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/checkbox.mjs","publicProof":"evidence/public/core.checkbox.json"}},
+    {"id":"core.input","contract":"components/input.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/input.mjs","publicProof":"evidence/public/core.input.json"}},
+    {"id":"core.radio","contract":"components/radio.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/radio.mjs","publicProof":"evidence/public/core.radio.json"}},
+    {"id":"core.switch","contract":"components/switch.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/switch.mjs","publicProof":"evidence/public/core.switch.json"}},
+    {"id":"core.tabs","contract":"components/tabs.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/tabs.mjs","publicProof":"evidence/public/core.tabs.json"}},
+    {"id":"core.textarea","contract":"components/textarea.json","maturity":"public-proof","evidence":{"implementation":"packages/adapters/web/components/textarea.mjs","publicProof":"evidence/public/core.textarea.json"}},
+    {"id":"core.select","contract":"components/select.json","maturity":"implemented","evidence":{"implementation":"packages/adapters/web/components/select.mjs","publicProof":null}}
   ]
 }
