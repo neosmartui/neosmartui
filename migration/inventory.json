@@ -241,6 +241,33 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use the explicit reusable select Core listing as capability/state-resilience evidence only; no legacy implementation code is copied and no nonexistent Rivet select artifact is claimed."
+    },
+    {
+      "id": "legacy.spec.card-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt the explicit family rule that informational cards remain stable and only cards with real action/navigation semantics may react to hover or press."
+    },
+    {
+      "id": "legacy.soft.card-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the documented Card Core capability and presentation variants as knowledge evidence while keeping generic core.card informational and non-interactive."
+    },
+    {
+      "id": "legacy.rivet.card-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/card.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use generic Card anatomy as implementation knowledge only; repository metadata declares no license, so no source code is copied into NeoSmartUI."
     }
   ]
 }
