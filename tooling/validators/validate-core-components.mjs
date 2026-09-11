@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 7) fail('seventh Core slice must contain exactly seven honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 8) fail('eighth Core slice must contain exactly eight honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -91,6 +91,18 @@ for (const marker of ['export function syncTextareaState', 'export function bind
 
 const textareaDocs = await readFile(resolve(root, 'packages/core/components/textarea.md'), 'utf8');
 for (const marker of ['real native `<textarea>`', 'interactive, not pressable', 'line breaks', 'Core MUST NOT globally disable resize', 'No textarea-specific Rivet implementation artifact is claimed', 'Maturity is `public-proof`']) if (!textareaDocs.includes(marker)) fail(`textarea.md missing marker: ${marker}`);
+
+const select = await readJson(resolve(root, 'packages/core/components/select.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'selected', 'invalid', 'disabled']) if (!select.states.includes(state)) fail(`core.select missing state ${state}`);
+for (const forbiddenState of ['open', 'read-only', 'loading']) if (select.states.includes(forbiddenState)) fail(`core.select must not invent unsupported state ${forbiddenState}`);
+for (const token of ['color.surface.interactive', 'color.content.primary', 'color.content.secondary', 'color.border.default', 'color.border.strong', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring', 'opacity.disabled', 'font.family.body']) if (!select.dependencies.includes(token)) fail(`core.select missing semantic/tactile token ${token}`);
+
+const selectEntry = registry.components.find((entry) => entry.id === 'core.select');
+if (!selectEntry || selectEntry.maturity !== 'contract-only') fail('core.select must remain contract-only in this slice');
+if (selectEntry.evidence.implementation !== null || selectEntry.evidence.publicProof !== null) fail('contract-only core.select must not claim implementation or public proof');
+
+const selectDocs = await readFile(resolve(root, 'packages/core/components/select.md'), 'utf8');
+for (const marker of ['real native single-select `<select>`', '`multiple` absent/false', 'contract intentionally does not invent a portable `open` state', 'collapsed single-select is a choice trigger', 'HTML has no native select `placeholder` attribute', 'No select-specific Rivet implementation artifact is claimed', 'Maturity is `contract-only`']) if (!selectDocs.includes(marker)) fail(`select.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
