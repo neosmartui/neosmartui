@@ -71,6 +71,8 @@ jobs:
           test ! -e dist/foundry/field.mjs
           test -f dist/foundry/breadcrumb.css
           test ! -e dist/foundry/breadcrumb.mjs
+          test -f dist/foundry/pagination.css
+          test ! -e dist/foundry/pagination.mjs
           test -f dist/foundry/deployment.json
           test ! -e dist/foundry/CNAME
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
@@ -132,6 +134,9 @@ jobs:
           grep -q "core.breadcrumb" dist/foundry/index.html
           grep -q "Ancestor locations stay native links" dist/foundry/index.html
           grep -q 'aria-current="page"' dist/foundry/index.html
+          grep -q "core.pagination" dist/foundry/index.html
+          grep -q "Pagination keeps page destinations as native links with 44px tactile targets." dist/foundry/index.html
+          grep -q 'aria-label="Next page"' dist/foundry/index.html
           node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/foundry/deployment.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA) throw new Error('deployment source SHA mismatch')"
 
   browser:

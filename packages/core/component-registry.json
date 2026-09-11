@@ -123,9 +123,9 @@
     {
       "id": "core.pagination",
       "contract": "components/pagination.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/pagination.css",
         "publicProof": null
       }
     }

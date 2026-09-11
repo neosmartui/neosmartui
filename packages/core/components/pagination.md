@@ -82,7 +82,15 @@ Pagination introduces no new token contracts. It deliberately combines two alrea
 
 Readable foreground, interactive surface, strong border, primary action surface/content, disabled opacity, body typography, and emphasis weight are existing roles. Reusing these roles is semantically honest because Pagination destinations are compact standalone controls, unlike Breadcrumb's inline text links.
 
-Contract-only maturity changes no Rivet Light values and does not expand the implemented dependency union. Every dependency is already resolved for existing public-proof Core components; implementation must preserve those existing values rather than introducing a pagination-specific geometry language.
+Implementation expands Rivet Light scope to `core.pagination` but changes no token value. Every dependency was already resolved by earlier public-proof Core components, so the exact implemented/public dependency union remains 55 and the token-contract count remains 63.
+
+## Web implementation
+
+The canonical Web implementation is `packages/adapters/web/components/pagination.css`. It is intentionally CSS-only: real anchors provide native destination, focus, modifier-key, context-menu, and Enter activation behavior, so no `pagination.mjs` binder exists.
+
+Reachable `.ns-pagination-link` items resolve the existing 44px minimum target, control padding/border/radius, structural resting depth, 2px hover compression, 5px active compression, focus ring, and press/release motion tokens. The current, unavailable, and passive ellipsis forms are non-interactive and explicitly keep `transform: none` and `transition: none`; they do not borrow tactile affordance from reachable links.
+
+Foundry renders one labelled Pagination navigation region with a non-operable previous boundary, real page links, one non-focusable `aria-current="page"` item, a passive hidden ellipsis, and a real Next destination. Five additive Chromium cases cover semantic anatomy and exact 44px targets, native Tab/Enter behavior without roving focus, exact pressure compression only on reachable links, RTL plus long-label wrapping, and reduced-motion/forced-colors resilience. The existing 70 browser cases remain unchanged, for 75 total.
 
 ## Migration knowledge provenance
 
@@ -95,4 +103,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `contract-only`. No Web implementation, Theme scope/value change, Foundry example, browser test, or public-proof claim exists in this slice. All 13 existing public-proof records remain untouched until Pagination separately passes implementation and deployment lifecycle gates.
+Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/pagination.css`; public proof remains null until the exact merged-main Foundry artifact is deployed and the singleton proof cohort is refreshed. All 13 existing public-proof records remain untouched in this implementation slice.
