@@ -14,6 +14,7 @@ if (proven.length === 0) {
   process.exit(0);
 }
 
+let singletonCohort = null;
 for (const entry of proven) {
   if (!entry.evidence.publicProof) fail(`${entry.id} is public-proof without an evidence record`);
   const proofPath = resolve(root, entry.evidence.publicProof);
@@ -28,6 +29,15 @@ for (const entry of proven) {
   if (!Number.isInteger(proof.deployment.pagesRunId) || proof.deployment.pagesRunId < 1) fail(`${entry.id} has invalid Pages run id`);
   if (proof.live.pageUrl !== 'https://neosmartui.github.io/' || proof.live.deploymentRecordUrl !== 'https://neosmartui.github.io/deployment.json') fail(`${entry.id} must use the GitHub Pages HTTPS proof endpoints during development`);
 
+  const cohort = JSON.stringify({
+    deployedSource: proof.deployedSource,
+    browserEvidence: proof.browserEvidence,
+    deployment: proof.deployment,
+    live: proof.live
+  });
+  if (singletonCohort === null) singletonCohort = cohort;
+  else if (cohort !== singletonCohort) fail(`${entry.id} proof is not bound to the singleton public-proof deployment cohort`);
+
   for (const file of proof.implementationFiles) {
     const path = resolve(root, file.path);
     const bytes = await readFile(path);
@@ -36,4 +46,4 @@ for (const entry of proven) {
   }
 }
 
-console.log(`[public-proof] validated ${proven.length} structural proof record with implementation blob binding`);
+console.log(`[public-proof] validated ${proven.length} structural proof records on one singleton deployment cohort with implementation blob binding`);
