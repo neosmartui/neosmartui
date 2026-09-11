@@ -4,7 +4,7 @@
 
 ## Semantic boundary
 
-The default Badge is non-interactive. A neutral host such as `<span>` is appropriate when the Badge is only visible metadata. Core MUST NOT add `tabindex`, `role="button"`, click handlers, keyboard activation, or link semantics to a Badge just to make a pill-shaped element feel interactive.
+The default `span` host is non-interactive and is appropriate when the Badge is only visible metadata. Core MUST NOT add `tabindex`, `role="button"`, click handlers, keyboard activation, or link semantics to a Badge just to make a pill-shaped element feel interactive.
 
 If the compact label truly navigates or performs an action, composition must use a real link/button semantic or a separately contracted interactive capability. Styling an `<a>` or `<button>` to resemble a Badge does not change the fact that the link/button component owns activation, focus, disabled behavior, and pressure physics.
 
