@@ -127,3 +127,17 @@ Card preserves a permanent token-model distinction: a grouped content surface is
 Foundry renders the Card as a semantic `<article>` chosen by the demo's document meaning, not by the primitive itself. The demo contains no whole-card interactive role or tab stop. Dedicated Chromium QA verifies token-backed geometry, stable hover/contact depth, RTL and long-content wrapping, zero-motion reduced-motion behavior, and a visible forced-colors boundary without making the Card focusable.
 
 Its public proof is bound to the same singleton cohort as the other eight public Core primitives: merged source `75449935bccead3173e8b2879f4a398b6df111c0`, Quality run `34637337995`, browser artifact `10278097590`, deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and Pages run `34638732835`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
+
+## Slice 10: `core.badge`
+
+`core.badge` starts as a contract-only compact informational metadata/status primitive. The default semantic host is neutral content such as a `span`; the Badge itself has no link/button role, tab stop, pointer activation, keyboard activation, selection model, or disabled state.
+
+Badge explicitly does not default to ARIA `role="status"`. That role creates a live region and is appropriate only when composition has a meaningful dynamic update to announce. Static labels such as `Active`, `Beta`, or a category/count remain ordinary text unless their surrounding workflow requires separate live-region semantics.
+
+The tone model is `neutral`, `info`, `success`, `warning`, and `error`. Tone is semantic presentation, not interaction state, and color cannot be the only carrier of meaning. Core therefore depends on the existing state-color roles plus readable foreground roles while keeping business-status calculation outside the primitive.
+
+Badge also creates a permanent geometry distinction: compact annotation surfaces are neither controls nor Cards. Slice 10 adds value-free `space.annotation.inline`, `space.annotation.block`, `border.annotation.width`, and `radius.annotation` roles rather than borrowing control or grouped-surface spacing/geometry. No Rivet Light values are added at contract-only maturity.
+
+Pinned Soft explicitly lists `Badge/status` among reusable Core primitives. Pinned Rivet's `badge.tsx` uses a neutral `span` by default and limits hover behavior to anchor-host usage, reinforcing that interaction belongs to an actual semantic link rather than to the Badge shape. The Rivet snapshot has no declared license metadata, so its implementation remains reference-only knowledge and no source code is copied.
+
+The future canonical implementation must remain motionless when informational, preserve readable non-color status meaning, avoid implicit focusability/live-region semantics, support logical RTL layout and long localization, and preserve a visible/readable boundary in forced-colors mode.

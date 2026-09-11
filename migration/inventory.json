@@ -268,6 +268,33 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use generic Card anatomy as implementation knowledge only; repository metadata declares no license, so no source code is copied into NeoSmartUI."
+    },
+    {
+      "id": "legacy.spec.badge-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared no-hover-lift, static-surface, semantic-token, accessibility, reduced-motion, RTL, and agent-readable laws into a non-interactive core.badge contract."
+    },
+    {
+      "id": "legacy.soft.badge-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Badge/status Core listing as reusable capability and state-resilience evidence; keep business status calculation outside Core."
+    },
+    {
+      "id": "legacy.rivet.badge-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/badge.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the default span host and anchor-only hover treatment as semantic-boundary implementation knowledge only; repository metadata declares no license, so no source code is copied."
     }
   ]
 }

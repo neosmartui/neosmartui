@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 9) fail('ninth Core slice must contain exactly nine honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 10) fail('tenth Core slice must contain exactly ten honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -112,6 +112,17 @@ for (const marker of ['padding-block: var(--ns-space-surface-block)', 'padding-i
 for (const forbiddenSelector of [':hover', ':active', ':focus', ':focus-visible']) if (cardCss.includes(forbiddenSelector)) fail(`card.css must not invent interactive selector ${forbiddenSelector}`);
 const cardDocs = await readFile(resolve(root, 'packages/core/components/card.md'), 'utf8');
 for (const marker of ['informational by default', 'MUST NOT become clickable', 'informational cards remain stable', 'intentionally CSS-only', 'MUST NOT borrow `border.control.width`, `radius.control`', 'no source code is copied', 'Maturity is `public-proof`']) if (!cardDocs.includes(marker)) fail(`card.md missing marker: ${marker}`);
+
+const badge = await readJson(resolve(root, 'packages/core/components/badge.json'));
+const badgeStates = new Set(['rest', 'neutral', 'info', 'success', 'warning', 'error']);
+if (badge.states.length !== badgeStates.size || !badge.states.every((state) => badgeStates.has(state))) fail('core.badge must expose exactly rest plus neutral/info/success/warning/error tone states');
+for (const token of ['color.surface.panel', 'color.content.primary', 'color.content.inverse', 'color.border.strong', 'color.state.info', 'color.state.success', 'color.state.warning', 'color.state.error', 'space.annotation.inline', 'space.annotation.block', 'border.annotation.width', 'radius.annotation', 'font.family.body', 'font.size.label', 'font.weight.emphasis']) if (!badge.dependencies.includes(token)) fail(`core.badge missing semantic annotation token ${token}`);
+for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'border.control.width', 'radius.control', 'size.control.minimum', 'space.surface.inline', 'space.surface.block', 'border.surface.width', 'radius.surface', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.action.primary.surface', 'color.focus.ring', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled']) if (badge.dependencies.includes(forbiddenToken)) fail(`core.badge informational contract must not borrow control/surface/interaction token ${forbiddenToken}`);
+const badgeEntry = registry.components.find((entry) => entry.id === 'core.badge');
+if (!badgeEntry || badgeEntry.maturity !== 'contract-only') fail('core.badge must remain contract-only in this slice');
+if (badgeEntry.evidence.implementation !== null || badgeEntry.evidence.publicProof !== null) fail('core.badge contract-only evidence must remain null');
+const badgeDocs = await readFile(resolve(root, 'packages/core/components/badge.md'), 'utf8');
+for (const marker of ['default Badge is non-interactive', '`role="status"` is also NOT the Badge default', 'Tone MUST NOT be the sole carrier of meaning', 'MUST NOT borrow `space.control.*`', 'default `span` host', 'no source code is copied', 'Maturity is `contract-only`']) if (!badgeDocs.includes(marker)) fail(`badge.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);

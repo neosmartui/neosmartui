@@ -83,6 +83,15 @@
         "implementation": "packages/adapters/web/components/card.css",
         "publicProof": "evidence/public/core.card.json"
       }
+    },
+    {
+      "id": "core.badge",
+      "contract": "components/badge.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
