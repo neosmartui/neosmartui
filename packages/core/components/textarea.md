@@ -69,4 +69,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `contract-only`. No Web adapter, Theme-resolution expansion, Foundry runtime, browser evidence, or public proof is claimed until matching NeoSmartUI-owned implementation evidence exists.
+Maturity is `implemented`: the canonical NeoSmartUI Web adapter preserves the native textarea and mirrors only empty/filled state metadata, Rivet Light resolves the component through the existing field-token dependency set without adding new token values, and the Foundry renders the multiline editing surface. Public proof remains null until a green merged-main artifact is deployed and live-verified.
