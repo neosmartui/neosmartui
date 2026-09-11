@@ -20,6 +20,8 @@ jobs:
         run: npm run validate:foundation
       - name: Validate Spec architecture and taxonomy
         run: npm run validate:spec
+      - name: Validate schemas and stable IDs
+        run: npm run validate:schemas
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files
