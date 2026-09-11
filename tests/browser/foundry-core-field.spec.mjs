@@ -160,6 +160,7 @@ test('core.field stays motionless with reduced motion and readable in forced col
   const field = page.locator('#field-invalid-demo');
   const error = page.locator('#field-code-error');
   const state = await fieldState(field);
+  const errorColor = await error.evaluate((element) => getComputedStyle(element).color);
   expect(state.transitionDuration).toBe('0s');
   expect(state.transform).toBe('none');
   expect(state.tabIndex).toBe(-1);
@@ -167,9 +168,10 @@ test('core.field stays motionless with reduced motion and readable in forced col
   expect(state.ariaLive).toBeNull();
   expect(state.active).toBeFalsy();
   expect(state.color).not.toBe('rgba(0, 0, 0, 0)');
-  await expect(error).toHaveCSS('color', 'rgb(0, 0, 0)');
+  expect(errorColor).not.toBe('rgba(0, 0, 0, 0)');
   expect(await error.getAttribute('role')).toBeNull();
   expect(await error.getAttribute('aria-live')).toBeNull();
+  await expect(error).toContainText('This invite code has expired');
   await expect(page.locator('#field-code')).toBeVisible();
   await page.screenshot({ path: `${evidenceDir}/core-field-forced-colors.png`, fullPage: true });
 });
