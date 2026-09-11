@@ -64,12 +64,16 @@ if (px(values.get('size.control.minimum')) < 44) fail('size.control.minimum must
 const buttonEntry = registry.components.find((entry) => entry.id === 'core.button');
 if (!buttonEntry || buttonEntry.maturity !== 'public-proof' || !buttonEntry.evidence.publicProof) fail('core.button must retain public-proof maturity and evidence');
 const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
-if (!checkboxEntry || !['implemented', 'public-proof'].includes(checkboxEntry.maturity)) fail('core.checkbox must be at least implemented');
-if (checkboxEntry.maturity === 'implemented' && checkboxEntry.evidence.publicProof !== null) fail('implemented core.checkbox must not claim public proof');
-if (checkboxEntry.maturity === 'public-proof' && checkboxEntry.evidence.publicProof !== 'evidence/public/core.checkbox.json') fail('public-proof core.checkbox must bind its canonical proof record');
+if (!checkboxEntry || checkboxEntry.maturity !== 'public-proof' || checkboxEntry.evidence.publicProof !== 'evidence/public/core.checkbox.json') fail('core.checkbox must retain public-proof maturity and evidence');
+const inputEntry = registry.components.find((entry) => entry.id === 'core.input');
+if (!inputEntry || !['implemented', 'public-proof'].includes(inputEntry.maturity)) fail('core.input must be at least implemented');
+if (inputEntry.evidence.implementation !== 'packages/adapters/web/components/input.mjs') fail('core.input must bind the canonical Web adapter');
+if (inputEntry.maturity === 'implemented' && inputEntry.evidence.publicProof !== null) fail('implemented core.input must not claim public proof');
+if (inputEntry.maturity === 'public-proof' && inputEntry.evidence.publicProof !== 'evidence/public/core.input.json') fail('public-proof core.input must bind its canonical proof record');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
 if (!css.includes('--ns-depth-hover-y: 3px;') || !css.includes('--ns-press-active-y: 5px;')) fail('generated CSS does not preserve expected pressure model');
+if (!css.includes('--ns-motion-standard-duration: 160ms;') || !css.includes('--ns-font-size-body: 1rem;')) fail('generated CSS does not include the Rivet Light input state/typography roles');
 
 console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);

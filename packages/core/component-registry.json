@@ -24,9 +24,9 @@
     {
       "id": "core.input",
       "contract": "components/input.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/input.mjs",
         "publicProof": null
       }
     }
