@@ -58,4 +58,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 - Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists `radio/choice card` among reusable Core primitives and applies the full conformance state/resilience gate.
 - No radio-specific Rivet implementation artifact is claimed for the pinned Rivet snapshot; provenance is intentionally limited to evidence actually present in the reviewed snapshots.
 
-Maturity remains `contract-only` until NeoSmartUI-owned implementation evidence exists.
+Maturity is `implemented` through the NeoSmartUI-owned native Web adapter. `public-proof` remains unavailable until exact-SHA browser evidence is deployed and live-verified.

@@ -80,8 +80,10 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', '
 for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!radio.dependencies.includes(token)) fail(`core.radio missing semantic/tactile token ${token}`);
 
 const radioEntry = registry.components.find((entry) => entry.id === 'core.radio');
-if (!radioEntry || radioEntry.maturity !== 'contract-only') fail('core.radio must remain contract-only in this slice');
-if (radioEntry.evidence.implementation !== null || radioEntry.evidence.publicProof !== null) fail('core.radio contract-only evidence must remain null');
+if (!radioEntry || radioEntry.maturity !== 'implemented') fail('core.radio must be implemented in this slice');
+if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/radio.mjs') fail('core.radio implementation evidence must bind the canonical Web adapter');
+if (radioEntry.evidence.publicProof !== null) fail('core.radio must not claim public proof before deployed evidence exists');
+await access(resolve(root, 'packages/adapters/web/components/radio.css'));
 
 const radioDocs = await readFile(resolve(root, 'packages/core/components/radio.md'), 'utf8');
 for (const marker of ['real native `<input type="radio">`', 'mutually-exclusive', 'MUST NOT emulate independent checkbox behavior', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied', 'No radio-specific Rivet implementation artifact is claimed']) if (!radioDocs.includes(marker)) fail(`radio.md missing marker: ${marker}`);

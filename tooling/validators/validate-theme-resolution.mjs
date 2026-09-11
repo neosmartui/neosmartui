@@ -66,10 +66,10 @@ if (!buttonEntry || buttonEntry.maturity !== 'public-proof' || !buttonEntry.evid
 const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
 if (!checkboxEntry || checkboxEntry.maturity !== 'public-proof' || checkboxEntry.evidence.publicProof !== 'evidence/public/core.checkbox.json') fail('core.checkbox must retain public-proof maturity and evidence');
 const inputEntry = registry.components.find((entry) => entry.id === 'core.input');
-if (!inputEntry || !['implemented', 'public-proof'].includes(inputEntry.maturity)) fail('core.input must be at least implemented');
-if (inputEntry.evidence.implementation !== 'packages/adapters/web/components/input.mjs') fail('core.input must bind the canonical Web adapter');
-if (inputEntry.maturity === 'implemented' && inputEntry.evidence.publicProof !== null) fail('implemented core.input must not claim public proof');
-if (inputEntry.maturity === 'public-proof' && inputEntry.evidence.publicProof !== 'evidence/public/core.input.json') fail('public-proof core.input must bind its canonical proof record');
+if (!inputEntry || inputEntry.maturity !== 'public-proof' || inputEntry.evidence.publicProof !== 'evidence/public/core.input.json') fail('core.input must retain public-proof maturity and evidence');
+const radioEntry = registry.components.find((entry) => entry.id === 'core.radio');
+if (!radioEntry || radioEntry.maturity !== 'implemented') fail('core.radio must be implemented without public proof in this slice');
+if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/radio.mjs' || radioEntry.evidence.publicProof !== null) fail('core.radio must bind the canonical Web adapter without claiming public proof');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
