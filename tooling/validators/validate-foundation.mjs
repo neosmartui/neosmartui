@@ -11,8 +11,7 @@ const required = [
   'README.md',
   'migration/inventory.json',
   'migration/inventory.schema.json',
-  'apps/foundry/src/index.html',
-  'apps/foundry/public/CNAME'
+  'apps/foundry/src/index.html'
 ];
 for (const file of required) await access(resolve(root, file));
 
@@ -45,7 +44,8 @@ for (const source of inventory.sources) {
 }
 if (!Array.isArray(inventory.artifacts)) throw new Error('Migration inventory artifacts must be an array.');
 
-const cname = (await readFile(resolve(root, 'apps/foundry/public/CNAME'), 'utf8')).trim();
-if (cname !== 'neosmartui.com') throw new Error(`Unexpected Foundry CNAME: ${cname}`);
+const deploymentDoc = await readFile(resolve(root, 'docs/FOUNDRY-DEPLOYMENT.md'), 'utf8');
+if (!deploymentDoc.includes('https://neosmartui.github.io/')) throw new Error('Foundry deployment contract must name the GitHub Pages host.');
+if (!deploymentDoc.includes('Custom domain is deferred')) throw new Error('Foundry deployment contract must explicitly defer custom-domain hosting.');
 
-console.log('Foundation validation passed. Canonical PRD authority, legacy source pins, and Foundry baseline are present.');
+console.log('Foundation validation passed. Canonical PRD authority, legacy source pins, and GitHub-first Foundry baseline are present.');
