@@ -74,9 +74,8 @@ const switchEntry = registry.components.find((entry) => entry.id === 'core.switc
 if (!switchEntry || switchEntry.maturity !== 'public-proof' || switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('core.switch must bind current public-proof evidence');
 if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch must retain the canonical Web adapter');
 const tabsEntry = registry.components.find((entry) => entry.id === 'core.tabs');
-if (!tabsEntry || tabsEntry.maturity !== 'implemented') fail('core.tabs must be implemented in this slice');
-if (tabsEntry.evidence.implementation !== 'packages/adapters/web/components/tabs.mjs') fail('core.tabs must bind the canonical Web adapter');
-if (tabsEntry.evidence.publicProof !== null) fail('implemented core.tabs must not claim public proof before deployment verification');
+if (!tabsEntry || tabsEntry.maturity !== 'public-proof' || tabsEntry.evidence.publicProof !== 'evidence/public/core.tabs.json') fail('core.tabs must bind current public-proof evidence');
+if (tabsEntry.evidence.implementation !== 'packages/adapters/web/components/tabs.mjs') fail('core.tabs must retain the canonical Web adapter');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
