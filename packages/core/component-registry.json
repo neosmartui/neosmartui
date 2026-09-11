@@ -60,9 +60,9 @@
     {
       "id": "core.textarea",
       "contract": "components/textarea.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/textarea.mjs",
         "publicProof": null
       }
     }
