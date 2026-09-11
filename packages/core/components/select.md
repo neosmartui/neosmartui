@@ -8,7 +8,7 @@ The canonical Web implementation MUST preserve a real native single-select `<sel
 
 A multi-select/listbox, searchable combobox, autocomplete, command palette, custom menu/listbox popup, async option loader, cascading picker, label, help text, validation message, or form layout is a different capability or higher-level composition and MUST NOT be smuggled into `core.select`.
 
-Native `<option>` and `<optgroup>` semantics remain authoritative. The selected option and the select's native value are the source of truth; agent-readable metadata MAY mirror them later but MUST NOT replace browser selection behavior.
+Native `<option>` and `<optgroup>` semantics remain authoritative. The selected option and the select's native value are the source of truth; the Web adapter mirrors only selected value/index metadata and MUST NOT replace browser selection behavior.
 
 ## State model
 
@@ -24,15 +24,15 @@ The contract intentionally does not invent a portable `open` state. Browser/OS-n
 
 ## Interaction law: pressure, not levitation
 
-Unlike `core.input` and `core.textarea`, a collapsed single-select is a choice trigger rather than a text-editing surface. Direct pointer/touch contact SHOULD follow the family pressure model: rest depth reduces on hover/contact, press moves toward the surface, and release restores structural depth. Apparent elevation MUST NOT increase on hover.
+Unlike `core.input` and `core.textarea`, a collapsed single-select is a choice trigger rather than a text-editing surface. Direct pointer/touch contact follows the family pressure model: rest depth reduces on hover/contact, press moves toward the surface, and release restores structural depth. Apparent elevation MUST NOT increase on hover.
 
 The platform-owned option popup is not a lifted NeoSmartUI surface and MUST NOT be reimplemented in this primitive. Tactile feedback belongs to the collapsed trigger only; the browser/OS continues to own popup presentation and option interaction.
 
-Keyboard-triggered selection/opening MUST preserve native platform behavior rather than being recreated solely to force visual pressure timing. When the platform exposes an active state, equivalent contact acknowledgement SHOULD remain visible without delaying the native action.
+The adapter mirrors pointer contact only as visual pressed metadata and never calls `preventDefault()` or synthesizes popup behavior. Keyboard-triggered selection/opening therefore preserves native platform behavior instead of being recreated solely to force pressure timing.
 
 ## Native choice contract
 
-The future Web adapter MUST preserve native option selection, form participation, `name`, `required`, `disabled`, `autocomplete`, `value`, `<option disabled>`, `<optgroup>`, and browser/OS popup behavior.
+The Web adapter preserves native option selection, form participation, `name`, `required`, `disabled`, `autocomplete`, `value`, `<option disabled>`, `<optgroup>`, and browser/OS popup behavior. It rejects `multiple` controls and multi-row/listbox-style `size` values rather than silently changing their semantics.
 
 Core MUST NOT synthesize its own keyboard navigation, type-ahead buffer, focus trap, or ARIA listbox for an ordinary native select. Arrow keys, typing/type-ahead, Space/Enter behavior, Escape behavior, option navigation, and popup modality remain platform semantics.
 
@@ -53,13 +53,13 @@ The effective collapsed control size MUST meet or exceed `size.control.minimum`.
 
 ## RTL and international options
 
-Direction is inherited from composition/native browser behavior. The implementation MUST preserve browser bidi rendering, option text direction, logical alignment, and platform popup behavior rather than forcing Latin or physical-left assumptions into Core.
+Direction is inherited from composition/native browser behavior. The implementation preserves browser bidi rendering, option text direction, logical alignment, and platform popup behavior rather than forcing Latin or physical-left assumptions into Core.
 
-Long or localized selected values MUST remain readable or predictably clipped/wrapped according to platform and composition constraints without breaking the control's hit target or focus indication.
+Long or localized selected values must remain readable or predictably clipped/wrapped according to platform and composition constraints without breaking the control's hit target or focus indication.
 
 ## Reduced motion and forced colors
 
-Reduced motion removes or shortens non-essential press/release travel while preserving immediate state meaning. Forced-colors mode must retain a visible boundary, selected value, native picker affordance where the platform exposes one, and explicit keyboard focus.
+Reduced motion removes or shortens non-essential press/release travel while preserving immediate state meaning. Forced-colors mode retains a visible boundary, selected value, native picker affordance where the platform exposes one, and explicit keyboard focus.
 
 ## Migration knowledge provenance
 
@@ -71,4 +71,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `contract-only`. No Web adapter, Theme-resolution expansion, Foundry runtime, browser evidence, or public proof is claimed until matching NeoSmartUI-owned implementation evidence exists.
+Maturity is `implemented`. The canonical NeoSmartUI Web adapter, Rivet Light scope resolution, and Foundry/browser evidence are required in this slice; `publicProof` remains null until an exact merged-main artifact is published and live HTTPS verification succeeds.
