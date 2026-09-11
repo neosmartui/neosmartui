@@ -69,4 +69,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `public-proof`: the native Web adapter remains implementation-blob-bound to the same current singleton cohort as every public Core primitive—merged-main Quality run `34647019377`, artifact `10282465652`, deployment commit `f4fa654ce6dff23c8cd4ac866ba857c8fab79f5f`, tree `31f7289c8d5cafb2c27027bfe35ac1efcfd95445`, and Pages run `34647436787`. Live HTTPS verification binds `core.textarea` to source `5566f1812a34c3820757fad7b476a7185b24bd7b` while checking the canonical multiline, non-pressable, and resize markers.
+Maturity is `public-proof`: the native Web adapter remains implementation-blob-bound to the same current singleton cohort as every public Core primitive—merged-main Quality run `34650971583`, artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`. Live HTTPS verification binds `core.textarea` to source `782c853463567e2f43924b8d6f49d7a0821b360b` while checking the canonical multiline, non-pressable, and resize markers.
