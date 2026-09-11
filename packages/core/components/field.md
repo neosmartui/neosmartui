@@ -85,4 +85,4 @@ This contract and implementation are clean NeoSmartUI definitions informed by pi
 
 ## Maturity
 
-Maturity is `implemented`. The canonical Web implementation is CSS-only at `packages/adapters/web/components/field.css`; registry public-proof evidence remains null until an exact merged-main browser artifact containing this implementation is deployed and verified over live HTTPS.
+Maturity is `public-proof`. The canonical CSS-only Web implementation remains `packages/adapters/web/components/field.css`, with proof bound at `evidence/public/core.field.json` to merged source `782c853463567e2f43924b8d6f49d7a0821b360b`, merged-main Quality run `34650971583`, browser artifact `10283552494`, Pages commit `cf107b1971e6849a9642039e6812d168df60a407`, Pages tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`. Live verification uses the canonical GitHub Pages HTTPS endpoints and the deployed Field label/help/invalid/disabled markers without introducing a Field JavaScript binder, group role, or implicit live region.
