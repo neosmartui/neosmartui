@@ -78,9 +78,9 @@
     {
       "id": "core.card",
       "contract": "components/card.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/card.css",
         "publicProof": null
       }
     }
