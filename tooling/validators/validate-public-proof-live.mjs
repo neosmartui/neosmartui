@@ -11,7 +11,8 @@ const liveMarkers = new Map([
   ['core.input', ['NeoSmartUI Foundry', 'core.input', 'Single-line native input', 'interactive, not pressable']],
   ['core.radio', ['NeoSmartUI Foundry', 'core.radio', 'Choose one native radio option', 'Alpha choice', 'Beta choice']],
   ['core.switch', ['NeoSmartUI Foundry', 'core.switch', 'Toggle immediate binary setting']],
-  ['core.tabs', ['NeoSmartUI Foundry', 'core.tabs', 'Automatic horizontal activation', 'Manual vertical activation', 'Selected tabs stay seated in their rail']]
+  ['core.tabs', ['NeoSmartUI Foundry', 'core.tabs', 'Automatic horizontal activation', 'Manual vertical activation', 'Selected tabs stay seated in their rail']],
+  ['core.textarea', ['NeoSmartUI Foundry', 'core.textarea', 'Multiline native textarea', 'interactive, not pressable', 'resize behavior']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {
