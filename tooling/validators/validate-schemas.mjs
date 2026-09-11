@@ -9,7 +9,8 @@ const schemaFiles = [
   'page.schema.json',
   'theme.schema.json',
   'flavor.schema.json',
-  'vertical.schema.json'
+  'vertical.schema.json',
+  'token-contracts.schema.json'
 ];
 
 const parsed = new Map();
@@ -25,7 +26,8 @@ const expectedIds = new Map([
   ['page.schema.json', 'https://neosmartui.com/schemas/page@1.json'],
   ['theme.schema.json', 'https://neosmartui.com/schemas/theme@1.json'],
   ['flavor.schema.json', 'https://neosmartui.com/schemas/flavor@1.json'],
-  ['vertical.schema.json', 'https://neosmartui.com/schemas/vertical@1.json']
+  ['vertical.schema.json', 'https://neosmartui.com/schemas/vertical@1.json'],
+  ['token-contracts.schema.json', 'https://neosmartui.com/schemas/token-contracts@1.json']
 ]);
 for (const [file, id] of expectedIds) if (parsed.get(file).$id !== id) throw new Error(`${file} has unexpected $id`);
 

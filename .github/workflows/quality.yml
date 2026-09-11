@@ -24,6 +24,8 @@ jobs:
         run: npm run validate:schemas
       - name: Validate migration snapshots and provenance
         run: npm run validate:migration
+      - name: Validate Core semantic token contracts
+        run: npm run validate:tokens
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files
