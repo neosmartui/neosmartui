@@ -18,6 +18,8 @@ jobs:
           node-version: 22
       - name: Validate foundation authority and provenance
         run: npm run validate:foundation
+      - name: Validate Spec architecture and taxonomy
+        run: npm run validate:spec
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files

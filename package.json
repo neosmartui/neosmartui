@@ -6,7 +6,8 @@
   "engines": {"node": ">=22"},
   "scripts": {
     "validate:foundation": "node tooling/validators/validate-foundation.mjs",
+    "validate:spec": "node tooling/validators/validate-spec-architecture.mjs",
     "build:foundry": "node tooling/foundry/build.mjs",
-    "quality": "npm run validate:foundation && npm run build:foundry"
+    "quality": "npm run validate:foundation && npm run validate:spec && npm run build:foundry"
   }
 }
