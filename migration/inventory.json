@@ -1,0 +1,15 @@
+{
+  "$schema": "./inventory.schema.json",
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-11",
+  "authority": "docs/CANONICAL-PRD.md",
+  "principle": "RESTART THE ARCHITECTURE, NOT THE KNOWLEDGE.",
+  "allowedDecisions": ["ADOPT", "ADAPT", "PROMOTE", "REWRITE", "RETIRE", "REFERENCE"],
+  "sources": [
+    {"repository":"NeoBrutalism-shop/spec","branch":"main","sha":"fbf499397f4e9a52d6e25c13921fd5377799c626","status":"snapshot-pinned"},
+    {"repository":"NeoBrutalism-shop/NeoBrutal-Soft","branch":"main","sha":"dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a","status":"snapshot-pinned"},
+    {"repository":"NeoBrutalism-shop/NeoBrutal-Commerce","branch":"main","sha":"24563484a9993c6c994f24114dc7956d3b93f694","status":"snapshot-pinned"},
+    {"repository":"NeoBrutalRivet/NeoBrutal-Rivet","branch":"main","sha":"bb4b641d35bc77c958b7345a3b7c0a134c7d802d","status":"snapshot-pinned"}
+  ],
+  "artifacts": []
+}
