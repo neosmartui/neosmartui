@@ -22,6 +22,8 @@ jobs:
         run: npm run validate:spec
       - name: Validate schemas and stable IDs
         run: npm run validate:schemas
+      - name: Validate migration snapshots and provenance
+        run: npm run validate:migration
       - name: Build Foundry artifact
         run: npm run build:foundry
       - name: Verify expected deployable files
