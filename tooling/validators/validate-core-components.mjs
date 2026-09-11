@@ -104,10 +104,14 @@ for (const forbiddenState of ['hover', 'focus-visible', 'pressed', 'selected', '
 for (const token of ['color.surface.panel', 'color.content.primary', 'color.content.secondary', 'color.border.strong', 'space.surface.inline', 'space.surface.block', 'border.surface.width', 'radius.surface', 'depth.rest.x', 'depth.rest.y', 'font.family.body', 'font.size.body', 'font.weight.regular', 'font.weight.strong']) if (!card.dependencies.includes(token)) fail(`core.card missing surface/content token ${token}`);
 for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'border.control.width', 'radius.control', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'color.action.primary.surface', 'color.focus.ring', 'opacity.disabled']) if (card.dependencies.includes(forbiddenToken)) fail(`core.card informational contract must not borrow control/press token ${forbiddenToken}`);
 const cardEntry = registry.components.find((entry) => entry.id === 'core.card');
-if (!cardEntry || cardEntry.maturity !== 'contract-only') fail('core.card must remain contract-only in this slice');
-if (cardEntry.evidence.implementation !== null || cardEntry.evidence.publicProof !== null) fail('core.card contract-only evidence must remain null');
+if (!cardEntry || cardEntry.maturity !== 'implemented') fail('core.card must be implemented in this slice');
+if (cardEntry.evidence.implementation !== 'packages/adapters/web/components/card.css') fail('core.card implementation evidence must bind the CSS-only Web implementation');
+if (cardEntry.evidence.publicProof !== null) fail('implemented core.card must not claim public proof');
+const cardCss = await readFile(resolve(root, 'packages/adapters/web/components/card.css'), 'utf8');
+for (const marker of ['padding-block: var(--ns-space-surface-block)', 'padding-inline: var(--ns-space-surface-inline)', 'border: var(--ns-border-surface-width)', 'border-radius: var(--ns-radius-surface)', 'box-shadow: var(--ns-depth-rest-x) var(--ns-depth-rest-y)', 'transform: none', 'transition: none', '@media (forced-colors: active)']) if (!cardCss.includes(marker)) fail(`card.css missing static-surface marker: ${marker}`);
+for (const forbiddenSelector of [':hover', ':active', ':focus', ':focus-visible']) if (cardCss.includes(forbiddenSelector)) fail(`card.css must not invent interactive selector ${forbiddenSelector}`);
 const cardDocs = await readFile(resolve(root, 'packages/core/components/card.md'), 'utf8');
-for (const marker of ['informational by default', 'MUST NOT become clickable', 'informational cards remain stable', 'MUST NOT borrow `border.control.width`, `radius.control`', 'no source code is copied', 'Maturity is `contract-only`']) if (!cardDocs.includes(marker)) fail(`card.md missing marker: ${marker}`);
+for (const marker of ['informational by default', 'MUST NOT become clickable', 'informational cards remain stable', 'intentionally CSS-only', 'MUST NOT borrow `border.control.width`, `radius.control`', 'no source code is copied', 'Maturity is `implemented`']) if (!cardDocs.includes(marker)) fail(`card.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
