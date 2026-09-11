@@ -181,3 +181,19 @@ Foundry renders normal/help, invalid/error, and disabled examples. The normal la
 Pinned Soft explicitly classifies `label/help/invalid field` as Core and supplies Field anatomy, invalid presentation, and exact fluid gap knowledge. Pinned Rivet provides Field/Label/Description/Error and fieldset/legend anatomy, but NeoSmartUI does not inherit its generic `role="group"` or unconditional FieldError `role="alert"` defaults. Both sources remain reference-only; no legacy source code is copied.
 
 Registry maturity is `public-proof`. Canonical implementation evidence remains `packages/adapters/web/components/field.css` with canonical proof `evidence/public/core.field.json`. Its singleton cohort binds source `782c853463567e2f43924b8d6f49d7a0821b360b`, merged-main Quality run `34650971583`, browser artifact `10283552494`, deployment commit `cf107b1971e6849a9642039e6812d168df60a407`, deployment tree `eb08c6a0ec0e28b7b949d09632d0a3292c13133b`, and Pages run `34651533397`; live verification requires the deployed Field label/help/invalid/disabled markers while structural validation recomputes the Field CSS blob.
+
+## Slice 13: `core.breadcrumb`
+
+`core.breadcrumb` starts contract-only as a generic hierarchical navigation trail. It introduces a new semantic class rather than another visual wrapper: a labeled navigation landmark contains an ordered location hierarchy, ancestor locations are genuine links, and exactly one current location is represented as non-interactive text with `aria-current="page"`.
+
+Breadcrumb does not own routing, history mutation, prefetching, page loading, authorization, or application-shell placement. Core MUST preserve real anchor semantics for navigable ancestors rather than replacing them with buttons, click-handler spans, `role="link"` shims, or router-only pseudo-links. The current page is not a disabled link, so NeoSmartUI deliberately does not inherit legacy `role="link" aria-disabled="true"` current-page treatment.
+
+Separators such as `/`, `›`, or chevrons are presentation-only and must not pollute the accessible hierarchy. A passive ellipsis is likewise presentation-only; if an overflow indicator opens hidden ancestors, the trigger/menu interaction is a separate capability rather than implicit Breadcrumb behavior.
+
+Ancestor links remain native inline navigation, not tactile button surfaces. They may strengthen text color or decoration on hover, but Breadcrumb does not borrow control padding, structural depth, box-shadow compression, active translation, or generic hover lift. Keyboard interaction remains platform-native: Tab/Shift+Tab reaches real links in document order, Enter activates the focused link, and Breadcrumb does not create an Arrow-key roving-focus model or remap Space to link activation.
+
+The contract adds two value-free roles, `space.navigation.gap` and `font.size.navigation`, for compact navigation rhythm and typography. No concrete Rivet Light value, Theme scope expansion, or resolved dependency is introduced at contract-only maturity, so the implemented Core dependency union remains 53 until a separately reviewed implementation earns those resolutions.
+
+Pinned Soft explicitly lists Breadcrumb under reusable Navigation + discovery capability, demonstrates ancestor anchors plus one `aria-current="page"` item, and provides wrapped breadcrumb/separator styling with a dedicated `.45rem` gap. Pinned Rivet independently provides nav/ordered-list/item/link/current/separator/ellipsis anatomy. Both implementations remain reference-only; no source code is copied, and Rivet's disabled-link current-page pattern is intentionally rejected.
+
+Registry maturity is `contract-only`; implementation and public-proof evidence remain null. No Web adapter/CSS, JavaScript binder, Rivet Light token value, Foundry example, browser test, Theme resolution change, or public proof is claimed by this contract slice.
