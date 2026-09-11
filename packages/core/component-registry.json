@@ -65,6 +65,15 @@
         "implementation": "packages/adapters/web/components/textarea.mjs",
         "publicProof": "evidence/public/core.textarea.json"
       }
+    },
+    {
+      "id": "core.select",
+      "contract": "components/select.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }

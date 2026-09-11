@@ -223,6 +223,24 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use the explicit reusable textarea Core listing as capability/state-resilience evidence only; no legacy implementation code is copied and no nonexistent Rivet textarea artifact is claimed."
+    },
+    {
+      "id": "legacy.spec.select-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt generic pressure-not-levitation, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws into the collapsed native single-select trigger while leaving the option popup platform-owned."
+    },
+    {
+      "id": "legacy.soft.select-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit reusable select Core listing as capability/state-resilience evidence only; no legacy implementation code is copied and no nonexistent Rivet select artifact is claimed."
     }
   ]
 }
