@@ -1,15 +1,15 @@
 {
   "$schema": "../../spec/schemas/public-proof.schema.json",
   "schema": "neosmartui/public-proof@1",
-  "component": "core.card",
+  "component": "core.badge",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
     "sha": "09d04bc7dc1a99c473b670a5d768c867d6da1a99"
   },
   "implementationFiles": [
     {
-      "path": "packages/adapters/web/components/card.css",
-      "blobSha": "0f851c0eeb60dbbc06fa44f66e30a7fa50b8692c"
+      "path": "packages/adapters/web/components/badge.css",
+      "blobSha": "199f963cb712828c42e9b1ea9432e69feb02c001"
     }
   ],
   "browserEvidence": {

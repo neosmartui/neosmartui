@@ -80,7 +80,7 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
-Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `75449935bccead3173e8b2879f4a398b6df111c0`, merged-main Quality run `34637337995`, browser artifact `10278097590`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and Pages run `34638732835`; live verification still requires the canonical automatic/manual Tabs markers.
+Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, merged-main Quality run `34643302864`, browser artifact `10281090546`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`; live verification still requires the canonical automatic/manual Tabs markers.
 
 ## Slice 7: `core.textarea`
 
@@ -94,7 +94,7 @@ Rivet Light resolution includes `core.textarea` in scope. Because every textarea
 
 Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
 
-Its current public proof shares the singleton cohort at source `75449935bccead3173e8b2879f4a398b6df111c0`, merged-main Quality run `34637337995`, browser artifact `10278097590`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and native Pages run `34638732835`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
+Its current public proof shares the singleton cohort at source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, merged-main Quality run `34643302864`, browser artifact `10281090546`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and native Pages run `34643671713`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
 
 ## Slice 8: `core.select`
 
@@ -110,7 +110,7 @@ Foundry renders the native single-select and binds the canonical adapter. Merged
 
 Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed.
 
-Its public proof is bound to merged-main Quality run `34637337995`, browser artifact `10278097590`, deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and native Pages run `34638732835`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `75449935bccead3173e8b2879f4a398b6df111c0` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All nine public-proof components share this singleton cohort while retaining their own implementation blob bindings.
+Its public proof is bound to merged-main Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and native Pages run `34643671713`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `09d04bc7dc1a99c473b670a5d768c867d6da1a99` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All ten public-proof components share this singleton cohort while retaining their own implementation blob bindings.
 
 ## Slice 9: `core.card`
 
@@ -126,11 +126,11 @@ Card preserves a permanent token-model distinction: a grouped content surface is
 
 Foundry renders the Card as a semantic `<article>` chosen by the demo's document meaning, not by the primitive itself. The demo contains no whole-card interactive role or tab stop. Dedicated Chromium QA verifies token-backed geometry, stable hover/contact depth, RTL and long-content wrapping, zero-motion reduced-motion behavior, and a visible forced-colors boundary without making the Card focusable.
 
-Its public proof is bound to the same singleton cohort as the other eight public Core primitives: merged source `75449935bccead3173e8b2879f4a398b6df111c0`, Quality run `34637337995`, browser artifact `10278097590`, deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and Pages run `34638732835`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
+Its public proof is bound to the same singleton cohort as the other nine public Core primitives: merged source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.
 
 ## Slice 10: `core.badge`
 
-`core.badge` is now an implemented compact informational metadata/status primitive with a deliberately CSS-only Web implementation. The default host remains a passive `span`: no link/button role, tab stop, pointer/keyboard activation, selection model, disabled state, JavaScript binder, or default live region is added merely because the annotation is visually prominent.
+`core.badge` is now a public-proof compact informational metadata/status primitive with a deliberately CSS-only Web implementation. The default host remains a passive `span`: no link/button role, tab stop, pointer/keyboard activation, selection model, disabled state, JavaScript binder, or default live region is added merely because the annotation is visually prominent.
 
 Badge explicitly does not default to ARIA `role="status"`. That role creates a live region and is appropriate only when composition has a meaningful dynamic update to announce. Foundry therefore renders ordinary static tone examples as plain text spans.
 
@@ -142,4 +142,4 @@ The canonical CSS contains no hover/active/focus selectors, no structural shadow
 
 Pinned Soft explicitly lists `Badge/status` and supplies exact compact Badge/palette knowledge in its pinned CSS. Pinned Rivet uses a neutral `span` by default, pill geometry, white destructive text, and scopes hover behavior to an actual anchor host. Rivet declares no license metadata, so it remains reference-only and NeoSmartUI copies no source implementation.
 
-Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Registry maturity is `implemented`; `publicProof` remains null until an exact green merged-main Foundry artifact is deployed and separately promoted through the singleton public-proof cohort.
+Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Its public proof is bound to merged source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`; structural proof validation recomputes the Badge CSS blob and live verification requires all five visible tone markers without adding interaction semantics.

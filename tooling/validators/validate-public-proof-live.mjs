@@ -14,7 +14,8 @@ const liveMarkers = new Map([
   ['core.tabs', ['NeoSmartUI Foundry', 'core.tabs', 'Automatic horizontal activation', 'Manual vertical activation', 'Selected tabs stay seated in their rail']],
   ['core.textarea', ['NeoSmartUI Foundry', 'core.textarea', 'Multiline native textarea', 'interactive, not pressable', 'resize behavior']],
   ['core.select', ['NeoSmartUI Foundry', 'core.select', 'Native single-select choice', 'browser/OS option popup']],
-  ['core.card', ['NeoSmartUI Foundry', 'core.card', 'Stable informational surface', 'Grouped content, not a disguised button.', 'Resting depth is structure, not hover affordance.']]
+  ['core.card', ['NeoSmartUI Foundry', 'core.card', 'Stable informational surface', 'Grouped content, not a disguised button.', 'Resting depth is structure, not hover affordance.']],
+  ['core.badge', ['NeoSmartUI Foundry', 'core.badge', 'Badge tone examples', 'Neutral metadata', 'Info · Reference', 'Success · Ready', 'Warning · Needs attention', 'Error · Failed']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {

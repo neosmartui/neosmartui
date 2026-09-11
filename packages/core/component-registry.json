@@ -87,10 +87,10 @@
     {
       "id": "core.badge",
       "contract": "components/badge.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/badge.css",
-        "publicProof": null
+        "publicProof": "evidence/public/core.badge.json"
       }
     }
   ]
