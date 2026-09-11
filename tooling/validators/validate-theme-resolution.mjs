@@ -10,9 +10,9 @@ const px = (value) => {
   if (!match) fail(`expected px dimension, got ${value}`);
   return Number(match[1]);
 };
+const sameSet = (actual, expected) => actual.length === expected.size && actual.every((value) => expected.has(value));
 
 const contracts = await json('spec/core/token-contracts.json');
-const button = await json('packages/core/components/button.json');
 const registry = await json('packages/core/component-registry.json');
 const flavor = await json('packages/flavors/rivet/flavor.json');
 const theme = await json('packages/themes/rivet-light/theme.json');
@@ -22,8 +22,21 @@ const bundle = await json('packages/themes/rivet-light/tokens.json');
 if (flavor.schema !== 'neosmartui/flavor@1' || flavor.id !== 'flavor.rivet' || flavor.interactionModel !== 'pressure-not-levitation') fail('Rivet Flavor identity/interaction contract is invalid');
 if (theme.schema !== 'neosmartui/theme@1' || theme.family !== 'neosmartui' || theme.name !== 'Rivet Light') fail('Rivet Light Theme identity is invalid');
 if (resolution.schema !== 'neosmartui/theme-resolution@1' || resolution.flavor !== flavor.id || resolution.theme !== theme.name || resolution.bundle !== 'tokens.json') fail('Theme resolution does not bind the expected Flavor/Theme/bundle');
-if (!resolution.scope.includes('core.button') || !bundle.scope.includes('core.button')) fail('first resolution slice must explicitly scope core.button');
 if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== flavor.id || bundle.theme !== theme.name) fail('resolved token bundle identity mismatch');
+
+const resolvedEntries = registry.components.filter((entry) => entry.maturity !== 'contract-only');
+const expectedScope = new Set(resolvedEntries.map((entry) => entry.id));
+if (!sameSet(resolution.scope, expectedScope) || !sameSet(bundle.scope, expectedScope)) fail('Theme resolution scope must exactly match implemented/public-proof Core components');
+
+const requiredDependencies = new Set();
+for (const entry of resolvedEntries) {
+  const contract = await json(`packages/core/${entry.contract}`);
+  for (const dependency of contract.dependencies) requiredDependencies.add(dependency);
+  if (!entry.evidence.implementation) fail(`${entry.id} resolved component lacks implementation evidence`);
+  await access(resolve(root, entry.evidence.implementation));
+  const componentName = entry.id.slice('core.'.length);
+  await access(resolve(root, `packages/adapters/web/components/${componentName}.css`));
+}
 
 const contractById = new Map(contracts.contracts.map((entry) => [entry.id, entry]));
 const values = new Map();
@@ -34,8 +47,8 @@ for (const entry of bundle.values) {
   if (contract.type !== entry.type) fail(`type mismatch for ${entry.id}`);
   values.set(entry.id, entry.value);
 }
-for (const dependency of button.dependencies) if (!values.has(dependency)) fail(`core.button unresolved token dependency ${dependency}`);
-if (values.size !== button.dependencies.length) fail('first resolved bundle must be the exact core.button dependency slice; add broader theme coverage in a later registry-backed slice');
+for (const dependency of requiredDependencies) if (!values.has(dependency)) fail(`unresolved implemented-component token dependency ${dependency}`);
+if (values.size !== requiredDependencies.size) fail('resolved bundle must be the exact union of implemented/public-proof Core component dependencies');
 
 for (const axis of ['x', 'y']) {
   const rest = px(values.get(`depth.rest.${axis}`));
@@ -46,18 +59,15 @@ for (const axis of ['x', 'y']) {
   if (!(rest > hover && hover >= active && active >= 0)) fail(`depth.${axis} must compress monotonically toward the surface`);
   if (rest !== hover + hoverPress || rest !== active + activePress) fail(`depth/press ${axis} values must describe one coherent physical model`);
 }
-if (px(values.get('size.control.minimum')) < 44) fail('size.control.minimum must preserve the 44px minimum target in this first Theme');
+if (px(values.get('size.control.minimum')) < 44) fail('size.control.minimum must preserve the 44px minimum target in this Theme');
 
-const componentEntry = registry.components.find((entry) => entry.id === 'core.button');
-if (!componentEntry || !['implemented', 'public-proof'].includes(componentEntry.maturity)) fail('resolved core.button must be at least implemented');
-if (!componentEntry.evidence.implementation) fail('resolved core.button must retain implementation evidence');
-if (componentEntry.maturity === 'implemented' && componentEntry.evidence.publicProof !== null) fail('implemented core.button must not claim public proof');
-if (componentEntry.maturity === 'public-proof' && !componentEntry.evidence.publicProof) fail('public-proof core.button must point to proof evidence');
-await access(resolve(root, componentEntry.evidence.implementation));
-await access(resolve(root, 'packages/adapters/web/components/button.css'));
+const buttonEntry = registry.components.find((entry) => entry.id === 'core.button');
+if (!buttonEntry || buttonEntry.maturity !== 'public-proof' || !buttonEntry.evidence.publicProof) fail('core.button must retain public-proof maturity and evidence');
+const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
+if (!checkboxEntry || checkboxEntry.maturity !== 'implemented' || checkboxEntry.evidence.publicProof !== null) fail('core.checkbox must be implemented without a public-proof claim');
 
 const css = renderResolvedTokenCss(contracts, bundle);
-for (const dependency of button.dependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
+for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
 if (!css.includes('--ns-depth-hover-y: 3px;') || !css.includes('--ns-press-active-y: 5px;')) fail('generated CSS does not preserve expected pressure model');
 
-console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${button.id}; component maturity=${componentEntry.maturity}`);
+console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);
