@@ -6,6 +6,9 @@ const root = resolve(import.meta.dirname, '../..');
 const source = resolve(root, 'apps/foundry/src');
 const publicDir = resolve(root, 'apps/foundry/public');
 const output = resolve(root, 'dist/foundry');
+const sourceSha = process.env.NEOSMARTUI_SOURCE_SHA || process.env.GITHUB_SHA || 'local-unpinned';
+
+if (sourceSha !== 'local-unpinned' && !/^[0-9a-f]{40}$/.test(sourceSha)) throw new Error(`Invalid source SHA: ${sourceSha}`);
 
 await rm(output, { recursive: true, force: true });
 await mkdir(output, { recursive: true });
@@ -16,5 +19,11 @@ const contracts = JSON.parse(await readFile(resolve(root, 'spec/core/token-contr
 const bundle = JSON.parse(await readFile(resolve(root, 'packages/themes/rivet-light/tokens.json'), 'utf8'));
 await writeFile(resolve(output, 'theme.css'), renderResolvedTokenCss(contracts, bundle));
 await cp(resolve(root, 'packages/adapters/web/components/button.css'), resolve(output, 'button.css'));
+await writeFile(resolve(output, 'deployment.json'), `${JSON.stringify({
+  schema: 'neosmartui/deployment-record@1',
+  sourceRepository: 'neosmartui/neosmartui',
+  sourceSha,
+  artifact: 'foundry'
+}, null, 2)}\n`);
 
-console.log(`Built NeoSmartUI Foundry → ${output}`);
+console.log(`Built NeoSmartUI Foundry → ${output} (${sourceSha})`);

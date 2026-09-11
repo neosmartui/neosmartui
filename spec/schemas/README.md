@@ -15,9 +15,10 @@ neosmartui/vertical@1
 neosmartui/token-contracts@1
 neosmartui/resolved-token-bundle@1
 neosmartui/theme-resolution@1
+neosmartui/deployment-record@1
 ```
 
-Core token contracts are value-free. Concrete values appear only in resolved Flavor/Theme bundles, and adapters translate those resolved values into framework/platform output.
+Core token contracts are value-free. Concrete values appear only in resolved Flavor/Theme bundles, and adapters translate those resolved values into framework/platform output. Every deployable Foundry artifact carries a source-SHA deployment record.
 
 ## Stable semantic IDs
 
@@ -63,5 +64,6 @@ The ecosystem/schema name carries `neosmartui`; everyday semantic IDs stay short
 - Vertical manifest IDs MUST use `vertical.` while Vertical-owned capability IDs use the domain prefix directly.
 - Core token paths MUST remain business-domain-neutral and value-free at the contract layer.
 - Resolved token bundles MUST reference known Core token contracts and preserve their declared types.
+- Deployment records MUST bind generated proof surfaces to the exact canonical source SHA.
 - Registry maturity MUST never exceed available implementation/public-proof evidence.
 - Missing capability is `REGISTRY GAP`, never an invented ID.

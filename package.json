@@ -14,6 +14,8 @@
     "validate:resolution": "node tooling/validators/validate-theme-resolution.mjs",
     "migration:report": "node tooling/migration/report.mjs",
     "build:foundry": "node tooling/foundry/build.mjs",
+    "serve:foundry": "node tooling/foundry/serve.mjs",
+    "test:browser": "playwright test --config=playwright.config.mjs",
     "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run build:foundry"
   }
 }
