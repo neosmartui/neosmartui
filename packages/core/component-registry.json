@@ -56,6 +56,15 @@
         "implementation": "packages/adapters/web/components/tabs.mjs",
         "publicProof": "evidence/public/core.tabs.json"
       }
+    },
+    {
+      "id": "core.textarea",
+      "contract": "components/textarea.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
