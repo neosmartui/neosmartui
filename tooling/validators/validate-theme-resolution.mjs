@@ -77,9 +77,8 @@ const tabsEntry = registry.components.find((entry) => entry.id === 'core.tabs');
 if (!tabsEntry || tabsEntry.maturity !== 'public-proof' || tabsEntry.evidence.publicProof !== 'evidence/public/core.tabs.json') fail('core.tabs must bind current public-proof evidence');
 if (tabsEntry.evidence.implementation !== 'packages/adapters/web/components/tabs.mjs') fail('core.tabs must retain the canonical Web adapter');
 const textareaEntry = registry.components.find((entry) => entry.id === 'core.textarea');
-if (!textareaEntry || textareaEntry.maturity !== 'implemented') fail('core.textarea must be implemented in this slice');
-if (textareaEntry.evidence.implementation !== 'packages/adapters/web/components/textarea.mjs') fail('core.textarea must bind the canonical Web adapter');
-if (textareaEntry.evidence.publicProof !== null) fail('implemented core.textarea must not claim public proof before deployment verification');
+if (!textareaEntry || textareaEntry.maturity !== 'public-proof' || textareaEntry.evidence.publicProof !== 'evidence/public/core.textarea.json') fail('core.textarea must bind current public-proof evidence');
+if (textareaEntry.evidence.implementation !== 'packages/adapters/web/components/textarea.mjs') fail('core.textarea must retain the canonical Web adapter');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);

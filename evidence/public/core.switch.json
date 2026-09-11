@@ -4,7 +4,7 @@
   "component": "core.switch",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
-    "sha": "0259b968def2f49599eb17233444ccda62031c5a"
+    "sha": "026250b5f2400777ef2701b80990b1e9d6d0b938"
   },
   "implementationFiles": [
     {
@@ -17,14 +17,14 @@
     }
   ],
   "browserEvidence": {
-    "runId": 34624666530,
-    "artifactId": 10274421165
+    "runId": 34628397403,
+    "artifactId": 10275107747
   },
   "deployment": {
     "repository": "neosmartui/neosmartui.github.io",
-    "commitSha": "c9761a1a11753ca7fe2a1e027407b8cf15c2ae39",
-    "treeSha": "ba3807db7b6239eb2eac70a5ca29bd6a22cd2a2f",
-    "pagesRunId": 34625533920
+    "commitSha": "c9df7f2db1ba29467086473a63bc29a719885423",
+    "treeSha": "d7e2086855177d58b1aa57c53a8e6fdb1136356c",
+    "pagesRunId": 34628914517
   },
   "live": {
     "pageUrl": "https://neosmartui.github.io/",

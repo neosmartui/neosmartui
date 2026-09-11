@@ -69,4 +69,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `implemented`: the canonical NeoSmartUI Web adapter preserves the native textarea and mirrors only empty/filled state metadata, Rivet Light resolves the component through the existing field-token dependency set without adding new token values, and the Foundry renders the multiline editing surface. Public proof remains null until a green merged-main artifact is deployed and live-verified.
+Maturity is `public-proof`: the canonical NeoSmartUI Web adapter is exercised by the 39-test merged-main Chromium cohort, the exact merged-main Foundry artifact is published byte-for-byte through native GitHub Pages, and live HTTPS verification binds `core.textarea` to source `026250b5f2400777ef2701b80990b1e9d6d0b938` while checking the canonical multiline, non-pressable, and resize markers. The proof record remains implementation-blob-bound so a future adapter or CSS change makes this evidence stale automatically.
