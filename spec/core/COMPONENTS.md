@@ -68,7 +68,7 @@ Its current public proof is bound to the same exact-SHA GitHub Pages deployment 
 
 ## Slice 6: `core.tabs`
 
-`core.tabs` is a composite peer-panel navigation primitive with a canonical NeoSmartUI Web adapter at `implemented` maturity. It owns the tablist/tab/tabpanel relationship, one-selected-panel state, roving focus model, orientation-aware keyboard navigation, activation mode, and tactile trigger behavior without importing routing or business-domain semantics.
+`core.tabs` is a composite peer-panel navigation primitive with a canonical NeoSmartUI Web adapter and live public proof. It owns the tablist/tab/tabpanel relationship, one-selected-panel state, roving focus model, orientation-aware keyboard navigation, activation mode, and tactile trigger behavior without importing routing or business-domain semantics.
 
 The adapter supports both explicit activation modes. Automatic horizontal Tabs move focus and selection together, while manual vertical Tabs allow Arrow/Home/End focus movement without changing selection until Space/Enter. Disabled tabs are skipped, only one enabled tab participates in the page Tab order, and every controlled panel remains linked through `aria-controls`/`aria-labelledby`.
 
@@ -76,6 +76,8 @@ Horizontal navigation follows logical inline direction so next/previous reverses
 
 The family interaction law is distinct from ordinary buttons: unselected tab triggers compress toward the surface on contact, while the persistent selected tab remains seated/locked at active depth instead of rising above peers. Selected state remains legible after press feedback ends, and focus-visible stays independently visible.
 
-Rivet Light resolution now includes `core.tabs` and adds only the three semantic roles that were previously absent from the exact dependency union: `color.surface.panel`, `font.size.label`, and `font.weight.emphasis`. Their values reuse visual decisions already present in the Foundry rather than introducing new arbitrary Theme choices.
+Rivet Light resolution includes `core.tabs` and adds only the three semantic roles that were previously absent from the exact dependency union: `color.surface.panel`, `font.size.label`, and `font.weight.emphasis`. Their values reuse visual decisions already present in the Foundry rather than introducing new arbitrary Theme choices.
 
-Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed. Public proof remains null until the exact green merged-main Foundry artifact is deployed and live-verified.
+Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
+
+Its current public proof is bound to the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as button, checkbox, input, radio, and switch. Live verification requires the deployment record to match source `0259b968def2f49599eb17233444ccda62031c5a` and the page to expose the canonical automatic/manual Tabs markers before the claim is accepted.
