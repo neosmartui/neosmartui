@@ -110,6 +110,15 @@
         "implementation": "packages/adapters/web/components/field.css",
         "publicProof": "evidence/public/core.field.json"
       }
+    },
+    {
+      "id": "core.breadcrumb",
+      "contract": "components/breadcrumb.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
