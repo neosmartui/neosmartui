@@ -143,3 +143,17 @@ The canonical CSS contains no hover/active/focus selectors, no structural shadow
 Pinned Soft explicitly lists `Badge/status` and supplies exact compact Badge/palette knowledge in its pinned CSS. Pinned Rivet uses a neutral `span` by default, pill geometry, white destructive text, and scopes hover behavior to an actual anchor host. Rivet declares no license metadata, so it remains reference-only and NeoSmartUI copies no source implementation.
 
 Foundry exposes five visible tone examples. Dedicated Chromium QA verifies passive span semantics, exact token-backed geometry and palette resolution, stable hover/pointer contact, RTL plus long localization wrapping, reduced-motion immobility, and forced-colors readability without focusability. Its public proof is bound to merged source `09d04bc7dc1a99c473b670a5d768c867d6da1a99`, Quality run `34643302864`, browser artifact `10281090546`, deployment commit `b35f3a26a61444979de7a04c9a5ff4d1db45df1e`, deployment tree `eca906e80ecd02bb16707b9b6f317a4474e760f8`, and Pages run `34643671713`; structural proof validation recomputes the Badge CSS blob and live verification requires all five visible tone markers without adding interaction semantics.
+
+## Slice 11: `core.alert`
+
+`core.alert` starts as a contract-only prominent inline message/callout primitive. It is a static message surface by default, not a button, link, popup, toast controller, notification queue, or live region.
+
+The core semantic correction is explicit: a visual Alert does not automatically receive `role="alert"`. `role="alert"` represents an assertive announcement contract for important time-sensitive content that is dynamically introduced or changed, so announcement urgency remains composition-owned rather than inferred from red styling or an Alert component name. `role="status"` and other live-region choices are likewise opt-in composition semantics.
+
+The tone model is `neutral`, `info`, `success`, `warning`, and `error`. Tone is message presentation, not interaction or lifecycle state, and color cannot be the sole carrier of meaning. Dismissal, timers, stacking, insertion/removal motion, persistence, and notification history are outside this primitive.
+
+Alert is a grouped surface, so it reuses the existing surface spacing/border/radius/resting-depth roles plus semantic status colors instead of inventing Alert-specific geometry. It does not borrow control target/focus/press roles or Badge annotation-pill roles. Contract-only maturity adds zero token contracts and zero Theme values.
+
+Pinned Soft explicitly classifies alerts as Core, provides stable icon/title/body and semantic-tone styling, and applies `role="alert"` only to its danger tone—useful evidence that visual treatment and announcement behavior are separable. Pinned Rivet provides Alert/title/description anatomy and default/destructive presentation, but its unconditional `role="alert"` is not adopted as a default because live announcement is a semantic decision rather than a visual variant. Both implementation sources remain reference-only; no legacy source code is copied.
+
+The future canonical implementation must remain physically stable when informational, preserve long localized content and logical RTL layout, keep tone understandable without color, retain a readable boundary in forced-colors mode, avoid implicit focusability/activation, and leave any nested or dismiss action to a real independently contracted control.

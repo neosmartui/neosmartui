@@ -92,6 +92,15 @@
         "implementation": "packages/adapters/web/components/badge.css",
         "publicProof": "evidence/public/core.badge.json"
       }
+    },
+    {
+      "id": "core.alert",
+      "contract": "components/alert.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }

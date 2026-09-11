@@ -295,6 +295,51 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use the default span host and anchor-only hover treatment as semantic-boundary implementation knowledge only; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.alert-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared static-surface, semantic-token, accessibility, RTL, reduced-motion, forced-colors, and agent-readable laws into a non-interactive core.alert contract while keeping live-announcement urgency explicit."
+    },
+    {
+      "id": "legacy.soft.alert-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Core alert classification as capability evidence while keeping business meaning, dismissal lifecycle, stacking, and notification policy outside Core."
+    },
+    {
+      "id": "legacy.soft.alert-implementation",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "registry/default/alert/alert.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use tone variants and the selective danger-only role=alert behavior as semantic-boundary knowledge; announcement urgency remains composition-owned and no source code is copied."
+    },
+    {
+      "id": "legacy.soft.alert-visual",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "src/components/alert.css",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use stable grouped-surface, icon/title/body, and semantic-tone presentation as future implementation knowledge only; no source code is copied."
+    },
+    {
+      "id": "legacy.rivet.alert-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/alert.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use Alert/title/description anatomy and default/destructive presentation as reference-only knowledge. Do not adopt unconditional role=alert as a visual default; repository metadata declares no license, so no source code is copied."
     }
   ]
 }
