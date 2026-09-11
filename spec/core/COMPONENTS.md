@@ -58,10 +58,10 @@ Its current public proof is bound to the same exact-SHA GitHub Pages deployment 
 
 ## Slice 5: `core.switch`
 
-`core.switch` is a binary-setting semantic class at `implemented` maturity. It remains intentionally distinct from checkbox and radio: one control owns one immediate off/on setting, has no indeterminate state, and does not participate in a mutually-exclusive group.
+`core.switch` is a binary-setting semantic class with a canonical NeoSmartUI Web adapter and live public proof. It remains intentionally distinct from checkbox and radio: one control owns one immediate off/on setting, has no indeterminate state, and does not participate in a mutually-exclusive group.
 
 The canonical Web adapter uses a native checkbox base with `role="switch"`, preserves browser form participation and Space-key activation, prevents indeterminate presentation, and mirrors only the authoritative checked state to agent-readable `off`/`on` metadata.
 
 The family interaction law combines ordinary contact compression with persistent toggle travel. Thumb position and state color resolve together; off maps to logical inline-start and on to logical inline-end, allowing RTL mirroring without reversing semantic meaning. The effective target remains at least 44px even when the visible track is smaller.
 
-Setting labels, descriptions, async-save status, confirmation copy, and business consequences remain higher-level composition. Public proof is not claimed until the exact green implementation artifact is deployed and live-verified.
+Its current public proof is bound to the same exact-SHA GitHub Pages deployment cohort as button, checkbox, input, and radio. Setting labels, descriptions, async-save status, confirmation copy, and business consequences remain higher-level composition.

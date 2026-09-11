@@ -71,4 +71,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 - Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists switch among reusable Core primitives and applies the full conformance/resilience gate.
 - No switch-specific Rivet implementation artifact is claimed for the pinned Rivet snapshot `bb4b641d35bc77c958b7345a3b7c0a134c7d802d`; the reviewed `components/ui/` tree contains no `switch.tsx`, so provenance is intentionally limited to evidence actually present.
 
-Maturity is `implemented`: NeoSmartUI-owned Web implementation evidence exists, while public proof remains null until an exact green artifact is deployed and live-verified.
+Maturity is `public-proof`: the unchanged canonical Web implementation is bound to exact merged-main Chromium evidence and the same exact-SHA native GitHub Pages deployment cohort as the other public Core primitives.

@@ -71,10 +71,8 @@ const radioEntry = registry.components.find((entry) => entry.id === 'core.radio'
 if (!radioEntry || radioEntry.maturity !== 'public-proof' || radioEntry.evidence.publicProof !== 'evidence/public/core.radio.json') fail('core.radio must bind current public-proof evidence');
 if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/radio.mjs') fail('core.radio must retain the canonical Web adapter');
 const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
-if (!switchEntry || !['implemented', 'public-proof'].includes(switchEntry.maturity)) fail('core.switch must be at least implemented');
-if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch must bind the canonical Web adapter');
-if (switchEntry.maturity === 'implemented' && switchEntry.evidence.publicProof !== null) fail('implemented core.switch must not claim public proof');
-if (switchEntry.maturity === 'public-proof' && switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind canonical public proof');
+if (!switchEntry || switchEntry.maturity !== 'public-proof' || switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('core.switch must bind current public-proof evidence');
+if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch must retain the canonical Web adapter');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
