@@ -93,10 +93,13 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'off', 'on', '
 for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.action.primary.content', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring']) if (!switchContract.dependencies.includes(token)) fail(`core.switch missing semantic/tactile token ${token}`);
 
 const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
-if (!switchEntry || switchEntry.maturity !== 'contract-only') fail('core.switch must remain contract-only in this slice');
-if (switchEntry.evidence.implementation !== null || switchEntry.evidence.publicProof !== null) fail('core.switch contract-only evidence must remain null');
+if (!switchEntry || !['implemented', 'public-proof'].includes(switchEntry.maturity)) fail('core.switch must be at least implemented');
+if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch implementation evidence must bind the canonical Web adapter');
+if (switchEntry.maturity === 'implemented' && switchEntry.evidence.publicProof !== null) fail('implemented core.switch must not claim public proof');
+if (switchEntry.maturity === 'public-proof' && switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind its canonical proof record');
+await access(resolve(root, 'packages/adapters/web/components/switch.css'));
 
 const switchDocs = await readFile(resolve(root, 'packages/core/components/switch.md'), 'utf8');
-for (const marker of ['role="switch"', 'binary setting', 'MUST NOT expose an indeterminate state', 'thumb position and state color MUST resolve together', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied', 'No switch-specific Rivet implementation artifact is claimed']) if (!switchDocs.includes(marker)) fail(`switch.md missing marker: ${marker}`);
+for (const marker of ['role="switch"', 'binary setting', 'MUST NOT expose an indeterminate state', 'thumb position and state color MUST resolve together', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'real `<input type="checkbox">`', 'no legacy implementation code is copied', 'No switch-specific Rivet implementation artifact is claimed']) if (!switchDocs.includes(marker)) fail(`switch.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
