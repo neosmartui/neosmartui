@@ -83,7 +83,7 @@ const selectEntry = registry.components.find((entry) => entry.id === 'core.selec
 if (!selectEntry || selectEntry.maturity !== 'public-proof' || selectEntry.evidence.publicProof !== 'evidence/public/core.select.json') fail('core.select must bind current public-proof evidence');
 if (selectEntry.evidence.implementation !== 'packages/adapters/web/components/select.mjs') fail('core.select must retain the canonical Web adapter');
 const cardEntry = registry.components.find((entry) => entry.id === 'core.card');
-if (!cardEntry || cardEntry.maturity !== 'implemented' || cardEntry.evidence.publicProof !== null) fail('core.card must be implemented without public proof in this slice');
+if (!cardEntry || cardEntry.maturity !== 'public-proof' || cardEntry.evidence.publicProof !== 'evidence/public/core.card.json') fail('core.card must bind current public-proof evidence');
 if (cardEntry.evidence.implementation !== 'packages/adapters/web/components/card.css') fail('core.card must bind its CSS-only implementation evidence');
 
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light Card surface padding must resolve to the deliberate 1rem surface rhythm');

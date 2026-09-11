@@ -62,9 +62,9 @@ Its current public proof is bound to the same exact-SHA GitHub Pages deployment 
 
 The canonical Web adapter uses a native checkbox base with `role="switch"`, preserves browser form participation and Space-key activation, prevents indeterminate presentation, and mirrors only the authoritative checked state to agent-readable `off`/`on` metadata.
 
-The family interaction law combines ordinary contact compression with persistent toggle travel. Thumb position and state color resolve together; off maps to logical inline-start and on to logical inline-end, allowing RTL mirroring without reversing semantic meaning. The effective target remains at least 44px even when the visible track is smaller.
+The family interaction law combines ordinary contact compression with persistent toggle travel. Thumb position and state color resolve together; off maps to logical inline-start and on maps to logical inline-end, allowing RTL mirroring without reversing semantic meaning. The effective target remains at least 44px even when the visible track is smaller.
 
-Its current public proof is bound to the same exact-SHA GitHub Pages deployment cohort as button, checkbox, input, and radio. Setting labels, descriptions, async-save status, confirmation copy, and business consequences remain higher-level composition.
+Its current public proof is bound to the same exact-SHA GitHub Pages deployment cohort as the other public Core primitives. Setting labels, descriptions, async-save status, confirmation copy, and business consequences remain higher-level composition.
 
 ## Slice 6: `core.tabs`
 
@@ -80,7 +80,7 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
-Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92`, merged-main Quality run `34633486142`, browser artifact `10277277111`, and Pages run `34633997409`; live verification still requires the canonical automatic/manual Tabs markers.
+Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as every public Core primitive. The current singleton cohort binds source `75449935bccead3173e8b2879f4a398b6df111c0`, merged-main Quality run `34637337995`, browser artifact `10278097590`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and Pages run `34638732835`; live verification still requires the canonical automatic/manual Tabs markers.
 
 ## Slice 7: `core.textarea`
 
@@ -94,7 +94,7 @@ Rivet Light resolution includes `core.textarea` in scope. Because every textarea
 
 Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
 
-Its current public proof shares the singleton cohort at source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92`, merged-main Quality run `34633486142`, browser artifact `10277277111`, deployment tree `3e4491947105a96986d072ff3fce0c2813a37f7d`, and native Pages run `34633997409`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
+Its current public proof shares the singleton cohort at source `75449935bccead3173e8b2879f4a398b6df111c0`, merged-main Quality run `34637337995`, browser artifact `10278097590`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and native Pages run `34638732835`. Live verification requires the page to expose the canonical multiline textarea, non-pressable, and resize markers while structural validation preserves its own implementation blob binding.
 
 ## Slice 8: `core.select`
 
@@ -110,11 +110,11 @@ Foundry renders the native single-select and binds the canonical adapter. Merged
 
 Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed.
 
-Its public proof is bound to merged-main Quality run `34633486142`, browser artifact `10277277111`, deployment commit `92da1d45e26e278027c3967f3748571d2b0931c5`, deployment tree `3e4491947105a96986d072ff3fce0c2813a37f7d`, and native Pages run `34633997409`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `f0a19e9084c27ca5a6a904daeb92bfa7dbc0ad92` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All eight public-proof components must share this singleton cohort while retaining their own implementation blob bindings.
+Its public proof is bound to merged-main Quality run `34637337995`, browser artifact `10278097590`, deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and native Pages run `34638732835`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `75449935bccead3173e8b2879f4a398b6df111c0` and the page to expose the canonical native single-select and browser/OS picker-boundary markers. All nine public-proof components share this singleton cohort while retaining their own implementation blob bindings.
 
 ## Slice 9: `core.card`
 
-`core.card` is an implemented informational grouping surface with a deliberately CSS-only Web implementation. It is not a generic clickable container: the Card itself has no built-in button/link role, tab stop, selection state, activation behavior, JavaScript binder, or synthetic state synchronization, and nested controls keep their own semantics and focus order.
+`core.card` is a public-proof informational grouping surface with a deliberately CSS-only Web implementation. It is not a generic clickable container: the Card itself has no built-in button/link role, tab stop, selection state, activation behavior, JavaScript binder, or synthetic state synchronization, and nested controls keep their own semantics and focus order.
 
 Pinned family conformance provides the decisive interaction rule: only cards with a real action or navigation role may react to hover/press; informational cards remain stable. NeoSmartUI therefore keeps the primitive at a single `rest` state. The canonical CSS has no hover/active/focus interaction selectors, sets `transform: none` and `transition: none`, and holds resting structural depth constant through pointer proximity and contact.
 
@@ -126,4 +126,4 @@ Card preserves a permanent token-model distinction: a grouped content surface is
 
 Foundry renders the Card as a semantic `<article>` chosen by the demo's document meaning, not by the primitive itself. The demo contains no whole-card interactive role or tab stop. Dedicated Chromium QA verifies token-backed geometry, stable hover/contact depth, RTL and long-content wrapping, zero-motion reduced-motion behavior, and a visible forced-colors boundary without making the Card focusable.
 
-Maturity is `implemented`; `publicProof` remains null until an exact merged-main artifact is deployed byte-for-byte to native GitHub Pages and live verification succeeds. The eight previously public Core primitives remain bound to their existing singleton proof cohort during this implementation slice.
+Its public proof is bound to the same singleton cohort as the other eight public Core primitives: merged source `75449935bccead3173e8b2879f4a398b6df111c0`, Quality run `34637337995`, browser artifact `10278097590`, deployment commit `f560c84073184da414d392ed8c4f97e98329b940`, deployment tree `7ce5638a2f1556e60a463533ef69445494b6b7cb`, and Pages run `34638732835`. Structural proof validation recomputes the Card CSS blob, and live verification requires the deployed Card markers without adding any whole-card interaction semantics.

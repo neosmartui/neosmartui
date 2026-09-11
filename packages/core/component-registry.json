@@ -78,10 +78,10 @@
     {
       "id": "core.card",
       "contract": "components/card.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/card.css",
-        "publicProof": null
+        "publicProof": "evidence/public/core.card.json"
       }
     }
   ]
