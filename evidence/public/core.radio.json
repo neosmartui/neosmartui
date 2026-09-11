@@ -1,19 +1,19 @@
 {
   "$schema": "../../spec/schemas/public-proof.schema.json",
   "schema": "neosmartui/public-proof@1",
-  "component": "core.input",
+  "component": "core.radio",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
     "sha": "4ee58bde5ad8a33d229098e12ae812e28005b14a"
   },
   "implementationFiles": [
     {
-      "path": "packages/adapters/web/components/input.mjs",
-      "blobSha": "e148fa89218ef628f989c138a250db3af77c6f40"
+      "path": "packages/adapters/web/components/radio.mjs",
+      "blobSha": "f34062fbb606b5677e3f98a3e8f0e2eafaeb1d95"
     },
     {
-      "path": "packages/adapters/web/components/input.css",
-      "blobSha": "9eda0543ec5ea3bf1a917a175f30ea6900328b50"
+      "path": "packages/adapters/web/components/radio.css",
+      "blobSha": "e537f101a4a624fa27ad0c06d642e6c8b56a4311"
     }
   ],
   "browserEvidence": {

@@ -50,8 +50,8 @@ Field labels, help/error copy, prefixes/suffixes, password reveal actions, and f
 
 ## Slice 4: `core.radio`
 
-`core.radio` introduces mutually-exclusive native choice semantics with a canonical NeoSmartUI Web adapter at `implemented` maturity. Unlike checkbox, one checked radio affects its peers in the same selection set; the adapter therefore mirrors state across the native group instead of reimplementing exclusivity.
+`core.radio` provides mutually-exclusive native choice semantics with a canonical NeoSmartUI Web adapter and live public proof. Unlike checkbox, one checked radio affects its peers in the same selection set; the adapter mirrors state across the native group instead of reimplementing exclusivity.
 
 The implementation preserves native same-name/form grouping and arrow-key movement while exposing agent-readable checked/unchecked state. Contact follows the family pressure law: hover and press compress toward the surface, never upward, and checked state remains unambiguous after release. The visible glyph is smaller than the token-backed 44px effective target.
 
-Legends, option-label content, shared help/error copy, choice-card presentation, and field layout remain composition outside this primitive. Public-proof remains a separate deployed-evidence promotion.
+Its current public proof is bound to the same exact-SHA GitHub Pages deployment cohort as the other public Core primitives. Legends, option-label content, shared help/error copy, choice-card presentation, and field layout remain composition outside this primitive.

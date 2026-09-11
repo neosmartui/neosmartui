@@ -68,8 +68,8 @@ if (!checkboxEntry || checkboxEntry.maturity !== 'public-proof' || checkboxEntry
 const inputEntry = registry.components.find((entry) => entry.id === 'core.input');
 if (!inputEntry || inputEntry.maturity !== 'public-proof' || inputEntry.evidence.publicProof !== 'evidence/public/core.input.json') fail('core.input must retain public-proof maturity and evidence');
 const radioEntry = registry.components.find((entry) => entry.id === 'core.radio');
-if (!radioEntry || radioEntry.maturity !== 'implemented') fail('core.radio must be implemented without public proof in this slice');
-if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/radio.mjs' || radioEntry.evidence.publicProof !== null) fail('core.radio must bind the canonical Web adapter without claiming public proof');
+if (!radioEntry || radioEntry.maturity !== 'public-proof' || radioEntry.evidence.publicProof !== 'evidence/public/core.radio.json') fail('core.radio must bind current public-proof evidence');
+if (radioEntry.evidence.implementation !== 'packages/adapters/web/components/radio.mjs') fail('core.radio must retain the canonical Web adapter');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
