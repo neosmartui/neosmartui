@@ -89,7 +89,7 @@ const badgeEntry = registry.components.find((entry) => entry.id === 'core.badge'
 if (!badgeEntry || badgeEntry.maturity !== 'public-proof' || badgeEntry.evidence.publicProof !== 'evidence/public/core.badge.json') fail('core.badge must bind current public-proof evidence');
 if (badgeEntry.evidence.implementation !== 'packages/adapters/web/components/badge.css') fail('core.badge must bind its CSS-only implementation evidence');
 const alertEntry = registry.components.find((entry) => entry.id === 'core.alert');
-if (!alertEntry || alertEntry.maturity !== 'implemented' || alertEntry.evidence.publicProof !== null) fail('core.alert must be implemented without claiming public proof in this slice');
+if (!alertEntry || alertEntry.maturity !== 'public-proof' || alertEntry.evidence.publicProof !== 'evidence/public/core.alert.json') fail('core.alert must bind current public-proof evidence');
 if (alertEntry.evidence.implementation !== 'packages/adapters/web/components/alert.css') fail('core.alert must bind its CSS-only implementation evidence');
 
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light grouped-surface padding must resolve to the deliberate 1rem surface rhythm');
