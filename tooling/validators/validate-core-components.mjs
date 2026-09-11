@@ -16,7 +16,7 @@ if (!Array.isArray(registry.components) || registry.components.length !== 13) fa
 
 const ids = new Set();
 for (const entry of registry.components) {
-  if (!/^core\.[a-z][a-z0-9-]*$/.test(entry.id)) fail(`invalid Core component id ${entry.id}`);
+  if (!/^core\.[a-z][a-z0-9-]*(\.[a-z][a-z0-9-]*)*$/.test(entry.id)) fail(`invalid Core component id ${entry.id}`);
   if (ids.has(entry.id)) fail(`duplicate component id ${entry.id}`);
   ids.add(entry.id);
   const contractPath = resolve(dirname(registryPath), entry.contract);
@@ -179,10 +179,21 @@ if (breadcrumb.states.length !== breadcrumbStates.size || !breadcrumb.states.eve
 for (const token of ['color.content.primary', 'color.content.secondary', 'color.focus.ring', 'space.navigation.gap', 'focus.ring.width', 'focus.ring.offset', 'font.family.body', 'font.size.navigation', 'font.weight.regular', 'font.weight.emphasis']) if (!breadcrumb.dependencies.includes(token)) fail(`core.breadcrumb missing semantic navigation token ${token}`);
 for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'space.field.gap', 'space.surface.inline', 'space.surface.block', 'space.annotation.inline', 'space.annotation.block', 'border.control.width', 'border.surface.width', 'border.annotation.width', 'radius.control', 'radius.surface', 'radius.annotation', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.action.primary.surface', 'color.state.error', 'opacity.disabled']) if (breadcrumb.dependencies.includes(forbiddenToken)) fail(`core.breadcrumb native-link contract must not borrow control/surface/press token ${forbiddenToken}`);
 const breadcrumbEntry = registry.components.find((entry) => entry.id === 'core.breadcrumb');
-if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'contract-only') fail('core.breadcrumb must remain contract-only in this slice');
-if (breadcrumbEntry.evidence.implementation !== null || breadcrumbEntry.evidence.publicProof !== null) fail('contract-only core.breadcrumb evidence must remain null');
+if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'implemented') fail('core.breadcrumb must be implemented in this slice');
+if (breadcrumbEntry.evidence.implementation !== 'packages/adapters/web/components/breadcrumb.css') fail('core.breadcrumb implementation evidence must bind the CSS-only Web implementation');
+if (breadcrumbEntry.evidence.publicProof !== null) fail('implemented core.breadcrumb must not claim public proof');
+const breadcrumbCss = await readFile(resolve(root, 'packages/adapters/web/components/breadcrumb.css'), 'utf8');
+for (const marker of ['gap: var(--ns-space-navigation-gap)', 'font-family: var(--ns-font-family-body)', 'font-size: var(--ns-font-size-navigation)', 'color: var(--ns-color-content-secondary)', 'color: var(--ns-color-content-primary)', 'font-weight: var(--ns-font-weight-emphasis)', 'outline: var(--ns-focus-ring-width) solid var(--ns-color-focus-ring)', 'outline-offset: var(--ns-focus-ring-offset)', 'overflow-wrap: anywhere', 'box-shadow: none', 'transform: none', 'transition: none', '@media (forced-colors: active)', 'color: LinkText', 'color: CanvasText']) if (!breadcrumbCss.includes(marker)) fail(`breadcrumb.css missing native-navigation marker: ${marker}`);
+for (const forbiddenMarker of ['var(--ns-depth-', 'var(--ns-press-', 'var(--ns-motion-press', 'var(--ns-motion-release', 'translate(']) if (breadcrumbCss.includes(forbiddenMarker)) fail(`breadcrumb.css must not borrow tactile control mechanics: ${forbiddenMarker}`);
+try {
+  await access(resolve(root, 'packages/adapters/web/components/breadcrumb.mjs'));
+  fail('core.breadcrumb must remain CSS-only; breadcrumb.mjs must not exist');
+} catch (error) {
+  if (error?.message?.startsWith('[core-components]')) throw error;
+  if (error?.code !== 'ENOENT') throw error;
+}
 const breadcrumbDocs = await readFile(resolve(root, 'packages/core/components/breadcrumb.md'), 'utf8');
-for (const marker of ['Breadcrumb is a navigation semantic', 'real links with real destinations', '`aria-current="page"`', 'MUST NOT manufacture `role="link" aria-disabled="true"`', 'MUST NOT add structural depth', 'MUST NOT implement arrow-key roving focus', '`space.navigation.gap`', '`font.size.navigation`', 'no legacy implementation code is copied', 'Maturity is `contract-only`']) if (!breadcrumbDocs.includes(marker)) fail(`breadcrumb.md missing marker: ${marker}`);
+for (const marker of ['Breadcrumb is a navigation semantic', 'real links with real destinations', '`aria-current="page"`', 'MUST NOT manufacture `role="link" aria-disabled="true"`', 'MUST NOT add structural depth', 'MUST NOT implement arrow-key roving focus', '`space.navigation.gap`', '`font.size.navigation`', '`0.45rem`', '`clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem)`', 'intentionally CSS-only', 'no legacy implementation code is copied', 'Maturity is `implemented`']) if (!breadcrumbDocs.includes(marker)) fail(`breadcrumb.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
@@ -201,7 +212,7 @@ for (const token of ['color.surface.interactive', 'color.action.primary.surface'
 const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
 if (!switchEntry || switchEntry.maturity !== 'public-proof') fail('core.switch must be public-proof in this slice');
 if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch implementation evidence must bind the canonical Web adapter');
-if (switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind its canonical proof record');
+if (switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind current public-proof evidence');
 await access(resolve(root, 'packages/adapters/web/components/switch.css'));
 const switchDocs = await readFile(resolve(root, 'packages/core/components/switch.md'), 'utf8');
 for (const marker of ['role="switch"', 'binary setting', 'MUST NOT expose an indeterminate state', 'thumb position and state color MUST resolve together', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'real `<input type="checkbox">`', 'no legacy implementation code is copied', 'No switch-specific Rivet implementation artifact is claimed']) if (!switchDocs.includes(marker)) fail(`switch.md missing marker: ${marker}`);
