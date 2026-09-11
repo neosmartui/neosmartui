@@ -119,6 +119,15 @@
         "implementation": "packages/adapters/web/components/breadcrumb.css",
         "publicProof": "evidence/public/core.breadcrumb.json"
       }
+    },
+    {
+      "id": "core.pagination",
+      "contract": "components/pagination.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
