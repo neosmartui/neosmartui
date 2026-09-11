@@ -33,9 +33,9 @@
     {
       "id": "core.radio",
       "contract": "components/radio.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/radio.mjs",
         "publicProof": null
       }
     }
