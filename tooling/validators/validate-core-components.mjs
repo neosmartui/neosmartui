@@ -16,7 +16,7 @@ if (!Array.isArray(registry.components) || registry.components.length !== 13) fa
 
 const ids = new Set();
 for (const entry of registry.components) {
-  if (!/^core\.[a-z][a-z0-9-]*(\.[a-z][a-z0-9-]*)*$/.test(entry.id)) fail(`invalid Core component id ${entry.id}`);
+  if (!/^core\.[a-z][a-z0-9-]*$/.test(entry.id)) fail(`invalid Core component id ${entry.id}`);
   if (ids.has(entry.id)) fail(`duplicate component id ${entry.id}`);
   ids.add(entry.id);
   const contractPath = resolve(dirname(registryPath), entry.contract);
@@ -212,7 +212,7 @@ for (const token of ['color.surface.interactive', 'color.action.primary.surface'
 const switchEntry = registry.components.find((entry) => entry.id === 'core.switch');
 if (!switchEntry || switchEntry.maturity !== 'public-proof') fail('core.switch must be public-proof in this slice');
 if (switchEntry.evidence.implementation !== 'packages/adapters/web/components/switch.mjs') fail('core.switch implementation evidence must bind the canonical Web adapter');
-if (switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind current public-proof evidence');
+if (switchEntry.evidence.publicProof !== 'evidence/public/core.switch.json') fail('public-proof core.switch must bind its canonical proof record');
 await access(resolve(root, 'packages/adapters/web/components/switch.css'));
 const switchDocs = await readFile(resolve(root, 'packages/core/components/switch.md'), 'utf8');
 for (const marker of ['role="switch"', 'binary setting', 'MUST NOT expose an indeterminate state', 'thumb position and state color MUST resolve together', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'real `<input type="checkbox">`', 'no legacy implementation code is copied', 'No switch-specific Rivet implementation artifact is claimed']) if (!switchDocs.includes(marker)) fail(`switch.md missing marker: ${marker}`);
