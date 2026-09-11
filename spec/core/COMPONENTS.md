@@ -55,3 +55,11 @@ Field labels, help/error copy, prefixes/suffixes, password reveal actions, and f
 The implementation preserves native same-name/form grouping and arrow-key movement while exposing agent-readable checked/unchecked state. Contact follows the family pressure law: hover and press compress toward the surface, never upward, and checked state remains unambiguous after release. The visible glyph is smaller than the token-backed 44px effective target.
 
 Its current public proof is bound to the same exact-SHA GitHub Pages deployment cohort as the other public Core primitives. Legends, option-label content, shared help/error copy, choice-card presentation, and field layout remain composition outside this primitive.
+
+## Slice 5: `core.switch`
+
+`core.switch` introduces a binary-setting semantic class at `contract-only` maturity. It is intentionally distinct from checkbox and radio: one control owns one immediate off/on setting, has no indeterminate state, and does not participate in a mutually-exclusive group.
+
+The family interaction law combines ordinary contact compression with persistent toggle travel. Thumb position and state color must resolve together; off maps to logical inline-start and on to logical inline-end, allowing RTL mirroring without reversing semantic meaning. The effective target remains at least 44px even when the visible track is smaller.
+
+Web implementations must expose accurate switch semantics and keyboard activation while keeping setting labels, descriptions, async-save status, confirmation copy, and business consequences in higher-level composition. No switch implementation or public proof is claimed in this contract slice.

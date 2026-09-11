@@ -38,6 +38,15 @@
         "implementation": "packages/adapters/web/components/radio.mjs",
         "publicProof": "evidence/public/core.radio.json"
       }
+    },
+    {
+      "id": "core.switch",
+      "contract": "components/switch.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
