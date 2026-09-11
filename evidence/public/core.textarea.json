@@ -1,0 +1,33 @@
+{
+  "$schema": "../../spec/schemas/public-proof.schema.json",
+  "schema": "neosmartui/public-proof@1",
+  "component": "core.textarea",
+  "deployedSource": {
+    "repository": "neosmartui/neosmartui",
+    "sha": "026250b5f2400777ef2701b80990b1e9d6d0b938"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/textarea.mjs",
+      "blobSha": "139a1ed4679b40e76136114df87daa8e15db34de"
+    },
+    {
+      "path": "packages/adapters/web/components/textarea.css",
+      "blobSha": "7015337f7f1fdba65e53abcedb99fadb42e4d77a"
+    }
+  ],
+  "browserEvidence": {
+    "runId": 34628397403,
+    "artifactId": 10275107747
+  },
+  "deployment": {
+    "repository": "neosmartui/neosmartui.github.io",
+    "commitSha": "c9df7f2db1ba29467086473a63bc29a719885423",
+    "treeSha": "d7e2086855177d58b1aa57c53a8e6fdb1136356c",
+    "pagesRunId": 34628914517
+  },
+  "live": {
+    "pageUrl": "https://neosmartui.github.io/",
+    "deploymentRecordUrl": "https://neosmartui.github.io/deployment.json"
+  }
+}
