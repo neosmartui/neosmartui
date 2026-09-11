@@ -51,9 +51,9 @@
     {
       "id": "core.tabs",
       "contract": "components/tabs.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/tabs.mjs",
         "publicProof": null
       }
     }
