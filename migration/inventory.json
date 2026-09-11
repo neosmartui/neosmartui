@@ -385,6 +385,51 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use Field/Label/Description/Error/fieldset/legend anatomy and orientation knowledge only. Do not adopt generic role=group or unconditional role=alert as defaults for one-control Field; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.breadcrumb-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared native-link, keyboard-focus, touch, reduced-motion, RTL, semantic-token, and no-generic-hover-lift laws into a hierarchical core.breadcrumb navigation contract without turning inline links into button surfaces."
+    },
+    {
+      "id": "legacy.soft.breadcrumb-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Breadcrumb Navigation + discovery listing as evidence that hierarchical location navigation belongs in reusable Core."
+    },
+    {
+      "id": "legacy.soft.breadcrumb-implementation",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "components.html",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use ancestor-anchor plus aria-current page anatomy as reference knowledge only; preserve native link semantics and copy no source code."
+    },
+    {
+      "id": "legacy.soft.breadcrumb-visual",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "src/components/navigation.css",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use wrapped breadcrumb layout, separator treatment, muted-to-current hierarchy, and dedicated gap rhythm as visual knowledge only; semantic token ownership stays in NeoSmartUI and no source code is copied."
+    },
+    {
+      "id": "legacy.rivet.breadcrumb-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/breadcrumb.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use nav/list/item/link/current/separator/ellipsis anatomy as reference-only knowledge. Do not adopt role=link aria-disabled=true for the current page; repository metadata declares no license, so no source code is copied."
     }
   ]
 }
