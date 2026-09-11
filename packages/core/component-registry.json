@@ -1,0 +1,16 @@
+{
+  "$schema": "../../spec/schemas/component-registry.schema.json",
+  "schema": "neosmartui/component-registry@1",
+  "domain": "core",
+  "components": [
+    {
+      "id": "core.button",
+      "contract": "components/button.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
+    }
+  ]
+}
