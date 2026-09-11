@@ -114,9 +114,9 @@
     {
       "id": "core.breadcrumb",
       "contract": "components/breadcrumb.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/breadcrumb.css",
         "publicProof": null
       }
     }

@@ -94,8 +94,14 @@ if (alertEntry.evidence.implementation !== 'packages/adapters/web/components/ale
 const fieldEntry = registry.components.find((entry) => entry.id === 'core.field');
 if (!fieldEntry || fieldEntry.maturity !== 'public-proof' || fieldEntry.evidence.publicProof !== 'evidence/public/core.field.json') fail('core.field must bind current public-proof evidence');
 if (fieldEntry.evidence.implementation !== 'packages/adapters/web/components/field.css') fail('core.field must bind its CSS-only implementation evidence');
+const breadcrumbEntry = registry.components.find((entry) => entry.id === 'core.breadcrumb');
+if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'implemented') fail('core.breadcrumb must be implemented before public-proof promotion');
+if (breadcrumbEntry.evidence.implementation !== 'packages/adapters/web/components/breadcrumb.css') fail('core.breadcrumb must bind its CSS-only implementation evidence');
+if (breadcrumbEntry.evidence.publicProof !== null) fail('implemented core.breadcrumb must not claim public proof');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
+if (values.get('space.navigation.gap') !== '0.45rem') fail('Rivet Light navigation gap must preserve the pinned Soft breadcrumb spacing value');
+if (values.get('font.size.navigation') !== 'clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem)') fail('Rivet Light navigation text size must preserve the pinned Soft text-xs fluid value');
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light grouped-surface padding must resolve to the deliberate 1rem surface rhythm');
 if (values.get('border.surface.width') !== '3px') fail('Rivet Light grouped-surface border must resolve to 3px');
 if (values.get('radius.surface') !== '6px') fail('Rivet Light grouped-surface radius must resolve to 6px');
@@ -115,6 +121,8 @@ if (!css.includes('--ns-color-surface-panel: #ffffff;')) fail('generated CSS doe
 if (!css.includes('--ns-font-size-label: 1rem;')) fail('generated CSS does not include the evidence-backed Rivet Light label size role');
 if (!css.includes('--ns-font-weight-emphasis: 750;')) fail('generated CSS does not include the evidence-backed Rivet Light emphasis weight role');
 if (!css.includes('--ns-space-field-gap: clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem);')) fail('generated CSS does not include the pinned Field gap role');
+if (!css.includes('--ns-space-navigation-gap: 0.45rem;')) fail('generated CSS does not include the pinned Breadcrumb navigation gap role');
+if (!css.includes('--ns-font-size-navigation: clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem);')) fail('generated CSS does not include the pinned Breadcrumb navigation text role');
 if (!css.includes('--ns-space-surface-inline: 1rem;') || !css.includes('--ns-space-surface-block: 1rem;')) fail('generated CSS does not include grouped-surface spacing roles');
 if (!css.includes('--ns-border-surface-width: 3px;') || !css.includes('--ns-radius-surface: 6px;')) fail('generated CSS does not include grouped-surface geometry roles');
 if (!css.includes('--ns-font-weight-strong: 800;')) fail('generated CSS does not include the strong typography role used by Card/Alert');
