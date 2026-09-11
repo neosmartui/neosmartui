@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 11) fail('eleventh Core slice must contain exactly eleven honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 12) fail('twelfth Core slice must contain exactly twelve honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -150,6 +150,17 @@ try {
 }
 const alertDocs = await readFile(resolve(root, 'packages/core/components/alert.md'), 'utf8');
 for (const marker of ['default Alert is not a live region', '`role="alert"` is not a visual variant', 'MUST NOT make the whole surface clickable', 'A dismiss action is a separate button', 'Tone MUST NOT be the sole carrier of meaning', 'message surfaces remain stable', 'intentionally CSS-only', 'introduces no new token contracts and no new Rivet Light values', 'no legacy implementation code is copied', 'Maturity is `public-proof`']) if (!alertDocs.includes(marker)) fail(`alert.md missing marker: ${marker}`);
+
+const field = await readJson(resolve(root, 'packages/core/components/field.json'));
+const fieldStates = new Set(['rest', 'invalid', 'disabled']);
+if (field.states.length !== fieldStates.size || !field.states.every((state) => fieldStates.has(state))) fail('core.field must expose exactly rest/invalid/disabled composition states');
+for (const token of ['color.content.primary', 'color.content.secondary', 'color.state.error', 'space.field.gap', 'font.family.body', 'font.size.body', 'font.size.label', 'font.weight.regular', 'font.weight.emphasis']) if (!field.dependencies.includes(token)) fail(`core.field missing semantic field token ${token}`);
+for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'space.surface.inline', 'space.surface.block', 'space.annotation.inline', 'space.annotation.block', 'border.control.width', 'border.surface.width', 'border.annotation.width', 'radius.control', 'radius.surface', 'radius.annotation', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.focus.ring', 'focus.ring.width', 'focus.ring.offset']) if (field.dependencies.includes(forbiddenToken)) fail(`core.field composition contract must not borrow control/surface/interaction token ${forbiddenToken}`);
+const fieldEntry = registry.components.find((entry) => entry.id === 'core.field');
+if (!fieldEntry || fieldEntry.maturity !== 'contract-only') fail('core.field must remain contract-only in this slice');
+if (fieldEntry.evidence.implementation !== null || fieldEntry.evidence.publicProof !== null) fail('contract-only core.field evidence must remain null');
+const fieldDocs = await readFile(resolve(root, 'packages/core/components/field.md'), 'utf8');
+for (const marker of ['one primary form control', 'does **not** add `role="group"`', '`role="alert"` is **not** the default', '`space.field.gap`', 'MUST NOT borrow `space.control.*`', 'no legacy implementation code is copied', 'Maturity is `contract-only`']) if (!fieldDocs.includes(marker)) fail(`field.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);

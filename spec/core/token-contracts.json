@@ -22,6 +22,7 @@
 
     {"id":"space.control.inline","type":"dimension","resolution":"flavor-theme","description":"Inline padding/gap rhythm inside controls."},
     {"id":"space.control.block","type":"dimension","resolution":"flavor-theme","description":"Block-axis padding rhythm inside controls."},
+    {"id":"space.field.gap","type":"dimension","resolution":"flavor-theme","description":"Block-axis gap between label, primary control, description/help, and validation message within a field composition."},
     {"id":"space.surface.inline","type":"dimension","resolution":"flavor-theme","description":"Inline padding rhythm inside grouped content surfaces."},
     {"id":"space.surface.block","type":"dimension","resolution":"flavor-theme","description":"Block-axis padding rhythm inside grouped content surfaces."},
     {"id":"space.annotation.inline","type":"dimension","resolution":"flavor-theme","description":"Compact inline padding rhythm for informational annotation/status surfaces."},
