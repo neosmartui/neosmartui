@@ -33,6 +33,7 @@ for (const entry of registry.components) {
   } else {
     if (!entry.evidence.implementation) fail(`${entry.id} implementation claim lacks evidence`);
     await access(resolve(root, entry.evidence.implementation));
+    if (entry.maturity === 'implemented' && entry.evidence.publicProof !== null) fail(`${entry.id} implemented maturity must not claim public proof`);
     if (entry.maturity === 'public-proof' && !entry.evidence.publicProof) fail(`${entry.id} public-proof claim lacks evidence`);
   }
 }
@@ -44,4 +45,4 @@ for (const token of ['depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.h
 const docs = await readFile(resolve(root, 'packages/core/components/button.md'), 'utf8');
 for (const marker of ['real `<button>`', 'MUST NOT increase apparent elevation', 'Loading prevents duplicate activation', 'Reduced motion removes non-essential travel/rebound']) if (!docs.includes(marker)) fail(`button.md missing marker: ${marker}`);
 
-console.log(`[core-components] validated ${registry.components.length} contract-only Core component with token/accessibility invariants`);
+console.log(`[core-components] validated ${registry.components.length} Core component with token/accessibility/evidence invariants`);

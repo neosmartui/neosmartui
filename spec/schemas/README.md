@@ -1,6 +1,6 @@
 # NeoSmartUI Schemas v1
 
-These schemas define stable identity and minimum machine-readable contracts. They intentionally do not define concrete token values, component implementations, registry counts beyond committed evidence, or vertical business models.
+These schemas define stable identity and minimum machine-readable contracts. They do not authorize registry counts beyond committed evidence or vertical business models.
 
 ## Schema identifiers
 
@@ -13,7 +13,11 @@ neosmartui/theme@1
 neosmartui/flavor@1
 neosmartui/vertical@1
 neosmartui/token-contracts@1
+neosmartui/resolved-token-bundle@1
+neosmartui/theme-resolution@1
 ```
+
+Core token contracts are value-free. Concrete values appear only in resolved Flavor/Theme bundles, and adapters translate those resolved values into framework/platform output.
 
 ## Stable semantic IDs
 
@@ -33,7 +37,7 @@ Page:      <domain>.page.<name>
            commerce.page.checkout
 
 Flavor:    flavor.<name>
-           flavor.hardline
+           flavor.rivet
 
 Vertical:  vertical.<name>
            vertical.commerce
@@ -48,7 +52,7 @@ Token:     <semantic-path>
 
 The ecosystem/schema name carries `neosmartui`; everyday semantic IDs stay short. Do not introduce verbose IDs such as `neosmartui.core.component.button`.
 
-## Identity rules
+## Identity and evidence rules
 
 - IDs MUST be stable once published.
 - Rename/migration requires explicit provenance and replacement mapping.
@@ -58,5 +62,6 @@ The ecosystem/schema name carries `neosmartui`; everyday semantic IDs stay short
 - Flavor IDs MUST use `flavor.`.
 - Vertical manifest IDs MUST use `vertical.` while Vertical-owned capability IDs use the domain prefix directly.
 - Core token paths MUST remain business-domain-neutral and value-free at the contract layer.
+- Resolved token bundles MUST reference known Core token contracts and preserve their declared types.
 - Registry maturity MUST never exceed available implementation/public-proof evidence.
 - Missing capability is `REGISTRY GAP`, never an invented ID.
