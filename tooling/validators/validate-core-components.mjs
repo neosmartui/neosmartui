@@ -51,7 +51,11 @@ for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', '
 for (const token of ['color.surface.interactive', 'color.action.primary.surface', 'color.state.error', 'size.control.minimum', 'depth.rest.x', 'depth.hover.x', 'depth.active.x', 'press.hover.x', 'press.active.x', 'motion.press.duration', 'motion.release.duration', 'color.focus.ring']) if (!checkbox.dependencies.includes(token)) fail(`core.checkbox missing semantic/tactile token ${token}`);
 
 const checkboxEntry = registry.components.find((entry) => entry.id === 'core.checkbox');
-if (!checkboxEntry || checkboxEntry.maturity !== 'contract-only') fail('core.checkbox must remain contract-only in this slice');
+if (!checkboxEntry || checkboxEntry.maturity !== 'implemented') fail('core.checkbox must be implemented in this slice');
+if (checkboxEntry.evidence.implementation !== 'packages/adapters/web/components/checkbox.mjs') fail('core.checkbox implementation evidence must bind the canonical Web adapter');
+if (checkboxEntry.evidence.publicProof !== null) fail('core.checkbox must not claim public proof before deployed evidence exists');
+await access(resolve(root, 'packages/adapters/web/components/checkbox.css'));
+
 const checkboxDocs = await readFile(resolve(root, 'packages/core/components/checkbox.md'), 'utf8');
 for (const marker of ['indeterminate', 'MUST NOT increase apparent elevation', 'effective interactive hit target MUST meet or exceed `size.control.minimum`', 'no legacy implementation code is copied']) if (!checkboxDocs.includes(marker)) fail(`checkbox.md missing marker: ${marker}`);
 

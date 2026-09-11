@@ -23,7 +23,9 @@ try {
 const contracts = JSON.parse(await readFile(resolve(root, 'spec/core/token-contracts.json'), 'utf8'));
 const bundle = JSON.parse(await readFile(resolve(root, 'packages/themes/rivet-light/tokens.json'), 'utf8'));
 await writeFile(resolve(output, 'theme.css'), renderResolvedTokenCss(contracts, bundle));
-await cp(resolve(root, 'packages/adapters/web/components/button.css'), resolve(output, 'button.css'));
+for (const file of ['button.css', 'checkbox.css', 'checkbox.mjs']) {
+  await cp(resolve(root, 'packages/adapters/web/components', file), resolve(output, file));
+}
 await writeFile(resolve(output, 'deployment.json'), `${JSON.stringify({
   schema: 'neosmartui/deployment-record@1',
   sourceRepository: 'neosmartui/neosmartui',
