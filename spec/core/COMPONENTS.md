@@ -81,3 +81,13 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
 Its current public proof is bound to the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as button, checkbox, input, radio, and switch. Live verification requires the deployment record to match source `0259b968def2f49599eb17233444ccda62031c5a` and the page to expose the canonical automatic/manual Tabs markers before the claim is accepted.
+
+## Slice 7: `core.textarea`
+
+`core.textarea` introduces generic multiline text entry at `contract-only` maturity. It owns the native textarea editing surface and its empty/filled, invalid, read-only, disabled, hover, and focus-visible states without importing field-layout, formatting, auto-save, or business-domain semantics.
+
+Textarea is intentionally separate from `core.input`: line breaks, multiline selection, scrolling, native resize affordances, and larger editing geometry materially change the platform behavior. The contract therefore requires a real native `<textarea>` in the future Web adapter and preserves native editing, selection, clipboard, undo/redo, IME, spellcheck/autocorrect, form participation, scrolling, directionality, and resize behavior instead of recreating them in JavaScript.
+
+The interaction class remains the same as input: interactive, not pressable. Hover, focus, pointer contact, selection, scrolling, and resizing must not borrow press-depth tokens or translate the editing surface toward/away from the page. Generic hover lift and fake button compression are both forbidden. The seventh contract deliberately reuses the existing field token vocabulary, so contract admission adds no Theme value or resolution-scope claim.
+
+Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed. Adapter, Theme resolution, Foundry runtime, browser evidence, and public proof remain future promotion steps.
