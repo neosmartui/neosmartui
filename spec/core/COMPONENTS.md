@@ -80,16 +80,18 @@ Rivet Light resolution includes `core.tabs` and adds only the three semantic rol
 
 Pinned family and Soft evidence support the semantic/keyboard contract. The pinned Soft React package remains reference-only knowledge; no source code is copied. The reviewed pinned Rivet `components/ui/` tree contains no `tabs.tsx`, so no Rivet Tabs implementation provenance is claimed.
 
-Its current public proof is bound to the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as button, checkbox, input, radio, and switch. Live verification requires the deployment record to match source `0259b968def2f49599eb17233444ccda62031c5a` and the page to expose the canonical automatic/manual Tabs markers before the claim is accepted.
+Its current public proof is refreshed onto the same exact merged-main Chromium artifact and native GitHub Pages deployment cohort as button, checkbox, input, radio, switch, and textarea. Live verification binds that singleton cohort to source `026250b5f2400777ef2701b80990b1e9d6d0b938` and requires the canonical automatic/manual Tabs markers.
 
 ## Slice 7: `core.textarea`
 
-`core.textarea` is generic multiline text entry with a canonical NeoSmartUI Web adapter at `implemented` maturity. It owns the native textarea editing surface and its empty/filled, invalid, read-only, disabled, hover, and focus-visible states without importing field-layout, formatting, auto-save, or business-domain semantics.
+`core.textarea` is generic multiline text entry with a canonical NeoSmartUI Web adapter and live public proof. It owns the native textarea editing surface and its empty/filled, invalid, read-only, disabled, hover, and focus-visible states without importing field-layout, formatting, auto-save, or business-domain semantics.
 
 Textarea remains intentionally separate from `core.input`: line breaks, multiline selection, scrolling, native resize affordances, and larger editing geometry materially change platform behavior. The adapter therefore preserves a real native `<textarea>`, leaves author-supplied native attributes authoritative, and mirrors only empty/filled state into agent-readable metadata rather than recreating editing in JavaScript.
 
 The interaction class remains the same as input: interactive, not pressable. Hover, focus, pointer contact, selection, scrolling, and resizing never borrow press-depth tokens or translate the editing surface toward or away from the page. The canonical CSS keeps structural shadow absent, preserves focus/invalid/read-only/disabled cues, does not disable native resize, and retains reduced-motion and forced-colors resilience.
 
-Rivet Light resolution now includes `core.textarea` in scope. Because every textarea dependency was already resolved for existing Core components, the exact resolved-token dependency union and every Theme token value remain unchanged; this implementation adds zero new Theme values.
+Rivet Light resolution includes `core.textarea` in scope. Because every textarea dependency was already resolved for existing Core components, the exact resolved-token dependency union and every Theme token value remain unchanged; this implementation adds zero new Theme values.
 
-Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed. Public proof remains null until the exact green merged-main Foundry artifact is deployed and live-verified.
+Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
+
+Its public proof is bound to merged-main Quality run `34628397403`, browser artifact `10275107747`, deployment tree `d7e2086855177d58b1aa57c53a8e6fdb1136356c`, and native Pages run `34628914517`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `026250b5f2400777ef2701b80990b1e9d6d0b938` and the page to expose the canonical multiline textarea, non-pressable, and resize markers. Structural proof validation also requires every public-proof component to share this one singleton cohort while preserving its own implementation blob binding.
