@@ -65,6 +65,8 @@ jobs:
           test ! -e dist/foundry/card.mjs
           test -f dist/foundry/badge.css
           test ! -e dist/foundry/badge.mjs
+          test -f dist/foundry/alert.css
+          test ! -e dist/foundry/alert.mjs
           test -f dist/foundry/deployment.json
           test ! -e dist/foundry/CNAME
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
@@ -108,6 +110,14 @@ jobs:
           grep -q "Success · Ready" dist/foundry/index.html
           grep -q "Warning · Needs attention" dist/foundry/index.html
           grep -q "Error · Failed" dist/foundry/index.html
+          grep -q "core.alert" dist/foundry/index.html
+          grep -q "Alert tone examples" dist/foundry/index.html
+          grep -q "Neutral · Note" dist/foundry/index.html
+          grep -q "Info · Update" dist/foundry/index.html
+          grep -q "Success · Complete" dist/foundry/index.html
+          grep -q "Warning · Check this" dist/foundry/index.html
+          grep -q "Error · Needs correction" dist/foundry/index.html
+          grep -q "Static message surface; no implicit live region." dist/foundry/index.html
           node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/foundry/deployment.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA) throw new Error('deployment source SHA mismatch')"
 
   browser:
