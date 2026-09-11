@@ -205,6 +205,24 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use pinned implementation knowledge for tablist/tab/tabpanel roles, roving focus, Arrow/Home/End navigation, disabled-tab skipping, and RTL-aware horizontal movement only; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.textarea-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt generic focus, keyboard, touch, reduced-motion, fluid-sizing, and agent-readable conformance laws into core.textarea while keeping the multiline editing surface non-pressable."
+    },
+    {
+      "id": "legacy.soft.textarea-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit reusable textarea Core listing as capability/state-resilience evidence only; no legacy implementation code is copied and no nonexistent Rivet textarea artifact is claimed."
     }
   ]
 }

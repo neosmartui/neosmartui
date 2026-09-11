@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 6) fail('sixth Core slice must contain exactly six honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 7) fail('seventh Core slice must contain exactly seven honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -74,6 +74,18 @@ await access(resolve(root, 'packages/adapters/web/components/input.css'));
 
 const inputDocs = await readFile(resolve(root, 'packages/core/components/input.md'), 'utf8');
 for (const marker of ['real native `<input>`', 'interactive, not pressable', 'placeholder MAY provide an example or hint, but MUST NOT substitute for an accessible name', 'Read-only and disabled are not interchangeable states', 'no legacy implementation code is copied']) if (!inputDocs.includes(marker)) fail(`input.md missing marker: ${marker}`);
+
+const textarea = await readJson(resolve(root, 'packages/core/components/textarea.json'));
+for (const state of ['rest', 'hover', 'focus-visible', 'empty', 'filled', 'invalid', 'read-only', 'disabled']) if (!textarea.states.includes(state)) fail(`core.textarea missing state ${state}`);
+for (const token of ['color.surface.interactive', 'color.content.primary', 'color.content.secondary', 'color.border.default', 'color.state.error', 'size.control.minimum', 'color.focus.ring', 'opacity.disabled', 'font.family.body', 'motion.standard.duration']) if (!textarea.dependencies.includes(token)) fail(`core.textarea missing semantic token ${token}`);
+for (const forbidden of ['depth.rest.x', 'press.hover.x', 'press.active.x']) if (textarea.dependencies.includes(forbidden)) fail(`core.textarea must not depend on press-depth token ${forbidden}`);
+
+const textareaEntry = registry.components.find((entry) => entry.id === 'core.textarea');
+if (!textareaEntry || textareaEntry.maturity !== 'contract-only') fail('core.textarea must remain contract-only in this slice');
+if (textareaEntry.evidence.implementation !== null || textareaEntry.evidence.publicProof !== null) fail('contract-only core.textarea must not claim implementation or public proof');
+
+const textareaDocs = await readFile(resolve(root, 'packages/core/components/textarea.md'), 'utf8');
+for (const marker of ['real native `<textarea>`', 'interactive, not pressable', 'line breaks', 'Core MUST NOT globally disable resize', 'No textarea-specific Rivet implementation artifact is claimed', 'Maturity is `contract-only`']) if (!textareaDocs.includes(marker)) fail(`textarea.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
