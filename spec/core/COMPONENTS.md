@@ -95,3 +95,15 @@ Rivet Light resolution includes `core.textarea` in scope. Because every textarea
 Pinned family conformance supplies generic focus/keyboard/touch/reduced-motion/fluid-sizing laws, while pinned Soft evidence explicitly lists textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/textarea.tsx`, so no Rivet textarea implementation provenance is claimed.
 
 Its public proof is bound to merged-main Quality run `34628397403`, browser artifact `10275107747`, deployment tree `d7e2086855177d58b1aa57c53a8e6fdb1136356c`, and native Pages run `34628914517`. Live verification requires `https://neosmartui.github.io/deployment.json` to report source `026250b5f2400777ef2701b80990b1e9d6d0b938` and the page to expose the canonical multiline textarea, non-pressable, and resize markers. Structural proof validation also requires every public-proof component to share this one singleton cohort while preserving its own implementation blob binding.
+
+## Slice 8: `core.select`
+
+`core.select` enters the registry at `contract-only` maturity as the generic native single-choice picker. Its semantic boundary is intentionally narrower than custom selection widgets: the future Web adapter must preserve a real single-select `<select>`, while multi-select/listbox, combobox/autocomplete/search, async option loading, cascading selection, labels/help/error copy, and form layout remain separate capabilities or composition.
+
+The native selected option/value is authoritative. `<option>` and `<optgroup>` semantics, form participation, required/disabled behavior, browser type-ahead, arrow-key navigation, and the browser/OS picker remain platform-owned. The contract does not invent a portable `open` state because native popup visibility is not consistently exposed, and it does not call an empty first option a native placeholder because HTML defines no select `placeholder` attribute.
+
+The collapsed select is a choice trigger rather than a text-editing surface, so it follows the permanent pressure-not-levitation law: hover/contact may reduce structural depth, press moves toward the surface, and release restores depth. The platform-owned picker itself is not reimplemented as a NeoSmartUI popup merely to obtain custom motion or state hooks.
+
+The dependency set reuses semantic roles already present in the Core token vocabulary, including the existing depth/press model, focus ring, field colors, typography, minimum target, and disabled opacity. Because this slice is contract-only, Rivet Light Theme scope and resolved values remain unchanged.
+
+Pinned family conformance supplies the generic pressure, focus, keyboard, touch, reduced-motion, sizing, and agent-readable laws. Pinned Soft explicitly lists `select` beside input and textarea among reusable Core primitives. The reviewed pinned Rivet snapshot has no `components/ui/select.tsx`, so no Rivet Select implementation provenance is claimed. No implementation, Foundry runtime, browser evidence, Theme-resolution expansion, or public proof is claimed in this slice.
