@@ -96,9 +96,9 @@
     {
       "id": "core.alert",
       "contract": "components/alert.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/alert.css",
         "publicProof": null
       }
     }

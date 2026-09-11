@@ -134,10 +134,22 @@ if (alert.states.length !== alertStates.size || !alert.states.every((state) => a
 for (const token of ['color.surface.panel', 'color.content.primary', 'color.content.secondary', 'color.border.strong', 'color.state.info', 'color.state.success', 'color.state.warning', 'color.state.error', 'space.surface.inline', 'space.surface.block', 'border.surface.width', 'radius.surface', 'depth.rest.x', 'depth.rest.y', 'font.family.body', 'font.size.body', 'font.weight.regular', 'font.weight.strong']) if (!alert.dependencies.includes(token)) fail(`core.alert missing semantic message/surface token ${token}`);
 for (const forbiddenToken of ['space.control.inline', 'space.control.block', 'border.control.width', 'radius.control', 'size.control.minimum', 'space.annotation.inline', 'space.annotation.block', 'border.annotation.width', 'radius.annotation', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'color.action.primary.surface', 'color.focus.ring', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled']) if (alert.dependencies.includes(forbiddenToken)) fail(`core.alert static message contract must not borrow control/annotation/interaction token ${forbiddenToken}`);
 const alertEntry = registry.components.find((entry) => entry.id === 'core.alert');
-if (!alertEntry || alertEntry.maturity !== 'contract-only') fail('core.alert must remain contract-only in this slice');
-if (alertEntry.evidence.implementation !== null || alertEntry.evidence.publicProof !== null) fail('core.alert contract-only evidence must remain null');
+if (!alertEntry || alertEntry.maturity !== 'implemented') fail('core.alert must be implemented in this slice');
+if (alertEntry.evidence.implementation !== 'packages/adapters/web/components/alert.css') fail('core.alert implementation evidence must bind the CSS-only Web implementation');
+if (alertEntry.evidence.publicProof !== null) fail('implemented core.alert must not claim public proof before deployed evidence exists');
+const alertCss = await readFile(resolve(root, 'packages/adapters/web/components/alert.css'), 'utf8');
+for (const marker of ['padding-block: var(--ns-space-surface-block)', 'padding-inline: var(--ns-space-surface-inline)', 'border: var(--ns-border-surface-width)', 'border-radius: var(--ns-radius-surface)', 'background: var(--ns-color-surface-panel)', 'box-shadow: var(--ns-depth-rest-x) var(--ns-depth-rest-y)', 'background: var(--ns-color-surface-panel)', '--ns-alert-tone: var(--ns-color-state-info)', '--ns-alert-tone: var(--ns-color-state-success)', '--ns-alert-tone: var(--ns-color-state-warning)', '--ns-alert-tone: var(--ns-color-state-error)', 'font-weight: var(--ns-font-weight-strong)', 'overflow-wrap: anywhere', 'transform: none', 'transition: none', '@media (forced-colors: active)']) if (!alertCss.includes(marker)) fail(`alert.css missing static-message marker: ${marker}`);
+for (const forbiddenSelector of [':hover', ':active', ':focus', ':focus-visible']) if (alertCss.includes(forbiddenSelector)) fail(`alert.css must not invent interactive selector ${forbiddenSelector}`);
+await access(resolve(root, 'packages/adapters/web/components/alert.css'));
+try {
+  await access(resolve(root, 'packages/adapters/web/components/alert.mjs'));
+  fail('core.alert must remain CSS-only; alert.mjs must not exist');
+} catch (error) {
+  if (error?.message?.startsWith('[core-components]')) throw error;
+  if (error?.code !== 'ENOENT') throw error;
+}
 const alertDocs = await readFile(resolve(root, 'packages/core/components/alert.md'), 'utf8');
-for (const marker of ['default Alert is not a live region', '`role="alert"` is not a visual variant', 'MUST NOT make the whole surface clickable', 'A dismiss action is a separate button', 'Tone MUST NOT be the sole carrier of meaning', 'message surfaces remain stable', 'no legacy implementation code is copied', 'Maturity is `contract-only`']) if (!alertDocs.includes(marker)) fail(`alert.md missing marker: ${marker}`);
+for (const marker of ['default Alert is not a live region', '`role="alert"` is not a visual variant', 'MUST NOT make the whole surface clickable', 'A dismiss action is a separate button', 'Tone MUST NOT be the sole carrier of meaning', 'message surfaces remain stable', 'intentionally CSS-only', 'introduces no new token contracts and no new Rivet Light values', 'no legacy implementation code is copied', 'Maturity is `implemented`']) if (!alertDocs.includes(marker)) fail(`alert.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
