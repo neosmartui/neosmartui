@@ -22,11 +22,15 @@
 
     {"id":"space.control.inline","type":"dimension","resolution":"flavor-theme","description":"Inline padding/gap rhythm inside controls."},
     {"id":"space.control.block","type":"dimension","resolution":"flavor-theme","description":"Block-axis padding rhythm inside controls."},
+    {"id":"space.surface.inline","type":"dimension","resolution":"flavor-theme","description":"Inline padding rhythm inside grouped content surfaces."},
+    {"id":"space.surface.block","type":"dimension","resolution":"flavor-theme","description":"Block-axis padding rhythm inside grouped content surfaces."},
     {"id":"space.layout.gutter","type":"dimension","resolution":"flavor-theme","description":"Primary responsive layout gutter."},
     {"id":"space.layout.section","type":"dimension","resolution":"flavor-theme","description":"Primary separation between major layout sections."},
     {"id":"size.control.minimum","type":"dimension","resolution":"flavor-theme","description":"Minimum interactive target dimension contract."},
     {"id":"border.control.width","type":"dimension","resolution":"flavor-theme","description":"Structural control border width."},
+    {"id":"border.surface.width","type":"dimension","resolution":"flavor-theme","description":"Structural border width for grouped content surfaces."},
     {"id":"radius.control","type":"dimension","resolution":"flavor-theme","description":"Default control corner radius."},
+    {"id":"radius.surface","type":"dimension","resolution":"flavor-theme","description":"Default grouped-surface corner radius."},
     {"id":"focus.ring.width","type":"dimension","resolution":"flavor-theme","description":"Keyboard focus ring width."},
     {"id":"focus.ring.offset","type":"dimension","resolution":"flavor-theme","description":"Keyboard focus ring offset."},
 
