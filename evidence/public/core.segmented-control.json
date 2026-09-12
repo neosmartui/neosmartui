@@ -1,19 +1,19 @@
 {
   "$schema": "../../spec/schemas/public-proof.schema.json",
   "schema": "neosmartui/public-proof@1",
-  "component": "core.button",
+  "component": "core.segmented-control",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
     "sha": "8508ffd2910ecc32cc6e45e10ff1197b0187e33c"
   },
   "implementationFiles": [
     {
-      "path": "packages/adapters/web/components/button.mjs",
-      "blobSha": "03136809d3518d4f2051b793c64ae247325c203d"
+      "path": "packages/adapters/web/components/segmented-control.mjs",
+      "blobSha": "513e24822b7e6612ca77706b02c26208b2155103"
     },
     {
-      "path": "packages/adapters/web/components/button.css",
-      "blobSha": "821c70154173a536de3ff8b1eeb08f8cdeec1303"
+      "path": "packages/adapters/web/components/segmented-control.css",
+      "blobSha": "b1f99072569be9b4a093e56ac29e9234454855ee"
     }
   ],
   "browserEvidence": {
