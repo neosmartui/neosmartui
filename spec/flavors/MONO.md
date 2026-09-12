@@ -8,8 +8,8 @@ Mono is the editorial black/white/gray NeoSmartUI flavor. It makes typography, h
 - Flavor schema: `neosmartui/flavor@1`
 - First implemented Theme: `packages/themes/mono-light/theme.json`
 - Interaction model: `pressure-not-levitation`
-- Official migration maturity: `implemented`
-- Public-proof status: **not public-proof yet**
+- Official migration maturity: `public-proof`
+- Public-proof record: `evidence/public/flavor.mono.json`
 
 ## Canonical authority and provenance boundary
 
@@ -80,9 +80,30 @@ Mono Light deliberately keeps every resolved color role grayscale:
 - compact annotations remain rectangular rather than pill-shaped;
 - responsive field and navigation roles continue to use semantic tokens rather than component-local values.
 
+## Public-proof cohort
+
+Mono Light reached `public-proof` only after its implementation was merged, the exact merged-main artifact was independently verified, and those exact bytes were deployed to GitHub Pages without rebuilding.
+
+- deployed source: `neosmartui/neosmartui@75fe02594bf1395275f1b4c611bcb4b1d8b1999c`
+- merged-main Quality run: `34713187736`
+- merged-main browser artifact: `10304495336`
+- merged-main artifact SHA-256: `b1e8213ced0a774b59347cadd27312c4f857b1de8d1ff6a1acd95023b5724e4d`
+- Chromium: `118/118`
+- deployable Foundry files: `41`
+- Pages commit: `c493bb58fcae679c16bf374775be1523ed50a28c`
+- Pages tree: `6423aef0f9b9be2088812143925b4a97c852c101`
+- native Pages run: `34713466334`
+- live route: `https://neosmartui.github.io/flavors/mono/`
+- live Theme asset: `https://neosmartui.github.io/mono-theme.css`
+- canonical deployment record: `https://neosmartui.github.io/deployment.json`
+
+The Pages tree was constructed directly from the independently verified merged-main artifact. Its Git tree SHA exactly matches the deterministic Git tree of all 41 `dist/foundry` files, proving that the deployment used the merged-main artifact bytes without a local or PR rebuild.
+
+For historical clarity, the implementation phase previously used an `implemented` maturity marker and said public proof was not yet claimed. Those phase statements are superseded by the evidence-bound public-proof state above.
+
 ## Browser and accessibility evidence boundary
 
-The implementation adds additive browser coverage for:
+The implementation's additive browser coverage verifies:
 
 1. shared Core adapter identity and the scoped Mono Theme;
 2. exact `3 → 1 → 0` depth and `0 → 2 → 3` pressure travel;
@@ -92,7 +113,9 @@ The implementation adds additive browser coverage for:
 6. forced-colors focus, boundaries, and normal Tab order;
 7. RTL plus long localized narrow-layout containment.
 
-These tests are implementation evidence only. They do **not** claim public proof before merged-main deployment and native Pages verification.
+Public proof remains evidence-bound rather than declarative. Structural validation checks the singleton deployment cohort and current implementation blob SHAs. Live validation checks the canonical deployment record, dedicated Mono page markers, and exact `mono-theme.css` markers over HTTPS.
+
+Public-proof promotion does not redeploy Pages.
 
 ## Dark Theme lifecycle
 
@@ -100,4 +123,10 @@ Mono Dark follows as its own concrete Theme instance. It MUST NOT be implemented
 
 ## Current exclusions
 
-This implementation adds no Mono renderer override, no Mono Dark Theme, no `flavor.mono` public-proof record, and no Pages deployment from the feature branch. Public proof can be promoted only after the exact merged-main CI artifact is deployed and verified on native GitHub Pages.
+- No Mono renderer override.
+- No Mono Dark Theme.
+- No Core adapter fork.
+- No Vertical semantics inside the Flavor.
+- No deployment during public-proof promotion.
+
+Mono Light is complete through public proof.

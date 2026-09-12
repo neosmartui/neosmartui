@@ -34,12 +34,14 @@ const liveMarkers = new Map([
   ['core.combobox', ['NeoSmartUI Foundry', 'core.combobox', 'Editable single-selection Combobox', 'role="combobox"', 'aria-autocomplete="list"', 'aria-controls="combobox-listbox"', 'role="listbox"', 'Choose one framework', 'Show suggestions', 'Svelte · unavailable', 'No matching suggestions']],
   ['core.accordion', ['NeoSmartUI Foundry', 'core.accordion', 'Accordion discloses related content with real buttons', 'data-expansion="single"', 'data-expansion="multiple"', 'aria-controls="accordion-single-panel-a"']],
   ['flavor.hardline', ['Hardline Light', 'ns-theme-hardline-light', 'Pressure, not levitation', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
+  ['flavor.mono', ['Mono Light', 'ns-theme-mono-light', 'Editorial pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
   ['flavor.rivet', ['Rivet Light', 'ns-theme-rivet-light', 'Mechanical pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
   ['flavor.soft', ['Soft Light', 'ns-theme-soft-light', 'Compress, never float', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']]
 ]);
 
 const assetMarkers = new Map([
   ['flavor.hardline', ['.ns-theme-hardline-light {', '--ns-radius-control: 0px;', '--ns-depth-rest-x: 4px;', '--ns-depth-hover-x: 2px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 4px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']],
+  ['flavor.mono', ['.ns-theme-mono-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 0px;', '--ns-radius-annotation: 0px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 65ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #111111;', '--ns-font-family-body: ui-serif, Georgia, serif;']],
   ['flavor.rivet', ['.ns-theme-rivet-light {', '--ns-border-control-width: 3px;', '--ns-radius-control: 6px;', '--ns-depth-rest-x: 5px;', '--ns-depth-hover-x: 3px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 5px;', '--ns-motion-press-duration: 80ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #b9a1ed;']],
   ['flavor.soft', ['.ns-theme-soft-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 8px;', '--ns-radius-surface: 12px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1.5px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']]
 ]);

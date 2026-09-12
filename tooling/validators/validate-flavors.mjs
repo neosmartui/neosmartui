@@ -29,7 +29,7 @@ const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileT
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono implementation slice expects exactly hardline,mono,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
+if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono public-proof slice expects exactly hardline,mono,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
 
 const flavorKeys = ['$schema', 'schema', 'id', 'name', 'intent', 'interactionModel'];
 const hardline = await readJson('packages/flavors/hardline/flavor.json');
@@ -157,10 +157,10 @@ if (monoValues.get('font.family.body')?.value !== 'ui-serif, Georgia, serif') fa
 for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) {
   await expectAbsent(`packages/flavors/hardline/index.${extension}`, `Hardline implementation must not introduce renderer override index.${extension}`);
   await expectAbsent(`packages/flavors/soft/index.${extension}`, `Soft implementation must not introduce renderer override index.${extension}`);
-  await expectAbsent(`packages/flavors/mono/index.${extension}`, `Mono implementation must not introduce renderer override index.${extension}`);
+  await expectAbsent(`packages/flavors/mono/index.${extension}`, `Mono public proof must not introduce renderer override index.${extension}`);
 }
 await expectAbsent('packages/themes/soft-dark', 'Soft Light implementation must not prematurely implement Soft Dark');
-await expectAbsent('packages/themes/mono-dark', 'Mono Light implementation must not prematurely implement Mono Dark');
+await expectAbsent('packages/themes/mono-dark', 'Mono Light public proof must not prematurely implement Mono Dark');
 
 const hardlineDocs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
@@ -171,8 +171,8 @@ for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.so
   if (!softDocs.includes(marker)) fail(`Soft implementation docs missing marker: ${marker}`);
 }
 const monoDocs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
-for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `implemented`', 'not public-proof yet', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Mono Dark follows as its own concrete Theme instance']) {
-  if (!monoDocs.includes(marker)) fail(`Mono implementation docs missing marker: ${marker}`);
+for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `public-proof`', 'Public-proof record: `evidence/public/flavor.mono.json`', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Public-proof promotion does not redeploy Pages', 'Mono Dark follows as its own concrete Theme instance', 'Mono Light is complete through public proof']) {
+  if (!monoDocs.includes(marker)) fail(`Mono public-proof docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated public-proof Hardline Light, implemented Soft Light, existing Rivet Flavor identity, and implemented Mono Light resolution boundary');
+console.log('[flavors] validated public-proof Hardline Light, implemented Soft Light, existing Rivet Flavor identity, and public-proof Mono Light resolution boundary');
