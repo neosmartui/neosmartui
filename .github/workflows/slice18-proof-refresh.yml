@@ -54,7 +54,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mapfile -t actual < <(git diff --name-only | sort)
+          git add -A
+          mapfile -t actual < <(git diff --cached --name-only | sort)
           mapfile -t expected < <(printf '%s\n' \
             evidence/public/core.accordion.json \
             evidence/public/core.alert.json \
@@ -86,6 +87,5 @@ jobs:
           test "$(git rev-parse origin/feat/v0.2-core-accordion-public-proof)" = "57dc766ece8eca13b8c60b6f14615692ecdb51e8"
           git config user.name "MrGPT007"
           git config user.email "mrgpt.net@gmail.com"
-          git add -- "${actual[@]}"
           git commit -m "core: promote core.accordion public proof"
           git push origin HEAD:feat/v0.2-core-accordion-public-proof
