@@ -6,14 +6,18 @@ Soft is the calm application-oriented NeoSmartUI flavor for long-session interfa
 
 - Flavor ID: `flavor.soft`
 - Flavor schema: `neosmartui/flavor@1`
-- Starting Theme: `packages/themes/soft-light/theme.json`
+- Implemented light Theme: `packages/themes/soft-light/theme.json`
+- Contract-only dark Theme: `packages/themes/soft-dark/theme.json`
 - Interaction model: `pressure-not-levitation`
-- Maturity: `public-proof`
+- Flavor maturity: `public-proof`
+- Soft Light maturity: `public-proof`
+- Soft Dark contract maturity: `contract-only`
+- Soft Dark public-proof status: **not public-proof yet**
 - Public-proof record: `evidence/public/flavor.soft.json`
 
 ## Expression contract
 
-Soft defaults toward moderate rounding, visible moderate boundaries, shallow hard structural depth, warm neutral application surfaces, softened blue primary accent intent, readable system-first typography, comfortable application density, seated persistent selection, and restrained motion. Hover begins compression toward the resting plane; direct press completes compression. Soft MUST NOT introduce generic hover lift.
+Soft defaults toward moderate rounding, visible moderate boundaries, shallow hard structural depth, warm neutral application surfaces, softened blue accent intent, readable system-first typography, comfortable application density, seated persistent selection, and restrained motion. Hover begins compression toward the resting plane; direct press completes compression. Soft MUST NOT introduce generic hover lift.
 
 Raised controls may express tactile hard-shadow depth. Recessed editing/data surfaces remain seated rather than pretending to be raised pressable controls. Informational surfaces remain stable. Motion is reserved for affordance, pressure, selection, progress, confirmation, and failure rather than decorative hover movement.
 
@@ -31,44 +35,69 @@ Soft MUST NOT own Button/Dialog/Product/Checkout/Billing behavior, SaaS workspac
 - exact resolved semantic dependency union: 55 token IDs
 - generated CSS scope: `.ns-theme-soft-light`
 
-The implementation resolves visible `2px` structural boundaries, `8px` control radius, `12px` surface radius, pill annotation geometry, a coherent `3px → 1.5px → 0` structural depth model with matching `0 → 1.5px → 3px` inward contact travel, and restrained `70ms / 105ms / 165ms` press/release/standard timing. Controls retain a `44px` minimum target and an independent `3px` focus keyline.
+The implementation resolves visible `2px` structural boundaries, `8px` control radius, `12px` surface radius, pill annotation geometry, a coherent `3px → 1.5px → 0px` structural depth model with matching `0px → 1.5px → 3px` inward travel, and restrained `70ms / 105ms / 165ms` press/release/standard timing. Controls retain a `44px` minimum target and an independent `3px` focus keyline with `3px` offset.
 
 Soft Light uses independently resolved warm neutral surfaces and a softened-blue primary action while keeping written state meaning, semantic HTML, accessibility behavior, RTL behavior, reduced-motion behavior, forced-colors behavior, and Core interaction semantics in the shared adapters. The Foundry route `apps/foundry/src/flavors/soft/index.html` imports the same shipping Button/Input/Card/Badge adapter CSS used by other flavors; no Soft component implementation fork exists.
 
+## Soft Dark contract
+
+`Soft Dark` is the second concrete Theme instance of `flavor.soft`. This contract establishes ownership and invariants only. It is authored as its own `neosmartui/theme@1` descriptor and will be implemented later as an explicit dark semantic Theme, not CSS inversion, filter-based dark mode, or hidden conditional values inside Soft Light.
+
+Soft Dark must resolve the same exact shipping 18-Core / 55-token semantic dependency boundary through the same shared Core adapters unless repository dependency reality changes first. It may change semantic color values while preserving the complete Soft structural and interaction model.
+
+The following Soft laws are frozen across Light and Dark:
+
+- visible `2px` control, surface, and annotation boundaries;
+- moderate `8px` control radius, `12px` grouped-surface radius, and pill annotation geometry;
+- `3px → 1.5px → 0px` structural depth for rest → hover → active;
+- `0px → 1.5px → 3px` inward travel;
+- `70ms / 105ms / 165ms` pressure timings;
+- `44px` minimum interactive target;
+- independent `3px` focus keyline with `3px` offset;
+- comfortable application density;
+- readable system-first typography;
+- seated persistent selection;
+- reduced-motion state acknowledgement without non-essential travel;
+- forced-colors, keyboard, touch, pointer, RTL, localization, and narrow-layout conformance.
+
+Concrete Dark palette values are intentionally deferred to the implementation slice. The contract requires a dark warm-neutral/softened-blue semantic intent, but no token value is authorized merely by this document. Implementation must independently resolve accessible dark surfaces, content, boundaries, action, focus, and status pairings and test their authored contrast.
+
+The existing `/flavors/soft/` proof surface remains the canonical Flavor route. Contract work must not mutate its already-proven Soft Light source file or the existing `flavor.soft` proof record. A later implementation should follow the proof-safe assembly pattern established by Hardline Dark: keep the proven Light source route byte-identical, author Dark demo content separately, and extend only the exact-SHA build artifact after implementation validators and browser coverage exist. No `flavor.soft-dark` identity or competing `/flavors/soft-dark/` route is permitted.
+
+Contract-only exclusions are strict:
+
+- no `packages/themes/soft-dark/resolution.json`;
+- no `packages/themes/soft-dark/tokens.json`;
+- no generated `soft-dark-theme.css`;
+- no Dark Foundry fragment or route mutation;
+- no Soft Dark browser implementation tests;
+- no Dark implementation validator;
+- no Soft Dark implementation-file binding in `evidence/public/flavor.soft.json`;
+- no Core adapter or renderer fork;
+- No Pages deployment occurs from the contract branch.
+
 ## Public-proof cohort
 
-Soft Light reached `public-proof` only after the implementation was merged and the exact merged-main artifact was verified and deployed without rebuilding.
+Soft Light reached `public-proof` only after implementation merged and the exact merged-main artifact was independently verified and deployed without rebuilding. Its original proof lifecycle used:
 
-- deployed source: `neosmartui/neosmartui@5e999f2e62dc7727ebb74a9c79c5bd40513d6d0d`
-- merged-main Quality run: `34707268277`
-- merged-main browser artifact: `10301797631`
-- Chromium: `105/105`
-- Pages commit: `ff7723951ff1eba3a6890ce57f71eeb2646f524a`
-- Pages tree: `24f8086b988db5aaa97c6bba44c4f8f35dcf6c95`
-- native Pages run: `34707560564`
-- live route: `https://neosmartui.github.io/flavors/soft/`
-- live Theme asset: `https://neosmartui.github.io/soft-theme.css`
-- canonical deployment record: `https://neosmartui.github.io/deployment.json`
+- implementation source `neosmartui/neosmartui@5e999f2e62dc7727ebb74a9c79c5bd40513d6d0d`
+- merged-main Quality run `34707268277`
+- merged-main browser artifact `10301797631`
+- Chromium `105/105`
+- Pages commit `ff7723951ff1eba3a6890ce57f71eeb2646f524a`
+- Pages tree `24f8086b988db5aaa97c6bba44c4f8f35dcf6c95`
+- native Pages run `34707560564`
 
-The generated Pages run metadata retained the preceding Pages SHA in its `head_sha` / `pages_build_version` label. That label is not used as proof of deployed bytes. The native build job checked out `main` and recorded `git log -1` as `ff7723951ff1eba3a6890ce57f71eeb2646f524a`; Pages artifact `10301862710` contains all 37 deployable files byte-identical to merged-main artifact `10301797631`, and its `deployment.json` binds the source SHA above. The public-proof live validator independently verifies the served deployment record, Soft route, and Theme markers before this promotion can merge.
-
-For historical clarity, the implementation-phase contract previously carried `Maturity: `implemented`` and said Soft was `not public-proof yet`. Those phase statements are superseded by the evidence-bound public-proof state above.
+The singleton public-proof cohort has since advanced as later verified Flavor work deployed. `evidence/public/flavor.soft.json` is the machine-readable authority for Soft's current cohort and retains exact implementation blob bindings. Public-proof promotion never redeploys Pages.
 
 ## Migration provenance
 
 The primary legacy knowledge source is pinned as `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a`, especially `DESIGN.md`. The migration ledger classifies `legacy.soft.design-language` as `ADAPT` into the Flavor layer and explicitly says to extract Soft visual personality without importing SaaS domain semantics.
 
-The pinned source describes coated-plastic / soft-touch hardware, a visible `2px` default structural border, moderate rounding, shallow hard depth with reference rest → hover → active geometry of `3px → 1.5px → 0`, warm neutral surfaces, softened blue accents, restrained motion, and dark mode as a first-class Theme rather than an inversion filter. These are migration knowledge inputs; NeoSmartUI resolves its own semantic token values and copies no legacy implementation source.
+The pinned source describes coated-plastic / soft-touch hardware, visible `2px` default structural borders, moderate rounding, shallow hard depth with reference rest → hover → active geometry of `3px → 1.5px → 0px`, warm neutral surfaces, softened blue accents, restrained motion, and dark mode as a first-class Theme rather than an inversion filter. These are migration knowledge inputs; NeoSmartUI resolves its own semantic token values and copies no legacy implementation source.
 
-Repository metadata for that legacy source does not declare a license. The migration policy therefore remains `knowledge-only-until-reviewed`, and no legacy CSS/JS/React implementation bytes are imported into this implementation.
-
-## Deliberate exclusions
-
-- No Soft Dark implementation. Soft Dark follows as its own concrete Theme instance and must be intentionally resolved and tested rather than produced by hidden conditional values or an inversion filter.
-- No Core component adapter fork.
-- No SaaS or other Vertical semantics inside the Flavor.
-- Public-proof promotion does not redeploy Pages.
+Repository metadata for that legacy source does not declare a license. The migration policy therefore remains `knowledge-only-until-reviewed`, and no legacy CSS/JS/React implementation bytes are imported.
 
 ## Next lifecycle stage
 
-Soft Light is complete through public proof. The next Soft Theme work is a separate Soft Dark lifecycle: contract/intent check if required by the canonical roadmap, concrete resolution, green implementation merge, merged-main verification, exact artifact deployment, native Pages verification, then public-proof promotion.
+This PR is contract-only. After the Soft Dark contract merges green and mandatory merged-main Quality is green, a separate implementation slice may author the Dark 18/55 resolution, generated scoped CSS, proof-safe canonical-route assembly, dedicated validation, and additive browser coverage. Only after a green implementation merge may the exact merged-main artifact be deployed without rebuilding, natively verified on Pages, and promoted through a separate proof-only singleton cohort refresh.
