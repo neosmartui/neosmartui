@@ -14,13 +14,15 @@ Core does not make an arbitrary non-interactive target focusable solely so it ca
 
 ## State model
 
-The initial contract exposes:
+The contract exposes exactly:
 
 - `closed` — supplemental content is not visually shown.
 - `open` — supplemental content is visually shown because the target is hovered or focused and has not been dismissed for the current interaction session.
 - `dismissed` — Escape has closed the visible tooltip while the originating hover/focus condition still exists; it MUST NOT immediately reopen until that originating interaction ends and a new hover/focus session begins.
 
 The Tooltip does not expose `hover`, `focus-visible`, `pressed`, `selected`, or `disabled` as surface states. Those states belong to the target, if the target's own semantic component supports them.
+
+The canonical Web adapter mirrors only this three-state authority through `data-state` on the tooltip and `data-tooltip-state` on the target. It does not add or replace the target's role, tab index, activation, accessible name, or other component state.
 
 ## Open, hover, focus, and persistence behavior
 
@@ -30,13 +32,15 @@ Keyboard focus does not move into the Tooltip. Focus stays on the described targ
 
 Tooltip MUST NOT auto-dismiss on a short timer while the target remains hovered/focused. Content remains available until the triggering hover/focus ends, the user explicitly dismisses it, or the target is removed/disabled by surrounding application logic.
 
+The Web adapter uses only a short pointer-transfer grace period when the pointer leaves one member of the target/tooltip pair, allowing it to arrive on the other without collapsing the surface between adjacent pointer events. That grace period is not an auto-dismiss timer while either surface remains active.
+
 ## Escape dismissal
 
 When a Tooltip is open, Escape dismisses it without moving focus from the target and without activating or changing the target. The Tooltip then remains dismissed for the current uninterrupted hover/focus session so the same condition does not immediately reopen it.
 
 A later genuine interaction session—such as leaving and re-entering with the pointer, or moving focus away and back—may reveal it again.
 
-Tooltip MUST NOT trap focus and MUST NOT intercept Tab, Shift+Tab, Enter, Space, Arrow keys, Home, or End for target behavior.
+Tooltip MUST NOT trap focus and MUST NOT intercept Tab, Shift+Tab, Enter, Space, Arrow keys, Home, or End for target behavior. The canonical adapter installs a document `keydown` listener only to observe Escape while an owned Tooltip is open; it neither stops propagation nor remaps any target key.
 
 ## Interaction law: explanation must not manufacture affordance
 
@@ -44,7 +48,7 @@ Pinned family conformance is explicit: Tooltips MUST NOT introduce movement that
 
 Showing or hiding Tooltip content therefore MUST NOT translate, lift, compress, scale, deepen, or otherwise animate the target itself. A non-interactive target does not become pressable because a Tooltip is attached. An interactive target keeps only the pressure/focus behavior defined by its own component contract.
 
-The Tooltip surface may use a restrained opacity transition or another non-spatial reveal that communicates hierarchy without simulating physical activation. Decorative travel from the target, bounce, spring, hover lift, or target-following pressure is outside the Core contract.
+The canonical Tooltip CSS animates only Tooltip opacity through `motion.standard.duration`. The surface keeps `transform: none`; no selector in the Tooltip implementation translates or changes structural depth on the described target.
 
 The Tooltip surface itself is informational and non-pressable. Pointer contact with it does not create hover lift, press compression, pointer cursor, or click behavior.
 
@@ -52,27 +56,27 @@ The Tooltip surface itself is informational and non-pressable. Pointer contact w
 
 Touch devices do not provide a dependable hover model. Core Tooltip therefore MUST NOT make essential information touch-only or require long-press as the sole discovery mechanism.
 
-A Tooltip implementation MUST NOT hijack tap, long-press, context-menu, text-selection, or native activation behavior merely to force a desktop tooltip pattern onto touch. If the target's meaning needs persistent explanation for touch users, composition must expose that information through visible text or a touch-appropriate disclosure capability.
+The canonical adapter listens to `pointerenter`, `pointerleave`, focus, blur, and Escape only. It installs no click, touchstart, touchend, contextmenu, or long-press handler and therefore MUST NOT hijack tap, long-press, context-menu, text-selection, or native activation behavior merely to force a desktop tooltip pattern onto touch.
 
-This graceful non-interference is the Tooltip's touch support contract.
+If the target's meaning needs persistent explanation for touch users, composition must expose that information through visible text or a touch-appropriate disclosure capability. This graceful non-interference is the Tooltip's touch support contract.
 
 ## Positioning, RTL, localization, and overflow
 
 Tooltip visual placement is presentation, not reading-order semantics. The described target remains in normal document order; the Tooltip may be rendered elsewhere in the DOM only if the explicit description relationship remains correct.
 
-Placement should use logical start/end concepts and viewport-aware collision handling rather than hard-coding physical left/right assumptions. RTL changes visual placement where appropriate but does not change the descriptive relationship.
+Placement uses logical block/inline properties rather than hard-coded physical left/right assumptions. RTL changes visual placement where appropriate but does not change the descriptive relationship.
 
-Long translated strings must wrap within a bounded readable surface and MUST NOT force page-level horizontal overflow. Tooltips are intended to remain concise; long instructions or structured content belong in a persistent help surface or richer disclosure component.
+Long translated strings wrap within a bounded readable surface and MUST NOT force page-level horizontal overflow. Tooltips are intended to remain concise; long instructions or structured content belong in a persistent help surface or richer disclosure component.
 
 ## Reduced motion and forced colors
 
-Reduced-motion mode removes non-essential reveal/close animation while preserving immediate visibility, dismissal, and description semantics. Because Tooltip must not move its target, reduced-motion support does not change target geometry.
+Reduced-motion mode removes non-essential reveal/close animation while preserving immediate visibility, dismissal, and description semantics. Because Tooltip never moves its target, reduced-motion support does not change target geometry.
 
-Forced-colors/high-contrast mode must preserve readable tooltip text and a perceivable boundary between tooltip content and surrounding surfaces. Meaning cannot depend on custom shadow or color alone.
+Forced-colors/high-contrast mode preserves readable tooltip text and a perceivable boundary between tooltip content and surrounding surfaces using system colors. Meaning does not depend on custom shadow or color alone.
 
 ## Token boundary
 
-Tooltip is a compact informational annotation surface, not a control and not a full grouped Card. The contract therefore reuses existing generic annotation geometry plus readable surface/content roles:
+Tooltip is a compact informational annotation surface, not a control and not a full grouped Card. The implementation reuses exactly the contract's existing roles:
 
 - `color.surface.panel`
 - `color.content.primary`
@@ -82,16 +86,25 @@ Tooltip is a compact informational annotation surface, not a control and not a f
 - `border.annotation.width`
 - `radius.annotation`
 - resting structural depth only
-- `motion.standard.duration` for optional non-spatial reveal/close timing
+- `motion.standard.duration` for non-spatial opacity timing
 - body typography roles
 
 Tooltip deliberately does not depend on target-size, focus-ring, press translation, hover/active depth, press/release motion, action surface, disabled opacity, or control geometry. Those belong to the described target or another interactive primitive.
 
-No Theme resolution scope or concrete token value changes in this contract-only slice.
+Rivet Light resolution now includes `core.tooltip`, but every Tooltip dependency already existed in the implemented/public Core dependency union. The exact dependency union therefore remains 55, and every concrete Theme token value remains byte-for-value unchanged; only resolution scope expands.
+
+## Canonical Web implementation
+
+The canonical implementation is split by responsibility:
+
+- `packages/adapters/web/components/tooltip.css` owns the bounded informational surface, logical placement, opacity-only visibility transition, wrapping, reduced-motion behavior, and forced-colors resilience.
+- `packages/adapters/web/components/tooltip.mjs` validates a real `aria-describedby` relationship to a `role="tooltip"` surface, rejects focusable/interactive Tooltip content, maintains `closed`/`open`/`dismissed`, preserves target focus and semantics, supports pointer transfer between target and Tooltip, and observes Escape dismissal.
+
+The adapter never manufactures a target role or tab stop and installs no click/touch/long-press behavior. The Tooltip element itself remains outside the tab order.
 
 ## Migration knowledge provenance
 
-This contract is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
+This implementation is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
 
 - Family conformance: `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626` — `COMPONENTS.md` explicitly states that Tooltips must not introduce movement that makes the target appear actionable when it is not, alongside the shared keyboard, touch, reduced-motion, RTL, semantic-token, and agent-readable laws.
 - Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` explicitly lists Tooltip under reusable Navigation + discovery capability.
@@ -101,4 +114,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `contract-only`. Implementation evidence and public-proof evidence remain `null`. This slice defines Tooltip semantics, states, token dependencies, accessibility, pointer/keyboard/touch behavior, provenance, and anti-patterns only; it does not add Tooltip runtime CSS/JavaScript, Theme scope/value changes, Foundry markup, deployable files, or browser tests.
+Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/tooltip.mjs`; public-proof evidence remains `null` until an exact merged-main browser artifact is deployed and independently verified through the normal public-proof lifecycle.

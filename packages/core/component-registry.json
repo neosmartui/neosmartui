@@ -141,9 +141,9 @@
     {
       "id": "core.tooltip",
       "contract": "components/tooltip.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/tooltip.mjs",
         "publicProof": null
       }
     }
