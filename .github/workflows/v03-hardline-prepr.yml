@@ -10,6 +10,7 @@ permissions:
 
 env:
   TARGET_SHA: b38f6bbf460670841e75aec0c7e74a7fb7af17e4
+  NEOSMARTUI_SOURCE_SHA: b38f6bbf460670841e75aec0c7e74a7fb7af17e4
 
 jobs:
   foundation:
