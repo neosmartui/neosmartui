@@ -23,7 +23,7 @@ try {
 const contracts = JSON.parse(await readFile(resolve(root, 'spec/core/token-contracts.json'), 'utf8'));
 const bundle = JSON.parse(await readFile(resolve(root, 'packages/themes/rivet-light/tokens.json'), 'utf8'));
 await writeFile(resolve(output, 'theme.css'), renderResolvedTokenCss(contracts, bundle));
-for (const file of ['button.css', 'checkbox.css', 'checkbox.mjs', 'input.css', 'input.mjs', 'radio.css', 'radio.mjs', 'switch.css', 'switch.mjs', 'tabs.css', 'tabs.mjs', 'textarea.css', 'textarea.mjs', 'select.css', 'select.mjs', 'card.css', 'badge.css', 'alert.css', 'field.css', 'breadcrumb.css', 'pagination.css', 'segmented-control.css', 'segmented-control.mjs']) {
+for (const file of ['button.css', 'checkbox.css', 'checkbox.mjs', 'input.css', 'input.mjs', 'radio.css', 'radio.mjs', 'switch.css', 'switch.mjs', 'tabs.css', 'tabs.mjs', 'textarea.css', 'textarea.mjs', 'select.css', 'select.mjs', 'card.css', 'badge.css', 'alert.css', 'field.css', 'breadcrumb.css', 'pagination.css', 'segmented-control.css', 'segmented-control.mjs', 'tooltip.css', 'tooltip.mjs']) {
   await cp(resolve(root, 'packages/adapters/web/components', file), resolve(output, file));
 }
 await writeFile(resolve(output, 'deployment.json'), `${JSON.stringify({
