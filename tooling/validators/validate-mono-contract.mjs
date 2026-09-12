@@ -22,8 +22,8 @@ const inventory = await json('migration/inventory.json');
 const family = inventory.sources.find((entry) => entry.repository === 'NeoBrutalism-shop/spec');
 if (!family || family.sha !== 'fbf499397f4e9a52d6e25c13921fd5377799c626' || family.status !== 'snapshot-pinned') fail('pinned family-spec authority drifted');
 if (family.copyPolicy !== 'knowledge-only-until-reviewed' || !family.evidencePaths?.includes('FLAVORS.md')) fail('family Flavor-law provenance boundary drifted');
-if (inventory.sources.some((entry) => /mono/i.test(entry.repository) || /mono/i.test(entry.legacyRole ?? ''))) fail('Mono contract must not invent a dedicated legacy Mono source');
-if (inventory.artifacts.some((entry) => /^legacy\.mono\./.test(entry.id))) fail('Mono contract must not invent legacy Mono artifacts');
+if (inventory.sources.some((entry) => /mono/i.test(entry.repository) || /mono/i.test(entry.legacyRole ?? ''))) fail('Mono implementation must not invent a dedicated legacy Mono source');
+if (inventory.artifacts.some((entry) => /^legacy\.mono\./.test(entry.id))) fail('Mono implementation must not invent legacy Mono artifacts');
 
 const flavor = await json('packages/flavors/mono/flavor.json');
 if (flavor.schema !== 'neosmartui/flavor@1' || flavor.id !== 'flavor.mono' || flavor.name !== 'Mono') fail('Mono Flavor identity is invalid');
@@ -42,30 +42,38 @@ if (theme.interaction?.model !== 'pressure-not-levitation' || theme.interaction?
 if (theme.icons?.strategy !== 'adapter-owned') fail('Mono Theme must not take renderer ownership of icons');
 
 const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileTypes: true })).filter((entry) => entry.isDirectory()).map((entry) => entry.name).sort();
-if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono contract expects exactly four official Flavor manifests; got ${flavorDirs.join(',')}`);
+if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono implementation expects exactly four official Flavor manifests; got ${flavorDirs.join(',')}`);
 
-for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/mono/index.${extension}`, `contract-only Mono must not add renderer override index.${extension}`);
-await expectAbsent('packages/themes/mono-light/tokens.json', 'contract-only Mono must not resolve token values');
-await expectAbsent('packages/themes/mono-light/resolution.json', 'contract-only Mono must not create a Theme resolution');
-await expectAbsent('packages/themes/mono-dark', 'contract-only Mono must not prematurely implement Mono Dark');
-await expectAbsent('apps/foundry/src/flavors/mono/index.html', 'contract-only Mono must not claim a dedicated Foundry route');
-await expectAbsent('evidence/public/flavor.mono.json', 'contract-only Mono must not claim public proof');
+for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/mono/index.${extension}`, `Mono implementation must not add renderer override index.${extension}`);
+await expectAbsent('packages/themes/mono-dark', 'Mono Light implementation must not prematurely implement Mono Dark');
+await expectAbsent('evidence/public/flavor.mono.json', 'implemented Mono must not claim public proof before deployment verification');
+
+const resolution = await json('packages/themes/mono-light/resolution.json');
+const bundle = await json('packages/themes/mono-light/tokens.json');
+if (resolution.schema !== 'neosmartui/theme-resolution@1' || resolution.flavor !== 'flavor.mono' || resolution.theme !== 'Mono Light' || resolution.bundle !== 'tokens.json') fail('Mono Light resolution binding is invalid');
+if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== 'flavor.mono' || bundle.theme !== 'Mono Light') fail('Mono Light resolved bundle identity is invalid');
+if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('Mono Light must bind the exact 18-component Core scope');
+if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('Mono Light must resolve exactly 55 unique semantic dependencies');
+
+for (const path of ['apps/foundry/src/flavors/mono/index.html', 'tests/browser/foundry-mono-light.spec.mjs', 'tooling/validators/validate-mono-theme.mjs']) await access(resolve(root, path));
 
 const docs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
 for (const marker of [
   'editorial black/white/gray NeoSmartUI flavor',
   '`flavor.mono`',
-  'Official migration maturity: `contract-only`',
+  'Official migration maturity: `implemented`',
+  'not public-proof yet',
   'no dedicated legacy Mono repository or Mono implementation artifact',
   'does not claim legacy Mono token values',
-  'does not',
   'Raw',
   'MUST NOT introduce generic hover lift',
-  '44px',
+  'exact resolved semantic dependency union: **55 token IDs**',
+  '`3px → 1px → 0`',
+  '`0px → 2px → 3px`',
   '`mono-theme.css`',
   '`/flavors/mono/`',
   'Mono Dark follows as its own concrete Theme instance',
-  'no Pages deployment'
-]) if (!docs.includes(marker)) fail(`Mono contract docs missing marker: ${marker}`);
+  'no Pages deployment from the feature branch'
+]) if (!docs.includes(marker)) fail(`Mono implementation docs missing marker: ${marker}`);
 
-console.log('[mono-contract] validated canonical Mono ownership, editorial monochrome contract, family-law provenance, and implementation/proof absences');
+console.log('[mono-contract] validated implemented Mono ownership, canonical provenance boundary, 18/55 resolution, and no dark/renderer/proof drift');

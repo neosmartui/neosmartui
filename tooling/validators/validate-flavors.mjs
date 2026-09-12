@@ -29,7 +29,7 @@ const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileT
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono contract slice expects exactly hardline,mono,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
+if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono implementation slice expects exactly hardline,mono,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
 
 const flavorKeys = ['$schema', 'schema', 'id', 'name', 'intent', 'interactionModel'];
 const hardline = await readJson('packages/flavors/hardline/flavor.json');
@@ -133,15 +133,34 @@ if (monoLight.motion?.model !== 'pressure-not-levitation' || monoLight.motion?.i
 if (monoLight.interaction?.model !== 'pressure-not-levitation' || monoLight.interaction?.selection !== 'seated') fail('Mono Light interaction must preserve pressure and seated selection');
 if (monoLight.icons?.strategy !== 'adapter-owned') fail('Mono Theme must not take renderer ownership of icons');
 
+const monoResolution = await readJson('packages/themes/mono-light/resolution.json');
+const monoBundle = await readJson('packages/themes/mono-light/tokens.json');
+if (monoResolution.schema !== 'neosmartui/theme-resolution@1' || monoResolution.flavor !== 'flavor.mono' || monoResolution.theme !== 'Mono Light' || monoResolution.bundle !== 'tokens.json') fail('Mono Light resolution identity is invalid');
+if (monoBundle.schema !== 'neosmartui/resolved-token-bundle@1' || monoBundle.flavor !== 'flavor.mono' || monoBundle.theme !== 'Mono Light') fail('Mono Light resolved bundle identity is invalid');
+if (monoResolution.scope.length !== 18 || monoBundle.scope.length !== 18 || [...monoResolution.scope].sort().join('|') !== [...monoBundle.scope].sort().join('|')) fail('Mono Light resolution and bundle must share the exact 18-component Core scope');
+if (monoBundle.values.length !== 55) fail(`Mono Light must resolve the exact shipping dependency union of 55 tokens; got ${monoBundle.values.length}`);
+const monoValues = toMap(monoBundle.values);
+if (monoValues.size !== 55) fail('Mono Light resolved token IDs must be unique');
+if (monoValues.get('border.control.width')?.value !== '2px' || monoValues.get('border.surface.width')?.value !== '2px' || monoValues.get('border.annotation.width')?.value !== '2px') fail('Mono Light must implement 2px print-like keylines');
+for (const id of ['radius.control', 'radius.surface', 'radius.annotation']) if (monoValues.get(id)?.value !== '0px') fail(`${id} must implement Mono square editorial geometry`);
+for (const axis of ['x', 'y']) {
+  if (monoValues.get(`depth.rest.${axis}`)?.value !== '3px' || monoValues.get(`depth.hover.${axis}`)?.value !== '1px' || monoValues.get(`depth.active.${axis}`)?.value !== '0px') fail(`Mono ${axis}-axis depth must implement ratified 3→1→0 pressure physics`);
+  if (monoValues.get(`press.hover.${axis}`)?.value !== '2px' || monoValues.get(`press.active.${axis}`)?.value !== '3px') fail(`Mono ${axis}-axis travel must implement ratified 0→2→3 pressure physics`);
+}
+if (monoValues.get('motion.press.duration')?.value !== '65ms' || monoValues.get('motion.release.duration')?.value !== '100ms' || monoValues.get('motion.standard.duration')?.value !== '140ms') fail('Mono Light timings must preserve restrained 65/100/140ms semantic timing');
+if (monoValues.get('focus.ring.width')?.value !== '3px' || monoValues.get('focus.ring.offset')?.value !== '3px') fail('Mono Light focus keyline must remain independently visible');
+if (monoValues.get('size.control.minimum')?.value !== '44px') fail('Mono Light must preserve the 44px minimum target');
+if (monoValues.get('color.surface.interactive')?.value !== '#ffffff' || monoValues.get('color.surface.panel')?.value !== '#f2f2f2') fail('Mono Light must preserve white/light-gray editorial surfaces');
+if (monoValues.get('color.action.primary.surface')?.value !== '#111111' || monoValues.get('color.action.primary.content')?.value !== '#ffffff') fail('Mono Light primary action must preserve black/white inverse pairing');
+if (monoValues.get('font.family.body')?.value !== 'ui-serif, Georgia, serif') fail('Mono Light must preserve serif-led editorial typography');
+
 for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) {
   await expectAbsent(`packages/flavors/hardline/index.${extension}`, `Hardline implementation must not introduce renderer override index.${extension}`);
   await expectAbsent(`packages/flavors/soft/index.${extension}`, `Soft implementation must not introduce renderer override index.${extension}`);
-  await expectAbsent(`packages/flavors/mono/index.${extension}`, `Mono contract must not introduce renderer override index.${extension}`);
+  await expectAbsent(`packages/flavors/mono/index.${extension}`, `Mono implementation must not introduce renderer override index.${extension}`);
 }
 await expectAbsent('packages/themes/soft-dark', 'Soft Light implementation must not prematurely implement Soft Dark');
-await expectAbsent('packages/themes/mono-light/tokens.json', 'Mono contract must not prematurely resolve token values');
-await expectAbsent('packages/themes/mono-light/resolution.json', 'Mono contract must not prematurely create a Theme resolution');
-await expectAbsent('packages/themes/mono-dark', 'Mono contract must not prematurely implement Mono Dark');
+await expectAbsent('packages/themes/mono-dark', 'Mono Light implementation must not prematurely implement Mono Dark');
 
 const hardlineDocs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
@@ -152,8 +171,8 @@ for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.so
   if (!softDocs.includes(marker)) fail(`Soft implementation docs missing marker: ${marker}`);
 }
 const monoDocs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
-for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `contract-only`', 'no dedicated legacy Mono repository or Mono implementation artifact', 'MUST NOT introduce generic hover lift', '`packages/themes/mono-light/theme.json`', 'Mono Dark follows as its own concrete Theme instance']) {
-  if (!monoDocs.includes(marker)) fail(`Mono contract docs missing marker: ${marker}`);
+for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `implemented`', 'not public-proof yet', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Mono Dark follows as its own concrete Theme instance']) {
+  if (!monoDocs.includes(marker)) fail(`Mono implementation docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated public-proof Hardline Light, implemented Soft Light resolution boundary, existing Rivet Flavor identity, and contract-only Mono Light descriptor');
+console.log('[flavors] validated public-proof Hardline Light, implemented Soft Light, existing Rivet Flavor identity, and implemented Mono Light resolution boundary');
