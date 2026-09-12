@@ -41,10 +41,24 @@ if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== 
 if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('public-proof Rivet Light must preserve the exact 18-component scope');
 if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('public-proof Rivet Light must preserve the exact 55-token dependency union');
 
+const dark = await json('packages/themes/rivet-dark/theme.json');
+if (dark.schema !== 'neosmartui/theme@1' || dark.name !== 'Rivet Dark' || dark.family !== 'neosmartui' || dark.category !== 'rivet') fail('Rivet Dark Theme contract identity is invalid');
+if (dark.color?.mode !== 'dark' || dark.color?.strategy !== 'industrial-lavender-lime-dark') fail('Rivet Dark must declare authored industrial dark color intent');
+if (dark.typography?.strategy !== 'sturdy-system-first' || dark.geometry?.profile !== 'mechanical' || dark.border?.profile !== 'strong' || dark.shadow?.model !== 'coherent-depth') fail('Rivet Dark must preserve Rivet structural expression');
+if (dark.spacing?.density !== 'comfortable' || dark.density?.control !== 'comfortable') fail('Rivet Dark must preserve comfortable density');
+if (dark.motion?.model !== 'pressure-not-levitation' || dark.interaction?.model !== 'pressure-not-levitation' || dark.icons?.strategy !== 'adapter-owned') fail('Rivet Dark must preserve pressure semantics and adapter ownership');
+
 for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/rivet/index.${extension}`, `Rivet public proof must not introduce renderer override index.${extension}`);
-await expectAbsent('packages/themes/rivet-dark', 'Rivet Light public proof must not prematurely implement Rivet Dark');
+for (const path of [
+  'packages/themes/rivet-dark/resolution.json',
+  'packages/themes/rivet-dark/tokens.json',
+  'apps/foundry/fragments/rivet-dark.html',
+  'tests/browser/foundry-rivet-dark.spec.mjs',
+  'tooling/validators/validate-rivet-dark-theme.mjs'
+]) await expectAbsent(path, `contract-only Rivet Dark must not include ${path}`);
 await access(resolve(root, 'apps/foundry/src/flavors/rivet/index.html'));
-await access(resolve(root, 'evidence/public/flavor.rivet.json'));
+const proof = await json('evidence/public/flavor.rivet.json');
+if (proof.implementationFiles.some((entry) => entry.path.includes('rivet-dark'))) fail('contract-only Rivet Dark must not mutate public-proof implementation bindings');
 
 const docs = await readFile(resolve(root, 'spec/flavors/RIVET.md'), 'utf8');
 for (const marker of [
@@ -63,8 +77,9 @@ for (const marker of [
   '`knowledge-only-until-reviewed`',
   'MUST NOT introduce generic hover lift',
   'Rivet Dark follows as its own concrete Theme instance',
+  'Rivet Dark contract maturity: `contract-only`',
   'Public-proof promotion does not redeploy Pages',
   'Rivet Light is complete through public proof'
-]) if (!docs.includes(marker)) fail(`Rivet public-proof docs missing marker: ${marker}`);
+]) if (!docs.includes(marker)) fail(`Rivet public-proof/Dark-contract docs missing marker: ${marker}`);
 
-console.log('[rivet-contract] validated public-proof Rivet Light ownership, pinned provenance, 18/55 boundary, and no dark/renderer fork');
+console.log('[rivet-contract] validated public-proof Rivet Light ownership/provenance/18-55 boundary plus descriptor-only Rivet Dark contract');
