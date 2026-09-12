@@ -11,6 +11,7 @@ Hardline is the flagship/default NeoSmartUI flavor. It owns visual and tactile e
 - Resolved Light bundle: `packages/themes/hardline-light/tokens.json`
 - Light Theme resolution: `packages/themes/hardline-light/resolution.json`
 - Interaction model: `pressure-not-levitation`
+- Maturity: `public-proof`
 - Hardline Light maturity: `public-proof`
 - Hardline Dark contract maturity: `contract-only`
 
@@ -42,7 +43,7 @@ The resolved bundle contains exactly the 55 semantic roles currently required by
 
 ## Hardline Dark contract
 
-`Hardline Dark` is the second concrete Theme instance of `flavor.hardline`. It exists as its own `neosmartui/theme@1` descriptor and must not be implemented as CSS inversion, filter-based dark mode, or hidden conditional values inside Hardline Light.
+Dark mode follows as its own concrete Theme instance rather than hidden conditional values inside the light Theme. `Hardline Dark` is that second concrete Theme instance of `flavor.hardline`. It exists as its own `neosmartui/theme@1` descriptor and must not be implemented as CSS inversion, filter-based dark mode, or hidden conditional values inside Hardline Light.
 
 Dark changes the semantic color resolution while preserving Hardline ownership and physics. Its implementation phase must resolve the same exact shipping 18-Core / 55-token semantic dependency boundary through the same shared Core adapters.
 
