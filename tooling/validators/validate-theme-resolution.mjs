@@ -99,7 +99,7 @@ const breadcrumbEntry = registry.components.find((entry) => entry.id === 'core.b
 if (!breadcrumbEntry || breadcrumbEntry.maturity !== 'public-proof' || breadcrumbEntry.evidence.publicProof !== 'evidence/public/core.breadcrumb.json') fail('core.breadcrumb must bind current public-proof evidence');
 if (breadcrumbEntry.evidence.implementation !== 'packages/adapters/web/components/breadcrumb.css') fail('core.breadcrumb must bind its CSS-only implementation evidence');
 const paginationEntry = registry.components.find((entry) => entry.id === 'core.pagination');
-if (!paginationEntry || paginationEntry.maturity !== 'implemented' || paginationEntry.evidence.publicProof !== null) fail('core.pagination must be implemented without claiming public proof in this slice');
+if (!paginationEntry || paginationEntry.maturity !== 'public-proof' || paginationEntry.evidence.publicProof !== 'evidence/public/core.pagination.json') fail('core.pagination must bind current public-proof evidence');
 if (paginationEntry.evidence.implementation !== 'packages/adapters/web/components/pagination.css') fail('core.pagination must bind its CSS-only implementation evidence');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');

@@ -103,4 +103,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/pagination.css`; public proof remains null until the exact merged-main Foundry artifact is deployed and the singleton proof cohort is refreshed. All 13 existing public-proof records remain untouched in this implementation slice.
+Maturity is `public-proof`. Canonical implementation evidence remains `packages/adapters/web/components/pagination.css` with exact blob SHA `998c8776f14cf509b1833fe4f978b5aee7eaa848` and canonical proof `evidence/public/core.pagination.json`. The proof is bound to merged source `7f88b4086286f14721f31a6d5c4e3aae616caa97`, merged-main Quality run `34659873718`, browser artifact `10287231563`, Pages commit `438bdd2db67e3dd57dea14d90e5c4d5114481155`, Pages tree `518fd19ce44692c318da91dc152737608cd1bbc9`, and Pages run `34660304985`. Live verification uses the deployed native Pagination markers and canonical GitHub Pages HTTPS endpoints; no Pagination JavaScript binder or runtime mutation is introduced by proof promotion.
