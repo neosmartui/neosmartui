@@ -33,7 +33,19 @@ const liveMarkers = new Map([
   ['core.tooltip', ['NeoSmartUI Foundry', 'core.tooltip', 'Tooltip keeps supplemental descriptions non-interactive', 'aria-describedby="tooltip-demo"', 'role="tooltip"', 'Read the permanent interaction rules', 'Continue without entering the tooltip']],
   ['core.combobox', ['NeoSmartUI Foundry', 'core.combobox', 'Editable single-selection Combobox', 'role="combobox"', 'aria-autocomplete="list"', 'aria-controls="combobox-listbox"', 'role="listbox"', 'Choose one framework', 'Show suggestions', 'Svelte · unavailable', 'No matching suggestions']],
   ['core.accordion', ['NeoSmartUI Foundry', 'core.accordion', 'Accordion discloses related content with real buttons', 'data-expansion="single"', 'data-expansion="multiple"', 'aria-controls="accordion-single-panel-a"']],
-  ['flavor.hardline', ['Hardline Light', 'ns-theme-hardline-light', 'Pressure, not levitation', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
+  ['flavor.hardline', [
+    'Hardline Light',
+    'ns-theme-hardline-light',
+    'Pressure, not levitation',
+    'Shared <code>core.button</code>',
+    'Shared <code>core.input</code>',
+    'hardline-dark-theme.css',
+    'ns-theme-hardline-dark',
+    'Hardline Dark',
+    'Concrete Dark Theme',
+    'Shared <code>core.button</code> · Dark',
+    'Shared <code>core.input</code> · Dark'
+  ]],
   ['flavor.mono', ['Mono Light', 'ns-theme-mono-light', 'Editorial pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
   ['flavor.rivet', ['Rivet Light', 'ns-theme-rivet-light', 'Mechanical pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
   ['flavor.soft', ['Soft Light', 'ns-theme-soft-light', 'Compress, never float', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']]
@@ -45,6 +57,27 @@ const assetMarkers = new Map([
   ['flavor.rivet', ['.ns-theme-rivet-light {', '--ns-border-control-width: 3px;', '--ns-radius-control: 6px;', '--ns-depth-rest-x: 5px;', '--ns-depth-hover-x: 3px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 5px;', '--ns-motion-press-duration: 80ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #b9a1ed;']],
   ['flavor.soft', ['.ns-theme-soft-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 8px;', '--ns-radius-surface: 12px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1.5px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']]
 ]);
+
+const hardlineDarkAssetMarkers = [
+  '.ns-theme-hardline-dark {',
+  '--ns-color-surface-interactive: #141414;',
+  '--ns-color-surface-panel: #1d1d1d;',
+  '--ns-color-content-primary: #f5f5f5;',
+  '--ns-color-action-primary-surface: #ffd84d;',
+  '--ns-color-action-primary-content: #111111;',
+  '--ns-radius-control: 0px;',
+  '--ns-depth-rest-x: 4px;',
+  '--ns-depth-hover-x: 2px;',
+  '--ns-depth-active-x: 0px;',
+  '--ns-press-active-x: 4px;',
+  '--ns-motion-press-duration: 70ms;',
+  '--ns-motion-release-duration: 110ms;',
+  '--ns-motion-standard-duration: 170ms;',
+  '--ns-size-control-minimum: 44px;',
+  '--ns-color-focus-ring: #8fb3ff;',
+  '--ns-focus-ring-width: 3px;',
+  '--ns-focus-ring-offset: 3px;'
+];
 
 const fetchWithRetry = async (url, attempts = 6) => {
   let lastError;
@@ -81,7 +114,11 @@ for (const claim of claims) {
   for (const assetUrl of proof.live.assetUrls ?? []) {
     const assetResponse = await fetchWithRetry(assetUrl);
     const asset = await assetResponse.text();
-    for (const marker of assetMarkers.get(claim.id) ?? []) if (!asset.includes(marker)) throw new Error(`[public-proof-live] ${claim.id} live asset ${assetUrl} missing ${marker}`);
+    const markersForAsset =
+      claim.id === 'flavor.hardline' && assetUrl === 'https://neosmartui.github.io/hardline-dark-theme.css'
+        ? hardlineDarkAssetMarkers
+        : assetMarkers.get(claim.id) ?? [];
+    for (const marker of markersForAsset) if (!asset.includes(marker)) throw new Error(`[public-proof-live] ${claim.id} live asset ${assetUrl} missing ${marker}`);
   }
   console.log(`[public-proof-live] ${claim.id} verified at ${pageResponse.url}; deployment record ${recordResponse.url} = ${record.sourceSha}`);
 }
