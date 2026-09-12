@@ -123,10 +123,10 @@
     {
       "id": "core.pagination",
       "contract": "components/pagination.json",
-      "maturity": "implemented",
+      "maturity": "public-proof",
       "evidence": {
         "implementation": "packages/adapters/web/components/pagination.css",
-        "publicProof": null
+        "publicProof": "evidence/public/core.pagination.json"
       }
     }
   ]
