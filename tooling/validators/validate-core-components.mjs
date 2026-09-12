@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 15) fail('fifteenth Core slice must contain exactly fifteen honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 16) fail('sixteenth Core slice must contain exactly sixteen honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -233,6 +233,17 @@ for (const marker of ['export function syncSegmentedControl', 'export function s
 for (const forbiddenMarker of ['addEventListener(\'keydown\'', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', "event.key === 'Home'", "event.key === 'End'", 'role="tablist"', 'role="tab"']) if (segmentedAdapter.includes(forbiddenMarker)) fail(`segmented-control.mjs must not manufacture Tabs/radio composite behavior: ${forbiddenMarker}`);
 const segmentedDocs = await readFile(resolve(root, 'packages/core/components/segmented-control.md'), 'utf8');
 for (const marker of ['Segmented Control is a button-based mode selector', 'real `<button type="button">` segments', '`aria-pressed="true"`', 'Use `core.radio`', 'Use `core.tabs`', 'MUST NOT expose `role="tablist"`', 'Core does not create a roving-focus composite', 'effective target MUST meet or exceed `size.control.minimum`', 'does not claim a Rivet Segmented Control implementation artifact', 'exact dependency union therefore remains 55', 'installs no `keydown` handler', 'Maturity is `public-proof`']) if (!segmentedDocs.includes(marker)) fail(`segmented-control.md missing marker: ${marker}`);
+
+const tooltip = await readJson(resolve(root, 'packages/core/components/tooltip.json'));
+const tooltipStates = new Set(['closed', 'open', 'dismissed']);
+if (tooltip.states.length !== tooltipStates.size || !tooltip.states.every((state) => tooltipStates.has(state))) fail('core.tooltip must expose exactly closed/open/dismissed states');
+for (const token of ['color.surface.panel', 'color.content.primary', 'color.border.strong', 'space.annotation.inline', 'space.annotation.block', 'border.annotation.width', 'radius.annotation', 'depth.rest.x', 'depth.rest.y', 'motion.standard.duration', 'font.family.body', 'font.size.body', 'font.weight.regular']) if (!tooltip.dependencies.includes(token)) fail(`core.tooltip missing semantic annotation/surface token ${token}`);
+for (const forbiddenToken of ['color.surface.interactive', 'color.action.primary.surface', 'color.action.primary.content', 'color.focus.ring', 'space.control.inline', 'space.control.block', 'space.field.gap', 'space.navigation.gap', 'space.surface.inline', 'space.surface.block', 'border.control.width', 'border.surface.width', 'radius.control', 'radius.surface', 'size.control.minimum', 'focus.ring.width', 'focus.ring.offset', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'opacity.disabled']) if (tooltip.dependencies.includes(forbiddenToken)) fail(`core.tooltip informational contract must not borrow target/control/press token ${forbiddenToken}`);
+const tooltipEntry = registry.components.find((entry) => entry.id === 'core.tooltip');
+if (!tooltipEntry || tooltipEntry.maturity !== 'contract-only') fail('core.tooltip must remain contract-only in this slice');
+if (tooltipEntry.evidence.implementation !== null || tooltipEntry.evidence.publicProof !== null) fail('contract-only core.tooltip evidence must remain null');
+const tooltipDocs = await readFile(resolve(root, 'packages/core/components/tooltip.md'), 'utf8');
+for (const marker of ['Tooltip content is supplemental, not essential', '`role="tooltip"`', '`aria-describedby`', 'MUST NOT contain buttons, links, inputs, menus, dismiss controls', 'Escape dismisses it without moving focus from the target', 'MUST NOT trap focus', 'Tooltips MUST NOT introduce movement that makes the target appear actionable', 'MUST NOT hijack tap, long-press, context-menu, text-selection, or native activation behavior', 'contains no `components/ui/tooltip.tsx`', 'Maturity is `contract-only`']) if (!tooltipDocs.includes(marker)) fail(`tooltip.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);

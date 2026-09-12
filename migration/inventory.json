@@ -511,6 +511,42 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use single-selection transfer behavior that leaves exactly one peer aria-pressed=true after activation as reference-only knowledge; native button activation and NeoSmartUI keyboard semantics remain authoritative and no source code is copied."
+    },
+    {
+      "id": "legacy.spec.tooltip-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt the explicit Tooltip law that supplemental reveal must not introduce movement that makes the described target appear actionable, together with shared keyboard, touch, reduced-motion, RTL, semantic-token, and agent-readable laws."
+    },
+    {
+      "id": "legacy.soft.tooltip-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Tooltip Navigation + discovery listing as evidence that concise supplemental target descriptions belong in reusable Core."
+    },
+    {
+      "id": "legacy.soft.tooltip-anatomy",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "components.html",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the aria-describedby target relationship and distinct role=tooltip surface as semantic anatomy knowledge only; no legacy implementation code is copied."
+    },
+    {
+      "id": "legacy.soft.tooltip-visual",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "src/components/navigation.css",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the compact bounded informational surface, annotation-like spacing, border/radius, readable text, and stable structural depth as visual knowledge only; NeoSmartUI keeps semantic token ownership and copies no source code."
     }
   ]
 }
