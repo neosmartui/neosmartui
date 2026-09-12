@@ -46,9 +46,10 @@ const assertCombobox = (root) => {
 const normalize = (value) => value.toLocaleLowerCase().trim();
 const optionValue = (option) => option.dataset.value ?? option.textContent?.trim() ?? '';
 
-const setExpanded = ({ root, input, popup }, expanded) => {
+const setExpanded = ({ root, input, popup, trigger }, expanded) => {
   root.dataset.state = expanded ? 'open' : 'closed';
   input.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  if (trigger) trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
   popup.hidden = !expanded;
 };
 
