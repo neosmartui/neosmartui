@@ -1,13 +1,91 @@
 name: Slice 18 Accordion proof refresh
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - ci/slice18-accordion-proof-refresh
 
 permissions:
   contents: write
 
 jobs:
-  idle:
+  refresh:
     runs-on: ubuntu-latest
     steps:
-      - run: echo staged
+      - name: Check out automation
+        uses: actions/checkout@v4
+        with:
+          path: automation
+
+      - name: Check out exact proof branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/v0.2-core-accordion-public-proof
+          fetch-depth: 0
+          path: work
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply bounded proof refresh
+        working-directory: work
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected=57dc766ece8eca13b8c60b6f14615692ecdb51e8
+          test "$(git rev-parse HEAD)" = "$expected"
+          git fetch origin feat/v0.2-core-accordion-public-proof
+          test "$(git rev-parse origin/feat/v0.2-core-accordion-public-proof)" = "$expected"
+          python3 ../automation/ci/slice18/refresh_proofs.py
+          python3 ../automation/ci/slice18/refresh_docs.py
+          python3 ../automation/ci/slice18/refresh_validators.py
+
+      - name: Validate proof promotion before mutation
+        working-directory: work
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run quality
+          npm run validate:proof:live
+
+      - name: Enforce exact proof-only diff and push
+        working-directory: work
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t actual < <(git diff --name-only | sort)
+          mapfile -t expected < <(printf '%s\n' \
+            evidence/public/core.accordion.json \
+            evidence/public/core.alert.json \
+            evidence/public/core.badge.json \
+            evidence/public/core.breadcrumb.json \
+            evidence/public/core.button.json \
+            evidence/public/core.card.json \
+            evidence/public/core.checkbox.json \
+            evidence/public/core.combobox.json \
+            evidence/public/core.field.json \
+            evidence/public/core.input.json \
+            evidence/public/core.pagination.json \
+            evidence/public/core.radio.json \
+            evidence/public/core.segmented-control.json \
+            evidence/public/core.select.json \
+            evidence/public/core.switch.json \
+            evidence/public/core.tabs.json \
+            evidence/public/core.textarea.json \
+            evidence/public/core.tooltip.json \
+            packages/core/component-registry.json \
+            packages/core/components/accordion.md \
+            spec/core/COMPONENTS.md \
+            tooling/validators/validate-core-components.mjs \
+            tooling/validators/validate-public-proof-live.mjs \
+            tooling/validators/validate-theme-resolution.mjs | sort)
+          test "${#actual[@]}" -eq 24
+          test "${actual[*]}" = "${expected[*]}"
+          git fetch origin feat/v0.2-core-accordion-public-proof
+          test "$(git rev-parse origin/feat/v0.2-core-accordion-public-proof)" = "57dc766ece8eca13b8c60b6f14615692ecdb51e8"
+          git config user.name "MrGPT007"
+          git config user.email "mrgpt.net@gmail.com"
+          git add -- "${actual[@]}"
+          git commit -m "core: promote core.accordion public proof"
+          git push origin HEAD:feat/v0.2-core-accordion-public-proof
