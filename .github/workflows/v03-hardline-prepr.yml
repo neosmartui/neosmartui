@@ -1,0 +1,46 @@
+name: v0.3 Hardline pre-PR validation
+
+on:
+  push:
+    branches:
+      - ci/v0.3-hardline-contract-validation
+
+permissions:
+  contents: read
+
+env:
+  TARGET_SHA: b38f6bbf460670841e75aec0c7e74a7fb7af17e4
+
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_SHA }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run full quality chain
+        run: npm run quality
+      - name: Re-verify existing public proofs live
+        run: npm run validate:proof:live
+
+  browser:
+    needs: foundation
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TARGET_SHA }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install pinned Playwright test runtime
+        run: npm install --no-save --no-package-lock @playwright/test@1.63.0
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build exact-SHA Foundry artifact
+        run: npm run build:foundry
+      - name: Run unchanged browser QA
+        run: npm run test:browser
