@@ -6,10 +6,10 @@ Mono is the editorial black/white/gray NeoSmartUI flavor. It makes typography, h
 
 - Flavor ID: `flavor.mono`
 - Flavor schema: `neosmartui/flavor@1`
-- First Theme descriptor: `packages/themes/mono-light/theme.json`
+- First implemented Theme: `packages/themes/mono-light/theme.json`
 - Interaction model: `pressure-not-levitation`
-- Official migration maturity: `contract-only`
-- Public-proof status: **not yet claimed**
+- Official migration maturity: `implemented`
+- Public-proof status: **not public-proof yet**
 
 ## Canonical authority and provenance boundary
 
@@ -17,7 +17,7 @@ The NeoSmartUI Canonical PRD is the direct product authority for Mono. It names 
 
 The pinned family source `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626` supplies cross-flavor laws through `FLAVORS.md`: flavors may change palette, typography, borders, radius, depth, spacing, motion, icon treatment, surfaces, and visual density, but must preserve compress-never-float direction, coherent depth/travel, immediate acknowledgement, equivalent touch/pointer/keyboard semantics, reduced motion, semantic state meaning, accessible focus, and machine-readable intent.
 
-There is **no dedicated legacy Mono repository or Mono implementation artifact in the current migration ledger**. That absence is intentional evidence, not a gap to fill by guessing. This contract therefore does not claim legacy Mono token values, copy implementation code from another flavor, or silently relabel the family spec's separate `Raw` personality as Mono. Mono's concrete Theme values will be authored under NeoSmartUI authority during the implementation phase and must remain traceable to this contract.
+There is **no dedicated legacy Mono repository or Mono implementation artifact in the current migration ledger**. That absence remains intentional evidence. Mono therefore does not claim legacy Mono token values, copy implementation code from another flavor, or silently relabel the family spec's separate `Raw` personality as Mono. The concrete Mono Light values below are authored under NeoSmartUI authority and trace directly to the ratified Mono contract.
 
 ## Expression contract
 
@@ -36,27 +36,68 @@ Mono owns an editorial monochrome expression:
 
 Mono MUST NOT introduce generic hover lift, decorative motion that implies false interactivity, or business/domain behavior. It MUST NOT own Button/Dialog/Product/Checkout/Billing semantics. Those remain Core/Vertical responsibilities.
 
-This contract deliberately does **not** choose final grayscale values, border widths, radii, depth distances, motion durations, font families, or spacing values. Those belong to the separate implementation slice and must be resolved against the exact shipping Core dependency union rather than invented here as pseudo-proof.
+## Mono Light implementation
 
-## Mono Light contract boundary
+Mono Light resolves the exact currently shipping Core surface:
 
-`packages/themes/mono-light/theme.json` is a descriptor-only Theme instance. It records the intended categories—editorial monochrome color, type-led hierarchy, structured geometry, print-like keylines, crisp monochrome depth, restrained pressure motion, seated selection, and adapter-owned icons—without resolving any semantic token values yet.
+- implemented/public-proof Core scope: **18 components**;
+- exact resolved semantic dependency union: **55 token IDs**;
+- resolved bundle: `packages/themes/mono-light/tokens.json`;
+- resolution contract: `packages/themes/mono-light/resolution.json`;
+- scoped generated CSS: `mono-theme.css` under `.ns-theme-mono-light`;
+- Foundry route: `/flavors/mono/`.
 
-The implementation phase must:
+The implementation keeps the existing Web Core adapters shared. It does not add a Mono renderer override or fork component semantics.
 
-1. resolve exactly the shipping implemented/public-proof Core component scope;
-2. resolve exactly the semantic token dependency union required by that scope;
-3. define a coherent monochrome pressure model in which visible depth and inward travel remain physically consistent;
-4. choose concrete grayscale values with sufficient contrast and non-color state meaning;
-5. preserve a minimum 44px target and independent visible keyboard focus;
-6. keep existing Core adapters shared rather than forking component behavior;
-7. add scoped `mono-theme.css`, a dedicated `/flavors/mono/` Foundry route, and additive browser evidence covering shared-adapter identity, pressure physics, static/editing stability, reduced motion, forced colors, focus, RTL/localization/narrow containment, and monochrome state clarity;
-8. merge green, verify merged-main, deploy only the exact merged-main CI artifact, verify native Pages, and only then promote public proof.
+### Editorial geometry and pressure
+
+- control/surface/annotation keylines: `2px`;
+- control/surface/annotation radius: `0px`;
+- structural depth: `3px → 1px → 0` for rest → hover → active;
+- inward travel: `0px → 2px → 3px`;
+- each axis remains physically coherent: rest depth equals hover depth + hover travel and active depth + active travel;
+- minimum interactive target: `44px`;
+- focus keyline: `3px` width with `3px` offset;
+- semantic timings: `65ms` press, `100ms` release, `140ms` standard.
+
+### Editorial monochrome palette
+
+Mono Light deliberately keeps every resolved color role grayscale:
+
+- interactive surface `#ffffff`;
+- panel surface `#f2f2f2`;
+- primary content / strong boundary `#111111`;
+- secondary content `#555555`;
+- primary action `#111111` with `#ffffff` content;
+- focus ring `#000000`;
+- semantic state surfaces remain grayscale and are paired with explicit written labels rather than color-only meaning.
+
+### Editorial typography and rhythm
+
+- body family: `ui-serif, Georgia, serif`;
+- regular/emphasis/strong weights: `400 / 700 / 800`;
+- grouped surfaces use `1.25rem` editorial breathing room;
+- compact annotations remain rectangular rather than pill-shaped;
+- responsive field and navigation roles continue to use semantic tokens rather than component-local values.
+
+## Browser and accessibility evidence boundary
+
+The implementation adds additive browser coverage for:
+
+1. shared Core adapter identity and the scoped Mono Theme;
+2. exact `3 → 1 → 0` depth and `0 → 2 → 3` pressure travel;
+3. non-pressable input/card/badge stability;
+4. grayscale state surfaces plus explicit written semantic labels;
+5. reduced-motion state acknowledgement;
+6. forced-colors focus, boundaries, and normal Tab order;
+7. RTL plus long localized narrow-layout containment.
+
+These tests are implementation evidence only. They do **not** claim public proof before merged-main deployment and native Pages verification.
 
 ## Dark Theme lifecycle
 
 Mono Dark follows as its own concrete Theme instance. It MUST NOT be implemented as a hidden conditional mutation, CSS inversion filter, or implicit side effect of Mono Light.
 
-## Contract exclusions
+## Current exclusions
 
-This slice adds no resolved `tokens.json`, no `resolution.json`, no Mono renderer override, no Mono Dark Theme, no dedicated `/flavors/mono/` Foundry route, no browser tests that pretend implementation exists, no `flavor.mono` public-proof record, and no Pages deployment.
+This implementation adds no Mono renderer override, no Mono Dark Theme, no `flavor.mono` public-proof record, and no Pages deployment from the feature branch. Public proof can be promoted only after the exact merged-main CI artifact is deployed and verified on native GitHub Pages.
