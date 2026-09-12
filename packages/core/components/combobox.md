@@ -126,4 +126,6 @@ This implementation is a clean NeoSmartUI definition informed by pinned legacy e
 
 ## Maturity
 
-Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/combobox.mjs`; `packages/adapters/web/components/combobox.css` is the paired visual adapter. Public-proof evidence remains `null` until a later lifecycle stage independently verifies the merged-main artifact, deploys that exact artifact, verifies native Pages, and promotes the singleton proof cohort.
+Maturity is `public-proof`. Canonical implementation evidence remains `packages/adapters/web/components/combobox.mjs`, paired visual evidence remains `packages/adapters/web/components/combobox.css`, and canonical public proof is `evidence/public/core.combobox.json`.
+
+The singleton public-proof cohort binds merged source `e492fc06fd14d22087c0b428d2788d3d9824212a`, merged-main Quality run `34681815707`, browser artifact `10294780025`, deployment commit `3d20426f83cb2a30431c36300f4f842efdbe3de9`, deployment tree `ce8daa808c0195dbf90a88bd7335bb9a8baec6ca`, and native Pages run `34682319293`. Structural proof validation recomputes both canonical Combobox implementation blobs, and live verification requires the deployed editable Combobox/listbox marker contract. All seventeen public-proof Core components share this singleton cohort while retaining their own implementation blob bindings.

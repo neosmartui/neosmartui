@@ -21,7 +21,8 @@ const liveMarkers = new Map([
   ['core.breadcrumb', ['NeoSmartUI Foundry', 'core.breadcrumb', 'Ancestor locations stay native links', 'aria-current="page"']],
   ['core.pagination', ['NeoSmartUI Foundry', 'core.pagination', 'Pagination keeps page destinations as native links with 44px tactile targets.', 'aria-current="page"', 'aria-label="Next page"']],
   ['core.segmented-control', ['NeoSmartUI Foundry', 'core.segmented-control', 'View mode', 'Overview', 'Activity', 'History', 'normal Tab, Space, and Enter button behavior']],
-  ['core.tooltip', ['NeoSmartUI Foundry', 'core.tooltip', 'Tooltip keeps supplemental descriptions non-interactive', 'aria-describedby="tooltip-demo"', 'role="tooltip"', 'Read the permanent interaction rules', 'Continue without entering the tooltip']]
+  ['core.tooltip', ['NeoSmartUI Foundry', 'core.tooltip', 'Tooltip keeps supplemental descriptions non-interactive', 'aria-describedby="tooltip-demo"', 'role="tooltip"', 'Read the permanent interaction rules', 'Continue without entering the tooltip']],
+  ['core.combobox', ['NeoSmartUI Foundry', 'core.combobox', 'Editable single-selection Combobox', 'role="combobox"', 'aria-autocomplete="list"', 'aria-controls="combobox-listbox"', 'role="listbox"', 'Choose one framework', 'Show suggestions', 'Svelte · unavailable', 'No matching suggestions']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {

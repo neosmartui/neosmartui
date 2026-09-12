@@ -49,7 +49,7 @@ for (const entry of bundle.values) {
 }
 for (const dependency of requiredDependencies) if (!values.has(dependency)) fail(`unresolved implemented-component token dependency ${dependency}`);
 if (values.size !== requiredDependencies.size) fail('resolved bundle must be the exact union of implemented/public-proof Core component dependencies');
-if (requiredDependencies.size !== 55) fail('Slice 17 implementation must preserve the exact implemented/public-proof dependency union at 55');
+if (requiredDependencies.size !== 55) fail('Slice 17 public-proof promotion must preserve the exact implemented/public-proof dependency union at 55');
 
 for (const axis of ['x', 'y']) {
   const rest = px(values.get(`depth.rest.${axis}`));
@@ -108,7 +108,7 @@ const tooltipEntry = registry.components.find((entry) => entry.id === 'core.tool
 if (!tooltipEntry || tooltipEntry.maturity !== 'public-proof' || tooltipEntry.evidence.publicProof !== 'evidence/public/core.tooltip.json') fail('core.tooltip must bind current public-proof evidence');
 if (tooltipEntry.evidence.implementation !== 'packages/adapters/web/components/tooltip.mjs') fail('core.tooltip must bind its canonical Web adapter');
 const comboboxEntry = registry.components.find((entry) => entry.id === 'core.combobox');
-if (!comboboxEntry || comboboxEntry.maturity !== 'implemented' || comboboxEntry.evidence.publicProof !== null) fail('core.combobox must be implemented without public-proof evidence in Slice 17');
+if (!comboboxEntry || comboboxEntry.maturity !== 'public-proof' || comboboxEntry.evidence.publicProof !== 'evidence/public/core.combobox.json') fail('core.combobox must bind current public-proof evidence');
 if (comboboxEntry.evidence.implementation !== 'packages/adapters/web/components/combobox.mjs') fail('core.combobox must bind its canonical Web adapter');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
