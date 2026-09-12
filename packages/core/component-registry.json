@@ -150,9 +150,9 @@
     {
       "id": "core.combobox",
       "contract": "components/combobox.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/combobox.mjs",
         "publicProof": null
       }
     }
