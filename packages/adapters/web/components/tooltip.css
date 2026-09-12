@@ -1,10 +1,10 @@
 .ns-tooltip {
-  position: absolute;
+  position: fixed;
   z-index: 10;
-  inset-block-start: calc(100% + var(--ns-space-annotation-block));
-  inset-inline-start: 0;
+  inset: auto;
+  box-sizing: border-box;
   inline-size: max-content;
-  max-inline-size: 18rem;
+  max-inline-size: min(18rem, calc(100vw - var(--ns-space-annotation-inline) - var(--ns-space-annotation-inline)));
   padding-block: var(--ns-space-annotation-block);
   padding-inline: var(--ns-space-annotation-inline);
   border: var(--ns-border-annotation-width) solid var(--ns-color-border-strong);
