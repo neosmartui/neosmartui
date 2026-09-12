@@ -43,29 +43,47 @@ for (const path of [
   'tests/browser/foundry-hardline-dark.spec.mjs',
   'tooling/validators/validate-hardline-dark-theme.mjs'
 ]) await access(resolve(root, path));
-await expectAbsent('apps/foundry/src/flavors/hardline-dark', 'Hardline Dark implementation must extend the canonical Hardline Flavor route rather than creating a route fork');
-
-const proof = await json('evidence/public/flavor.hardline.json');
-if (proof.flavor !== 'flavor.hardline') fail('existing Hardline public-proof subject drifted');
-if (proof.implementationFiles.some((entry) => entry.path.includes('hardline-dark'))) fail('implemented Hardline Dark must not claim public proof before merged-main deployment and live verification');
-const provenRoute = proof.implementationFiles.find((entry) => entry.path === 'apps/foundry/src/flavors/hardline/index.html');
-if (!provenRoute) fail('existing Hardline public proof must retain the canonical Light route source binding during Dark implementation');
-const routeBytes = await readFile(resolve(root, provenRoute.path));
-if (gitBlobSha(routeBytes) !== provenRoute.blobSha) fail('Hardline Dark implementation must not mutate the already-proven Light route source before deployment/proof promotion');
+await expectAbsent('apps/foundry/src/flavors/hardline-dark', 'Hardline Dark must extend the canonical Hardline Flavor route rather than creating a route fork');
 
 const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
 for (const marker of [
-  "apps/foundry/fragments/hardline-dark.html",
-  "hardline-dark-theme.css",
-  "flavors/hardline/index.html",
-  "Hardline route is missing the Light Theme stylesheet marker required for Dark assembly",
-  "Hardline route is missing the canonical return-link insertion marker required for Dark assembly"
+  'apps/foundry/fragments/hardline-dark.html',
+  'hardline-dark-theme.css',
+  'flavors/hardline/index.html',
+  'Hardline route is missing the Light Theme stylesheet marker required for Dark assembly',
+  'Hardline route is missing the canonical return-link insertion marker required for Dark assembly'
 ]) if (!builder.includes(marker)) fail(`Hardline Dark builder missing proof-safe assembly marker: ${marker}`);
+
+const proof = await json('evidence/public/flavor.hardline.json');
+if (proof.flavor !== 'flavor.hardline') fail('Hardline public-proof subject drifted');
+const requiredProofPaths = [
+  'packages/themes/hardline-light/theme.json',
+  'packages/themes/hardline-light/resolution.json',
+  'packages/themes/hardline-light/tokens.json',
+  'apps/foundry/src/flavors/hardline/index.html',
+  'packages/themes/hardline-dark/theme.json',
+  'packages/themes/hardline-dark/resolution.json',
+  'packages/themes/hardline-dark/tokens.json',
+  'apps/foundry/fragments/hardline-dark.html',
+  'tooling/foundry/build.mjs'
+];
+const proofByPath = new Map(proof.implementationFiles.map((entry) => [entry.path, entry.blobSha]));
+if (proofByPath.size !== requiredProofPaths.length) fail('Hardline public proof must bind exactly the Light source inputs, Dark source inputs, and deterministic builder');
+for (const path of requiredProofPaths) {
+  const expected = proofByPath.get(path);
+  if (!expected) fail(`Hardline public proof missing implementation binding: ${path}`);
+  const actual = gitBlobSha(await readFile(resolve(root, path)));
+  if (actual !== expected) fail(`Hardline public proof is stale for ${path}: expected ${expected}, got ${actual}`);
+}
+if (proof.live.pageUrl !== 'https://neosmartui.github.io/flavors/hardline/') fail('Hardline public proof must retain the canonical Flavor route');
+for (const assetUrl of ['https://neosmartui.github.io/hardline-theme.css', 'https://neosmartui.github.io/hardline-dark-theme.css']) {
+  if (!(proof.live.assetUrls ?? []).includes(assetUrl)) fail(`Hardline public proof missing live Theme asset: ${assetUrl}`);
+}
 
 const docs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of [
   'Implemented dark Theme: `packages/themes/hardline-dark/theme.json`',
-  'Hardline Dark implementation maturity: `implemented`',
+  'Hardline Dark maturity: `public-proof`',
   'second concrete Theme instance of `flavor.hardline`',
   'not implemented as CSS inversion, filter-based dark mode, or hidden conditional values inside Hardline Light',
   'exact shipping 18-Core / 55-token semantic dependency boundary',
@@ -76,8 +94,8 @@ for (const marker of [
   'Light and Dark together',
   '`apps/foundry/fragments/hardline-dark.html`',
   'proven Light source route remains byte-identical',
-  'Hardline Dark is implemented but is not public proof yet',
-  'No Pages deployment occurs from the implementation branch'
-]) if (!docs.includes(marker)) fail(`Hardline Dark implementation docs missing marker: ${marker}`);
+  'Hardline Dark is `public-proof`',
+  'Public-proof promotion does not redeploy Pages'
+]) if (!docs.includes(marker)) fail(`Hardline Dark public-proof docs missing marker: ${marker}`);
 
-console.log('[hardline-dark-contract] validated implemented Hardline Dark, proof-safe route assembly, shared adapters, and no premature proof');
+console.log('[hardline-dark-contract] validated public-proof Hardline Dark, proof-safe route assembly, exact implementation bindings, shared adapters, and singleton live assets');

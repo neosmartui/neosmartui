@@ -15,8 +15,7 @@ Hardline is the flagship/default NeoSmartUI flavor. It owns visual and tactile e
 - Interaction model: `pressure-not-levitation`
 - Maturity: `public-proof`
 - Hardline Light maturity: `public-proof`
-- Hardline Dark implementation maturity: `implemented`
-- Hardline Dark public-proof status: **not public-proof yet**
+- Hardline Dark maturity: `public-proof`
 
 ## Expression contract
 
@@ -78,13 +77,13 @@ The Dark Theme is deliberately resolved rather than inverted:
 
 The dedicated Theme validator requires at least `4.5:1` authored contrast for primary and secondary text, action content, and the state badge pairings used by shared Core adapters. Written labels remain authoritative for status meaning, so color is never the only state signal.
 
-The existing `/flavors/hardline/` proof surface remains the canonical Flavor route. During implementation, its already-proven Light source file stays untouched: the proven Light source route remains byte-identical to the blob recorded in `evidence/public/flavor.hardline.json`. The Dark demo is authored separately in `apps/foundry/fragments/hardline-dark.html` so implementation work does not stale the existing public-proof binding before a new deployment exists.
+The existing `/flavors/hardline/` proof surface remains the canonical Flavor route. Its already-proven Light source file stays untouched: the proven Light source route remains byte-identical to the blob recorded in `evidence/public/flavor.hardline.json`. The Dark demo is authored separately in `apps/foundry/fragments/hardline-dark.html`.
 
-The deterministic Foundry builder extends the **deployed artifact** for that same canonical route: it copies the proven Light source page, injects the generated `hardline-dark-theme.css` link, injects `apps/foundry/fragments/hardline-dark.html` before the route's existing return link, and writes only the artifact copy under `dist/foundry/flavors/hardline/index.html`. Light and Dark together therefore appear on the one canonical Hardline route without mutating the already-proven Light source blob. The deployed Light section remains `.ns-theme-hardline-light`; the injected Dark section is scoped by `.ns-theme-hardline-dark` and consumes the same `.ns-button`, `.ns-input`, `.ns-card`, and `.ns-badge` adapter classes. The build emits `hardline-theme.css` and `hardline-dark-theme.css` from the two independent resolved bundles.
+The deterministic Foundry builder extends the deployed artifact for that same canonical route: it copies the proven Light source page, injects the generated `hardline-dark-theme.css` link, injects `apps/foundry/fragments/hardline-dark.html` before the route's existing return link, and writes only the artifact copy under `dist/foundry/flavors/hardline/index.html`. Light and Dark together therefore appear on the one canonical Hardline route without mutating the already-proven Light source blob. The deployed Light section remains `.ns-theme-hardline-light`; the injected Dark section is scoped by `.ns-theme-hardline-dark` and consumes the same `.ns-button`, `.ns-input`, `.ns-card`, and `.ns-badge` adapter classes. The build emits `hardline-theme.css` and `hardline-dark-theme.css` from the two independent resolved bundles.
 
 Dedicated browser coverage verifies authored dark CSS, shared adapter identity, exact flagship pressure physics, stability of non-pressable editing/informational surfaces, explicit written state labels, reduced motion, forced colors, normal Tab order, RTL, and narrow localized containment.
 
-Hardline Dark is implemented but is not public proof yet. No Pages deployment occurs from the implementation branch. Public proof remains gated on an exact merged-main Quality artifact, deployment of those exact bytes without rebuilding, native Pages verification, and a later proof-only cohort refresh.
+Hardline Dark is `public-proof`. Promotion was gated on the exact merged-main Quality artifact from source `9135d2b00b34954f41c72f4b6c12289d10b476fc`, deployment of those exact bytes without rebuilding, and successful native GitHub Pages verification. Public-proof promotion does not redeploy Pages.
 
 ## Provenance
 
@@ -98,8 +97,10 @@ The canonical NeoSmartUI PRD supplies the Hardline-specific flagship choices: ze
 
 ## Public-proof evidence
 
-Hardline Light is `public-proof` only for the exact merged-main source and singleton Pages cohort recorded in `evidence/public/flavor.hardline.json`. The existing proof still binds only the concrete Light Theme, resolution, resolved-token bundle, and the byte-identical Light source route. This implementation deliberately does not mutate that record.
+Hardline Light and Hardline Dark are `public-proof` only for the exact merged-main source and singleton Pages cohort recorded in `evidence/public/flavor.hardline.json`.
 
-The current live gate continues to verify the already-deployed `/flavors/hardline/` route, scoped `.ns-theme-hardline-light` surface, and deployed `hardline-theme.css` markers from the current singleton cohort. The new Dark fragment exists only in the candidate build artifact until a later merged-main deployment. Hardline Dark does not become public proof by being present in a feature branch or by merging.
+The proof record retains the concrete Light Theme, Light resolution, Light resolved-token bundle, and the byte-identical Light source route. It additionally binds the concrete Dark Theme, Dark resolution, Dark resolved-token bundle, `apps/foundry/fragments/hardline-dark.html`, and `tooling/foundry/build.mjs`, so the verified public artifact can be traced from both Theme inputs through deterministic proof-safe route assembly.
 
-After implementation merges green, only the exact merged-main CI artifact may be deployed to Pages without rebuilding. Native Pages must then verify the combined Light/Dark Hardline route and both scoped Theme assets. A later proof promotion must refresh the singleton 18 Core + 4 Flavor cohort and extend `flavor.hardline` implementation-file bindings to both concrete Themes plus the Dark fragment while retaining the proven Light source route binding. Public-proof promotion itself must not redeploy Pages.
+The live gate verifies the canonical `/flavors/hardline/` route contains both `.ns-theme-hardline-light` and `.ns-theme-hardline-dark` surfaces, retains the existing Light pressure markers, exposes the authored Dark section, and serves both `hardline-theme.css` and `hardline-dark-theme.css` with their independent scoped token markers.
+
+The current singleton proof cohort binds all 18 Core records plus the 4 Flavor records to the same merged-main browser evidence and the same native Pages deployment. Public-proof promotion does not redeploy Pages; it records and verifies the already-deployed singleton.
