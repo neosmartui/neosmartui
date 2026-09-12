@@ -547,6 +547,33 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use the compact bounded informational surface, annotation-like spacing, border/radius, readable text, and stable structural depth as visual knowledge only; NeoSmartUI keeps semantic token ownership and copies no source code."
+    },
+    {
+      "id": "legacy.spec.combobox-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared explicit-state, focus, keyboard, touch, reduced-motion, fluid-token, agent-readable, and pressure-not-levitation laws into an editable single-selection Combobox; apply the Menus/Popovers trigger law without making the editable input itself pressable."
+    },
+    {
+      "id": "legacy.soft.combobox-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Combobox surfaces listing as reusable capability evidence and preserve the document's warning that keyboard-complete production Combobox behavior remains high-value unfinished work; do not overclaim a Soft runtime."
+    },
+    {
+      "id": "legacy.rivet.combobox-implementation",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/combobox.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use editable input, trigger, clear action, positioned popup, list, item, group, label, empty state, separator, selection-indicator, and optional chips anatomy as reference-only knowledge. Initial NeoSmartUI scope is deliberately single-select and excludes chips/multi-select; repository metadata declares no license, so no source code is copied."
     }
   ]
 }

@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 16) fail('sixteenth Core slice must contain exactly sixteen honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 17) fail('seventeenth Core slice must contain exactly seventeen honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -251,6 +251,26 @@ for (const marker of ['export function syncTooltipState', 'export function bindT
 for (const forbiddenMarker of ["addEventListener('click'", 'touchstart', 'touchend', 'contextmenu', 'longpress', "setAttribute('role'", "setAttribute('tabindex'", 'preventDefault(', 'stopPropagation(']) if (tooltipAdapter.includes(forbiddenMarker)) fail(`tooltip.mjs must not manufacture target/touch activation behavior: ${forbiddenMarker}`);
 const tooltipDocs = await readFile(resolve(root, 'packages/core/components/tooltip.md'), 'utf8');
 for (const marker of ['Tooltip content is supplemental, not essential', '`role="tooltip"`', '`aria-describedby`', 'MUST NOT contain buttons, links, inputs, menus, dismiss controls', 'Escape dismisses it without moving focus from the target', 'MUST NOT trap focus', 'Tooltips MUST NOT introduce movement that makes the target appear actionable', 'MUST NOT hijack tap, long-press, context-menu, text-selection, or native activation behavior', 'contains no `components/ui/tooltip.tsx`', 'exact dependency union therefore remains 55', '`packages/adapters/web/components/tooltip.css`', '`packages/adapters/web/components/tooltip.mjs`', 'Maturity is `public-proof`']) if (!tooltipDocs.includes(marker)) fail(`tooltip.md missing marker: ${marker}`);
+
+const combobox = await readJson(resolve(root, 'packages/core/components/combobox.json'));
+const comboboxStates = new Set(['rest', 'hover', 'focus-visible', 'pressed', 'closed', 'open', 'query-empty', 'query-filled', 'highlighted', 'selected', 'invalid', 'disabled']);
+if (combobox.states.length !== comboboxStates.size || !combobox.states.every((state) => comboboxStates.has(state))) fail('core.combobox must expose exactly the contract-only editable single-selection state matrix');
+for (const token of ['color.surface.interactive', 'color.surface.panel', 'color.content.primary', 'color.content.secondary', 'color.border.default', 'color.border.strong', 'color.action.primary.surface', 'color.action.primary.content', 'color.state.error', 'color.focus.ring', 'space.control.inline', 'space.control.block', 'space.surface.inline', 'space.surface.block', 'border.control.width', 'border.surface.width', 'radius.control', 'radius.surface', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled', 'font.family.body', 'font.size.body', 'font.weight.regular', 'font.weight.emphasis']) if (!combobox.dependencies.includes(token)) fail(`core.combobox missing semantic/editable/popup token ${token}`);
+for (const forbiddenToken of ['space.annotation.inline', 'space.annotation.block', 'border.annotation.width', 'radius.annotation', 'font.size.navigation']) if (combobox.dependencies.includes(forbiddenToken)) fail(`core.combobox must not borrow unrelated annotation/navigation token ${forbiddenToken}`);
+const comboboxEntry = registry.components.find((entry) => entry.id === 'core.combobox');
+if (!comboboxEntry || comboboxEntry.maturity !== 'contract-only') fail('core.combobox must remain contract-only in Slice 17');
+if (comboboxEntry.evidence.implementation !== null || comboboxEntry.evidence.publicProof !== null) fail('contract-only core.combobox must not claim implementation or public proof');
+for (const path of ['packages/adapters/web/components/combobox.css', 'packages/adapters/web/components/combobox.mjs']) {
+  try {
+    await access(resolve(root, path));
+    fail(`core.combobox contract-only slice must not ship ${path}`);
+  } catch (error) {
+    if (error?.message?.startsWith('[core-components]')) throw error;
+    if (error?.code !== 'ENOENT') throw error;
+  }
+}
+const comboboxDocs = await readFile(resolve(root, 'packages/core/components/combobox.md'), 'utf8');
+for (const marker of ['editable single-selection', 'Combobox is not a styled native Select', 'Query text and committed value are different authorities', '`aria-activedescendant`', 'MUST NOT trap focus', 'Tab and Shift+Tab retain ordinary document focus traversal', 'Home/End and Left/Right remain text-editing keys by default', 'initial Core contract is **single-selection only**', 'trigger follows the family pressure law', 'editable text surface itself remains an editing surface, not a pressable button', 'introduces **no new semantic token contracts**', 'Combobox surfaces', 'keyboard-complete production Combobox behavior as high-value unfinished work', '`components/ui/combobox.tsx`', 'excludes chips/multi-select', 'Maturity is `contract-only`']) if (!comboboxDocs.includes(marker)) fail(`combobox.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);

@@ -146,6 +146,15 @@
         "implementation": "packages/adapters/web/components/tooltip.mjs",
         "publicProof": "evidence/public/core.tooltip.json"
       }
+    },
+    {
+      "id": "core.combobox",
+      "contract": "components/combobox.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
