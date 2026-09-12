@@ -77,6 +77,8 @@ jobs:
           test -f dist/foundry/segmented-control.mjs
           test -f dist/foundry/tooltip.css
           test -f dist/foundry/tooltip.mjs
+          test -f dist/foundry/combobox.css
+          test -f dist/foundry/combobox.mjs
           test -f dist/foundry/deployment.json
           test ! -e dist/foundry/CNAME
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
@@ -148,6 +150,10 @@ jobs:
           grep -q "Tooltip keeps supplemental descriptions non-interactive" dist/foundry/index.html
           grep -q 'aria-describedby="tooltip-demo"' dist/foundry/index.html
           grep -q 'role="tooltip"' dist/foundry/index.html
+          grep -q "core.combobox" dist/foundry/index.html
+          grep -q "Editable single-selection Combobox" dist/foundry/index.html
+          grep -q 'role="combobox"' dist/foundry/index.html
+          grep -q 'role="listbox"' dist/foundry/index.html
           node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/foundry/deployment.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA) throw new Error('deployment source SHA mismatch')"
 
   browser:
