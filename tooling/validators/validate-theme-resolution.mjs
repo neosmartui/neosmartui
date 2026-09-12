@@ -49,7 +49,7 @@ for (const entry of bundle.values) {
 }
 for (const dependency of requiredDependencies) if (!values.has(dependency)) fail(`unresolved implemented-component token dependency ${dependency}`);
 if (values.size !== requiredDependencies.size) fail('resolved bundle must be the exact union of implemented/public-proof Core component dependencies');
-if (requiredDependencies.size !== 55) fail('Slice 14 implementation must preserve the exact implemented/public-proof dependency union at 55');
+if (requiredDependencies.size !== 55) fail('Slice 15 implementation must preserve the exact implemented/public-proof dependency union at 55');
 
 for (const axis of ['x', 'y']) {
   const rest = px(values.get(`depth.rest.${axis}`));
@@ -101,6 +101,9 @@ if (breadcrumbEntry.evidence.implementation !== 'packages/adapters/web/component
 const paginationEntry = registry.components.find((entry) => entry.id === 'core.pagination');
 if (!paginationEntry || paginationEntry.maturity !== 'public-proof' || paginationEntry.evidence.publicProof !== 'evidence/public/core.pagination.json') fail('core.pagination must bind current public-proof evidence');
 if (paginationEntry.evidence.implementation !== 'packages/adapters/web/components/pagination.css') fail('core.pagination must bind its CSS-only implementation evidence');
+const segmentedEntry = registry.components.find((entry) => entry.id === 'core.segmented-control');
+if (!segmentedEntry || segmentedEntry.maturity !== 'implemented' || segmentedEntry.evidence.publicProof !== null) fail('core.segmented-control must be implemented without public proof in this slice');
+if (segmentedEntry.evidence.implementation !== 'packages/adapters/web/components/segmented-control.mjs') fail('core.segmented-control must bind its canonical Web adapter');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
 if (values.get('space.navigation.gap') !== '0.45rem') fail('Rivet Light navigation gap must preserve the pinned Soft breadcrumb spacing value');
