@@ -13,7 +13,6 @@ const expectAbsent = async (path, message) => {
     if (error?.code !== 'ENOENT') throw error;
   }
 };
-const valuesMap = (bundle) => new Map(bundle.values.map((entry) => [entry.id, entry.value]));
 
 const inventory = await json('migration/inventory.json');
 const source = inventory.sources.find((entry) => entry.repository === 'NeoBrutalRivet/NeoBrutal-Rivet');
@@ -33,43 +32,38 @@ for (const marker of ['Industrial/mechanical', 'crisp structural depth', 'restra
 const theme = await json('packages/themes/rivet-light/theme.json');
 const resolution = await json('packages/themes/rivet-light/resolution.json');
 const bundle = await json('packages/themes/rivet-light/tokens.json');
-if (theme.schema !== 'neosmartui/theme@1' || theme.name !== 'Rivet Light' || theme.family !== 'neosmartui' || theme.category !== 'rivet') fail('preexisting Rivet Light Theme identity is invalid');
-if (theme.color?.mode !== 'light' || theme.geometry?.profile !== 'mechanical' || theme.border?.profile !== 'strong' || theme.shadow?.model !== 'coherent-depth') fail('preexisting Rivet Light expression descriptor drifted');
-if (theme.motion?.model !== 'pressure-not-levitation' || theme.interaction?.model !== 'pressure-not-levitation' || theme.icons?.strategy !== 'adapter-owned') fail('preexisting Rivet Light interaction/adapter ownership drifted');
-if (resolution.schema !== 'neosmartui/theme-resolution@1' || resolution.flavor !== 'flavor.rivet' || resolution.theme !== 'Rivet Light' || resolution.bundle !== 'tokens.json') fail('preexisting Rivet Light resolution identity is invalid');
-if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== 'flavor.rivet' || bundle.theme !== 'Rivet Light') fail('preexisting Rivet Light bundle identity is invalid');
-if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('preexisting Rivet Light baseline must preserve the exact 18-component scope');
-if (bundle.values.length !== 55) fail(`preexisting Rivet Light baseline must preserve the exact 55-token dependency union; got ${bundle.values.length}`);
-const values = valuesMap(bundle);
-if (values.size !== 55) fail('preexisting Rivet Light token IDs must remain unique');
-if (values.get('border.control.width') !== '3px' || values.get('border.surface.width') !== '3px') fail('contract slice must not silently mutate Rivet baseline structural borders');
-if (values.get('radius.control') !== '6px' || values.get('radius.surface') !== '6px') fail('contract slice must not silently mutate Rivet baseline geometry');
-for (const axis of ['x', 'y']) {
-  if (values.get(`depth.rest.${axis}`) !== '5px' || values.get(`depth.hover.${axis}`) !== '3px' || values.get(`depth.active.${axis}`) !== '0px') fail(`contract slice must preserve Rivet baseline ${axis}-axis 5→3→0 depth`);
-  if (values.get(`press.hover.${axis}`) !== '2px' || values.get(`press.active.${axis}`) !== '5px') fail(`contract slice must preserve Rivet baseline ${axis}-axis 0→2→5 travel`);
-}
-if (values.get('motion.press.duration') !== '80ms' || values.get('motion.release.duration') !== '140ms' || values.get('motion.standard.duration') !== '160ms') fail('contract slice must preserve Rivet baseline motion timing');
-if (values.get('size.control.minimum') !== '44px' || values.get('focus.ring.width') !== '3px' || values.get('focus.ring.offset') !== '3px') fail('contract slice must preserve target/focus accessibility baseline');
+if (theme.schema !== 'neosmartui/theme@1' || theme.name !== 'Rivet Light' || theme.family !== 'neosmartui' || theme.category !== 'rivet') fail('Rivet Light Theme identity is invalid');
+if (theme.color?.mode !== 'light' || theme.color?.strategy !== 'industrial-lavender-lime') fail('Rivet Light must declare its implemented industrial lavender/lime palette strategy');
+if (theme.typography?.strategy !== 'sturdy-system-first' || theme.geometry?.profile !== 'mechanical' || theme.border?.profile !== 'strong' || theme.shadow?.model !== 'coherent-depth') fail('Rivet Light expression descriptor drifted');
+if (theme.motion?.model !== 'pressure-not-levitation' || theme.interaction?.model !== 'pressure-not-levitation' || theme.icons?.strategy !== 'adapter-owned') fail('Rivet Light interaction/adapter ownership drifted');
+if (resolution.schema !== 'neosmartui/theme-resolution@1' || resolution.flavor !== 'flavor.rivet' || resolution.theme !== 'Rivet Light' || resolution.bundle !== 'tokens.json') fail('Rivet Light resolution identity is invalid');
+if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== 'flavor.rivet' || bundle.theme !== 'Rivet Light') fail('Rivet Light bundle identity is invalid');
+if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('implemented Rivet Light must preserve the exact 18-component scope');
+if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('implemented Rivet Light must preserve the exact 55-token dependency union');
 
-for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/rivet/index.${extension}`, `contract-only Rivet migration must not add renderer override index.${extension}`);
-await expectAbsent('packages/themes/rivet-dark', 'contract-only Rivet migration must not prematurely implement Rivet Dark');
-await expectAbsent('apps/foundry/src/flavors/rivet/index.html', 'contract-only Rivet migration must not claim a dedicated Foundry route');
-await expectAbsent('evidence/public/flavor.rivet.json', 'contract-only Rivet migration must not claim public proof');
+for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/rivet/index.${extension}`, `Rivet implementation must not introduce renderer override index.${extension}`);
+await expectAbsent('packages/themes/rivet-dark', 'Rivet Light implementation must not prematurely implement Rivet Dark');
+await expectAbsent('evidence/public/flavor.rivet.json', 'Rivet implementation must not claim public proof before exact deployment and live verification');
+await access(resolve(root, 'apps/foundry/src/flavors/rivet/index.html'));
 
 const docs = await readFile(resolve(root, 'spec/flavors/RIVET.md'), 'utf8');
 for (const marker of [
   'industrial/mechanical NeoSmartUI flavor',
   '`flavor.rivet`',
-  'Official migration maturity: `contract-only`',
-  '**preexisting foundation baseline**',
+  'Official migration maturity: `implemented`',
+  'Public-proof status: **not yet claimed**',
   '18 shipping Core components',
-  'exact 55-token dependency union',
+  'exact resolved semantic dependency union: 55 token IDs',
+  'deliberately **ratified**',
+  'deliberately **adapted**',
+  '`/flavors/rivet/`',
+  '`rivet-theme.css`',
   'NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d',
   '`legacy.rivet.flavor-system`',
   '`knowledge-only-until-reviewed`',
   'MUST NOT introduce generic hover lift',
   'Rivet Dark follows as its own concrete Theme instance',
-  'no Pages deployment'
-]) if (!docs.includes(marker)) fail(`Rivet contract docs missing marker: ${marker}`);
+  'no direct Pages deployment'
+]) if (!docs.includes(marker)) fail(`Rivet implementation docs missing marker: ${marker}`);
 
-console.log('[rivet-contract] validated official Rivet migration contract, pinned provenance, and unchanged preexisting 18/55 foundation baseline');
+console.log('[rivet-contract] validated implemented Rivet Light ownership, pinned provenance, 18/55 boundary, and no premature proof/dark/renderer fork');
