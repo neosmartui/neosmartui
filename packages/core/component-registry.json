@@ -132,9 +132,9 @@
     {
       "id": "core.segmented-control",
       "contract": "components/segmented-control.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/segmented-control.mjs",
         "publicProof": null
       }
     }
