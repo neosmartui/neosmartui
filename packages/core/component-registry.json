@@ -128,6 +128,15 @@
         "implementation": "packages/adapters/web/components/pagination.css",
         "publicProof": "evidence/public/core.pagination.json"
       }
+    },
+    {
+      "id": "core.segmented-control",
+      "contract": "components/segmented-control.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
