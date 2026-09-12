@@ -44,54 +44,59 @@ if (dark.motion?.model !== 'pressure-not-levitation' || dark.motion?.intensity !
 if (dark.interaction?.model !== 'pressure-not-levitation' || dark.interaction?.selection !== 'seated') fail('Soft Dark must preserve pressure and seated selection');
 if (dark.icons?.strategy !== 'adapter-owned') fail('Soft Dark must preserve adapter-owned icon ownership');
 
-const resolution = await json('packages/themes/soft-light/resolution.json');
-const bundle = await json('packages/themes/soft-light/tokens.json');
-if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('Soft Light baseline must retain the exact 18-component Core scope');
-if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('Soft Light baseline must retain exactly 55 unique semantic dependencies');
-const values = new Map(bundle.values.map((entry) => [entry.id, entry.value]));
-for (const axis of ['x', 'y']) {
-  if (values.get(`depth.rest.${axis}`) !== '3px' || values.get(`depth.hover.${axis}`) !== '1.5px' || values.get(`depth.active.${axis}`) !== '0px') fail(`Soft ${axis}-axis structural depth must remain 3→1.5→0`);
-  if (values.get(`press.hover.${axis}`) !== '1.5px' || values.get(`press.active.${axis}`) !== '3px') fail(`Soft ${axis}-axis inward travel must remain 0→1.5→3`);
-}
-if (values.get('border.control.width') !== '2px' || values.get('border.surface.width') !== '2px' || values.get('border.annotation.width') !== '2px') fail('Soft Dark future implementation must preserve 2px structural boundaries');
-if (values.get('radius.control') !== '8px' || values.get('radius.surface') !== '12px' || values.get('radius.annotation') !== '999px') fail('Soft Dark future implementation must preserve 8/12/pill geometry');
-if (values.get('motion.press.duration') !== '70ms' || values.get('motion.release.duration') !== '105ms' || values.get('motion.standard.duration') !== '165ms') fail('Soft Dark future implementation must preserve 70/105/165ms timings');
-if (values.get('size.control.minimum') !== '44px') fail('Soft Dark future implementation must preserve the 44px minimum target');
-if (values.get('focus.ring.width') !== '3px' || values.get('focus.ring.offset') !== '3px') fail('Soft Dark future implementation must preserve the 3px focus keyline width/offset');
-
 for (const path of [
   'packages/themes/soft-dark/resolution.json',
   'packages/themes/soft-dark/tokens.json',
   'apps/foundry/fragments/soft-dark.html',
   'tests/browser/foundry-soft-dark.spec.mjs',
   'tooling/validators/validate-soft-dark-theme.mjs'
-]) await expectAbsent(path, `Soft Dark contract-only stage must not include ${path}`);
+]) await access(resolve(root, path));
 await expectAbsent('packages/flavors/soft-dark', 'Soft Dark is a Theme of flavor.soft, not a new Flavor identity');
 await expectAbsent('apps/foundry/src/flavors/soft-dark', 'Soft Dark must extend the canonical Soft Flavor route rather than create a route fork');
 
+const resolution = await json('packages/themes/soft-dark/resolution.json');
+const bundle = await json('packages/themes/soft-dark/tokens.json');
+const lightResolution = await json('packages/themes/soft-light/resolution.json');
+const lightBundle = await json('packages/themes/soft-light/tokens.json');
+if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('Soft Dark must retain the exact 18-component Core scope');
+if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('Soft Dark must resolve exactly 55 unique semantic dependencies');
+if ([...resolution.scope].sort().join('|') !== [...lightResolution.scope].sort().join('|')) fail('Soft Dark and Soft Light must resolve the same Core scope');
+if (new Set(lightBundle.values.map((entry) => entry.id)).size !== 55) fail('Soft Light dependency baseline drifted');
+
+const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
+for (const marker of [
+  'packages/themes/soft-dark/tokens.json',
+  'soft-dark-theme.css',
+  'apps/foundry/fragments/soft-dark.html',
+  'flavors/soft/index.html',
+  'Soft route is missing the Light Theme stylesheet marker required for Dark assembly',
+  'Soft route is missing the canonical return-link insertion marker required for Dark assembly'
+]) if (!builder.includes(marker)) fail(`Soft Dark builder missing proof-safe assembly marker: ${marker}`);
+
 const proof = await json('evidence/public/flavor.soft.json');
 if (proof.flavor !== 'flavor.soft') fail('existing Soft public-proof subject drifted');
-if (proof.implementationFiles.some((entry) => entry.path.includes('soft-dark'))) fail('contract-only Soft Dark must not claim public proof');
+if (proof.implementationFiles.some((entry) => entry.path.includes('soft-dark'))) fail('implemented Soft Dark must not claim public proof before exact merged-main deployment verification');
 const provenRoute = proof.implementationFiles.find((entry) => entry.path === 'apps/foundry/src/flavors/soft/index.html');
-if (!provenRoute) fail('existing Soft public proof must retain the canonical Light route source binding during Dark contract work');
+if (!provenRoute) fail('existing Soft public proof must retain the canonical Light route source binding during Dark implementation');
 const routeBytes = await readFile(resolve(root, provenRoute.path));
-if (gitBlobSha(routeBytes) !== provenRoute.blobSha) fail('Soft Dark contract work must not mutate the already-proven Soft Light source route');
-const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
-if (builder.includes('soft-dark')) fail('Soft Dark contract-only stage must not add runtime builder output');
+if (gitBlobSha(routeBytes) !== provenRoute.blobSha) fail('Soft Dark implementation must keep the already-proven Soft Light source route byte-identical');
+if ((proof.live.assetUrls ?? []).some((url) => url.includes('soft-dark-theme.css'))) fail('Soft Dark live asset must not be claimed before deployment and proof promotion');
 
 const docs = await readFile(resolve(root, 'spec/flavors/SOFT.md'), 'utf8');
 for (const marker of [
-  'Soft Dark contract maturity: `contract-only`',
+  'Implemented dark Theme: `packages/themes/soft-dark/theme.json`',
+  'Soft Dark maturity: `implemented`',
+  'Soft Dark public-proof status: **not public-proof yet**',
   'second concrete Theme instance of `flavor.soft`',
   'not CSS inversion, filter-based dark mode, or hidden conditional values inside Soft Light',
   'exact shipping 18-Core / 55-token semantic dependency boundary',
   '`3px → 1.5px → 0px` structural depth',
   '`0px → 1.5px → 3px` inward travel',
   '`70ms / 105ms / 165ms` pressure timings',
-  'existing `/flavors/soft/` proof surface',
-  'Concrete Dark palette values are intentionally deferred',
-  '`knowledge-only-until-reviewed`',
-  'No Pages deployment occurs from the contract branch'
-]) if (!docs.includes(marker)) fail(`Soft Dark contract docs missing marker: ${marker}`);
+  '`apps/foundry/fragments/soft-dark.html`',
+  'proven Light source route remains byte-identical',
+  'Soft Dark is implemented but not public-proof',
+  'No Pages deployment occurs from the implementation branch'
+]) if (!docs.includes(marker)) fail(`Soft Dark implementation docs missing marker: ${marker}`);
 
-console.log('[soft-dark-contract] validated contract-only Soft Dark ownership, pinned provenance, frozen Soft physics, proof continuity, and implementation/runtime absences');
+console.log('[soft-dark-contract] validated implemented Soft Dark ownership, pinned provenance, 18/55 boundary, proof-safe route assembly, and no premature public proof');
