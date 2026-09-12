@@ -9,10 +9,11 @@ export function serializeTokenValue(type, value) {
   throw new Error(`Unsupported ${type} token value: ${JSON.stringify(value)}`);
 }
 
-export function renderResolvedTokenCss(registry, bundle) {
+export function renderResolvedTokenCss(registry, bundle, { selector = ':root' } = {}) {
+  if (typeof selector !== 'string' || !selector.trim()) throw new Error('Resolved token CSS selector must be a non-empty string');
   const contracts = new Map(registry.contracts.map((entry) => [entry.id, entry]));
   const seen = new Set();
-  const lines = [':root {'];
+  const lines = [`${selector.trim()} {`];
   for (const entry of bundle.values) {
     if (seen.has(entry.id)) throw new Error(`Duplicate resolved token: ${entry.id}`);
     seen.add(entry.id);
