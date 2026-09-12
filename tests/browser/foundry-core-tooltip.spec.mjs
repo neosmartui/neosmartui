@@ -17,6 +17,8 @@ const tooltipState = async (target, tooltip) => target.evaluate((element, toolti
     targetTransform: targetStyles.transform,
     targetX: targetRect.x,
     targetY: targetRect.y,
+    targetDocumentX: targetRect.x + window.scrollX,
+    targetDocumentY: targetRect.y + window.scrollY,
     targetWidth: targetRect.width,
     targetHeight: targetRect.height,
     targetFocused: document.activeElement === element,
@@ -89,6 +91,7 @@ test('core.tooltip keeps a real described target, non-interactive tooltip semant
   await target.focus();
   await expect(tooltip).toHaveAttribute('data-state', 'open');
   await expect(target).toHaveAttribute('data-tooltip-state', 'open');
+  await expect.poll(async () => (await tooltipState(target, tooltip)).opacity).toBeCloseTo(1, 2);
   const open = await tooltipState(target, tooltip);
   expect(open.targetFocused).toBeTruthy();
   expect(open.visibility).toBe('visible');
@@ -154,8 +157,8 @@ test('core.tooltip never moves its target and preserves RTL plus long localized 
   await expect(tooltip).toHaveAttribute('data-state', 'open');
   const after = await tooltipState(target, tooltip);
   expect(after.targetTransform).toBe('none');
-  expect(after.targetX).toBeCloseTo(before.targetX, 2);
-  expect(after.targetY).toBeCloseTo(before.targetY, 2);
+  expect(after.targetDocumentX).toBeCloseTo(before.targetDocumentX, 2);
+  expect(after.targetDocumentY).toBeCloseTo(before.targetDocumentY, 2);
   expect(after.targetWidth).toBeCloseTo(before.targetWidth, 2);
   expect(after.targetHeight).toBeCloseTo(before.targetHeight, 2);
   expect(after.direction).toBe('rtl');
