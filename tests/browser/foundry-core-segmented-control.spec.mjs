@@ -163,9 +163,9 @@ test('core.segmented-control unselected peers compress 0→2→5px while selecte
   await page.mouse.up();
 
   await activity.click();
+  await expect.poll(async () => (await segmentState(activity)).x).toBeCloseTo(5, 1);
+  await expect.poll(async () => (await segmentState(activity)).y).toBeCloseTo(5, 1);
   const selected = await segmentState(activity);
-  expect(selected.x).toBeCloseTo(5, 1);
-  expect(selected.y).toBeCloseTo(5, 1);
   expect(selected.borderStyle).toBe('double');
   await expect(activity).toHaveAttribute('aria-pressed', 'true');
   await expect(activity).toHaveAttribute('data-state', 'selected');
