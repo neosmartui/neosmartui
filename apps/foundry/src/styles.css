@@ -38,9 +38,9 @@ ul { margin-bottom: 0; padding-left: 1.25rem; }
 .breadcrumb-example { max-inline-size: 48rem; margin-top: 1.25rem; }
 .pagination-example { max-inline-size: 52rem; margin-top: 1.25rem; }
 .segmented-control-example { max-inline-size: 48rem; margin-top: 1.25rem; }
-.tooltip-examples { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; margin-top: 1.25rem; padding-block-end: 3rem; }
-.tooltip-example { position: relative; display: inline-flex; align-items: center; min-inline-size: 0; }
-.tooltip-example > a, #tooltip-next-focus { overflow-wrap: anywhere; }
+.tooltip-examples { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; min-inline-size: 0; max-inline-size: 100%; margin-top: 1.25rem; padding-block-end: 3rem; }
+.tooltip-example { position: relative; display: inline-flex; align-items: center; min-inline-size: 0; max-inline-size: 100%; }
+.tooltip-example > a, #tooltip-next-focus { min-inline-size: 0; max-inline-size: 100%; overflow-wrap: anywhere; }
 .footnote { margin-top: 2rem; font-size: 0.95rem; }
 @media (prefers-color-scheme: dark) {
   :root { color: #f8f4ea; background: #151515; }
