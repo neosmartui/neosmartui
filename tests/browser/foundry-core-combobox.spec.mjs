@@ -217,12 +217,13 @@ test('core.combobox keeps the editable field motionless while only the disclosur
   expect(pressed.triggerX - before.triggerX).toBeCloseTo(5, 1);
   expect(pressed.triggerY - before.triggerY).toBeCloseTo(5, 1);
   await page.mouse.up();
+  await expect(input).toHaveAttribute('aria-expanded', 'true');
+  await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+  await expect(input).toBeFocused();
 
   await trigger.click();
-  await expect(input).toHaveAttribute('aria-expanded', 'true');
-  await expect(input).toBeFocused();
-  await trigger.click();
   await expect(input).toHaveAttribute('aria-expanded', 'false');
+  await expect(trigger).toHaveAttribute('aria-expanded', 'false');
   await expect(trigger).toBeFocused();
   await page.waitForTimeout(100);
   await expect(input).toHaveAttribute('aria-expanded', 'false');
