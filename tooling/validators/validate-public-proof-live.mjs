@@ -33,11 +33,13 @@ const liveMarkers = new Map([
   ['core.tooltip', ['NeoSmartUI Foundry', 'core.tooltip', 'Tooltip keeps supplemental descriptions non-interactive', 'aria-describedby="tooltip-demo"', 'role="tooltip"', 'Read the permanent interaction rules', 'Continue without entering the tooltip']],
   ['core.combobox', ['NeoSmartUI Foundry', 'core.combobox', 'Editable single-selection Combobox', 'role="combobox"', 'aria-autocomplete="list"', 'aria-controls="combobox-listbox"', 'role="listbox"', 'Choose one framework', 'Show suggestions', 'Svelte · unavailable', 'No matching suggestions']],
   ['core.accordion', ['NeoSmartUI Foundry', 'core.accordion', 'Accordion discloses related content with real buttons', 'data-expansion="single"', 'data-expansion="multiple"', 'aria-controls="accordion-single-panel-a"']],
-  ['flavor.hardline', ['Hardline Light', 'ns-theme-hardline-light', 'Pressure, not levitation', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']]
+  ['flavor.hardline', ['Hardline Light', 'ns-theme-hardline-light', 'Pressure, not levitation', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
+  ['flavor.soft', ['Soft Light', 'ns-theme-soft-light', 'Compress, never float', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']]
 ]);
 
 const assetMarkers = new Map([
-  ['flavor.hardline', ['.ns-theme-hardline-light {', '--ns-radius-control: 0px;', '--ns-depth-rest-x: 4px;', '--ns-depth-hover-x: 2px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 4px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']]
+  ['flavor.hardline', ['.ns-theme-hardline-light {', '--ns-radius-control: 0px;', '--ns-depth-rest-x: 4px;', '--ns-depth-hover-x: 2px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 4px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']],
+  ['flavor.soft', ['.ns-theme-soft-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 8px;', '--ns-radius-surface: 12px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1.5px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {

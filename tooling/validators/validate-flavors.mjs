@@ -29,7 +29,7 @@ const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileT
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-if (flavorDirs.join(',') !== 'hardline,rivet,soft') fail(`Soft implementation slice expects exactly hardline,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
+if (flavorDirs.join(',') !== 'hardline,rivet,soft') fail(`Soft public-proof slice expects exactly hardline,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
 
 const flavorKeys = ['$schema', 'schema', 'id', 'name', 'intent', 'interactionModel'];
 const hardline = await readJson('packages/flavors/hardline/flavor.json');
@@ -127,8 +127,8 @@ for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`',
   if (!hardlineDocs.includes(marker)) fail(`Hardline implementation docs missing marker: ${marker}`);
 }
 const softDocs = await readFile(resolve(root, 'spec/flavors/SOFT.md'), 'utf8');
-for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.soft`', 'Maturity: `implemented`', 'moderate rounding', 'MUST NOT introduce generic hover lift', 'SaaS remains a Vertical', '`packages/themes/soft-light/tokens.json`', '`packages/themes/soft-light/resolution.json`', 'exact resolved semantic dependency union: 55 token IDs', '`3px → 1.5px → 0`', 'not public-proof yet', 'NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a', '`knowledge-only-until-reviewed`', 'Soft Dark follows as its own concrete Theme instance']) {
-  if (!softDocs.includes(marker)) fail(`Soft implementation docs missing marker: ${marker}`);
+for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.soft`', 'Maturity: `public-proof`', 'moderate rounding', 'MUST NOT introduce generic hover lift', 'SaaS remains a Vertical', '`packages/themes/soft-light/tokens.json`', '`packages/themes/soft-light/resolution.json`', 'exact resolved semantic dependency union: 55 token IDs', '`3px → 1.5px → 0`', 'Public-proof cohort', 'NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a', '`knowledge-only-until-reviewed`', 'Soft Dark follows as its own concrete Theme instance']) {
+  if (!softDocs.includes(marker)) fail(`Soft public-proof docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated public-proof Hardline Light, implemented Soft Light resolution boundary, and existing Rivet Flavor identity');
+console.log('[flavors] validated public-proof Hardline Light and Soft Light resolution boundaries plus existing Rivet Flavor identity');

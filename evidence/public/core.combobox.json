@@ -4,7 +4,7 @@
   "component": "core.combobox",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
-    "sha": "ad87f50b24774a5e676ffc05ae62379c7be0576d"
+    "sha": "5e999f2e62dc7727ebb74a9c79c5bd40513d6d0d"
   },
   "implementationFiles": [
     {
@@ -17,14 +17,14 @@
     }
   ],
   "browserEvidence": {
-    "runId": 34704509621,
-    "artifactId": 10300792653
+    "runId": 34707268277,
+    "artifactId": 10301797631
   },
   "deployment": {
     "repository": "neosmartui/neosmartui.github.io",
-    "commitSha": "fbc70d0455be94479f652bf7f27481c7647bf198",
-    "treeSha": "b83a0c1eaff598a7e88cd3af103c73f9717d34aa",
-    "pagesRunId": 34704772239
+    "commitSha": "ff7723951ff1eba3a6890ce57f71eeb2646f524a",
+    "treeSha": "24f8086b988db5aaa97c6bba44c4f8f35dcf6c95",
+    "pagesRunId": 34707560564
   },
   "live": {
     "pageUrl": "https://neosmartui.github.io/",

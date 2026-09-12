@@ -8,8 +8,8 @@ Soft is the calm application-oriented NeoSmartUI flavor for long-session interfa
 - Flavor schema: `neosmartui/flavor@1`
 - Starting Theme: `packages/themes/soft-light/theme.json`
 - Interaction model: `pressure-not-levitation`
-- Maturity: `implemented`
-- Public-proof status: **not yet claimed**
+- Maturity: `public-proof`
+- Public-proof status: **claimed against the verified singleton deployment cohort**
 
 ## Expression contract
 
@@ -23,7 +23,7 @@ Soft MUST NOT own Button/Dialog/Product/Checkout/Billing behavior, SaaS workspac
 
 ## Soft Light implementation
 
-`Soft Light` is now a concrete schema-valid `neosmartui/theme@1` implementation. Its resolution is explicit and machine-readable:
+`Soft Light` is a concrete schema-valid `neosmartui/theme@1` implementation. Its resolution is explicit and machine-readable:
 
 - `packages/themes/soft-light/tokens.json`
 - `packages/themes/soft-light/resolution.json`
@@ -35,7 +35,13 @@ The implementation resolves visible `2px` structural boundaries, `8px` control r
 
 Soft Light uses independently resolved warm neutral surfaces and a softened-blue primary action while keeping written state meaning, semantic HTML, accessibility behavior, RTL behavior, reduced-motion behavior, forced-colors behavior, and Core interaction semantics in the shared adapters. The Foundry route `apps/foundry/src/flavors/soft/index.html` imports the same shipping Button/Input/Card/Badge adapter CSS used by other flavors; no Soft component implementation fork exists.
 
-This implementation is **not public-proof yet**. It must complete the standard lifecycle before any proof claim: green implementation merge, merged-main verification, exact merged-main artifact deployment without rebuilding, native Pages verification, then public-proof promotion.
+## Public-proof cohort
+
+Soft Light is public-proof only because the standard lifecycle completed in order: exact-head implementation CI, merge, independent merged-main CI, deployment of the exact merged-main Foundry artifact without rebuilding, native Pages build/deploy verification, and live HTTPS verification by the proof gate.
+
+The proof record is `evidence/public/flavor.soft.json`. It binds Soft Light to merged source `5e999f2e62dc7727ebb74a9c79c5bd40513d6d0d`, merged-main Quality run `34707268277` / artifact `10301797631`, Pages commit `ff7723951ff1eba3a6890ce57f71eeb2646f524a`, exact deployed tree `24f8086b988db5aaa97c6bba44c4f8f35dcf6c95`, and native Pages run `34707560564`. The live route is `https://neosmartui.github.io/flavors/soft/` and the generated Theme asset is `https://neosmartui.github.io/soft-theme.css`.
+
+GitHub's dynamic Pages wrapper for run `34707560564` retained the previous `pages_build_version` label, but the build job itself checked out exact Pages commit `ff7723951ff1eba3a6890ce57f71eeb2646f524a`, archived the Soft route and Theme asset, and the deploy job successfully published that artifact. The public-proof gate therefore relies on the immutable Pages commit/tree plus actual live HTTPS deployment record/page/assets, not on the stale wrapper label.
 
 ## Migration provenance
 
@@ -50,9 +56,9 @@ Repository metadata for that legacy source does not declare a license. The migra
 - No Soft Dark implementation. Soft Dark follows as its own concrete Theme instance and must be intentionally resolved and tested rather than produced by hidden conditional values or an inversion filter.
 - No Core component adapter fork.
 - No SaaS or other Vertical semantics inside the Flavor.
-- No public-proof record in the implementation slice.
-- No deployment during contract or feature-branch implementation work.
+- No deployment is triggered by the proof-only promotion commit; proof promotion records the already-deployed merged-main artifact.
+- No weakening of existing Core, Hardline, accessibility, browser, or live-proof gates.
 
 ## Next lifecycle stage
 
-After the implementation PR is independently green and merged by exact head, merged-main Quality becomes the authoritative source. Only its exact CI-produced Foundry artifact may be deployed. Native Pages must then verify the exact deployed singleton before Soft public-proof evidence is promoted.
+The Soft Light lifecycle is complete at public-proof. The next roadmap slice must be selected from canonical dependency order rather than by extending Soft opportunistically; Soft Dark remains a separate future Theme instance.
