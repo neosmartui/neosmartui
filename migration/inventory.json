@@ -574,6 +574,24 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use editable input, trigger, clear action, positioned popup, list, item, group, label, empty state, separator, selection-indicator, and optional chips anatomy as reference-only knowledge. Initial NeoSmartUI scope is deliberately single-select and excludes chips/multi-select; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.accordion-conformance",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt shared explicit-state, pressure-not-levitation, focus, keyboard, touch, reduced-motion, fluid-token, semantic-token, and agent-readable laws into core.accordion. The pinned family document contains no separate Accordion-specific interaction law, so none is claimed."
+    },
+    {
+      "id": "legacy.rivet.accordion-anatomy",
+      "sourceRepository": "NeoBrutalRivet/NeoBrutal-Rivet",
+      "sourcePath": "components/ui/accordion.tsx",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use root/item/header-trigger/content anatomy, open/closed data state, disabled/focus treatment, and disclosure-indicator behavior as reference-only knowledge; repository metadata declares no license, so no source code is copied."
     }
   ]
 }
