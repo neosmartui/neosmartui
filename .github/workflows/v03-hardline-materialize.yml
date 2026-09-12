@@ -1,4 +1,4 @@
-name: v0.3 Hardline implementation materialize
+name: v0.3 Hardline provenance cleanup
 
 on:
   push:
@@ -9,58 +9,90 @@ permissions:
   contents: write
 
 jobs:
-  materialize:
+  cleanup:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out automation
-        uses: actions/checkout@v4
-        with:
-          path: automation
-      - name: Check out exact implementation branch
+      - name: Check out exact validated implementation branch
         uses: actions/checkout@v4
         with:
           ref: feat/v0.3-hardline-light-implementation
           fetch-depth: 0
-          path: work
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Materialize bounded provenance and CI assertions
-        working-directory: work
+      - name: Minimize migration provenance diff
         shell: bash
         run: |
           set -euo pipefail
-          expected=261e1436d250059ca03a4a658b332b8d4f55f37f
+          expected=d62682d7dd748c12b2732fefd4b3c65db60a20ee
+          base=31cfd3549845cfb639db71181e866215e57dc5ad
           test "$(git rev-parse HEAD)" = "$expected"
           git fetch origin feat/v0.3-hardline-light-implementation
           test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "$expected"
-          python3 ../automation/ci/v03-hardline/materialize.py
-          mapfile -t changed < <(git diff --name-only | sort)
-          test "${#changed[@]}" -eq 2
-          test "${changed[0]}" = ".github/workflows/quality.yml"
-          test "${changed[1]}" = "migration/inventory.json"
+          git show "$base:migration/inventory.json" > migration/inventory.json
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('migration/inventory.json')
+          text = p.read_text()
+          marker = '\n  ]\n}\n'
+          if text.count(marker) != 1:
+              raise SystemExit(f'expected one inventory close marker, got {text.count(marker)}')
+          additions = '''
+            ,
+              {
+                "id": "legacy.spec.flavor-expression-laws",
+                "sourceRepository": "NeoBrutalism-shop/spec",
+                "sourcePath": "FLAVORS.md",
+                "kind": "documentation",
+                "decision": "ADAPT",
+                "targetLayer": "flavor",
+                "note": "Adapt the pinned Flavor/Core ownership boundary, shared semantic-state invariants, and flavor-owned expression dimensions into Hardline without changing Core behavior."
+              },
+              {
+                "id": "legacy.spec.theme-token-physics",
+                "sourceRepository": "NeoBrutalism-shop/spec",
+                "sourcePath": "TOKENS.md",
+                "kind": "documentation",
+                "decision": "ADAPT",
+                "targetLayer": "flavor",
+                "note": "Adapt the pinned 4→2→0 structural-depth reference, matching 0→2→4 press travel, 70/110/170ms semantic motion references, independent focus keyline, and semantic-token separation into Hardline Light."
+              },
+              {
+                "id": "legacy.spec.interaction-physics",
+                "sourceRepository": "NeoBrutalism-shop/spec",
+                "sourcePath": "INTERACTION.md",
+                "kind": "documentation",
+                "decision": "ADAPT",
+                "targetLayer": "flavor",
+                "note": "Adapt compress-never-float, coherent shadow/travel, reduced-motion, keyboard/touch parity, and static-surface laws as Hardline conformance evidence."
+              }
+          '''
+          # Normalize indentation of the literal to match existing artifact objects exactly.
+          lines = [line[10:] if line.startswith('          ') else line for line in additions.splitlines()]
+          insert = '\n'.join(lines).strip('\n')
+          head, tail = text.rsplit(marker, 1)
+          p.write_text(head + '\n' + insert + marker + tail)
+          PY
+          python3 -m json.tool migration/inventory.json >/dev/null
+          test "$(git diff --name-only)" = "migration/inventory.json"
           git config user.name "MrGPT007"
           git config user.email "mrgpt.net@gmail.com"
-          git add .github/workflows/quality.yml migration/inventory.json
-          git commit -m "theme: bind Hardline provenance and CI gates"
+          git add migration/inventory.json
+          git commit -m "docs: minimize Hardline provenance diff"
           echo "NEOSMARTUI_SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       - name: Run full quality and live-proof gates
-        working-directory: work
         run: |
           npm run quality
           npm run validate:proof:live
       - name: Install pinned browser runtime
-        working-directory: work
         run: |
           npm install --no-save --no-package-lock @playwright/test@1.63.0
           npx playwright install --with-deps chromium
       - name: Run all browser QA
-        working-directory: work
         run: |
           npm run build:foundry
           npm run test:browser
       - name: Require exact 100-case report and push
-        working-directory: work
         shell: bash
         run: |
           set -euo pipefail
@@ -68,18 +100,13 @@ jobs:
           import json, os
           report = json.load(open('artifacts/browser/report.json'))
           stats = report['stats']
-          expected = stats.get('expected')
-          skipped = stats.get('skipped')
-          unexpected = stats.get('unexpected')
-          flaky = stats.get('flaky')
-          if (expected, skipped, unexpected, flaky) != (100, 0, 0, 0):
-              raise SystemExit(f'unexpected browser stats: {(expected, skipped, unexpected, flaky)}')
+          if (stats.get('expected'), stats.get('skipped'), stats.get('unexpected'), stats.get('flaky')) != (100, 0, 0, 0):
+              raise SystemExit(f'unexpected browser stats: {stats}')
           git_hash = report.get('config', {}).get('metadata', {}).get('gitCommit', {}).get('hash')
           if git_hash != os.environ['NEOSMARTUI_SOURCE_SHA']:
-              raise SystemExit(f'report git hash {git_hash} != exact materialized SHA {os.environ["NEOSMARTUI_SOURCE_SHA"]}')
+              raise SystemExit(f'report git hash {git_hash} != exact cleanup SHA {os.environ["NEOSMARTUI_SOURCE_SHA"]}')
           print(f'validated 100/100 on {git_hash}')
           PY
           git fetch origin feat/v0.3-hardline-light-implementation
-          test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "261e1436d250059ca03a4a658b332b8d4f55f37f"
-          test "$(git rev-parse HEAD)" = "$NEOSMARTUI_SOURCE_SHA"
+          test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "d62682d7dd748c12b2732fefd4b3c65db60a20ee"
           git push origin HEAD:feat/v0.3-hardline-light-implementation
