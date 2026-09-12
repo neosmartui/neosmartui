@@ -1,0 +1,29 @@
+{
+  "$schema": "../../spec/schemas/public-proof.schema.json",
+  "schema": "neosmartui/public-proof@1",
+  "component": "core.pagination",
+  "deployedSource": {
+    "repository": "neosmartui/neosmartui",
+    "sha": "7f88b4086286f14721f31a6d5c4e3aae616caa97"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/pagination.css",
+      "blobSha": "998c8776f14cf509b1833fe4f978b5aee7eaa848"
+    }
+  ],
+  "browserEvidence": {
+    "runId": 34659873718,
+    "artifactId": 10287231563
+  },
+  "deployment": {
+    "repository": "neosmartui/neosmartui.github.io",
+    "commitSha": "438bdd2db67e3dd57dea14d90e5c4d5114481155",
+    "treeSha": "518fd19ce44692c318da91dc152737608cd1bbc9",
+    "pagesRunId": 34660304985
+  },
+  "live": {
+    "pageUrl": "https://neosmartui.github.io/",
+    "deploymentRecordUrl": "https://neosmartui.github.io/deployment.json"
+  }
+}
