@@ -6,8 +6,11 @@ Hardline is the flagship/default NeoSmartUI flavor. It owns visual and tactile e
 
 - Flavor ID: `flavor.hardline`
 - Flavor schema: `neosmartui/flavor@1`
-- Starting theme descriptor: `packages/themes/hardline-light/theme.json`
+- Implemented light Theme: `packages/themes/hardline-light/theme.json`
+- Resolved bundle: `packages/themes/hardline-light/tokens.json`
+- Theme resolution: `packages/themes/hardline-light/resolution.json`
 - Interaction model: `pressure-not-levitation`
+- Maturity: `implemented`
 
 ## Expression contract
 
@@ -15,19 +18,38 @@ Hardline defaults toward square or zero-radius geometry, hard boundaries, strong
 
 Flavor-owned expression may configure palette defaults, typography, geometry, border weight, shadow direction/strength, density, spacing personality, motion intensity/release, icon treatment, surface treatment, and patterns.
 
-Hardline MUST NOT own Button/Dialog/Product/Checkout/Billing behavior or any other Core/Vertical semantic behavior. Renderer overrides are exceptional and are not part of this contract slice.
+Hardline MUST NOT own Button/Dialog/Product/Checkout/Billing behavior or any other Core/Vertical semantic behavior. Renderer overrides are exceptional and are not part of the Hardline Light implementation.
 
-## Theme descriptor phase
+## Hardline Light implementation
 
-`Hardline Light` is descriptor-only in this slice. It is schema-valid `neosmartui/theme@1` data and establishes light-mode intent/profile metadata. It does **not** yet claim a resolved token bundle, Theme resolution, generated CSS, Foundry route, dark mode, or public proof.
+`Hardline Light` resolves the exact semantic dependency union consumed by the 18 shipping Core components. It does not add component-specific magic values or fork component renderers. Core adapters remain authoritative and receive Hardline expression through inherited semantic custom properties.
 
-The following files MUST therefore remain absent until the implementation phase establishes and validates concrete values:
+The pressure model follows the pinned family reference:
 
-- `packages/themes/hardline-light/tokens.json`
-- `packages/themes/hardline-light/resolution.json`
+- rest depth: `4px × 4px`
+- hover/proximity depth: `2px × 2px`
+- pressed/seated depth: `0px × 0px`
+- hover travel: `2px × 2px`
+- pressed/seated travel: `4px × 4px`
+- press/release/standard timing: `70ms / 110ms / 170ms`
+- control, grouped-surface, and annotation radius: `0px`
+- minimum interactive target: `44px`
+- independent focus keyline: `3px` width with `3px` offset
 
-No Hardline component CSS/MJS fork belongs under the Flavor package. Core behavior stays in Core adapters.
+The resolved bundle contains exactly the 55 semantic roles currently required by implemented/public-proof Core components. The full Core registry still defines 63 value-free contracts; unused contracts are not padded into this concrete bundle.
 
-## Next lifecycle stage
+## Provenance
 
-The implementation stage will resolve the existing Core semantic token contracts for Hardline Light, preserve the permanent pressure law, prove zero-radius/sharp geometry without changing component semantics, and add cross-flavor Foundry evidence. Dark mode follows as its own concrete Theme instance rather than hidden conditional values inside the light Theme.
+Hardline is a new NeoSmartUI flagship personality, not a copied legacy implementation. Its family-law evidence is pinned through the migration ledger to `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626`:
+
+- `FLAVORS.md` supplies the Flavor/Core ownership boundary and cross-flavor semantic invariants.
+- `TOKENS.md` supplies the semantic pressure, motion, focus, and token-separation reference model.
+- `INTERACTION.md` supplies compress-never-float, coherent shadow/travel, reduced-motion, keyboard/touch, and static-surface laws.
+
+The canonical NeoSmartUI PRD supplies the Hardline-specific flagship choices: zero-radius/square geometry, hard boundaries, strong structural depth, high reaction, seated selection, and restrained decorative movement. No legacy source code is copied.
+
+## Public-proof boundary
+
+Maturity is `implemented`, not `public-proof`. This slice may build local/CI Foundry evidence using the same shipping Core implementations under a scoped Hardline Theme, but it MUST NOT claim a deployed Hardline proof until the exact merged-main artifact is deployed, native Pages verification succeeds, and live proof is independently established.
+
+Dark mode follows as its own concrete Theme instance rather than hidden conditional values inside the light Theme.
