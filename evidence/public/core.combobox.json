@@ -1,19 +1,19 @@
 {
   "$schema": "../../spec/schemas/public-proof.schema.json",
   "schema": "neosmartui/public-proof@1",
-  "component": "core.checkbox",
+  "component": "core.combobox",
   "deployedSource": {
     "repository": "neosmartui/neosmartui",
     "sha": "e492fc06fd14d22087c0b428d2788d3d9824212a"
   },
   "implementationFiles": [
     {
-      "path": "packages/adapters/web/components/checkbox.mjs",
-      "blobSha": "41a19cbff884b7e944a6bebcdae415dc0e5612ce"
+      "path": "packages/adapters/web/components/combobox.mjs",
+      "blobSha": "7894c98f07a7e9c940d041e40fc016eab431d003"
     },
     {
-      "path": "packages/adapters/web/components/checkbox.css",
-      "blobSha": "5d2d21868a7bcb16e28391d1163694fdc40b1fbc"
+      "path": "packages/adapters/web/components/combobox.css",
+      "blobSha": "e1c896eb40ad6bc5ec711b270a23e81cbb4cf68d"
     }
   ],
   "browserEvidence": {
