@@ -48,7 +48,19 @@ const liveMarkers = new Map([
   ]],
   ['flavor.mono', ['Mono Light', 'ns-theme-mono-light', 'Editorial pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
   ['flavor.rivet', ['Rivet Light', 'ns-theme-rivet-light', 'Mechanical pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
-  ['flavor.soft', ['Soft Light', 'ns-theme-soft-light', 'Compress, never float', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']]
+  ['flavor.soft', [
+    'Soft Light',
+    'ns-theme-soft-light',
+    'Compress, never float',
+    'Shared <code>core.button</code>',
+    'Shared <code>core.input</code>',
+    'soft-dark-theme.css',
+    'ns-theme-soft-dark',
+    'Soft Dark',
+    'Concrete Dark Theme',
+    'Shared <code>core.button</code> · Dark',
+    'Shared <code>core.input</code> · Dark'
+  ]]
 ]);
 
 const assetMarkers = new Map([
@@ -75,6 +87,29 @@ const hardlineDarkAssetMarkers = [
   '--ns-motion-standard-duration: 170ms;',
   '--ns-size-control-minimum: 44px;',
   '--ns-color-focus-ring: #8fb3ff;',
+  '--ns-focus-ring-width: 3px;',
+  '--ns-focus-ring-offset: 3px;'
+];
+
+const softDarkAssetMarkers = [
+  '.ns-theme-soft-dark {',
+  '--ns-color-surface-interactive: #1e1b19;',
+  '--ns-color-surface-panel: #292522;',
+  '--ns-color-content-primary: #f7f1e8;',
+  '--ns-color-action-primary-surface: #8fb8f4;',
+  '--ns-color-action-primary-content: #171513;',
+  '--ns-border-control-width: 2px;',
+  '--ns-radius-control: 8px;',
+  '--ns-radius-surface: 12px;',
+  '--ns-depth-rest-x: 3px;',
+  '--ns-depth-hover-x: 1.5px;',
+  '--ns-depth-active-x: 0px;',
+  '--ns-press-active-x: 3px;',
+  '--ns-motion-press-duration: 70ms;',
+  '--ns-motion-release-duration: 105ms;',
+  '--ns-motion-standard-duration: 165ms;',
+  '--ns-size-control-minimum: 44px;',
+  '--ns-color-focus-ring: #9ec4ff;',
   '--ns-focus-ring-width: 3px;',
   '--ns-focus-ring-offset: 3px;'
 ];
@@ -117,7 +152,9 @@ for (const claim of claims) {
     const markersForAsset =
       claim.id === 'flavor.hardline' && assetUrl === 'https://neosmartui.github.io/hardline-dark-theme.css'
         ? hardlineDarkAssetMarkers
-        : assetMarkers.get(claim.id) ?? [];
+        : claim.id === 'flavor.soft' && assetUrl === 'https://neosmartui.github.io/soft-dark-theme.css'
+          ? softDarkAssetMarkers
+          : assetMarkers.get(claim.id) ?? [];
     for (const marker of markersForAsset) if (!asset.includes(marker)) throw new Error(`[public-proof-live] ${claim.id} live asset ${assetUrl} missing ${marker}`);
   }
   console.log(`[public-proof-live] ${claim.id} verified at ${pageResponse.url}; deployment record ${recordResponse.url} = ${record.sourceSha}`);
