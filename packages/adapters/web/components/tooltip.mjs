@@ -25,6 +25,52 @@ function validateTooltip(target, tooltip) {
   }
 }
 
+const numericStyle = (styles, property) => {
+  const value = Number.parseFloat(styles[property]);
+  return Number.isFinite(value) ? value : 0;
+};
+
+export function positionTooltip(target, explicitTooltip) {
+  const tooltip = describedTooltip(target, explicitTooltip);
+  validateTooltip(target, tooltip);
+  if (tooltip.dataset.state !== 'open') return { target, tooltip };
+
+  const view = target.ownerDocument.defaultView;
+  const targetRect = target.getBoundingClientRect();
+  const tooltipRect = tooltip.getBoundingClientRect();
+  const tooltipStyles = view.getComputedStyle(tooltip);
+  const targetStyles = view.getComputedStyle(target);
+  const inlineGutter = Math.max(
+    numericStyle(tooltipStyles, 'paddingInlineStart'),
+    numericStyle(tooltipStyles, 'borderInlineStartWidth'),
+    numericStyle(tooltipStyles, 'boxShadow') ? 0 : 0
+  );
+  const blockGap = Math.max(
+    numericStyle(tooltipStyles, 'paddingBlockStart'),
+    numericStyle(tooltipStyles, 'borderBlockStartWidth')
+  );
+  const safeInlineGutter = Math.max(inlineGutter, 1);
+  const safeBlockGap = Math.max(blockGap, 1);
+
+  let left = targetStyles.direction === 'rtl'
+    ? targetRect.right - tooltipRect.width
+    : targetRect.left;
+  const maxLeft = Math.max(safeInlineGutter, view.innerWidth - tooltipRect.width - safeInlineGutter);
+  left = Math.min(Math.max(left, safeInlineGutter), maxLeft);
+
+  let top = targetRect.bottom + safeBlockGap;
+  const above = targetRect.top - safeBlockGap - tooltipRect.height;
+  if (top + tooltipRect.height + safeBlockGap > view.innerHeight && above >= safeBlockGap) top = above;
+  const maxTop = Math.max(safeBlockGap, view.innerHeight - tooltipRect.height - safeBlockGap);
+  top = Math.min(Math.max(top, safeBlockGap), maxTop);
+
+  tooltip.style.left = `${left}px`;
+  tooltip.style.top = `${top}px`;
+  tooltip.style.right = 'auto';
+  tooltip.style.bottom = 'auto';
+  return { target, tooltip, left, top };
+}
+
 export function syncTooltipState(target, state = 'closed', explicitTooltip) {
   const tooltip = describedTooltip(target, explicitTooltip);
   validateTooltip(target, tooltip);
@@ -44,15 +90,20 @@ export function bindTooltip(target, options = {}) {
   let targetFocused = target.ownerDocument.activeElement === target;
   let dismissed = false;
   let closeTimer = null;
+  const view = target.ownerDocument.defaultView;
 
   const clearCloseTimer = () => {
     if (closeTimer !== null) {
-      target.ownerDocument.defaultView.clearTimeout(closeTimer);
+      view.clearTimeout(closeTimer);
       closeTimer = null;
     }
   };
 
-  const setState = (state) => syncTooltipState(target, state, tooltip);
+  const setState = (state) => {
+    const result = syncTooltipState(target, state, tooltip);
+    if (state === 'open') positionTooltip(target, tooltip);
+    return result;
+  };
   const sessionActive = () => targetHovered || tooltipHovered || targetFocused;
 
   const reconcile = () => {
@@ -70,7 +121,7 @@ export function bindTooltip(target, options = {}) {
 
   const scheduleClose = () => {
     clearCloseTimer();
-    closeTimer = target.ownerDocument.defaultView.setTimeout(reconcile, 80);
+    closeTimer = view.setTimeout(reconcile, 80);
   };
 
   const onTargetPointerEnter = () => {
@@ -106,6 +157,9 @@ export function bindTooltip(target, options = {}) {
     clearCloseTimer();
     setState('dismissed');
   };
+  const onViewportChange = () => {
+    if (tooltip.dataset.state === 'open') positionTooltip(target, tooltip);
+  };
 
   target.addEventListener('pointerenter', onTargetPointerEnter);
   target.addEventListener('pointerleave', onTargetPointerLeave);
@@ -114,6 +168,8 @@ export function bindTooltip(target, options = {}) {
   tooltip.addEventListener('pointerenter', onTooltipPointerEnter);
   tooltip.addEventListener('pointerleave', onTooltipPointerLeave);
   target.ownerDocument.addEventListener('keydown', onDocumentKeyDown);
+  view.addEventListener('resize', onViewportChange);
+  view.addEventListener('scroll', onViewportChange, true);
   setState(targetFocused ? 'open' : 'closed');
 
   const controller = {
@@ -126,6 +182,9 @@ export function bindTooltip(target, options = {}) {
       return setState('dismissed');
     },
     sync: reconcile,
+    position() {
+      return positionTooltip(target, tooltip);
+    },
     destroy() {
       clearCloseTimer();
       target.removeEventListener('pointerenter', onTargetPointerEnter);
@@ -135,6 +194,8 @@ export function bindTooltip(target, options = {}) {
       tooltip.removeEventListener('pointerenter', onTooltipPointerEnter);
       tooltip.removeEventListener('pointerleave', onTooltipPointerLeave);
       target.ownerDocument.removeEventListener('keydown', onDocumentKeyDown);
+      view.removeEventListener('resize', onViewportChange);
+      view.removeEventListener('scroll', onViewportChange, true);
       controllers.delete(target);
       dismissed = false;
       setState('closed');
