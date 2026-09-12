@@ -159,9 +159,9 @@
     {
       "id": "core.accordion",
       "contract": "components/accordion.json",
-      "maturity": "contract-only",
+      "maturity": "implemented",
       "evidence": {
-        "implementation": null,
+        "implementation": "packages/adapters/web/components/accordion.mjs",
         "publicProof": null
       }
     }

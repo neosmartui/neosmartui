@@ -49,7 +49,7 @@ for (const entry of bundle.values) {
 }
 for (const dependency of requiredDependencies) if (!values.has(dependency)) fail(`unresolved implemented-component token dependency ${dependency}`);
 if (values.size !== requiredDependencies.size) fail('resolved bundle must be the exact union of implemented/public-proof Core component dependencies');
-if (requiredDependencies.size !== 55) fail('Slice 17 public-proof promotion must preserve the exact implemented/public-proof dependency union at 55');
+if (requiredDependencies.size !== 55) fail('Slice 18 Accordion implementation must preserve the exact implemented/public-proof dependency union at 55');
 
 for (const axis of ['x', 'y']) {
   const rest = px(values.get(`depth.rest.${axis}`));
@@ -110,6 +110,9 @@ if (tooltipEntry.evidence.implementation !== 'packages/adapters/web/components/t
 const comboboxEntry = registry.components.find((entry) => entry.id === 'core.combobox');
 if (!comboboxEntry || comboboxEntry.maturity !== 'public-proof' || comboboxEntry.evidence.publicProof !== 'evidence/public/core.combobox.json') fail('core.combobox must bind current public-proof evidence');
 if (comboboxEntry.evidence.implementation !== 'packages/adapters/web/components/combobox.mjs') fail('core.combobox must bind its canonical Web adapter');
+const accordionEntry = registry.components.find((entry) => entry.id === 'core.accordion');
+if (!accordionEntry || accordionEntry.maturity !== 'implemented' || accordionEntry.evidence.publicProof !== null) fail('core.accordion must remain implemented without public proof in this phase');
+if (accordionEntry.evidence.implementation !== 'packages/adapters/web/components/accordion.mjs') fail('core.accordion must bind its canonical Web adapter');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
 if (values.get('space.navigation.gap') !== '0.45rem') fail('Rivet Light navigation gap must preserve the pinned Soft breadcrumb spacing value');
