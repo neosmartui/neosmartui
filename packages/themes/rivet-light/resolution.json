@@ -4,5 +4,5 @@
   "flavor": "flavor.rivet",
   "theme": "Rivet Light",
   "bundle": "tokens.json",
-  "scope": ["core.button", "core.checkbox", "core.input", "core.radio", "core.switch", "core.tabs", "core.textarea", "core.select", "core.card", "core.badge", "core.alert", "core.field", "core.breadcrumb", "core.pagination", "core.segmented-control", "core.tooltip"]
+  "scope": ["core.button", "core.checkbox", "core.input", "core.radio", "core.switch", "core.tabs", "core.textarea", "core.select", "core.card", "core.badge", "core.alert", "core.field", "core.breadcrumb", "core.pagination", "core.segmented-control", "core.tooltip", "core.combobox"]
 }
