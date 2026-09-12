@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          expected=141aefe7339a278de76d55cf98595ead1bf32b38
+          expected=5572061f6c047012048bd18cb9473a6dc092e7f1
           test "$(git rev-parse HEAD)" = "$expected"
           git fetch origin feat/v0.3-hardline-light-implementation
           test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "$expected"
@@ -80,6 +80,6 @@ jobs:
           print(f'validated 100/100 on {git_hash}')
           PY
           git fetch origin feat/v0.3-hardline-light-implementation
-          test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "141aefe7339a278de76d55cf98595ead1bf32b38"
+          test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "5572061f6c047012048bd18cb9473a6dc092e7f1"
           test "$(git rev-parse HEAD)" = "$NEOSMARTUI_SOURCE_SHA"
           git push origin HEAD:feat/v0.3-hardline-light-implementation
