@@ -38,20 +38,20 @@ if (theme.typography?.strategy !== 'sturdy-system-first' || theme.geometry?.prof
 if (theme.motion?.model !== 'pressure-not-levitation' || theme.interaction?.model !== 'pressure-not-levitation' || theme.icons?.strategy !== 'adapter-owned') fail('Rivet Light interaction/adapter ownership drifted');
 if (resolution.schema !== 'neosmartui/theme-resolution@1' || resolution.flavor !== 'flavor.rivet' || resolution.theme !== 'Rivet Light' || resolution.bundle !== 'tokens.json') fail('Rivet Light resolution identity is invalid');
 if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== 'flavor.rivet' || bundle.theme !== 'Rivet Light') fail('Rivet Light bundle identity is invalid');
-if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('implemented Rivet Light must preserve the exact 18-component scope');
-if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('implemented Rivet Light must preserve the exact 55-token dependency union');
+if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('public-proof Rivet Light must preserve the exact 18-component scope');
+if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('public-proof Rivet Light must preserve the exact 55-token dependency union');
 
-for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/rivet/index.${extension}`, `Rivet implementation must not introduce renderer override index.${extension}`);
-await expectAbsent('packages/themes/rivet-dark', 'Rivet Light implementation must not prematurely implement Rivet Dark');
-await expectAbsent('evidence/public/flavor.rivet.json', 'Rivet implementation must not claim public proof before exact deployment and live verification');
+for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/rivet/index.${extension}`, `Rivet public proof must not introduce renderer override index.${extension}`);
+await expectAbsent('packages/themes/rivet-dark', 'Rivet Light public proof must not prematurely implement Rivet Dark');
 await access(resolve(root, 'apps/foundry/src/flavors/rivet/index.html'));
+await access(resolve(root, 'evidence/public/flavor.rivet.json'));
 
 const docs = await readFile(resolve(root, 'spec/flavors/RIVET.md'), 'utf8');
 for (const marker of [
   'industrial/mechanical NeoSmartUI flavor',
   '`flavor.rivet`',
-  'Official migration maturity: `implemented`',
-  'Public-proof status: **not yet claimed**',
+  'Official migration maturity: `public-proof`',
+  'Public-proof record: `evidence/public/flavor.rivet.json`',
   '18 shipping Core components',
   'exact resolved semantic dependency union: 55 token IDs',
   'deliberately **ratified**',
@@ -63,7 +63,8 @@ for (const marker of [
   '`knowledge-only-until-reviewed`',
   'MUST NOT introduce generic hover lift',
   'Rivet Dark follows as its own concrete Theme instance',
-  'no direct Pages deployment'
-]) if (!docs.includes(marker)) fail(`Rivet implementation docs missing marker: ${marker}`);
+  'Public-proof promotion does not redeploy Pages',
+  'Rivet Light is complete through public proof'
+]) if (!docs.includes(marker)) fail(`Rivet public-proof docs missing marker: ${marker}`);
 
-console.log('[rivet-contract] validated implemented Rivet Light ownership, pinned provenance, 18/55 boundary, and no premature proof/dark/renderer fork');
+console.log('[rivet-contract] validated public-proof Rivet Light ownership, pinned provenance, 18/55 boundary, and no dark/renderer fork');
