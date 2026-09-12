@@ -149,7 +149,7 @@ test('Hardline Dark forced colors preserves focus, boundaries, and normal docume
 
 test('Hardline Dark preserves RTL and long localized content in a narrow viewport without horizontal overflow', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 800 });
-  await page.locator('html').setAttribute('dir', 'rtl');
+  await page.locator('html').evaluate((element) => element.setAttribute('dir', 'rtl'));
   await page.locator('#hardline-dark-localized-copy').evaluate((element) => {
     element.textContent = 'واجهة تحرير طويلة للغاية يجب أن تلتف داخل السطح الداكن من دون أي تجاوز أفقي حتى مع اتجاه القراءة من اليمين إلى اليسار وتسميات مطولة للاختبار.';
   });
