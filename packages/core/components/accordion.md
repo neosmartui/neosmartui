@@ -95,6 +95,8 @@ Pinned Rivet contains `components/ui/accordion.tsx`, which provides reference-on
 
 ## Lifecycle
 
-Maturity is `implemented`.
+Maturity is `public-proof`.
 
-Implementation evidence is `packages/adapters/web/components/accordion.mjs`. Public-proof evidence remains `null`. Deployment, native Pages verification, and singleton public-proof cohort refresh are later lifecycle stages and MUST NOT be claimed until an exact merged-main 95/95 artifact is deployed and independently verified.
+Implementation evidence is `packages/adapters/web/components/accordion.mjs`, paired CSS is `packages/adapters/web/components/accordion.css`, and canonical proof is `evidence/public/core.accordion.json`.
+
+The singleton proof cohort binds deployed source `57dc766ece8eca13b8c60b6f14615692ecdb51e8`, merged-main Quality run `34699170996`, browser artifact `10300390087`, Pages commit `f5caac25c16aa012222edeeb3b0e85c6b1bfbd11`, Pages tree `b0f9ec75170566945b8bf00af9a5c8b1b3136555`, and native Pages run `34700103133`. Structural proof validation recomputes both Accordion implementation blobs, while live proof validation requires the deployed Accordion disclosure markers. All eighteen public-proof Core components share this singleton deployment/browser cohort while retaining their own implementation blob bindings.
