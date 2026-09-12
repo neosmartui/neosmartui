@@ -466,6 +466,51 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use wrapped compact-control layout, structural depth, inward hover/active compression, current treatment, and disabled presentation as visual knowledge only; NeoSmartUI retains its existing 44px minimum and semantic token ownership."
+    },
+    {
+      "id": "legacy.spec.segmented-control-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "core",
+      "note": "Adapt the explicit chips/segmented-control law that pressable peers compress toward the surface and persistent selected state remains distinguishable after release, together with shared keyboard, touch, reduced-motion, fluid-token, and agent-readable laws."
+    },
+    {
+      "id": "legacy.soft.segmented-control-capability",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "COMPONENTS.md",
+      "kind": "documentation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the explicit Segmented Control Navigation + discovery listing as evidence that compact single-mode selection belongs in reusable Core."
+    },
+    {
+      "id": "legacy.soft.segmented-control-anatomy",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "components.html",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use the labelled role=group, real-button peers, and mutually-exclusive aria-pressed example as semantic anatomy knowledge only; no source code is copied."
+    },
+    {
+      "id": "legacy.soft.segmented-control-visual",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "src/components/navigation.css",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use connected group geometry, inward hover/active travel, persistent selected treatment, and responsive equal-width grid behavior as visual knowledge only; NeoSmartUI retains its existing 44px minimum and semantic token ownership."
+    },
+    {
+      "id": "legacy.soft.segmented-control-behavior",
+      "sourceRepository": "NeoBrutalism-shop/NeoBrutal-Soft",
+      "sourcePath": "component-explorer.js",
+      "kind": "implementation",
+      "decision": "REFERENCE",
+      "targetLayer": "core",
+      "note": "Use single-selection transfer behavior that leaves exactly one peer aria-pressed=true after activation as reference-only knowledge; native button activation and NeoSmartUI keyboard semantics remain authoritative and no source code is copied."
     }
   ]
 }
