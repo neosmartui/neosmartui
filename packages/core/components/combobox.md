@@ -46,7 +46,7 @@ If a platform accessibility pattern requires a narrowly different mapping, the i
 
 ## Pointer, touch, and trigger behavior
 
-Typing/focusing the editable field may open suggestions according to implementation policy. An optional disclosure trigger may also open or close the list. If a trigger exists, it is a real button-like control and follows the family pressure law: hover/contact moves it toward the resting surface, never upward, direct press acknowledges immediately, and release restores its structural depth.
+Typing/focusing the editable field may open suggestions according to implementation policy. An optional disclosure trigger may also open or close the list. If a trigger exists, it is a real button-like control; the trigger follows the family pressure law: hover/contact moves it toward the resting surface, never upward, direct press acknowledges immediately, and release restores its structural depth.
 
 The editable text surface itself remains an editing surface, not a pressable button. Pointer contact used to place a caret, select text, or edit content MUST NOT translate the input as though the entire field were a button.
 
