@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 17) fail('seventeenth Core slice must contain exactly seventeen honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 18) fail('eighteenth Core slice must contain exactly eighteen honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -305,5 +305,16 @@ const tabsAdapter = await readFile(resolve(root, 'packages/adapters/web/componen
 for (const marker of ['export function selectTab', 'export function bindTabs', "['automatic', 'manual']", 'aria-orientation', 'ArrowLeft', 'ArrowRight', "event.key === 'Home'", "event.key === 'End'", "event.key === ' ' || event.key === 'Enter'", 'aria-selected']) if (!tabsAdapter.includes(marker)) fail(`tabs.mjs missing implementation marker: ${marker}`);
 const tabsDocs = await readFile(resolve(root, 'packages/core/components/tabs.md'), 'utf8');
 for (const marker of ['role="tablist"', 'roving focus', 'Automatic activation', 'Manual activation', 'logical inline-end', 'MUST NOT increase apparent elevation', 'selected tab SHOULD feel seated/locked into its rail', 'no legacy implementation code is copied', 'No tabs-specific Rivet implementation artifact is claimed', 'Maturity is `public-proof`']) if (!tabsDocs.includes(marker)) fail(`tabs.md missing marker: ${marker}`);
+
+const accordion = await readJson(resolve(root, 'packages/core/components/accordion.json'));
+const accordionStates = new Set(['rest', 'hover', 'focus-visible', 'pressed', 'closed', 'open', 'disabled']);
+if (accordion.states.length !== accordionStates.size || !accordion.states.every((state) => accordionStates.has(state))) fail('core.accordion must expose exactly rest/hover/focus-visible/pressed/closed/open/disabled disclosure states');
+for (const token of ['color.surface.interactive', 'color.surface.panel', 'color.content.primary', 'color.content.secondary', 'color.border.default', 'color.border.strong', 'color.focus.ring', 'space.control.inline', 'space.control.block', 'space.surface.inline', 'space.surface.block', 'border.control.width', 'border.surface.width', 'radius.control', 'radius.surface', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'motion.standard.duration', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled', 'font.family.body', 'font.size.body', 'font.size.label', 'font.weight.regular', 'font.weight.emphasis']) if (!accordion.dependencies.includes(token)) fail(`core.accordion missing semantic disclosure/control token ${token}`);
+for (const forbiddenToken of ['space.annotation.inline', 'space.annotation.block', 'border.annotation.width', 'radius.annotation', 'space.navigation.gap', 'font.size.navigation', 'color.state.error']) if (accordion.dependencies.includes(forbiddenToken)) fail(`core.accordion must not borrow unrelated annotation/navigation/error token ${forbiddenToken}`);
+const accordionEntry = registry.components.find((entry) => entry.id === 'core.accordion');
+if (!accordionEntry || accordionEntry.maturity !== 'contract-only') fail('core.accordion must remain contract-only in Slice 18');
+if (accordionEntry.evidence.implementation !== null || accordionEntry.evidence.publicProof !== null) fail('contract-only core.accordion must keep implementation and public-proof evidence null');
+const accordionDocs = await readFile(resolve(root, 'packages/core/components/accordion.md'), 'utf8');
+for (const marker of ['real `<button>`', '`aria-expanded="true|false"`', '`aria-controls`', 'ordinary document focus traversal', 'MUST NOT require ArrowUp, ArrowDown, Home, or End', '`open` and `closed` describe disclosure state', 'hover MUST NOT increase apparent elevation', '`role="region"` when the surrounding information architecture benefits', 'does not list or implement Accordion', '`components/ui/accordion.tsx`', 'Maturity is `contract-only`']) if (!accordionDocs.includes(marker)) fail(`accordion.md missing marker: ${marker}`);
 
 console.log(`[core-components] validated ${registry.components.length} Core components with token/accessibility/evidence invariants`);
