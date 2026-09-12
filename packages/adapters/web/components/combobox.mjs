@@ -227,8 +227,11 @@ export function bindCombobox(root) {
   let releaseTrigger = null;
   const onTriggerClick = parts.trigger ? () => {
     const expanded = parts.input.getAttribute('aria-expanded') === 'true';
-    if (expanded) close();
-    else open({ active: true });
+    if (expanded) {
+      close();
+      return;
+    }
+    open({ active: true });
     parts.input.focus();
   } : null;
   const onTriggerPointerDown = parts.trigger ? () => { parts.trigger.dataset.pressed = 'true'; } : null;
