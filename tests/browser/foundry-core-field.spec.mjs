@@ -99,14 +99,14 @@ test('core.field reflects invalid and disabled state from the real controls with
   expect(await invalidInput.getAttribute('aria-errormessage')).toBe('field-code-error');
   expect(await error.getAttribute('role')).toBeNull();
   expect(await error.getAttribute('aria-live')).toBeNull();
-  await expect(invalidLabel).toHaveCSS('color', 'rgb(193, 18, 31)');
-  await expect(error).toHaveCSS('color', 'rgb(193, 18, 31)');
+  await expect(invalidLabel).toHaveCSS('color', 'rgb(184, 58, 49)');
+  await expect(error).toHaveCSS('color', 'rgb(184, 58, 49)');
 
   await expect(disabledInput).toBeDisabled();
   expect(await disabledField.getAttribute('disabled')).toBeNull();
   expect(await disabledField.getAttribute('aria-disabled')).toBeNull();
   expect(await disabledField.getAttribute('role')).toBeNull();
-  await expect(disabledLabel).toHaveCSS('color', 'rgb(95, 90, 80)');
+  await expect(disabledLabel).toHaveCSS('color', 'rgb(98, 95, 105)');
   await page.screenshot({ path: `${evidenceDir}/core-field-invalid-disabled.png`, fullPage: true });
 });
 

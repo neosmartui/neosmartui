@@ -81,23 +81,23 @@ test('core.alert is a passive token-backed message surface and visual tone does 
   expect(await tokenValue(page, '--ns-radius-surface')).toBe('6px');
   expect(await tokenValue(page, '--ns-depth-rest-x')).toBe('5px');
   expect(await tokenValue(page, '--ns-depth-rest-y')).toBe('5px');
-  expect(await tokenValue(page, '--ns-color-state-info')).toBe('#c9b7ff');
-  expect(await tokenValue(page, '--ns-color-state-success')).toBe('#9be3bd');
-  expect(await tokenValue(page, '--ns-color-state-warning')).toBe('#f4dc78');
-  expect(await tokenValue(page, '--ns-color-state-error')).toBe('#c1121f');
+  expect(await tokenValue(page, '--ns-color-state-info')).toBe('#397eaf');
+  expect(await tokenValue(page, '--ns-color-state-success')).toBe('#27865d');
+  expect(await tokenValue(page, '--ns-color-state-warning')).toBe('#a66a13');
+  expect(await tokenValue(page, '--ns-color-state-error')).toBe('#b83a31');
 
   const tones = [
-    ['#alert-neutral', 'Neutral · Note', 'rgb(17, 17, 17)'],
-    ['#alert-info', 'Info · Update', 'rgb(201, 183, 255)'],
-    ['#alert-success', 'Success · Complete', 'rgb(155, 227, 189)'],
-    ['#alert-warning', 'Warning · Check this', 'rgb(244, 220, 120)'],
-    ['#alert-error', 'Error · Needs correction', 'rgb(193, 18, 31)']
+    ['#alert-neutral', 'Neutral · Note', 'rgb(37, 35, 43)'],
+    ['#alert-info', 'Info · Update', 'rgb(57, 126, 175)'],
+    ['#alert-success', 'Success · Complete', 'rgb(39, 134, 93)'],
+    ['#alert-warning', 'Warning · Check this', 'rgb(166, 106, 19)'],
+    ['#alert-error', 'Error · Needs correction', 'rgb(184, 58, 49)']
   ];
   for (const [selector, title, borderColor] of tones) {
     const alert = page.locator(selector);
     await expect(alert.locator('.ns-alert-title')).toHaveText(title);
     await expect(alert).toHaveCSS('border-color', borderColor);
-    await expect(alert).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+    await expect(alert).toHaveCSS('background-color', 'rgb(248, 246, 241)');
     const toneState = await visualState(alert);
     expect(toneState.role).toBeNull();
     expect(toneState.ariaLive).toBeNull();

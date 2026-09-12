@@ -49,7 +49,7 @@ for (const entry of bundle.values) {
 }
 for (const dependency of requiredDependencies) if (!values.has(dependency)) fail(`unresolved implemented-component token dependency ${dependency}`);
 if (values.size !== requiredDependencies.size) fail('resolved bundle must be the exact union of implemented/public-proof Core component dependencies');
-if (requiredDependencies.size !== 55) fail('Slice 18 Accordion public-proof promotion must preserve the exact implemented/public-proof dependency union at 55');
+if (requiredDependencies.size !== 55) fail('Rivet Light must preserve the exact implemented/public-proof dependency union at 55');
 
 for (const axis of ['x', 'y']) {
   const rest = px(values.get(`depth.rest.${axis}`));
@@ -114,36 +114,40 @@ const accordionEntry = registry.components.find((entry) => entry.id === 'core.ac
 if (!accordionEntry || accordionEntry.maturity !== 'public-proof' || accordionEntry.evidence.publicProof !== 'evidence/public/core.accordion.json') fail('core.accordion must bind current public-proof evidence');
 if (accordionEntry.evidence.implementation !== 'packages/adapters/web/components/accordion.mjs') fail('core.accordion must bind its canonical Web adapter');
 
-if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
-if (values.get('space.navigation.gap') !== '0.45rem') fail('Rivet Light navigation gap must preserve the pinned Soft breadcrumb spacing value');
-if (values.get('font.size.navigation') !== 'clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem)') fail('Rivet Light navigation text size must preserve the pinned Soft text-xs fluid value');
+if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the ratified fluid spacing value');
+if (values.get('space.navigation.gap') !== '0.45rem') fail('Rivet Light navigation gap must preserve the ratified breadcrumb spacing value');
+if (values.get('font.size.navigation') !== 'clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem)') fail('Rivet Light navigation text size must preserve the ratified fluid value');
 if (values.get('space.surface.inline') !== '1rem' || values.get('space.surface.block') !== '1rem') fail('Rivet Light grouped-surface padding must resolve to the deliberate 1rem surface rhythm');
 if (values.get('border.surface.width') !== '3px') fail('Rivet Light grouped-surface border must resolve to 3px');
 if (values.get('radius.surface') !== '6px') fail('Rivet Light grouped-surface radius must resolve to 6px');
 if (values.get('font.weight.strong') !== 800) fail('Rivet Light strong text weight must resolve to 800');
-if (values.get('space.annotation.inline') !== '0.55rem' || values.get('space.annotation.block') !== '0.15rem') fail('Rivet Light Badge annotation padding must resolve to the pinned compact rhythm');
+if (values.get('space.annotation.inline') !== '0.55rem' || values.get('space.annotation.block') !== '0.15rem') fail('Rivet Light Badge annotation padding must resolve to the ratified compact rhythm');
 if (values.get('border.annotation.width') !== '2px') fail('Rivet Light Badge annotation border must resolve to 2px');
 if (values.get('radius.annotation') !== '999px') fail('Rivet Light Badge annotation radius must resolve to a pill');
-if (values.get('color.state.info') !== '#c9b7ff' || values.get('color.state.success') !== '#9be3bd' || values.get('color.state.warning') !== '#f4dc78') fail('Rivet Light status palette must preserve pinned Soft evidence');
-if (values.get('color.state.error') !== '#c1121f') fail('Alert/Badge/Field implementation must not mutate the established NeoSmartUI error role');
-if (values.get('color.content.inverse') !== '#ffffff') fail('Rivet Light inverse content must remain white for dark error surfaces');
+if (values.get('color.surface.interactive') !== '#fffefb' || values.get('color.surface.panel') !== '#f8f6f1') fail('Rivet Light surfaces must preserve the implemented paper identity');
+if (values.get('color.action.primary.surface') !== '#b9a1ed' || values.get('color.action.primary.content') !== '#211c2b') fail('Rivet Light primary action must preserve the implemented lavender/ink identity');
+if (values.get('color.focus.ring') !== '#7550ac') fail('Rivet Light focus ring must preserve the implemented deep-lavender identity');
+if (values.get('color.state.info') !== '#397eaf' || values.get('color.state.success') !== '#27865d' || values.get('color.state.warning') !== '#a66a13') fail('Rivet Light status palette must preserve the implemented semantic identity');
+if (values.get('color.state.error') !== '#b83a31') fail('Rivet Light error role must preserve the implemented semantic identity');
+if (values.get('color.content.inverse') !== '#fffef5') fail('Rivet Light inverse content must preserve the implemented paper-on-dark role');
 
 const css = renderResolvedTokenCss(contracts, bundle);
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`CSS adapter omitted ${dependency}`);
 if (!css.includes('--ns-depth-hover-y: 3px;') || !css.includes('--ns-press-active-y: 5px;')) fail('generated CSS does not preserve expected pressure model');
 if (!css.includes('--ns-motion-standard-duration: 160ms;') || !css.includes('--ns-font-size-body: 1rem;')) fail('generated CSS does not include the Rivet Light input/state typography roles');
-if (!css.includes('--ns-color-surface-panel: #ffffff;')) fail('generated CSS does not include the evidence-backed Rivet Light panel surface role');
+if (!css.includes('--ns-color-surface-interactive: #fffefb;') || !css.includes('--ns-color-surface-panel: #f8f6f1;')) fail('generated CSS does not include the implemented Rivet Light paper surface roles');
+if (!css.includes('--ns-color-action-primary-surface: #b9a1ed;') || !css.includes('--ns-color-focus-ring: #7550ac;')) fail('generated CSS does not include the implemented Rivet Light lavender identity roles');
 if (!css.includes('--ns-font-size-label: 1rem;')) fail('generated CSS does not include the evidence-backed Rivet Light label size role');
 if (!css.includes('--ns-font-weight-emphasis: 750;')) fail('generated CSS does not include the evidence-backed Rivet Light emphasis weight role');
-if (!css.includes('--ns-space-field-gap: clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem);')) fail('generated CSS does not include the pinned Field gap role');
-if (!css.includes('--ns-space-navigation-gap: 0.45rem;')) fail('generated CSS does not include the pinned Breadcrumb navigation gap role');
-if (!css.includes('--ns-font-size-navigation: clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem);')) fail('generated CSS does not include the pinned Breadcrumb navigation text role');
+if (!css.includes('--ns-space-field-gap: clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem);')) fail('generated CSS does not include the ratified Field gap role');
+if (!css.includes('--ns-space-navigation-gap: 0.45rem;')) fail('generated CSS does not include the ratified Breadcrumb navigation gap role');
+if (!css.includes('--ns-font-size-navigation: clamp(0.72rem, 0.69rem + 0.08vw, 0.78rem);')) fail('generated CSS does not include the ratified Breadcrumb navigation text role');
 if (!css.includes('--ns-space-surface-inline: 1rem;') || !css.includes('--ns-space-surface-block: 1rem;')) fail('generated CSS does not include grouped-surface spacing roles');
 if (!css.includes('--ns-border-surface-width: 3px;') || !css.includes('--ns-radius-surface: 6px;')) fail('generated CSS does not include grouped-surface geometry roles');
 if (!css.includes('--ns-font-weight-strong: 800;')) fail('generated CSS does not include the strong typography role used by Card/Alert');
 if (!css.includes('--ns-space-annotation-inline: 0.55rem;') || !css.includes('--ns-space-annotation-block: 0.15rem;')) fail('generated CSS does not include Badge annotation spacing roles');
 if (!css.includes('--ns-border-annotation-width: 2px;') || !css.includes('--ns-radius-annotation: 999px;')) fail('generated CSS does not include Badge annotation geometry roles');
-if (!css.includes('--ns-color-state-info: #c9b7ff;') || !css.includes('--ns-color-state-success: #9be3bd;') || !css.includes('--ns-color-state-warning: #f4dc78;') || !css.includes('--ns-color-state-error: #c1121f;')) fail('generated CSS does not include the complete semantic status tone roles used by Alert');
-if (!css.includes('--ns-color-content-inverse: #ffffff;')) fail('generated CSS does not include Badge inverse foreground role');
+if (!css.includes('--ns-color-state-info: #397eaf;') || !css.includes('--ns-color-state-success: #27865d;') || !css.includes('--ns-color-state-warning: #a66a13;') || !css.includes('--ns-color-state-error: #b83a31;')) fail('generated CSS does not include the complete implemented Rivet semantic status roles');
+if (!css.includes('--ns-color-content-inverse: #fffef5;')) fail('generated CSS does not include the implemented Rivet inverse foreground role');
 
 console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);

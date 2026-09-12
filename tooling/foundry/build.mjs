@@ -25,6 +25,7 @@ const rivetBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/riv
 const hardlineBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/hardline-light/tokens.json'), 'utf8'));
 const softBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/soft-light/tokens.json'), 'utf8'));
 await writeFile(resolve(output, 'theme.css'), renderResolvedTokenCss(contracts, rivetBundle));
+await writeFile(resolve(output, 'rivet-theme.css'), renderResolvedTokenCss(contracts, rivetBundle, { selector: '.ns-theme-rivet-light' }));
 await writeFile(resolve(output, 'hardline-theme.css'), renderResolvedTokenCss(contracts, hardlineBundle, { selector: '.ns-theme-hardline-light' }));
 await writeFile(resolve(output, 'soft-theme.css'), renderResolvedTokenCss(contracts, softBundle, { selector: '.ns-theme-soft-light' }));
 for (const file of ['button.css', 'checkbox.css', 'checkbox.mjs', 'input.css', 'input.mjs', 'radio.css', 'radio.mjs', 'switch.css', 'switch.mjs', 'tabs.css', 'tabs.mjs', 'textarea.css', 'textarea.mjs', 'select.css', 'select.mjs', 'card.css', 'badge.css', 'alert.css', 'field.css', 'breadcrumb.css', 'pagination.css', 'segmented-control.css', 'segmented-control.mjs', 'tooltip.css', 'tooltip.mjs', 'combobox.css', 'combobox.mjs', 'accordion.css', 'accordion.mjs']) {
