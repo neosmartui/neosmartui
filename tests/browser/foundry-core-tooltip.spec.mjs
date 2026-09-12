@@ -33,6 +33,10 @@ const tooltipState = async (target, tooltip) => target.evaluate((element, toolti
     borderWidth: tooltipStyles.borderTopWidth,
     borderStyle: tooltipStyles.borderTopStyle,
     direction: tooltipStyles.direction,
+    left: tooltipRect.left,
+    right: tooltipRect.right,
+    top: tooltipRect.top,
+    bottom: tooltipRect.bottom,
     width: tooltipRect.width,
     scrollWidth: surface?.scrollWidth ?? 0,
     clientWidth: surface?.clientWidth ?? 0,
@@ -164,6 +168,11 @@ test('core.tooltip never moves its target and preserves RTL plus long localized 
   expect(after.direction).toBe('rtl');
   expect(after.width).toBeLessThanOrEqual(288.5);
   expect(after.scrollWidth).toBeLessThanOrEqual(after.clientWidth + 1);
+  const viewport = await page.evaluate(() => ({ width: innerWidth, height: innerHeight }));
+  expect(after.left).toBeGreaterThanOrEqual(0);
+  expect(after.right).toBeLessThanOrEqual(viewport.width + 0.5);
+  expect(after.top).toBeGreaterThanOrEqual(0);
+  expect(after.bottom).toBeLessThanOrEqual(viewport.height + 0.5);
   const pageOverflow = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
   expect(pageOverflow.scroll).toBeLessThanOrEqual(pageOverflow.client + 1);
   await page.screenshot({ path: `${evidenceDir}/core-tooltip-rtl-long-copy.png`, fullPage: true });
