@@ -29,14 +29,16 @@ const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileT
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-if (flavorDirs.join(',') !== 'hardline,rivet') fail(`Hardline implementation slice expects exactly hardline,rivet Flavor manifests; got ${flavorDirs.join(',')}`);
+if (flavorDirs.join(',') !== 'hardline,rivet,soft') fail(`Soft contract slice expects exactly hardline,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
 
 const flavorKeys = ['$schema', 'schema', 'id', 'name', 'intent', 'interactionModel'];
 const hardline = await readJson('packages/flavors/hardline/flavor.json');
 const rivet = await readJson('packages/flavors/rivet/flavor.json');
+const soft = await readJson('packages/flavors/soft/flavor.json');
 for (const [label, flavor, expectedId, expectedName] of [
   ['Hardline', hardline, 'flavor.hardline', 'Hardline'],
-  ['Rivet', rivet, 'flavor.rivet', 'Rivet']
+  ['Rivet', rivet, 'flavor.rivet', 'Rivet'],
+  ['Soft', soft, 'flavor.soft', 'Soft']
 ]) {
   if (!sameKeys(flavor, flavorKeys)) fail(`${label} Flavor manifest must expose only the canonical Flavor fields`);
   if (flavor.schema !== 'neosmartui/flavor@1' || flavor.id !== expectedId || flavor.name !== expectedName) fail(`${label} Flavor identity is invalid`);
@@ -46,6 +48,10 @@ for (const [label, flavor, expectedId, expectedName] of [
 }
 if (!hardline.intent.includes('Flagship sharp neo-brutalist expression')) fail('Hardline must identify itself as the flagship sharp expression');
 if (!hardline.intent.includes('square geometry') || !hardline.intent.includes('seated selection')) fail('Hardline intent must encode sharp geometry and seated selection');
+if (!soft.intent.includes('Calm application-oriented neo-brutalist expression')) fail('Soft must identify itself as the calm application-oriented expression');
+for (const marker of ['moderate rounding', 'shallow hard depth', 'warm neutral surfaces', 'softened blue accents', 'seated selection']) {
+  if (!soft.intent.includes(marker)) fail(`Soft intent must encode ${marker}`);
+}
 
 const themeKeys = ['$schema', 'schema', 'name', 'family', 'category', 'color', 'typography', 'geometry', 'border', 'shadow', 'spacing', 'density', 'motion', 'interaction', 'icons'];
 const hardlineLight = await readJson('packages/themes/hardline-light/theme.json');
@@ -77,13 +83,34 @@ if (values.get('focus.ring.width')?.value !== '3px' || values.get('focus.ring.of
 if (values.get('size.control.minimum')?.value !== '44px') fail('Hardline must preserve the 44px minimum target');
 if (values.get('color.action.primary.surface')?.value !== '#ffd84d' || values.get('color.action.primary.content')?.value !== '#111111') fail('Hardline primary action must preserve the canonical yellow/ink flagship pairing');
 
+const softLight = await readJson('packages/themes/soft-light/theme.json');
+if (!sameKeys(softLight, themeKeys)) fail('Soft Light must expose exactly the canonical neosmartui/theme@1 fields');
+if (softLight.schema !== 'neosmartui/theme@1' || softLight.name !== 'Soft Light' || softLight.family !== 'neosmartui' || softLight.category !== 'soft') fail('Soft Light Theme identity is invalid');
+if (softLight.color?.mode !== 'light' || softLight.color?.strategy !== 'warm-neutral-softened-blue') fail('Soft Light must declare light warm-neutral/softened-blue color intent');
+if (softLight.typography?.strategy !== 'readable-system-first') fail('Soft Light must prioritize long-session readable system typography');
+if (softLight.geometry?.profile !== 'moderate-rounded') fail('Soft Light must declare moderate rounding rather than Hardline geometry');
+if (softLight.border?.profile !== 'visible-moderate') fail('Soft Light must retain visible moderate structural boundaries');
+if (softLight.shadow?.model !== 'shallow-hard-depth') fail('Soft Light must declare shallow hard structural depth');
+if (softLight.spacing?.density !== 'comfortable' || softLight.density?.control !== 'comfortable') fail('Soft Light must declare comfortable application density');
+if (softLight.motion?.model !== 'pressure-not-levitation' || softLight.motion?.intensity !== 'restrained') fail('Soft Light motion must preserve pressure with restrained movement');
+if (softLight.interaction?.model !== 'pressure-not-levitation' || softLight.interaction?.selection !== 'seated') fail('Soft Light interaction must preserve pressure and seated selection');
+if (softLight.icons?.strategy !== 'adapter-owned') fail('Soft Theme must not take renderer ownership of icons');
+
 for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) {
   await expectAbsent(`packages/flavors/hardline/index.${extension}`, `Hardline implementation must not introduce renderer override index.${extension}`);
+  await expectAbsent(`packages/flavors/soft/index.${extension}`, `Soft contract must not introduce renderer override index.${extension}`);
 }
+await expectAbsent('packages/themes/soft-light/tokens.json', 'contract-only Soft Light must not claim a resolved token bundle');
+await expectAbsent('packages/themes/soft-light/resolution.json', 'contract-only Soft Light must not claim Theme resolution');
+await expectAbsent('packages/themes/soft-dark', 'contract-only Soft slice must not prematurely implement Soft Dark');
 
-const docs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
+const hardlineDocs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
-  if (!docs.includes(marker)) fail(`Hardline implementation docs missing marker: ${marker}`);
+  if (!hardlineDocs.includes(marker)) fail(`Hardline implementation docs missing marker: ${marker}`);
+}
+const softDocs = await readFile(resolve(root, 'spec/flavors/SOFT.md'), 'utf8');
+for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.soft`', 'Maturity: `contract-only`', 'moderate rounding', 'MUST NOT introduce generic hover lift', 'SaaS remains a Vertical', '`packages/themes/soft-light/tokens.json`', '`packages/themes/soft-light/resolution.json`', 'NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a', '`3px → 1.5px → 0`', 'Soft Dark follows as its own concrete Theme instance']) {
+  if (!softDocs.includes(marker)) fail(`Soft contract docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated public-proof Hardline Light resolution, pinned pressure physics, zero-radius geometry, and existing Rivet Flavor identity');
+console.log('[flavors] validated public-proof Hardline Light, contract-only Soft Light descriptor boundary, and existing Rivet Flavor identity');
