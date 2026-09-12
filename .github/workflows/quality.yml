@@ -48,6 +48,8 @@ jobs:
           test -f dist/foundry/theme.css
           test -f dist/foundry/hardline-theme.css
           test -f dist/foundry/flavors/hardline/index.html
+          test -f dist/foundry/soft-theme.css
+          test -f dist/foundry/flavors/soft/index.html
           test -f dist/foundry/button.css
           test -f dist/foundry/checkbox.css
           test -f dist/foundry/checkbox.mjs
@@ -92,6 +94,16 @@ jobs:
           grep -q -- "--ns-press-active-y: 4px;" dist/foundry/hardline-theme.css
           grep -q -- "Hardline Light" dist/foundry/flavors/hardline/index.html
           grep -q -- "ns-theme-hardline-light" dist/foundry/flavors/hardline/index.html
+          grep -q -- ".ns-theme-soft-light {" dist/foundry/soft-theme.css
+          grep -q -- "--ns-border-control-width: 2px;" dist/foundry/soft-theme.css
+          grep -q -- "--ns-radius-control: 8px;" dist/foundry/soft-theme.css
+          grep -q -- "--ns-radius-surface: 12px;" dist/foundry/soft-theme.css
+          grep -q -- "--ns-depth-rest-y: 3px;" dist/foundry/soft-theme.css
+          grep -q -- "--ns-depth-hover-y: 1.5px;" dist/foundry/soft-theme.css
+          grep -q -- "--ns-press-active-y: 3px;" dist/foundry/soft-theme.css
+          grep -q -- "--ns-color-action-primary-surface: #8bb8f8;" dist/foundry/soft-theme.css
+          grep -q -- "Soft Light" dist/foundry/flavors/soft/index.html
+          grep -q -- "ns-theme-soft-light" dist/foundry/flavors/soft/index.html
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
           grep -q -- "--ns-color-surface-interactive: #ffffff;" dist/foundry/theme.css
           grep -q -- "--ns-color-surface-panel: #ffffff;" dist/foundry/theme.css

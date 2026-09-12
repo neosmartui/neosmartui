@@ -29,7 +29,7 @@ const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileT
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
   .sort();
-if (flavorDirs.join(',') !== 'hardline,rivet,soft') fail(`Soft contract slice expects exactly hardline,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
+if (flavorDirs.join(',') !== 'hardline,rivet,soft') fail(`Soft implementation slice expects exactly hardline,rivet,soft Flavor manifests; got ${flavorDirs.join(',')}`);
 
 const flavorKeys = ['$schema', 'schema', 'id', 'name', 'intent', 'interactionModel'];
 const hardline = await readJson('packages/flavors/hardline/flavor.json');
@@ -65,23 +65,23 @@ if (hardlineLight.motion?.model !== 'pressure-not-levitation' || hardlineLight.m
 if (hardlineLight.interaction?.model !== 'pressure-not-levitation' || hardlineLight.interaction?.selection !== 'seated') fail('Hardline Light interaction must preserve pressure and seated selection');
 if (hardlineLight.icons?.strategy !== 'adapter-owned') fail('Hardline Theme must not take renderer ownership of icons');
 
-const resolution = await readJson('packages/themes/hardline-light/resolution.json');
-const bundle = await readJson('packages/themes/hardline-light/tokens.json');
-if (resolution.schema !== 'neosmartui/theme-resolution@1' || resolution.flavor !== 'flavor.hardline' || resolution.theme !== 'Hardline Light' || resolution.bundle !== 'tokens.json') fail('Hardline Light resolution identity is invalid');
-if (bundle.schema !== 'neosmartui/resolved-token-bundle@1' || bundle.flavor !== 'flavor.hardline' || bundle.theme !== 'Hardline Light') fail('Hardline Light resolved bundle identity is invalid');
-if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resolution.scope].sort().join('|') !== [...bundle.scope].sort().join('|')) fail('Hardline Light resolution and bundle must share the exact 18-component Core scope');
-if (bundle.values.length !== 55) fail(`Hardline Light must resolve the exact shipping dependency union of 55 tokens; got ${bundle.values.length}`);
-const values = toMap(bundle.values);
-if (values.size !== 55) fail('Hardline Light resolved token IDs must be unique');
-for (const id of ['radius.control', 'radius.surface', 'radius.annotation']) if (values.get(id)?.value !== '0px') fail(`${id} must implement Hardline zero-radius geometry`);
+const hardlineResolution = await readJson('packages/themes/hardline-light/resolution.json');
+const hardlineBundle = await readJson('packages/themes/hardline-light/tokens.json');
+if (hardlineResolution.schema !== 'neosmartui/theme-resolution@1' || hardlineResolution.flavor !== 'flavor.hardline' || hardlineResolution.theme !== 'Hardline Light' || hardlineResolution.bundle !== 'tokens.json') fail('Hardline Light resolution identity is invalid');
+if (hardlineBundle.schema !== 'neosmartui/resolved-token-bundle@1' || hardlineBundle.flavor !== 'flavor.hardline' || hardlineBundle.theme !== 'Hardline Light') fail('Hardline Light resolved bundle identity is invalid');
+if (hardlineResolution.scope.length !== 18 || hardlineBundle.scope.length !== 18 || [...hardlineResolution.scope].sort().join('|') !== [...hardlineBundle.scope].sort().join('|')) fail('Hardline Light resolution and bundle must share the exact 18-component Core scope');
+if (hardlineBundle.values.length !== 55) fail(`Hardline Light must resolve the exact shipping dependency union of 55 tokens; got ${hardlineBundle.values.length}`);
+const hardlineValues = toMap(hardlineBundle.values);
+if (hardlineValues.size !== 55) fail('Hardline Light resolved token IDs must be unique');
+for (const id of ['radius.control', 'radius.surface', 'radius.annotation']) if (hardlineValues.get(id)?.value !== '0px') fail(`${id} must implement Hardline zero-radius geometry`);
 for (const axis of ['x', 'y']) {
-  if (values.get(`depth.rest.${axis}`)?.value !== '4px' || values.get(`depth.hover.${axis}`)?.value !== '2px' || values.get(`depth.active.${axis}`)?.value !== '0px') fail(`Hardline ${axis}-axis depth must implement pinned 4→2→0 pressure physics`);
-  if (values.get(`press.hover.${axis}`)?.value !== '2px' || values.get(`press.active.${axis}`)?.value !== '4px') fail(`Hardline ${axis}-axis travel must implement pinned 0→2→4 pressure physics`);
+  if (hardlineValues.get(`depth.rest.${axis}`)?.value !== '4px' || hardlineValues.get(`depth.hover.${axis}`)?.value !== '2px' || hardlineValues.get(`depth.active.${axis}`)?.value !== '0px') fail(`Hardline ${axis}-axis depth must implement pinned 4→2→0 pressure physics`);
+  if (hardlineValues.get(`press.hover.${axis}`)?.value !== '2px' || hardlineValues.get(`press.active.${axis}`)?.value !== '4px') fail(`Hardline ${axis}-axis travel must implement pinned 0→2→4 pressure physics`);
 }
-if (values.get('motion.press.duration')?.value !== '70ms' || values.get('motion.release.duration')?.value !== '110ms' || values.get('motion.standard.duration')?.value !== '170ms') fail('Hardline timings must preserve the pinned family 70/110/170ms semantic reference');
-if (values.get('focus.ring.width')?.value !== '3px' || values.get('focus.ring.offset')?.value !== '3px') fail('Hardline focus keyline must remain independently visible');
-if (values.get('size.control.minimum')?.value !== '44px') fail('Hardline must preserve the 44px minimum target');
-if (values.get('color.action.primary.surface')?.value !== '#ffd84d' || values.get('color.action.primary.content')?.value !== '#111111') fail('Hardline primary action must preserve the canonical yellow/ink flagship pairing');
+if (hardlineValues.get('motion.press.duration')?.value !== '70ms' || hardlineValues.get('motion.release.duration')?.value !== '110ms' || hardlineValues.get('motion.standard.duration')?.value !== '170ms') fail('Hardline timings must preserve the pinned family 70/110/170ms semantic reference');
+if (hardlineValues.get('focus.ring.width')?.value !== '3px' || hardlineValues.get('focus.ring.offset')?.value !== '3px') fail('Hardline focus keyline must remain independently visible');
+if (hardlineValues.get('size.control.minimum')?.value !== '44px') fail('Hardline must preserve the 44px minimum target');
+if (hardlineValues.get('color.action.primary.surface')?.value !== '#ffd84d' || hardlineValues.get('color.action.primary.content')?.value !== '#111111') fail('Hardline primary action must preserve the canonical yellow/ink flagship pairing');
 
 const softLight = await readJson('packages/themes/soft-light/theme.json');
 if (!sameKeys(softLight, themeKeys)) fail('Soft Light must expose exactly the canonical neosmartui/theme@1 fields');
@@ -96,21 +96,39 @@ if (softLight.motion?.model !== 'pressure-not-levitation' || softLight.motion?.i
 if (softLight.interaction?.model !== 'pressure-not-levitation' || softLight.interaction?.selection !== 'seated') fail('Soft Light interaction must preserve pressure and seated selection');
 if (softLight.icons?.strategy !== 'adapter-owned') fail('Soft Theme must not take renderer ownership of icons');
 
+const softResolution = await readJson('packages/themes/soft-light/resolution.json');
+const softBundle = await readJson('packages/themes/soft-light/tokens.json');
+if (softResolution.schema !== 'neosmartui/theme-resolution@1' || softResolution.flavor !== 'flavor.soft' || softResolution.theme !== 'Soft Light' || softResolution.bundle !== 'tokens.json') fail('Soft Light resolution identity is invalid');
+if (softBundle.schema !== 'neosmartui/resolved-token-bundle@1' || softBundle.flavor !== 'flavor.soft' || softBundle.theme !== 'Soft Light') fail('Soft Light resolved bundle identity is invalid');
+if (softResolution.scope.length !== 18 || softBundle.scope.length !== 18 || [...softResolution.scope].sort().join('|') !== [...softBundle.scope].sort().join('|')) fail('Soft Light resolution and bundle must share the exact 18-component Core scope');
+if (softBundle.values.length !== 55) fail(`Soft Light must resolve the exact shipping dependency union of 55 tokens; got ${softBundle.values.length}`);
+const softValues = toMap(softBundle.values);
+if (softValues.size !== 55) fail('Soft Light resolved token IDs must be unique');
+if (softValues.get('border.control.width')?.value !== '2px' || softValues.get('border.surface.width')?.value !== '2px' || softValues.get('border.annotation.width')?.value !== '2px') fail('Soft Light must implement visible 2px boundaries');
+if (softValues.get('radius.control')?.value !== '8px' || softValues.get('radius.surface')?.value !== '12px' || softValues.get('radius.annotation')?.value !== '999px') fail('Soft Light must implement moderate 8/12/pill geometry');
+for (const axis of ['x', 'y']) {
+  if (softValues.get(`depth.rest.${axis}`)?.value !== '3px' || softValues.get(`depth.hover.${axis}`)?.value !== '1.5px' || softValues.get(`depth.active.${axis}`)?.value !== '0px') fail(`Soft ${axis}-axis depth must implement pinned 3→1.5→0 pressure physics`);
+  if (softValues.get(`press.hover.${axis}`)?.value !== '1.5px' || softValues.get(`press.active.${axis}`)?.value !== '3px') fail(`Soft ${axis}-axis travel must implement pinned 0→1.5→3 pressure physics`);
+}
+if (softValues.get('motion.press.duration')?.value !== '70ms' || softValues.get('motion.release.duration')?.value !== '105ms' || softValues.get('motion.standard.duration')?.value !== '165ms') fail('Soft Light timings must preserve restrained 70/105/165ms semantic timing');
+if (softValues.get('focus.ring.width')?.value !== '3px' || softValues.get('focus.ring.offset')?.value !== '3px') fail('Soft Light focus keyline must remain independently visible');
+if (softValues.get('size.control.minimum')?.value !== '44px') fail('Soft Light must preserve the 44px minimum target');
+if (softValues.get('color.surface.interactive')?.value !== '#fffaf2' || softValues.get('color.surface.panel')?.value !== '#f7f1e7') fail('Soft Light must preserve warm neutral surfaces');
+if (softValues.get('color.action.primary.surface')?.value !== '#8bb8f8' || softValues.get('color.action.primary.content')?.value !== '#171717') fail('Soft Light primary action must preserve softened-blue/ink pairing');
+
 for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) {
   await expectAbsent(`packages/flavors/hardline/index.${extension}`, `Hardline implementation must not introduce renderer override index.${extension}`);
-  await expectAbsent(`packages/flavors/soft/index.${extension}`, `Soft contract must not introduce renderer override index.${extension}`);
+  await expectAbsent(`packages/flavors/soft/index.${extension}`, `Soft implementation must not introduce renderer override index.${extension}`);
 }
-await expectAbsent('packages/themes/soft-light/tokens.json', 'contract-only Soft Light must not claim a resolved token bundle');
-await expectAbsent('packages/themes/soft-light/resolution.json', 'contract-only Soft Light must not claim Theme resolution');
-await expectAbsent('packages/themes/soft-dark', 'contract-only Soft slice must not prematurely implement Soft Dark');
+await expectAbsent('packages/themes/soft-dark', 'Soft Light implementation must not prematurely implement Soft Dark');
 
 const hardlineDocs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
   if (!hardlineDocs.includes(marker)) fail(`Hardline implementation docs missing marker: ${marker}`);
 }
 const softDocs = await readFile(resolve(root, 'spec/flavors/SOFT.md'), 'utf8');
-for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.soft`', 'Maturity: `contract-only`', 'moderate rounding', 'MUST NOT introduce generic hover lift', 'SaaS remains a Vertical', '`packages/themes/soft-light/tokens.json`', '`packages/themes/soft-light/resolution.json`', 'NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a', '`3px → 1.5px → 0`', 'Soft Dark follows as its own concrete Theme instance']) {
-  if (!softDocs.includes(marker)) fail(`Soft contract docs missing marker: ${marker}`);
+for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.soft`', 'Maturity: `implemented`', 'moderate rounding', 'MUST NOT introduce generic hover lift', 'SaaS remains a Vertical', '`packages/themes/soft-light/tokens.json`', '`packages/themes/soft-light/resolution.json`', 'exact resolved semantic dependency union: 55 token IDs', '`3px → 1.5px → 0`', 'not public-proof yet', 'NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a', '`knowledge-only-until-reviewed`', 'Soft Dark follows as its own concrete Theme instance']) {
+  if (!softDocs.includes(marker)) fail(`Soft implementation docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated public-proof Hardline Light, contract-only Soft Light descriptor boundary, and existing Rivet Flavor identity');
+console.log('[flavors] validated public-proof Hardline Light, implemented Soft Light resolution boundary, and existing Rivet Flavor identity');
