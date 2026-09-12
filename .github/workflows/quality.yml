@@ -46,6 +46,8 @@ jobs:
           test -f dist/foundry/index.html
           test -f dist/foundry/styles.css
           test -f dist/foundry/theme.css
+          test -f dist/foundry/hardline-theme.css
+          test -f dist/foundry/flavors/hardline/index.html
           test -f dist/foundry/button.css
           test -f dist/foundry/checkbox.css
           test -f dist/foundry/checkbox.mjs
@@ -83,6 +85,13 @@ jobs:
           test -f dist/foundry/accordion.mjs
           test -f dist/foundry/deployment.json
           test ! -e dist/foundry/CNAME
+          grep -q -- ".ns-theme-hardline-light {" dist/foundry/hardline-theme.css
+          grep -q -- "--ns-radius-control: 0px;" dist/foundry/hardline-theme.css
+          grep -q -- "--ns-depth-rest-y: 4px;" dist/foundry/hardline-theme.css
+          grep -q -- "--ns-depth-hover-y: 2px;" dist/foundry/hardline-theme.css
+          grep -q -- "--ns-press-active-y: 4px;" dist/foundry/hardline-theme.css
+          grep -q -- "Hardline Light" dist/foundry/flavors/hardline/index.html
+          grep -q -- "ns-theme-hardline-light" dist/foundry/flavors/hardline/index.html
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
           grep -q -- "--ns-color-surface-interactive: #ffffff;" dist/foundry/theme.css
           grep -q -- "--ns-color-surface-panel: #ffffff;" dist/foundry/theme.css

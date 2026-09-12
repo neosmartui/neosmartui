@@ -5,7 +5,14 @@
   "authority": "docs/CANONICAL-PRD.md",
   "principle": "RESTART THE ARCHITECTURE, NOT THE KNOWLEDGE.",
   "scope": "selected-migration-evidence",
-  "allowedDecisions": ["ADOPT", "ADAPT", "PROMOTE", "REWRITE", "RETIRE", "REFERENCE"],
+  "allowedDecisions": [
+    "ADOPT",
+    "ADAPT",
+    "PROMOTE",
+    "REWRITE",
+    "RETIRE",
+    "REFERENCE"
+  ],
   "sources": [
     {
       "repository": "NeoBrutalism-shop/spec",
@@ -13,10 +20,22 @@
       "sha": "fbf499397f4e9a52d6e25c13921fd5377799c626",
       "status": "snapshot-pinned",
       "legacyRole": "family-spec",
-      "targetLayers": ["spec"],
-      "licenseEvidence": {"status": "not-declared-in-repository-metadata", "path": null, "name": null},
+      "targetLayers": [
+        "spec"
+      ],
+      "licenseEvidence": {
+        "status": "not-declared-in-repository-metadata",
+        "path": null,
+        "name": null
+      },
       "copyPolicy": "knowledge-only-until-reviewed",
-      "evidencePaths": ["README.md", "INTERACTION.md", "TOKENS.md", "COMPONENTS.md", "FLAVORS.md"]
+      "evidencePaths": [
+        "README.md",
+        "INTERACTION.md",
+        "TOKENS.md",
+        "COMPONENTS.md",
+        "FLAVORS.md"
+      ]
     },
     {
       "repository": "NeoBrutalism-shop/NeoBrutal-Soft",
@@ -24,10 +43,25 @@
       "sha": "dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a",
       "status": "snapshot-pinned",
       "legacyRole": "mixed-flavor-vertical",
-      "targetLayers": ["flavor", "vertical", "tooling"],
-      "licenseEvidence": {"status": "not-declared-in-repository-metadata", "path": null, "name": null},
+      "targetLayers": [
+        "flavor",
+        "vertical",
+        "tooling"
+      ],
+      "licenseEvidence": {
+        "status": "not-declared-in-repository-metadata",
+        "path": null,
+        "name": null
+      },
       "copyPolicy": "knowledge-only-until-reviewed",
-      "evidencePaths": ["COMPONENTS.md", "DESIGN.md", "QUALITY.md", "RESILIENCE.md", "LLMS.md", "component-explorer.js"]
+      "evidencePaths": [
+        "COMPONENTS.md",
+        "DESIGN.md",
+        "QUALITY.md",
+        "RESILIENCE.md",
+        "LLMS.md",
+        "component-explorer.js"
+      ]
     },
     {
       "repository": "NeoBrutalism-shop/NeoBrutal-Commerce",
@@ -35,10 +69,25 @@
       "sha": "24563484a9993c6c994f24114dc7956d3b93f694",
       "status": "snapshot-pinned",
       "legacyRole": "commerce-system",
-      "targetLayers": ["vertical", "tooling", "applications"],
-      "licenseEvidence": {"status": "declared", "path": "LICENSE.md", "name": "PolyForm Noncommercial License 1.0.0"},
+      "targetLayers": [
+        "vertical",
+        "tooling",
+        "applications"
+      ],
+      "licenseEvidence": {
+        "status": "declared",
+        "path": "LICENSE.md",
+        "name": "PolyForm Noncommercial License 1.0.0"
+      },
       "copyPolicy": "license-review-required-before-code-copy",
-      "evidencePaths": ["COMPONENTS.md", "AGENTS.md", "LLMS.md", "storefront/", "tests/", "playwright.config.mjs"]
+      "evidencePaths": [
+        "COMPONENTS.md",
+        "AGENTS.md",
+        "LLMS.md",
+        "storefront/",
+        "tests/",
+        "playwright.config.mjs"
+      ]
     },
     {
       "repository": "NeoBrutalRivet/NeoBrutal-Rivet",
@@ -46,10 +95,25 @@
       "sha": "bb4b641d35bc77c958b7345a3b7c0a134c7d802d",
       "status": "snapshot-pinned",
       "legacyRole": "flavor-system",
-      "targetLayers": ["flavor", "tooling"],
-      "licenseEvidence": {"status": "not-declared-in-repository-metadata", "path": null, "name": null},
+      "targetLayers": [
+        "flavor",
+        "tooling"
+      ],
+      "licenseEvidence": {
+        "status": "not-declared-in-repository-metadata",
+        "path": null,
+        "name": null
+      },
       "copyPolicy": "knowledge-only-until-reviewed",
-      "evidencePaths": ["AGENTS.md", "README.md", "components/", "docs/", "hooks/", "lib/", "index.ts"]
+      "evidencePaths": [
+        "AGENTS.md",
+        "README.md",
+        "components/",
+        "docs/",
+        "hooks/",
+        "lib/",
+        "index.ts"
+      ]
     }
   ],
   "artifacts": [
@@ -592,6 +656,33 @@
       "decision": "REFERENCE",
       "targetLayer": "core",
       "note": "Use root/item/header-trigger/content anatomy, open/closed data state, disabled/focus treatment, and disclosure-indicator behavior as reference-only knowledge; repository metadata declares no license, so no source code is copied."
+    },
+    {
+      "id": "legacy.spec.flavor-expression-laws",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "FLAVORS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "flavor",
+      "note": "Adapt the pinned Flavor/Core ownership boundary, shared semantic-state invariants, and flavor-owned expression dimensions into Hardline without changing Core behavior."
+    },
+    {
+      "id": "legacy.spec.theme-token-physics",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "TOKENS.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "flavor",
+      "note": "Adapt the pinned 4\u21922\u21920 structural-depth reference, matching 0\u21922\u21924 press travel, 70/110/170ms semantic motion references, independent focus keyline, and semantic-token separation into Hardline Light."
+    },
+    {
+      "id": "legacy.spec.interaction-physics",
+      "sourceRepository": "NeoBrutalism-shop/spec",
+      "sourcePath": "INTERACTION.md",
+      "kind": "documentation",
+      "decision": "ADAPT",
+      "targetLayer": "flavor",
+      "note": "Adapt compress-never-float, coherent shadow/travel, reduced-motion, keyboard/touch parity, and static-surface laws as Hardline conformance evidence."
     }
   ]
 }
