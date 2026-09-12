@@ -12,7 +12,7 @@ const tokenIds = new Set(tokens.contracts.map((entry) => entry.id));
 
 if (registry.schema !== 'neosmartui/component-registry@1') fail('unexpected registry schema');
 if (registry.domain !== 'core') fail('Core registry domain must be core');
-if (!Array.isArray(registry.components) || registry.components.length !== 14) fail('fourteenth Core slice must contain exactly fourteen honest registry entries');
+if (!Array.isArray(registry.components) || registry.components.length !== 15) fail('fifteenth Core slice must contain exactly fifteen honest registry entries');
 
 const ids = new Set();
 for (const entry of registry.components) {
@@ -216,6 +216,17 @@ try {
 }
 const paginationDocs = await readFile(resolve(root, 'packages/core/components/pagination.md'), 'utf8');
 for (const marker of ['Pagination is navigation, not a row of arbitrary buttons', 'real anchor with a real `href`', '`aria-current="page"`', 'Pagination is also not Tabs', 'does not use Arrow-key roving focus', 'effective target MUST meet or exceed `size.control.minimum`', 'introduces no new token contracts', 'intentionally CSS-only', 'exact implemented/public dependency union remains 55', '`components/ui/pagination.tsx`', 'Maturity is `public-proof`']) if (!paginationDocs.includes(marker)) fail(`pagination.md missing marker: ${marker}`);
+
+const segmented = await readJson(resolve(root, 'packages/core/components/segmented-control.json'));
+const segmentedStates = new Set(['rest', 'hover', 'focus-visible', 'pressed', 'selected', 'disabled']);
+if (segmented.states.length !== segmentedStates.size || !segmented.states.every((state) => segmentedStates.has(state))) fail('core.segmented-control must expose exactly rest/hover/focus-visible/pressed/selected/disabled states');
+for (const token of ['color.surface.panel', 'color.surface.interactive', 'color.content.primary', 'color.content.secondary', 'color.border.strong', 'color.action.primary.surface', 'color.action.primary.content', 'color.focus.ring', 'space.navigation.gap', 'space.control.inline', 'space.control.block', 'border.control.width', 'radius.control', 'size.control.minimum', 'depth.rest.x', 'depth.rest.y', 'depth.hover.x', 'depth.hover.y', 'depth.active.x', 'depth.active.y', 'press.hover.x', 'press.hover.y', 'press.active.x', 'press.active.y', 'motion.press.duration', 'motion.release.duration', 'focus.ring.width', 'focus.ring.offset', 'opacity.disabled', 'font.family.body', 'font.size.label', 'font.weight.emphasis']) if (!segmented.dependencies.includes(token)) fail(`core.segmented-control missing semantic/tactile token ${token}`);
+for (const forbiddenToken of ['space.field.gap', 'space.surface.inline', 'space.surface.block', 'space.annotation.inline', 'space.annotation.block', 'border.surface.width', 'border.annotation.width', 'radius.surface', 'radius.annotation', 'color.state.error', 'motion.standard.duration', 'font.size.navigation']) if (segmented.dependencies.includes(forbiddenToken)) fail(`core.segmented-control must not borrow unrelated field/surface/annotation/status/navigation token ${forbiddenToken}`);
+const segmentedEntry = registry.components.find((entry) => entry.id === 'core.segmented-control');
+if (!segmentedEntry || segmentedEntry.maturity !== 'contract-only') fail('core.segmented-control must remain contract-only in this slice');
+if (segmentedEntry.evidence.implementation !== null || segmentedEntry.evidence.publicProof !== null) fail('contract-only core.segmented-control evidence must remain null');
+const segmentedDocs = await readFile(resolve(root, 'packages/core/components/segmented-control.md'), 'utf8');
+for (const marker of ['Segmented Control is a button-based mode selector', 'real `<button type="button">` segments', '`aria-pressed="true"`', 'Use `core.radio`', 'Use `core.tabs`', 'MUST NOT expose `role="tablist"`', 'Core does not create a roving-focus composite', 'effective target MUST meet or exceed `size.control.minimum`', 'does not claim a Rivet Segmented Control implementation artifact', 'Maturity is `contract-only`']) if (!segmentedDocs.includes(marker)) fail(`segmented-control.md missing marker: ${marker}`);
 
 const radio = await readJson(resolve(root, 'packages/core/components/radio.json'));
 for (const state of ['rest', 'hover', 'focus-visible', 'pressed', 'unchecked', 'checked', 'invalid', 'disabled']) if (!radio.states.includes(state)) fail(`core.radio missing state ${state}`);
