@@ -49,7 +49,8 @@ for (const path of [
   'packages/themes/soft-dark/tokens.json',
   'apps/foundry/fragments/soft-dark.html',
   'tests/browser/foundry-soft-dark.spec.mjs',
-  'tooling/validators/validate-soft-dark-theme.mjs'
+  'tooling/validators/validate-soft-dark-theme.mjs',
+  'tooling/foundry/assemble-soft-dark.mjs'
 ]) await access(resolve(root, path));
 await expectAbsent('packages/flavors/soft-dark', 'Soft Dark is a Theme of flavor.soft, not a new Flavor identity');
 await expectAbsent('apps/foundry/src/flavors/soft-dark', 'Soft Dark must extend the canonical Soft Flavor route rather than create a route fork');
@@ -76,19 +77,36 @@ for (const marker of [
 ]) if (!assembler.includes(marker)) fail(`Soft Dark assembler missing proof-safe assembly marker: ${marker}`);
 
 const proof = await json('evidence/public/flavor.soft.json');
-if (proof.flavor !== 'flavor.soft') fail('existing Soft public-proof subject drifted');
-if (proof.implementationFiles.some((entry) => entry.path.includes('soft-dark'))) fail('implemented Soft Dark must not claim public proof before exact merged-main deployment verification');
-const provenRoute = proof.implementationFiles.find((entry) => entry.path === 'apps/foundry/src/flavors/soft/index.html');
-if (!provenRoute) fail('existing Soft public proof must retain the canonical Light route source binding during Dark implementation');
-const routeBytes = await readFile(resolve(root, provenRoute.path));
-if (gitBlobSha(routeBytes) !== provenRoute.blobSha) fail('Soft Dark implementation must keep the already-proven Soft Light source route byte-identical');
-if ((proof.live.assetUrls ?? []).some((url) => url.includes('soft-dark-theme.css'))) fail('Soft Dark live asset must not be claimed before deployment and proof promotion');
+if (proof.flavor !== 'flavor.soft') fail('Soft public-proof subject drifted');
+const requiredProofPaths = [
+  'packages/themes/soft-light/theme.json',
+  'packages/themes/soft-light/resolution.json',
+  'packages/themes/soft-light/tokens.json',
+  'apps/foundry/src/flavors/soft/index.html',
+  'packages/themes/soft-dark/theme.json',
+  'packages/themes/soft-dark/resolution.json',
+  'packages/themes/soft-dark/tokens.json',
+  'apps/foundry/fragments/soft-dark.html',
+  'tooling/foundry/assemble-soft-dark.mjs'
+];
+const proofByPath = new Map(proof.implementationFiles.map((entry) => [entry.path, entry.blobSha]));
+if (proofByPath.size !== requiredProofPaths.length) fail('Soft public proof must bind exactly the Light source inputs, Dark source inputs, and deterministic Soft Dark assembler');
+for (const path of requiredProofPaths) {
+  const expected = proofByPath.get(path);
+  if (!expected) fail(`Soft public proof missing implementation binding: ${path}`);
+  const actual = gitBlobSha(await readFile(resolve(root, path)));
+  if (actual !== expected) fail(`Soft public proof is stale for ${path}: expected ${expected}, got ${actual}`);
+}
+if (proof.live.pageUrl !== 'https://neosmartui.github.io/flavors/soft/') fail('Soft public proof must retain the canonical Flavor route');
+for (const assetUrl of ['https://neosmartui.github.io/soft-theme.css', 'https://neosmartui.github.io/soft-dark-theme.css']) {
+  if (!(proof.live.assetUrls ?? []).includes(assetUrl)) fail(`Soft public proof missing live Theme asset: ${assetUrl}`);
+}
 
 const docs = await readFile(resolve(root, 'spec/flavors/SOFT.md'), 'utf8');
 for (const marker of [
   'Implemented dark Theme: `packages/themes/soft-dark/theme.json`',
-  'Soft Dark maturity: `implemented`',
-  'Soft Dark public-proof status: **not public-proof yet**',
+  'Soft Dark maturity: `public-proof`',
+  'Soft Dark public-proof status: **public-proof**',
   'second concrete Theme instance of `flavor.soft`',
   'not CSS inversion, filter-based dark mode, or hidden conditional values inside Soft Light',
   'exact shipping 18-Core / 55-token semantic dependency boundary',
@@ -96,9 +114,12 @@ for (const marker of [
   '`0px → 1.5px → 3px` inward travel',
   '`70ms / 105ms / 165ms` pressure timings',
   '`apps/foundry/fragments/soft-dark.html`',
+  '`tooling/foundry/assemble-soft-dark.mjs`',
   'proven Light source route remains byte-identical',
-  'Soft Dark is implemented but not public-proof',
-  'No Pages deployment occurs from the implementation branch'
-]) if (!docs.includes(marker)) fail(`Soft Dark implementation docs missing marker: ${marker}`);
+  'Soft Dark is `public-proof`',
+  'Chromium `130/130`',
+  'Public-proof promotion does not redeploy Pages',
+  'Soft Dark is complete through public proof'
+]) if (!docs.includes(marker)) fail(`Soft Dark public-proof docs missing marker: ${marker}`);
 
-console.log('[soft-dark-contract] validated implemented Soft Dark ownership, pinned provenance, 18/55 boundary, proof-safe route assembly, and no premature public proof');
+console.log('[soft-dark-contract] validated public-proof Soft Dark, pinned provenance, 18/55 boundary, proof-safe assembly, exact implementation bindings, and live Theme assets');
