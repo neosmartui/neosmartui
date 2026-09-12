@@ -1,0 +1,85 @@
+name: v0.3 Hardline implementation materialize
+
+on:
+  push:
+    branches:
+      - ci/v0.3-hardline-light-materialize
+
+permissions:
+  contents: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out automation
+        uses: actions/checkout@v4
+        with:
+          path: automation
+      - name: Check out exact implementation branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/v0.3-hardline-light-implementation
+          fetch-depth: 0
+          path: work
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Materialize bounded provenance and CI assertions
+        working-directory: work
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected=141aefe7339a278de76d55cf98595ead1bf32b38
+          test "$(git rev-parse HEAD)" = "$expected"
+          git fetch origin feat/v0.3-hardline-light-implementation
+          test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "$expected"
+          python3 ../automation/ci/v03-hardline/materialize.py
+          mapfile -t changed < <(git diff --name-only | sort)
+          test "${#changed[@]}" -eq 2
+          test "${changed[0]}" = ".github/workflows/quality.yml"
+          test "${changed[1]}" = "migration/inventory.json"
+          git config user.name "MrGPT007"
+          git config user.email "mrgpt.net@gmail.com"
+          git add .github/workflows/quality.yml migration/inventory.json
+          git commit -m "theme: bind Hardline provenance and CI gates"
+          echo "NEOSMARTUI_SOURCE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Run full quality and live-proof gates
+        working-directory: work
+        run: |
+          npm run quality
+          npm run validate:proof:live
+      - name: Install pinned browser runtime
+        working-directory: work
+        run: |
+          npm install --no-save --no-package-lock @playwright/test@1.63.0
+          npx playwright install --with-deps chromium
+      - name: Run all browser QA
+        working-directory: work
+        run: |
+          npm run build:foundry
+          npm run test:browser
+      - name: Require exact 100-case report and push
+        working-directory: work
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os
+          report = json.load(open('artifacts/browser/report.json'))
+          stats = report['stats']
+          expected = stats.get('expected')
+          skipped = stats.get('skipped')
+          unexpected = stats.get('unexpected')
+          flaky = stats.get('flaky')
+          if (expected, skipped, unexpected, flaky) != (100, 0, 0, 0):
+              raise SystemExit(f'unexpected browser stats: {(expected, skipped, unexpected, flaky)}')
+          git_hash = report.get('config', {}).get('metadata', {}).get('gitCommit', {}).get('hash')
+          if git_hash != os.environ['NEOSMARTUI_SOURCE_SHA']:
+              raise SystemExit(f'report git hash {git_hash} != exact materialized SHA {os.environ["NEOSMARTUI_SOURCE_SHA"]}')
+          print(f'validated 100/100 on {git_hash}')
+          PY
+          git fetch origin feat/v0.3-hardline-light-implementation
+          test "$(git rev-parse origin/feat/v0.3-hardline-light-implementation)" = "141aefe7339a278de76d55cf98595ead1bf32b38"
+          test "$(git rev-parse HEAD)" = "$NEOSMARTUI_SOURCE_SHA"
+          git push origin HEAD:feat/v0.3-hardline-light-implementation
