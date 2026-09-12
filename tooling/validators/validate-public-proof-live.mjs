@@ -1,9 +1,18 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
 const registry = JSON.parse(await readFile(resolve(root, 'packages/core/component-registry.json'), 'utf8'));
-const proven = registry.components.filter((entry) => entry.maturity === 'public-proof');
+const componentClaims = registry.components
+  .filter((entry) => entry.maturity === 'public-proof')
+  .map((entry) => ({ id: entry.id, proofPath: entry.evidence.publicProof }));
+const flavorClaims = [];
+for (const name of (await readdir(resolve(root, 'evidence/public'))).filter((name) => /^flavor\.[a-z][a-z0-9-]*\.json$/.test(name)).sort()) {
+  const proofPath = `evidence/public/${name}`;
+  const proof = JSON.parse(await readFile(resolve(root, proofPath), 'utf8'));
+  flavorClaims.push({ id: proof.flavor, proofPath });
+}
+const claims = [...componentClaims, ...flavorClaims];
 
 const liveMarkers = new Map([
   ['core.button', ['NeoSmartUI Foundry', 'core.button', 'Pressure, not levitation']],
@@ -23,7 +32,12 @@ const liveMarkers = new Map([
   ['core.segmented-control', ['NeoSmartUI Foundry', 'core.segmented-control', 'View mode', 'Overview', 'Activity', 'History', 'normal Tab, Space, and Enter button behavior']],
   ['core.tooltip', ['NeoSmartUI Foundry', 'core.tooltip', 'Tooltip keeps supplemental descriptions non-interactive', 'aria-describedby="tooltip-demo"', 'role="tooltip"', 'Read the permanent interaction rules', 'Continue without entering the tooltip']],
   ['core.combobox', ['NeoSmartUI Foundry', 'core.combobox', 'Editable single-selection Combobox', 'role="combobox"', 'aria-autocomplete="list"', 'aria-controls="combobox-listbox"', 'role="listbox"', 'Choose one framework', 'Show suggestions', 'Svelte · unavailable', 'No matching suggestions']],
-  ['core.accordion', ['NeoSmartUI Foundry', 'core.accordion', 'Accordion discloses related content with real buttons', 'data-expansion="single"', 'data-expansion="multiple"', 'aria-controls="accordion-single-panel-a"']]
+  ['core.accordion', ['NeoSmartUI Foundry', 'core.accordion', 'Accordion discloses related content with real buttons', 'data-expansion="single"', 'data-expansion="multiple"', 'aria-controls="accordion-single-panel-a"']],
+  ['flavor.hardline', ['Hardline Light', 'ns-theme-hardline-light', 'Pressure, not levitation', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']]
+]);
+
+const assetMarkers = new Map([
+  ['flavor.hardline', ['.ns-theme-hardline-light {', '--ns-radius-control: 0px;', '--ns-depth-rest-x: 4px;', '--ns-depth-hover-x: 2px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 4px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']]
 ]);
 
 const fetchWithRetry = async (url, attempts = 6) => {
@@ -45,17 +59,23 @@ const fetchWithRetry = async (url, attempts = 6) => {
   throw new Error(`${url} live verification failed after ${attempts} attempts: ${lastError?.message || 'unknown error'}`);
 };
 
-for (const entry of proven) {
-  const proof = JSON.parse(await readFile(resolve(root, entry.evidence.publicProof), 'utf8'));
+for (const claim of claims) {
+  const proof = JSON.parse(await readFile(resolve(root, claim.proofPath), 'utf8'));
   const recordResponse = await fetchWithRetry(proof.live.deploymentRecordUrl);
   const record = await recordResponse.json();
-  if (record.schema !== 'neosmartui/deployment-record@1') throw new Error(`[public-proof-live] ${entry.id} live deployment schema mismatch`);
-  if (record.sourceRepository !== proof.deployedSource.repository || record.sourceSha !== proof.deployedSource.sha || record.artifact !== 'foundry') throw new Error(`[public-proof-live] ${entry.id} live deployment record does not match proven source`);
+  if (record.schema !== 'neosmartui/deployment-record@1') throw new Error(`[public-proof-live] ${claim.id} live deployment schema mismatch`);
+  if (record.sourceRepository !== proof.deployedSource.repository || record.sourceSha !== proof.deployedSource.sha || record.artifact !== 'foundry') throw new Error(`[public-proof-live] ${claim.id} live deployment record does not match proven source`);
 
-  const markers = liveMarkers.get(entry.id);
-  if (!markers) throw new Error(`[public-proof-live] ${entry.id} has no explicit live marker contract`);
+  const markers = liveMarkers.get(claim.id);
+  if (!markers) throw new Error(`[public-proof-live] ${claim.id} has no explicit live marker contract`);
   const pageResponse = await fetchWithRetry(proof.live.pageUrl);
   const html = await pageResponse.text();
-  for (const marker of markers) if (!html.includes(marker)) throw new Error(`[public-proof-live] ${entry.id} live page missing ${marker}`);
-  console.log(`[public-proof-live] ${entry.id} verified at ${pageResponse.url}; deployment record ${recordResponse.url} = ${record.sourceSha}`);
+  for (const marker of markers) if (!html.includes(marker)) throw new Error(`[public-proof-live] ${claim.id} live page missing ${marker}`);
+
+  for (const assetUrl of proof.live.assetUrls ?? []) {
+    const assetResponse = await fetchWithRetry(assetUrl);
+    const asset = await assetResponse.text();
+    for (const marker of assetMarkers.get(claim.id) ?? []) if (!asset.includes(marker)) throw new Error(`[public-proof-live] ${claim.id} live asset ${assetUrl} missing ${marker}`);
+  }
+  console.log(`[public-proof-live] ${claim.id} verified at ${pageResponse.url}; deployment record ${recordResponse.url} = ${record.sourceSha}`);
 }

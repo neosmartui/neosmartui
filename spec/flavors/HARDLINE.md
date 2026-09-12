@@ -10,7 +10,7 @@ Hardline is the flagship/default NeoSmartUI flavor. It owns visual and tactile e
 - Resolved bundle: `packages/themes/hardline-light/tokens.json`
 - Theme resolution: `packages/themes/hardline-light/resolution.json`
 - Interaction model: `pressure-not-levitation`
-- Maturity: `implemented`
+- Maturity: `public-proof`
 
 ## Expression contract
 
@@ -48,8 +48,10 @@ Hardline is a new NeoSmartUI flagship personality, not a copied legacy implement
 
 The canonical NeoSmartUI PRD supplies the Hardline-specific flagship choices: zero-radius/square geometry, hard boundaries, strong structural depth, high reaction, seated selection, and restrained decorative movement. No legacy source code is copied.
 
-## Public-proof boundary
+## Public-proof evidence
 
-Maturity is `implemented`, not `public-proof`. This slice may build local/CI Foundry evidence using the same shipping Core implementations under a scoped Hardline Theme, but it MUST NOT claim a deployed Hardline proof until the exact merged-main artifact is deployed, native Pages verification succeeds, and live proof is independently established.
+Hardline Light is `public-proof` only for the exact merged-main source and singleton Pages cohort recorded in `evidence/public/flavor.hardline.json`. The proof binds the concrete Theme, resolution, resolved-token bundle, and shipping Foundry Flavor page to exact merged-main browser evidence and the native GitHub Pages deployment.
+
+The live gate verifies the dedicated `/flavors/hardline/` route, the scoped `.ns-theme-hardline-light` surface, and the deployed `hardline-theme.css` pressure/geometry markers. Proof promotion refreshes the existing Core records onto the same singleton cohort without rebuilding or redeploying the already verified runtime artifact.
 
 Dark mode follows as its own concrete Theme instance rather than hidden conditional values inside the light Theme.
