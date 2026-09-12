@@ -32,6 +32,19 @@ await writeFile(resolve(output, 'hardline-theme.css'), renderResolvedTokenCss(co
 await writeFile(resolve(output, 'hardline-dark-theme.css'), renderResolvedTokenCss(contracts, hardlineDarkBundle, { selector: '.ns-theme-hardline-dark' }));
 await writeFile(resolve(output, 'soft-theme.css'), renderResolvedTokenCss(contracts, softBundle, { selector: '.ns-theme-soft-light' }));
 await writeFile(resolve(output, 'mono-theme.css'), renderResolvedTokenCss(contracts, monoBundle, { selector: '.ns-theme-mono-light' }));
+
+const hardlineDarkFragment = await readFile(resolve(root, 'apps/foundry/fragments/hardline-dark.html'), 'utf8');
+const hardlineRoutePath = resolve(output, 'flavors/hardline/index.html');
+let hardlineRoute = await readFile(hardlineRoutePath, 'utf8');
+const hardlineThemeLink = '    <link rel="stylesheet" href="../../hardline-theme.css" />';
+const hardlineReturnLink = '      <p><a href="../../">Return to the Rivet Light Core Foundry</a></p>';
+if (!hardlineRoute.includes(hardlineThemeLink)) throw new Error('Hardline route is missing the Light Theme stylesheet marker required for Dark assembly');
+if (!hardlineRoute.includes(hardlineReturnLink)) throw new Error('Hardline route is missing the canonical return-link insertion marker required for Dark assembly');
+hardlineRoute = hardlineRoute
+  .replace(hardlineThemeLink, `${hardlineThemeLink}\n    <link rel="stylesheet" href="../../hardline-dark-theme.css" />`)
+  .replace(hardlineReturnLink, `${hardlineDarkFragment.trimEnd()}\n\n${hardlineReturnLink}`);
+await writeFile(hardlineRoutePath, hardlineRoute);
+
 for (const file of ['button.css', 'checkbox.css', 'checkbox.mjs', 'input.css', 'input.mjs', 'radio.css', 'radio.mjs', 'switch.css', 'switch.mjs', 'tabs.css', 'tabs.mjs', 'textarea.css', 'textarea.mjs', 'select.css', 'select.mjs', 'card.css', 'badge.css', 'alert.css', 'field.css', 'breadcrumb.css', 'pagination.css', 'segmented-control.css', 'segmented-control.mjs', 'tooltip.css', 'tooltip.mjs', 'combobox.css', 'combobox.mjs', 'accordion.css', 'accordion.mjs']) {
   await cp(resolve(root, 'packages/adapters/web/components', file), resolve(output, file));
 }
