@@ -1,0 +1,284 @@
+name: Slice 18 Accordion proof refresh
+
+on:
+  push:
+    branches:
+      - ci/slice18-accordion-proof-refresh
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out exact proof branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/v0.2-core-accordion-public-proof
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Refresh singleton cohort and promote Accordion
+        shell: bash
+        run: |
+          set -euo pipefail
+          expected_base=57dc766ece8eca13b8c60b6f14615692ecdb51e8
+          test "$(git rev-parse HEAD)" = "$expected_base"
+          git fetch origin feat/v0.2-core-accordion-public-proof
+          test "$(git rev-parse origin/feat/v0.2-core-accordion-public-proof)" = "$expected_base"
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path('.')
+          old = {
+              'source': 'e492fc06fd14d22087c0b428d2788d3d9824212a',
+              'run': 34681815707,
+              'artifact': 10294780025,
+              'commit': '3d20426f83cb2a30431c36300f4f842efdbe3de9',
+              'tree': 'ce8daa808c0195dbf90a88bd7335bb9a8baec6ca',
+              'pages': 34682319293,
+          }
+          new = {
+              'source': '57dc766ece8eca13b8c60b6f14615692ecdb51e8',
+              'run': 34699170996,
+              'artifact': 10300390087,
+              'commit': 'f5caac25c16aa012222edeeb3b0e85c6b1bfbd11',
+              'tree': 'b0f9ec75170566945b8bf00af9a5c8b1b3136555',
+              'pages': 34700103133,
+          }
+
+          proof_dir = root / 'evidence/public'
+          existing = sorted(proof_dir.glob('core.*.json'))
+          if len(existing) != 17:
+              raise SystemExit(f'expected exactly 17 existing public proofs, found {len(existing)}')
+          if any(p.name == 'core.accordion.json' for p in existing):
+              raise SystemExit('core.accordion proof already exists unexpectedly')
+
+          for path in existing:
+              proof = json.loads(path.read_text())
+              checks = [
+                  (proof['deployedSource']['sha'], old['source'], 'source'),
+                  (proof['browserEvidence']['runId'], old['run'], 'run'),
+                  (proof['browserEvidence']['artifactId'], old['artifact'], 'artifact'),
+                  (proof['deployment']['commitSha'], old['commit'], 'Pages commit'),
+                  (proof['deployment']['treeSha'], old['tree'], 'Pages tree'),
+                  (proof['deployment']['pagesRunId'], old['pages'], 'Pages run'),
+              ]
+              for actual, expected, label in checks:
+                  if actual != expected:
+                      raise SystemExit(f'{path}: stale/unexpected {label}: {actual!r} != {expected!r}')
+              proof['deployedSource']['sha'] = new['source']
+              proof['browserEvidence']['runId'] = new['run']
+              proof['browserEvidence']['artifactId'] = new['artifact']
+              proof['deployment']['commitSha'] = new['commit']
+              proof['deployment']['treeSha'] = new['tree']
+              proof['deployment']['pagesRunId'] = new['pages']
+              path.write_text(json.dumps(proof, indent=2) + '\n')
+
+          accordion_proof = {
+              '$schema': '../../spec/schemas/public-proof.schema.json',
+              'schema': 'neosmartui/public-proof@1',
+              'component': 'core.accordion',
+              'deployedSource': {
+                  'repository': 'neosmartui/neosmartui',
+                  'sha': new['source'],
+              },
+              'implementationFiles': [
+                  {
+                      'path': 'packages/adapters/web/components/accordion.mjs',
+                      'blobSha': 'f81715844ed9c180279ad9a9257ccb9956cb7fd6',
+                  },
+                  {
+                      'path': 'packages/adapters/web/components/accordion.css',
+                      'blobSha': 'e0d494ff63973bd39d6815583f643e01b394ffe1',
+                  },
+              ],
+              'browserEvidence': {
+                  'runId': new['run'],
+                  'artifactId': new['artifact'],
+              },
+              'deployment': {
+                  'repository': 'neosmartui/neosmartui.github.io',
+                  'commitSha': new['commit'],
+                  'treeSha': new['tree'],
+                  'pagesRunId': new['pages'],
+              },
+              'live': {
+                  'pageUrl': 'https://neosmartui.github.io/',
+                  'deploymentRecordUrl': 'https://neosmartui.github.io/deployment.json',
+              },
+          }
+          (proof_dir / 'core.accordion.json').write_text(json.dumps(accordion_proof, indent=2) + '\n')
+
+          registry_path = root / 'packages/core/component-registry.json'
+          registry = json.loads(registry_path.read_text())
+          accordion = next((entry for entry in registry['components'] if entry['id'] == 'core.accordion'), None)
+          if not accordion:
+              raise SystemExit('core.accordion missing from registry')
+          if accordion['maturity'] != 'implemented' or accordion['evidence']['publicProof'] is not None:
+              raise SystemExit(f'unexpected Accordion lifecycle before promotion: {accordion}')
+          if accordion['evidence']['implementation'] != 'packages/adapters/web/components/accordion.mjs':
+              raise SystemExit('Accordion implementation evidence drifted')
+          accordion['maturity'] = 'public-proof'
+          accordion['evidence']['publicProof'] = 'evidence/public/core.accordion.json'
+          registry_path.write_text(json.dumps(registry, indent=2) + '\n')
+
+          docs_path = root / 'packages/core/components/accordion.md'
+          docs = docs_path.read_text()
+          old_lifecycle = '''## Lifecycle
+
+Maturity is `implemented`.
+
+Implementation evidence is `packages/adapters/web/components/accordion.mjs`. Public-proof evidence remains `null`. Deployment, native Pages verification, and singleton public-proof cohort refresh are later lifecycle stages and MUST NOT be claimed until an exact merged-main 95/95 artifact is deployed and independently verified.
+'''
+          new_lifecycle = '''## Lifecycle
+
+Maturity is `public-proof`.
+
+Implementation evidence is `packages/adapters/web/components/accordion.mjs`, paired CSS is `packages/adapters/web/components/accordion.css`, and canonical proof is `evidence/public/core.accordion.json`.
+
+The singleton proof cohort binds deployed source `57dc766ece8eca13b8c60b6f14615692ecdb51e8`, merged-main Quality run `34699170996`, browser artifact `10300390087`, Pages commit `f5caac25c16aa012222edeeb3b0e85c6b1bfbd11`, Pages tree `b0f9ec75170566945b8bf00af9a5c8b1b3136555`, and native Pages run `34700103133`. Structural proof validation recomputes both Accordion implementation blobs, while live proof validation requires the deployed Accordion disclosure markers. All eighteen public-proof Core components share this singleton deployment/browser cohort while retaining their own implementation blob bindings.
+'''
+          if docs.count(old_lifecycle) != 1:
+              raise SystemExit('Accordion lifecycle paragraph did not match exactly once')
+          docs_path.write_text(docs.replace(old_lifecycle, new_lifecycle))
+
+          spec_path = root / 'spec/core/COMPONENTS.md'
+          spec = spec_path.read_text()
+          replacements = {
+              old['source']: new['source'],
+              str(old['run']): str(new['run']),
+              str(old['artifact']): str(new['artifact']),
+              old['commit']: new['commit'],
+              old['tree']: new['tree'],
+              str(old['pages']): str(new['pages']),
+              'All seventeen public-proof Core components share this singleton cohort': 'All eighteen public-proof Core components share this singleton cohort',
+          }
+          for before, after in replacements.items():
+              spec = spec.replace(before, after)
+          old_final = '''Registry maturity is `implemented`, with canonical implementation evidence `packages/adapters/web/components/accordion.mjs` and public-proof evidence still `null`. The existing 17 public proofs remain bound to the deployed `57dc766ece8eca13b8c60b6f14615692ecdb51e8` singleton cohort. This implementation phase does not deploy or alter proof records; public-proof promotion must wait for an exact merged-main 95/95 browser artifact, deployment of that exact merged-main artifact, native Pages verification, and a singleton cohort refresh from 17 to 18.'''
+          new_final = '''Registry maturity is `public-proof`, with canonical implementation evidence `packages/adapters/web/components/accordion.mjs`, paired CSS at `packages/adapters/web/components/accordion.css`, and canonical proof `evidence/public/core.accordion.json`. Its singleton cohort binds merged source `57dc766ece8eca13b8c60b6f14615692ecdb51e8`, merged-main Quality run `34699170996`, browser artifact `10300390087`, deployment commit `f5caac25c16aa012222edeeb3b0e85c6b1bfbd11`, deployment tree `b0f9ec75170566945b8bf00af9a5c8b1b3136555`, and native Pages run `34700103133`; structural proof validation recomputes both Accordion implementation blobs and live verification requires the deployed Accordion disclosure marker contract. All eighteen public-proof Core components share this singleton cohort while retaining their own implementation blob bindings.'''
+          if spec.count(old_final) != 1:
+              raise SystemExit(f'Accordion aggregate lifecycle paragraph matched {spec.count(old_final)} times')
+          spec_path.write_text(spec.replace(old_final, new_final))
+
+          core_validator_path = root / 'tooling/validators/validate-core-components.mjs'
+          core_validator = core_validator_path.read_text()
+          core_replacements = {
+              "if (!accordionEntry || accordionEntry.maturity !== 'implemented') fail('core.accordion must be implemented in Slice 18 implementation phase');": "if (!accordionEntry || accordionEntry.maturity !== 'public-proof') fail('core.accordion must be public-proof after verified Slice 18 deployment');",
+              "if (accordionEntry.evidence.publicProof !== null) fail('implemented core.accordion must not claim public proof before deployment verification');": "if (accordionEntry.evidence.publicProof !== 'evidence/public/core.accordion.json') fail('public-proof core.accordion must bind its canonical proof record');",
+              "'Maturity is `implemented`'": "'Maturity is `public-proof`'",
+          }
+          for before, after in core_replacements.items():
+              if core_validator.count(before) != 1:
+                  raise SystemExit(f'Core validator replacement did not match once: {before}')
+              core_validator = core_validator.replace(before, after)
+          core_validator_path.write_text(core_validator)
+
+          theme_validator_path = root / 'tooling/validators/validate-theme-resolution.mjs'
+          theme_validator = theme_validator_path.read_text()
+          theme_old = "if (!accordionEntry || accordionEntry.maturity !== 'implemented' || accordionEntry.evidence.publicProof !== null) fail('core.accordion must remain implemented without public proof in this phase');"
+          theme_new = "if (!accordionEntry || accordionEntry.maturity !== 'public-proof' || accordionEntry.evidence.publicProof !== 'evidence/public/core.accordion.json') fail('core.accordion must bind current public-proof evidence');"
+          if theme_validator.count(theme_old) != 1:
+              raise SystemExit('Theme Accordion lifecycle assertion did not match exactly once')
+          theme_validator = theme_validator.replace(theme_old, theme_new)
+          theme_validator = theme_validator.replace('Slice 18 Accordion implementation must preserve the exact implemented/public-proof dependency union at 55', 'Slice 18 Accordion public-proof promotion must preserve the exact implemented/public-proof dependency union at 55')
+          theme_validator_path.write_text(theme_validator)
+
+          live_path = root / 'tooling/validators/validate-public-proof-live.mjs'
+          live = live_path.read_text()
+          if "['core.accordion'" in live:
+              raise SystemExit('Accordion live marker contract already exists unexpectedly')
+          anchor = '\n]);\n\nconst fetchWithRetry'
+          if live.count(anchor) != 1:
+              raise SystemExit('live marker map closing anchor did not match exactly once')
+          accordion_markers = '''  ['core.accordion', ['NeoSmartUI Foundry', 'core.accordion', 'Accordion discloses related content with real buttons', 'data-expansion="single"', 'data-expansion="multiple"', 'aria-controls="accordion-single-panel-a"']]'''
+          live = live.replace(anchor, ',\n' + accordion_markers + anchor, 1)
+          live_path.write_text(live)
+          PY
+
+      - name: Validate proof promotion before mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm run quality
+          npm run validate:proof:live
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          proofs = sorted(Path('evidence/public').glob('core.*.json'))
+          if len(proofs) != 18:
+              raise SystemExit(f'expected 18 proof records, found {len(proofs)}')
+          cohort = None
+          for path in proofs:
+              proof = json.loads(path.read_text())
+              current = (
+                  proof['deployedSource']['sha'],
+                  proof['browserEvidence']['runId'],
+                  proof['browserEvidence']['artifactId'],
+                  proof['deployment']['commitSha'],
+                  proof['deployment']['treeSha'],
+                  proof['deployment']['pagesRunId'],
+              )
+              if cohort is None:
+                  cohort = current
+              elif current != cohort:
+                  raise SystemExit(f'non-singleton cohort at {path}: {current} != {cohort}')
+          expected = (
+              '57dc766ece8eca13b8c60b6f14615692ecdb51e8',
+              34699170996,
+              10300390087,
+              'f5caac25c16aa012222edeeb3b0e85c6b1bfbd11',
+              'b0f9ec75170566945b8bf00af9a5c8b1b3136555',
+              34700103133,
+          )
+          if cohort != expected:
+              raise SystemExit(f'wrong singleton cohort: {cohort}')
+          print('validated exact 18-component singleton proof cohort')
+          PY
+
+      - name: Enforce exact proof-only diff and push
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t actual < <(git diff --name-only | sort)
+          mapfile -t expected < <(printf '%s\n' \
+            evidence/public/core.accordion.json \
+            evidence/public/core.alert.json \
+            evidence/public/core.badge.json \
+            evidence/public/core.breadcrumb.json \
+            evidence/public/core.button.json \
+            evidence/public/core.card.json \
+            evidence/public/core.checkbox.json \
+            evidence/public/core.combobox.json \
+            evidence/public/core.field.json \
+            evidence/public/core.input.json \
+            evidence/public/core.pagination.json \
+            evidence/public/core.radio.json \
+            evidence/public/core.segmented-control.json \
+            evidence/public/core.select.json \
+            evidence/public/core.switch.json \
+            evidence/public/core.tabs.json \
+            evidence/public/core.textarea.json \
+            evidence/public/core.tooltip.json \
+            packages/core/component-registry.json \
+            packages/core/components/accordion.md \
+            spec/core/COMPONENTS.md \
+            tooling/validators/validate-core-components.mjs \
+            tooling/validators/validate-public-proof-live.mjs \
+            tooling/validators/validate-theme-resolution.mjs | sort)
+          test "${#actual[@]}" -eq 24
+          test "${actual[*]}" = "${expected[*]}"
+          git fetch origin feat/v0.2-core-accordion-public-proof
+          test "$(git rev-parse origin/feat/v0.2-core-accordion-public-proof)" = "57dc766ece8eca13b8c60b6f14615692ecdb51e8"
+          git config user.name "MrGPT007"
+          git config user.email "mrgpt.net@gmail.com"
+          git add -- "${actual[@]}"
+          git commit -m "core: promote core.accordion public proof"
+          git push origin HEAD:feat/v0.2-core-accordion-public-proof
