@@ -114,4 +114,4 @@ This implementation is a clean NeoSmartUI definition informed by pinned legacy e
 
 ## Maturity
 
-Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/tooltip.mjs`; public-proof evidence remains `null` until an exact merged-main browser artifact is deployed and independently verified through the normal public-proof lifecycle.
+Maturity is `public-proof`. Canonical implementation evidence is `packages/adapters/web/components/tooltip.mjs` with presentation in `packages/adapters/web/components/tooltip.css`, and canonical proof is `evidence/public/core.tooltip.json`. Its singleton cohort binds merged source `f4fdf3fbf3924b1598e1ee5be4dda22edcbf73e6`, merged-main Quality run `34677415919`, browser artifact `10292104339`, deployment commit `bbd5696b4b0e24ab1fd4d5c8c0b6e462608667fa`, deployment tree `dd1bdf23838ffe5f79d6085b0d0544f5f03adff4`, and Pages run `34678037957`; structural proof validation recomputes both Tooltip implementation blobs and live verification requires the deployed Tooltip marker contract.

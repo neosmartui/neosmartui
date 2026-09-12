@@ -105,7 +105,7 @@ const segmentedEntry = registry.components.find((entry) => entry.id === 'core.se
 if (!segmentedEntry || segmentedEntry.maturity !== 'public-proof' || segmentedEntry.evidence.publicProof !== 'evidence/public/core.segmented-control.json') fail('core.segmented-control must bind current public-proof evidence');
 if (segmentedEntry.evidence.implementation !== 'packages/adapters/web/components/segmented-control.mjs') fail('core.segmented-control must bind its canonical Web adapter');
 const tooltipEntry = registry.components.find((entry) => entry.id === 'core.tooltip');
-if (!tooltipEntry || tooltipEntry.maturity !== 'implemented' || tooltipEntry.evidence.publicProof !== null) fail('core.tooltip must be implemented without public proof in this slice');
+if (!tooltipEntry || tooltipEntry.maturity !== 'public-proof' || tooltipEntry.evidence.publicProof !== 'evidence/public/core.tooltip.json') fail('core.tooltip must bind current public-proof evidence');
 if (tooltipEntry.evidence.implementation !== 'packages/adapters/web/components/tooltip.mjs') fail('core.tooltip must bind its canonical Web adapter');
 
 if (values.get('space.field.gap') !== 'clamp(0.5rem, 0.44rem + 0.18vw, 0.6875rem)') fail('Rivet Light field gap must preserve the pinned Soft fluid spacing value');
