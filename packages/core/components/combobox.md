@@ -98,16 +98,32 @@ The contract introduces **no new semantic token contracts**. It reuses the alrea
 - optional disclosure trigger: existing control geometry plus structural depth/press/release roles;
 - suggestion popup/options: panel surface, readable content, strong/default border, selected action surface/content, standard non-spatial motion, and emphasis typography.
 
-This contract does not require new Combobox-specific geometry, popup-shadow, highlight-color, search, ranking, or business-filter tokens. At contract-only maturity, Rivet Light scope and all concrete Theme values remain unchanged, and the current implemented/public dependency union remains 55.
+This implementation does not require new Combobox-specific geometry, popup-shadow, highlight-color, search, ranking, or business-filter tokens. Rivet Light resolution scope now includes `core.combobox`, but every declared dependency already exists in the resolved bundle. Semantic token contracts therefore remain 63, every concrete Theme value remains unchanged, and the exact implemented/public dependency union remains 55.
+
+## Canonical Web implementation
+
+The canonical Web implementation is `packages/adapters/web/components/combobox.css` plus `packages/adapters/web/components/combobox.mjs`.
+
+The adapter requires a real `<input role="combobox">` with `aria-autocomplete="list"` or `both`, a stable `aria-controls` relationship to an owned `role="listbox"`, stable option IDs, explicit boolean `aria-selected`, and single-selection state. It refuses multiple selected options rather than silently normalizing an invalid composite.
+
+Filtering is local and deliberately generic: typed query text controls which supplied options are visible, while application-owned remote fetching, ranking, pagination, virtualization, and domain filtering remain outside Core. Typing after a committed choice clears the stale committed-selection claim when the text no longer exactly represents that selected value.
+
+ArrowDown/ArrowUp update only `aria-activedescendant` and active-option metadata while DOM focus remains on the input. Disabled options are skipped. Enter commits the enabled active option and closes the list; Escape closes and clears transient highlight without erasing the committed value. No Home/End, Left/Right, Tab, printable-key, clipboard, selection, or IME remapping is installed.
+
+Pointer movement may update the active option and pointer activation commits it before returning focus to the editable control. The optional disclosure control is validated as a real `<button type="button">`. Opening through it may seed the first enabled visible option; closing through it keeps the button focused so the input focus handler cannot immediately reopen the popup.
+
+The CSS keeps `.ns-combobox-input` at `transform: none` through hover, focus, and active editing contact. Only `.ns-combobox-trigger` uses the established 0→2→5px pressure model. The popup uses generic surface spacing/border/radius/resting depth and opacity-only standard motion. Options remain outside normal Tab order, highlighted and selected states have explicit non-color boundaries, long content wraps, RTL uses logical geometry, reduced motion collapses transitions, and forced colors maps boundaries/focus/selection to system colors.
+
+Foundry binds this exact adapter to a labelled editable Combobox with four supplied options, one disabled option, a non-option empty-result message, and a separate disclosure trigger. Five additive Chromium cases verify semantics/token geometry, active-descendant keyboard navigation with disabled-option skipping, query-versus-selection separation, input immobility plus trigger pressure/close stability, and RTL/long-content/reduced-motion/forced-colors resilience. The previous 85 browser cases remain unchanged, for 90 total.
 
 ## Migration knowledge provenance
 
-This contract is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
+This implementation is a clean NeoSmartUI definition informed by pinned legacy evidence; no legacy implementation code is copied.
 
 - Family conformance: `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626` — shared explicit-state, focus, keyboard, touch, reduced-motion, fluid-token, agent-readable, and pressure-not-levitation laws apply. The family Menus/Popovers rule provides the physical distinction that a trigger compresses while a revealed hierarchical surface may appear without making the trigger float upward.
 - Soft capability evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` explicitly lists `Combobox surfaces` under Navigation + discovery and separately identifies keyboard-complete production Combobox behavior as high-value unfinished work. NeoSmartUI therefore uses Soft only as capability/boundary evidence and does **not** overclaim a completed Soft Combobox runtime.
-- Rivet implementation knowledge: `NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d` — `components/ui/combobox.tsx` provides reference-only anatomy for editable input, disclosure trigger, clear action, positioned popup, list, items, groups, labels, empty state, separators, selection indicator, and optional chips. The initial NeoSmartUI contract deliberately narrows that knowledge to single selection and excludes chips/multi-select. Repository metadata declares no license, so no source code is copied.
+- Rivet implementation knowledge: `NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d` — `components/ui/combobox.tsx` provides reference-only anatomy for editable input, disclosure trigger, clear action, positioned popup, list, items, groups, labels, empty state, separators, selection indicator, and optional chips. The initial NeoSmartUI implementation deliberately narrows that knowledge to single selection and excludes chips/multi-select. Repository metadata declares no license, so no source code is copied.
 
 ## Maturity
 
-Maturity is `contract-only`. No canonical Web CSS/JavaScript implementation, Theme resolution scope change, Foundry demo, browser test, or public-proof evidence is claimed by this slice. Registry implementation and public-proof evidence remain `null` until those later lifecycle stages are independently implemented and verified.
+Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/combobox.mjs`; `packages/adapters/web/components/combobox.css` is the paired visual adapter. Public-proof evidence remains `null` until a later lifecycle stage independently verifies the merged-main artifact, deploys that exact artifact, verifies native Pages, and promotes the singleton proof cohort.
