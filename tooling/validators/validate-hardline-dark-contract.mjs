@@ -1,9 +1,11 @@
+import { createHash } from 'node:crypto';
 import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[hardline-dark-contract] ${message}`); };
 const json = async (path) => JSON.parse(await readFile(resolve(root, path), 'utf8'));
+const gitBlobSha = (buffer) => createHash('sha1').update(`blob ${buffer.length}\0`).update(buffer).digest('hex');
 const expectAbsent = async (path, message) => {
   try {
     await access(resolve(root, path));
@@ -25,7 +27,7 @@ if (flavor.interactionModel !== 'pressure-not-levitation') fail('Hardline Dark m
 const light = await json('packages/themes/hardline-light/theme.json');
 const dark = await json('packages/themes/hardline-dark/theme.json');
 if (light.schema !== 'neosmartui/theme@1' || light.name !== 'Hardline Light' || light.category !== 'hardline' || light.color?.mode !== 'light') fail('Hardline Light baseline identity drifted');
-if (dark.schema !== 'neosmartui/theme@1' || dark.name !== 'Hardline Dark' || dark.family !== 'neosmartui' || dark.category !== 'hardline') fail('Hardline Dark Theme contract identity is invalid');
+if (dark.schema !== 'neosmartui/theme@1' || dark.name !== 'Hardline Dark' || dark.family !== 'neosmartui' || dark.category !== 'hardline') fail('Hardline Dark Theme identity is invalid');
 if (dark.color?.mode !== 'dark' || dark.color?.strategy !== 'high-reaction-dark') fail('Hardline Dark must declare an explicit dark high-reaction color strategy');
 if (dark.typography?.strategy !== 'sharp-system-first') fail('Hardline Dark must preserve Hardline typography strategy');
 if (dark.geometry?.profile !== 'square-zero-radius-default' || dark.border?.profile !== 'hard' || dark.shadow?.model !== 'strong-structural-depth') fail('Hardline Dark structural expression must preserve the flagship Hardline profile');
@@ -37,27 +39,45 @@ if (dark.icons?.strategy !== 'adapter-owned' || dark.icons?.treatment !== 'sharp
 for (const path of [
   'packages/themes/hardline-dark/resolution.json',
   'packages/themes/hardline-dark/tokens.json',
-  'apps/foundry/src/flavors/hardline-dark',
-  'tests/browser/foundry-hardline-dark.spec.mjs'
-]) await expectAbsent(path, `contract-only Hardline Dark must not implement ${path}`);
+  'apps/foundry/fragments/hardline-dark.html',
+  'tests/browser/foundry-hardline-dark.spec.mjs',
+  'tooling/validators/validate-hardline-dark-theme.mjs'
+]) await access(resolve(root, path));
+await expectAbsent('apps/foundry/src/flavors/hardline-dark', 'Hardline Dark implementation must extend the canonical Hardline Flavor route rather than creating a route fork');
 
 const proof = await json('evidence/public/flavor.hardline.json');
 if (proof.flavor !== 'flavor.hardline') fail('existing Hardline public-proof subject drifted');
-if (proof.implementationFiles.some((entry) => entry.path.includes('hardline-dark'))) fail('contract-only Hardline Dark must not alter the existing deployed Hardline proof binding');
+if (proof.implementationFiles.some((entry) => entry.path.includes('hardline-dark'))) fail('implemented Hardline Dark must not claim public proof before merged-main deployment and live verification');
+const provenRoute = proof.implementationFiles.find((entry) => entry.path === 'apps/foundry/src/flavors/hardline/index.html');
+if (!provenRoute) fail('existing Hardline public proof must retain the canonical Light route source binding during Dark implementation');
+const routeBytes = await readFile(resolve(root, provenRoute.path));
+if (gitBlobSha(routeBytes) !== provenRoute.blobSha) fail('Hardline Dark implementation must not mutate the already-proven Light route source before deployment/proof promotion');
+
+const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
+for (const marker of [
+  "apps/foundry/fragments/hardline-dark.html",
+  "hardline-dark-theme.css",
+  "flavors/hardline/index.html",
+  "Hardline route is missing the Light Theme stylesheet marker required for Dark assembly",
+  "Hardline route is missing the canonical return-link insertion marker required for Dark assembly"
+]) if (!builder.includes(marker)) fail(`Hardline Dark builder missing proof-safe assembly marker: ${marker}`);
 
 const docs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of [
-  'Contract-only dark Theme: `packages/themes/hardline-dark/theme.json`',
-  'Hardline Dark contract maturity: `contract-only`',
+  'Implemented dark Theme: `packages/themes/hardline-dark/theme.json`',
+  'Hardline Dark implementation maturity: `implemented`',
   'second concrete Theme instance of `flavor.hardline`',
-  'must not be implemented as CSS inversion, filter-based dark mode, or hidden conditional values inside Hardline Light',
-  'same exact shipping 18-Core / 55-token semantic dependency boundary',
+  'not implemented as CSS inversion, filter-based dark mode, or hidden conditional values inside Hardline Light',
+  'exact shipping 18-Core / 55-token semantic dependency boundary',
   '`4px → 2px → 0px` structural depth',
   '`0px → 2px → 4px` inward travel',
   '`70ms / 110ms / 170ms` pressure timings',
   'existing `/flavors/hardline/` proof surface',
   'Light and Dark together',
-  'No Hardline Dark token bundle, generated CSS, browser test, route fork, or proof claim exists in this contract phase'
-]) if (!docs.includes(marker)) fail(`Hardline Dark contract docs missing marker: ${marker}`);
+  '`apps/foundry/fragments/hardline-dark.html`',
+  'proven Light source route remains byte-identical',
+  'Hardline Dark is implemented but is not public proof yet',
+  'No Pages deployment occurs from the implementation branch'
+]) if (!docs.includes(marker)) fail(`Hardline Dark implementation docs missing marker: ${marker}`);
 
-console.log('[hardline-dark-contract] validated contract-only Hardline Dark as a separate Theme with unchanged flagship physics and no runtime/proof drift');
+console.log('[hardline-dark-contract] validated implemented Hardline Dark, proof-safe route assembly, shared adapters, and no premature proof');
