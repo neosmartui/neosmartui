@@ -43,26 +43,25 @@ export function positionTooltip(target, explicitTooltip) {
   const inlineGutter = Math.max(
     numericStyle(tooltipStyles, 'paddingInlineStart'),
     numericStyle(tooltipStyles, 'borderInlineStartWidth'),
-    numericStyle(tooltipStyles, 'boxShadow') ? 0 : 0
+    1
   );
   const blockGap = Math.max(
     numericStyle(tooltipStyles, 'paddingBlockStart'),
-    numericStyle(tooltipStyles, 'borderBlockStartWidth')
+    numericStyle(tooltipStyles, 'borderBlockStartWidth'),
+    1
   );
-  const safeInlineGutter = Math.max(inlineGutter, 1);
-  const safeBlockGap = Math.max(blockGap, 1);
 
   let left = targetStyles.direction === 'rtl'
     ? targetRect.right - tooltipRect.width
     : targetRect.left;
-  const maxLeft = Math.max(safeInlineGutter, view.innerWidth - tooltipRect.width - safeInlineGutter);
-  left = Math.min(Math.max(left, safeInlineGutter), maxLeft);
+  const maxLeft = Math.max(inlineGutter, view.innerWidth - tooltipRect.width - inlineGutter);
+  left = Math.min(Math.max(left, inlineGutter), maxLeft);
 
-  let top = targetRect.bottom + safeBlockGap;
-  const above = targetRect.top - safeBlockGap - tooltipRect.height;
-  if (top + tooltipRect.height + safeBlockGap > view.innerHeight && above >= safeBlockGap) top = above;
-  const maxTop = Math.max(safeBlockGap, view.innerHeight - tooltipRect.height - safeBlockGap);
-  top = Math.min(Math.max(top, safeBlockGap), maxTop);
+  let top = targetRect.bottom + blockGap;
+  const above = targetRect.top - blockGap - tooltipRect.height;
+  if (top + tooltipRect.height + blockGap > view.innerHeight && above >= blockGap) top = above;
+  const maxTop = Math.max(blockGap, view.innerHeight - tooltipRect.height - blockGap);
+  top = Math.min(Math.max(top, blockGap), maxTop);
 
   tooltip.style.left = `${left}px`;
   tooltip.style.top = `${top}px`;
