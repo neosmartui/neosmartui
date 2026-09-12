@@ -155,6 +155,15 @@
         "implementation": "packages/adapters/web/components/combobox.mjs",
         "publicProof": "evidence/public/core.combobox.json"
       }
+    },
+    {
+      "id": "core.accordion",
+      "contract": "components/accordion.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
