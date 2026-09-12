@@ -44,6 +44,35 @@ const tooltipState = async (target, tooltip) => target.evaluate((element, toolti
   };
 }, await tooltip.getAttribute('id'));
 
+const pageOverflowState = async (page) => page.evaluate(() => {
+  const viewportWidth = document.documentElement.clientWidth;
+  const offenders = [...document.querySelectorAll('body *')]
+    .map((element) => {
+      const rect = element.getBoundingClientRect();
+      const styles = getComputedStyle(element);
+      return {
+        tag: element.tagName,
+        id: element.id || '',
+        className: typeof element.className === 'string' ? element.className : '',
+        left: Math.round(rect.left * 100) / 100,
+        right: Math.round(rect.right * 100) / 100,
+        width: Math.round(rect.width * 100) / 100,
+        scrollWidth: element.scrollWidth,
+        clientWidth: element.clientWidth,
+        position: styles.position,
+        direction: styles.direction
+      };
+    })
+    .filter((entry) => entry.left < -1 || entry.right > viewportWidth + 1 || entry.scrollWidth > entry.clientWidth + 1)
+    .sort((a, b) => Math.max(b.right - viewportWidth, b.scrollWidth - b.clientWidth) - Math.max(a.right - viewportWidth, a.scrollWidth - a.clientWidth))
+    .slice(0, 12);
+  return {
+    scroll: document.documentElement.scrollWidth,
+    client: viewportWidth,
+    offenders
+  };
+});
+
 const resolvedLength = async (page, variable) => page.evaluate((name) => {
   const probe = document.createElement('div');
   probe.style.position = 'absolute';
@@ -150,6 +179,7 @@ test('core.tooltip never moves its target and preserves RTL plus long localized 
   const target = page.locator('#tooltip-target');
   const tooltip = page.locator('#tooltip-demo');
   const wrapper = page.locator('#tooltip-example');
+  const baselineOverflow = await pageOverflowState(page);
 
   await wrapper.evaluate((element) => element.setAttribute('dir', 'rtl'));
   await tooltip.evaluate((element) => {
@@ -173,8 +203,11 @@ test('core.tooltip never moves its target and preserves RTL plus long localized 
   expect(after.right).toBeLessThanOrEqual(viewport.width + 0.5);
   expect(after.top).toBeGreaterThanOrEqual(0);
   expect(after.bottom).toBeLessThanOrEqual(viewport.height + 0.5);
-  const pageOverflow = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, client: document.documentElement.clientWidth }));
-  expect(pageOverflow.scroll).toBeLessThanOrEqual(pageOverflow.client + 1);
+  const pageOverflow = await pageOverflowState(page);
+  expect(
+    pageOverflow.scroll,
+    `baseline=${baselineOverflow.scroll}/${baselineOverflow.client}; after=${pageOverflow.scroll}/${pageOverflow.client}; offenders=${JSON.stringify(pageOverflow.offenders)}`
+  ).toBeLessThanOrEqual(pageOverflow.client + 1);
   await page.screenshot({ path: `${evidenceDir}/core-tooltip-rtl-long-copy.png`, fullPage: true });
 });
 
