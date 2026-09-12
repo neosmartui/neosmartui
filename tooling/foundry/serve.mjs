@@ -14,17 +14,29 @@ const mime = new Map([
   ['.txt', 'text/plain; charset=utf-8']
 ]);
 
+const contained = (path) => path === root || path.startsWith(`${root}${sep}`);
+
 const server = createServer(async (request, response) => {
   try {
     const url = new URL(request.url || '/', `http://${host}:${port}`);
     const pathname = decodeURIComponent(url.pathname === '/' ? '/index.html' : url.pathname);
-    const file = resolve(root, `.${pathname}`);
-    if (file !== root && !file.startsWith(`${root}${sep}`)) {
+    let file = resolve(root, `.${pathname}`);
+    if (!contained(file)) {
       response.writeHead(403).end('Forbidden');
       return;
     }
     const info = await stat(file);
-    if (!info.isFile()) throw new Error('not-file');
+    if (info.isDirectory()) {
+      file = resolve(file, 'index.html');
+      if (!contained(file)) {
+        response.writeHead(403).end('Forbidden');
+        return;
+      }
+    } else if (!info.isFile()) {
+      throw new Error('not-file');
+    }
+    const finalInfo = await stat(file);
+    if (!finalInfo.isFile()) throw new Error('not-file');
     const body = await readFile(file);
     response.writeHead(200, {
       'content-type': mime.get(extname(file)) || 'application/octet-stream',
