@@ -82,8 +82,8 @@ for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) {
 }
 
 const docs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
-for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `implemented`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
+for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
   if (!docs.includes(marker)) fail(`Hardline implementation docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated implemented Hardline Light resolution, pinned pressure physics, zero-radius geometry, and existing Rivet Flavor identity');
+console.log('[flavors] validated public-proof Hardline Light resolution, pinned pressure physics, zero-radius geometry, and existing Rivet Flavor identity');
