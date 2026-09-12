@@ -63,7 +63,9 @@ if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id
 if ([...resolution.scope].sort().join('|') !== [...lightResolution.scope].sort().join('|')) fail('Soft Dark and Soft Light must resolve the same Core scope');
 if (new Set(lightBundle.values.map((entry) => entry.id)).size !== 55) fail('Soft Light dependency baseline drifted');
 
-const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
+const packageJson = await json('package.json');
+if (packageJson.scripts?.['build:foundry'] !== 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs') fail('Soft Dark must extend Foundry through the post-build assembler while preserving the proven shared builder');
+const assembler = await readFile(resolve(root, 'tooling/foundry/assemble-soft-dark.mjs'), 'utf8');
 for (const marker of [
   'packages/themes/soft-dark/tokens.json',
   'soft-dark-theme.css',
@@ -71,7 +73,7 @@ for (const marker of [
   'flavors/soft/index.html',
   'Soft route is missing the Light Theme stylesheet marker required for Dark assembly',
   'Soft route is missing the canonical return-link insertion marker required for Dark assembly'
-]) if (!builder.includes(marker)) fail(`Soft Dark builder missing proof-safe assembly marker: ${marker}`);
+]) if (!assembler.includes(marker)) fail(`Soft Dark assembler missing proof-safe assembly marker: ${marker}`);
 
 const proof = await json('evidence/public/flavor.soft.json');
 if (proof.flavor !== 'flavor.soft') fail('existing Soft public-proof subject drifted');

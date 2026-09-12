@@ -25,14 +25,12 @@ const rivetBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/riv
 const hardlineBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/hardline-light/tokens.json'), 'utf8'));
 const hardlineDarkBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/hardline-dark/tokens.json'), 'utf8'));
 const softBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/soft-light/tokens.json'), 'utf8'));
-const softDarkBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/soft-dark/tokens.json'), 'utf8'));
 const monoBundle = JSON.parse(await readFile(resolve(root, 'packages/themes/mono-light/tokens.json'), 'utf8'));
 await writeFile(resolve(output, 'theme.css'), renderResolvedTokenCss(contracts, rivetBundle));
 await writeFile(resolve(output, 'rivet-theme.css'), renderResolvedTokenCss(contracts, rivetBundle, { selector: '.ns-theme-rivet-light' }));
 await writeFile(resolve(output, 'hardline-theme.css'), renderResolvedTokenCss(contracts, hardlineBundle, { selector: '.ns-theme-hardline-light' }));
 await writeFile(resolve(output, 'hardline-dark-theme.css'), renderResolvedTokenCss(contracts, hardlineDarkBundle, { selector: '.ns-theme-hardline-dark' }));
 await writeFile(resolve(output, 'soft-theme.css'), renderResolvedTokenCss(contracts, softBundle, { selector: '.ns-theme-soft-light' }));
-await writeFile(resolve(output, 'soft-dark-theme.css'), renderResolvedTokenCss(contracts, softDarkBundle, { selector: '.ns-theme-soft-dark' }));
 await writeFile(resolve(output, 'mono-theme.css'), renderResolvedTokenCss(contracts, monoBundle, { selector: '.ns-theme-mono-light' }));
 
 const hardlineDarkFragment = await readFile(resolve(root, 'apps/foundry/fragments/hardline-dark.html'), 'utf8');
@@ -46,18 +44,6 @@ hardlineRoute = hardlineRoute
   .replace(hardlineThemeLink, `${hardlineThemeLink}\n    <link rel="stylesheet" href="../../hardline-dark-theme.css" />`)
   .replace(hardlineReturnLink, `${hardlineDarkFragment.trimEnd()}\n\n${hardlineReturnLink}`);
 await writeFile(hardlineRoutePath, hardlineRoute);
-
-const softDarkFragment = await readFile(resolve(root, 'apps/foundry/fragments/soft-dark.html'), 'utf8');
-const softRoutePath = resolve(output, 'flavors/soft/index.html');
-let softRoute = await readFile(softRoutePath, 'utf8');
-const softThemeLink = '    <link rel="stylesheet" href="../../soft-theme.css" />';
-const softReturnLink = '      <p><a href="../../">Return to the Rivet Light Core Foundry</a></p>';
-if (!softRoute.includes(softThemeLink)) throw new Error('Soft route is missing the Light Theme stylesheet marker required for Dark assembly');
-if (!softRoute.includes(softReturnLink)) throw new Error('Soft route is missing the canonical return-link insertion marker required for Dark assembly');
-softRoute = softRoute
-  .replace(softThemeLink, `${softThemeLink}\n    <link rel="stylesheet" href="../../soft-dark-theme.css" />`)
-  .replace(softReturnLink, `${softDarkFragment.trimEnd()}\n\n${softReturnLink}`);
-await writeFile(softRoutePath, softRoute);
 
 for (const file of ['button.css', 'checkbox.css', 'checkbox.mjs', 'input.css', 'input.mjs', 'radio.css', 'radio.mjs', 'switch.css', 'switch.mjs', 'tabs.css', 'tabs.mjs', 'textarea.css', 'textarea.mjs', 'select.css', 'select.mjs', 'card.css', 'badge.css', 'alert.css', 'field.css', 'breadcrumb.css', 'pagination.css', 'segmented-control.css', 'segmented-control.mjs', 'tooltip.css', 'tooltip.mjs', 'combobox.css', 'combobox.mjs', 'accordion.css', 'accordion.mjs']) {
   await cp(resolve(root, 'packages/adapters/web/components', file), resolve(output, file));

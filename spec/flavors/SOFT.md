@@ -79,7 +79,7 @@ The authored Soft Dark semantic palette is NeoSmartUI-owned and independently co
 
 The dedicated validator requires at least 4.5:1 for text/content pairings and at least 3:1 for focus/boundary non-text contrast. Status meaning remains written and semantic; color is never the only carrier of meaning.
 
-The proven Light source route remains byte-identical. `tooling/foundry/build.mjs` generates `soft-dark-theme.css` and deterministically assembles `apps/foundry/fragments/soft-dark.html` into the copied `/flavors/soft/` artifact after the proven Light source route is copied. No `flavor.soft-dark` identity, `/flavors/soft-dark/` route, renderer fork, or component fork exists.
+The proven Light source route remains byte-identical. `tooling/foundry/assemble-soft-dark.mjs` runs after the proven shared builder, generates `soft-dark-theme.css`, and deterministically assembles `apps/foundry/fragments/soft-dark.html` into the copied `/flavors/soft/` artifact after the proven Light source route is copied. No `flavor.soft-dark` identity, `/flavors/soft-dark/` route, renderer fork, or component fork exists.
 
 Soft Dark is implemented but not public-proof. The existing `evidence/public/flavor.soft.json` continues to bind only the already-deployed Soft Light inputs until a later exact merged-main artifact is deployed and natively verified. No Pages deployment occurs from the implementation branch.
 
@@ -113,4 +113,4 @@ Repository metadata for that legacy source does not declare a license. The migra
 
 ## Next lifecycle stage
 
-After this implementation PR passes exact-head Quality with the browser suite increased from 124 to 130 and merges, mandatory merged-main Quality must pass again. Only then may the exact merged-main artifact be independently verified and deployed byte-for-byte without rebuilding. Native Pages verification must confirm those exact bytes, after which a separate proof-only singleton promotion may bind the Soft Dark Theme, resolution, tokens, fragment, and deterministic builder into the existing `flavor.soft` proof record. The proof promotion must not redeploy Pages.
+After this implementation PR passes exact-head Quality with the browser suite increased from 124 to 130 and merges, mandatory merged-main Quality must pass again. Only then may the exact merged-main artifact be independently verified and deployed byte-for-byte without rebuilding. Native Pages verification must confirm those exact bytes, after which a separate proof-only singleton promotion may bind the Soft Dark Theme, resolution, tokens, fragment, and deterministic Soft Dark assembler into the existing `flavor.soft` proof record. The proof promotion must not redeploy Pages.
