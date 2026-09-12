@@ -22,6 +22,16 @@ const state = async (locator) => locator.evaluate((element) => {
   };
 });
 
+const documentBox = async (locator) => locator.evaluate((element) => {
+  const rect = element.getBoundingClientRect();
+  return {
+    x: rect.x + window.scrollX,
+    y: rect.y + window.scrollY,
+    width: rect.width,
+    height: rect.height
+  };
+});
+
 test.beforeEach(async ({ page }) => {
   const errors = [];
   page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
@@ -87,19 +97,17 @@ test('Hardline changes expression without inventing interaction on input, card, 
   expect((await state(card)).tabIndex).toBe(-1);
   expect((await state(badge)).tabIndex).toBe(-1);
 
-  const inputBefore = await input.boundingBox();
-  const cardBefore = await card.boundingBox();
+  const inputBefore = await documentBox(input);
+  const cardBefore = await documentBox(card);
   await input.hover();
   await card.hover();
   await page.waitForTimeout(150);
-  const inputAfter = await input.boundingBox();
-  const cardAfter = await card.boundingBox();
-  expect(inputBefore).not.toBeNull();
-  expect(cardBefore).not.toBeNull();
-  expect(inputAfter?.x).toBeCloseTo(inputBefore?.x ?? 0, 1);
-  expect(inputAfter?.y).toBeCloseTo(inputBefore?.y ?? 0, 1);
-  expect(cardAfter?.x).toBeCloseTo(cardBefore?.x ?? 0, 1);
-  expect(cardAfter?.y).toBeCloseTo(cardBefore?.y ?? 0, 1);
+  const inputAfter = await documentBox(input);
+  const cardAfter = await documentBox(card);
+  expect(inputAfter.x).toBeCloseTo(inputBefore.x, 1);
+  expect(inputAfter.y).toBeCloseTo(inputBefore.y, 1);
+  expect(cardAfter.x).toBeCloseTo(cardBefore.x, 1);
+  expect(cardAfter.y).toBeCloseTo(cardBefore.y, 1);
 });
 
 test('Hardline reduced motion keeps immediate pressure feedback without losing state', async ({ page }) => {
