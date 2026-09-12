@@ -59,7 +59,7 @@ Touch activation must acknowledge contact immediately without depending on hover
 
 Unavailable segments use the native `disabled` attribute on their real button. Core MUST NOT leave an otherwise active button operable and rely on `aria-disabled="true"` alone as a substitute for disabled behavior.
 
-Disabling one segment does not make the group itself disabled. If composition disables the entire mode selector, each interactive button must become genuinely unavailable while the current mode remains understandable.
+Disabling one segment does not make the group itself disabled. If composition disables the entire mode selector, each interactive button must become genuinely unavailable while the current mode remains understandable. A currently selected segment may therefore also become disabled; its selected meaning remains represented until another enabled mode is deliberately activated.
 
 ## RTL, localization, and responsive layout
 
@@ -75,7 +75,7 @@ Forced-colors/high-contrast mode must retain visible button boundaries, explicit
 
 ## Token boundary
 
-Segmented Control introduces no new token contracts in the contract slice. It intentionally reuses existing generic roles for:
+Segmented Control introduces no new token contracts. It intentionally reuses existing generic roles for:
 
 - group/segment readable surfaces and content;
 - compact control padding, border, radius, and minimum target;
@@ -87,7 +87,17 @@ Segmented Control introduces no new token contracts in the contract slice. It in
 
 The contract does not own form-field spacing, Card surface padding, Badge annotation geometry, error/status colors, or application-specific layout values.
 
-No Theme resolution scope or concrete token value changes in this contract-only slice.
+Rivet Light resolution now includes `core.segmented-control`, but every declared dependency was already resolved by the existing implemented/public cohort. The exact dependency union therefore remains 55 and no existing Theme token value changes.
+
+## Web implementation
+
+The canonical Web runtime consists of `packages/adapters/web/components/segmented-control.css` plus `packages/adapters/web/components/segmented-control.mjs`.
+
+The CSS keeps the group frame non-pressable and assigns pressure mechanics only to real segment buttons. Unselected segments rest at structural depth, compress to the existing hover depth, and seat at active depth on direct contact. The persistent selected segment uses the existing primary action surface/content roles, remains seated after release, and uses a double border as a non-color selected distinction. Enabled targets resolve `size.control.minimum`; native disabled buttons retain disabled meaning and use the existing opacity role. Narrow layouts become an equal-width grid without changing DOM order.
+
+The binder validates a labelled-group-compatible `role="group"` host with real `<button type="button">` segment peers whose `aria-pressed` values are strictly `true` or `false`. It requires exactly one selected segment at bind/sync time, transfers selection only after native `click`, leaves reactivation of the already selected segment selected, and mirrors agent-readable `data-state` plus `data-selected-segment` metadata. It installs no `keydown` handler, so Tab/Shift+Tab, Space/Enter, Arrow keys, Home, and End remain native button/document behavior rather than a hidden Tabs model.
+
+Five additive Chromium cases cover semantic anatomy and single-selection transfer, native keyboard behavior without roving focus, exact 0→2→5px pressure geometry plus persistent selected treatment, RTL/long-label responsive resilience, and reduced-motion/forced-colors behavior. Existing browser cases remain unchanged, taking the suite from 75 to 80 cases.
 
 ## Migration knowledge provenance
 
@@ -102,4 +112,4 @@ This contract is a clean NeoSmartUI definition informed by pinned legacy evidenc
 
 ## Maturity
 
-Maturity is `contract-only`. Implementation evidence and public-proof evidence remain `null`. This slice defines semantics, states, token dependencies, accessibility, interaction, provenance, and anti-patterns only; it does not add Segmented Control runtime CSS/JavaScript, Theme scope/value changes, Foundry markup, deployable files, or browser tests.
+Maturity is `implemented`. Canonical implementation evidence is `packages/adapters/web/components/segmented-control.mjs`; public-proof evidence remains `null` until an exact merged-main Foundry artifact containing this implementation is deployed and verified. This implementation changes no public-proof record and does not claim live proof prematurely.
