@@ -205,10 +205,14 @@ test('core.combobox keeps the editable field motionless while only the disclosur
   await expect(input).toHaveAttribute('aria-expanded', 'false');
 
   await trigger.hover();
+  await expect.poll(async () => (await state(page)).triggerX - before.triggerX, { timeout: 750 }).toBeCloseTo(2, 1);
+  await expect.poll(async () => (await state(page)).triggerY - before.triggerY, { timeout: 750 }).toBeCloseTo(2, 1);
   const hovered = await state(page);
   expect(hovered.triggerX - before.triggerX).toBeCloseTo(2, 1);
   expect(hovered.triggerY - before.triggerY).toBeCloseTo(2, 1);
   await page.mouse.down();
+  await expect.poll(async () => (await state(page)).triggerX - before.triggerX, { timeout: 750 }).toBeCloseTo(5, 1);
+  await expect.poll(async () => (await state(page)).triggerY - before.triggerY, { timeout: 750 }).toBeCloseTo(5, 1);
   const pressed = await state(page);
   expect(pressed.triggerX - before.triggerX).toBeCloseTo(5, 1);
   expect(pressed.triggerY - before.triggerY).toBeCloseTo(5, 1);
