@@ -190,6 +190,7 @@ test('core.combobox keeps the editable field motionless while only the disclosur
   const input = page.locator('#combobox-input');
   const trigger = page.locator('#combobox-trigger');
 
+  await input.scrollIntoViewIfNeeded();
   const before = await state(page);
   await input.hover();
   await page.mouse.down();
