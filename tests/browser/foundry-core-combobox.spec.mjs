@@ -200,6 +200,8 @@ test('core.combobox keeps the editable field motionless while only the disclosur
   expect(inputContact.inputWidth).toBeCloseTo(before.inputWidth, 2);
   expect(inputContact.inputHeight).toBeCloseTo(before.inputHeight, 2);
   await page.mouse.up();
+  await input.press('Escape');
+  await expect(input).toHaveAttribute('aria-expanded', 'false');
 
   await trigger.hover();
   const hovered = await state(page);
