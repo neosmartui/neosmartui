@@ -137,6 +137,15 @@
         "implementation": "packages/adapters/web/components/segmented-control.mjs",
         "publicProof": "evidence/public/core.segmented-control.json"
       }
+    },
+    {
+      "id": "core.tooltip",
+      "contract": "components/tooltip.json",
+      "maturity": "contract-only",
+      "evidence": {
+        "implementation": null,
+        "publicProof": null
+      }
     }
   ]
 }
