@@ -11,8 +11,8 @@ Soft is the calm application-oriented NeoSmartUI flavor for long-session interfa
 - Interaction model: `pressure-not-levitation`
 - Flavor maturity: `public-proof`
 - Soft Light maturity: `public-proof`
-- Soft Dark maturity: `implemented`
-- Soft Dark public-proof status: **not public-proof yet**
+- Soft Dark maturity: `public-proof`
+- Soft Dark public-proof status: **public-proof**
 - Public-proof record: `evidence/public/flavor.soft.json`
 
 ## Expression contract
@@ -39,7 +39,7 @@ The implementation resolves visible `2px` structural boundaries, `8px` control r
 
 Soft Light uses independently resolved warm neutral surfaces and a softened-blue primary action while keeping written state meaning, semantic HTML, accessibility behavior, RTL behavior, reduced-motion behavior, forced-colors behavior, and Core interaction semantics in the shared adapters. The Foundry route `apps/foundry/src/flavors/soft/index.html` imports the same shipping Button/Input/Card/Badge adapter CSS used by other flavors; no Soft component implementation fork exists.
 
-## Soft Dark implementation
+## Soft Dark implementation and public proof
 
 `Soft Dark` is the second concrete Theme instance of `flavor.soft`. It is implemented as an authored semantic Dark Theme, not CSS inversion, filter-based dark mode, or hidden conditional values inside Soft Light.
 
@@ -51,6 +51,7 @@ Soft Dark resolves the same exact shipping 18-Core / 55-token semantic dependenc
 - exact resolved semantic dependency union: 55 token IDs
 - generated CSS scope: `.ns-theme-soft-dark`
 - proof-safe demo fragment: `apps/foundry/fragments/soft-dark.html`
+- deterministic post-build assembler: `tooling/foundry/assemble-soft-dark.mjs`
 - canonical route: `/flavors/soft/`
 
 The non-color Soft laws remain identical across Light and Dark:
@@ -81,17 +82,31 @@ The dedicated validator requires at least 4.5:1 for text/content pairings and at
 
 The proven Light source route remains byte-identical. `tooling/foundry/assemble-soft-dark.mjs` runs after the proven shared builder, generates `soft-dark-theme.css`, and deterministically assembles `apps/foundry/fragments/soft-dark.html` into the copied `/flavors/soft/` artifact after the proven Light source route is copied. No `flavor.soft-dark` identity, `/flavors/soft-dark/` route, renderer fork, or component fork exists.
 
-Soft Dark is implemented but not public-proof. The existing `evidence/public/flavor.soft.json` continues to bind only the already-deployed Soft Light inputs until a later exact merged-main artifact is deployed and natively verified. No Pages deployment occurs from the implementation branch.
+Soft Dark is `public-proof`. The machine-readable record binds both Light and Dark implementation inputs, the deterministic Soft Dark assembler, the exact merged-main browser cohort, the exact no-rebuild Pages deployment, and both live Theme assets.
+
+The verified Soft Dark public-proof cohort is:
+
+- deployed implementation source `neosmartui/neosmartui@20b32bba63f5882b17193eaca093e315c214ccd6`;
+- merged-main Quality run `34721447129`;
+- merged-main browser artifact `10306147715`;
+- Chromium `130/130` with zero skipped, unexpected, or flaky tests;
+- merged-main artifact SHA-256 `298562ffbe59f46ac6cfcef95c23d033a4a8186a77bef89469a934d0e62955b3`;
+- exact Pages commit `06c68201a1842cdea42fa5e4d24c68215e97ae51`;
+- exact Pages tree `7ff00b76190cab5c9cdf1862db2cff4b0c7762d2`;
+- native Pages run `34721869013`;
+- native Pages artifact `10306322680` with all 43 deployable files byte-identical to the merged-main artifact plus only Jekyll-generated `assets/css/style.css`.
+
+Public-proof promotion does not redeploy Pages.
 
 ## Contract history
 
-The preceding lifecycle stage intentionally carried the marker `Soft Dark contract maturity: `contract-only`` and the rule “Concrete Dark palette values are intentionally deferred” until the contract merged green and mandatory merged-main Quality passed. Those contract-only statements are now superseded by the implementation above; they are retained here solely as lifecycle history and validator evidence, not as current maturity.
+The preceding lifecycle stage intentionally carried the marker `Soft Dark contract maturity: `contract-only`` and the rule “Concrete Dark palette values are intentionally deferred” until the contract merged green and mandatory merged-main Quality passed. Those contract-only statements are superseded by the implementation and public proof above; they are retained here solely as lifecycle history and validator evidence, not as current maturity.
 
-The contract established that Soft Dark is the second concrete Theme instance of `flavor.soft`, must preserve the exact shipping 18-Core / 55-token semantic dependency boundary, and must not mutate the existing `/flavors/soft/` proof source. Those boundaries remain authoritative in implementation.
+The contract established that Soft Dark is the second concrete Theme instance of `flavor.soft`, must preserve the exact shipping 18-Core / 55-token semantic dependency boundary, and must not mutate the existing `/flavors/soft/` proof source. Those boundaries remain authoritative.
 
 ## Public-proof cohort
 
-Soft Light reached `public-proof` only after implementation merged and the exact merged-main artifact was independently verified and deployed without rebuilding. Its original proof lifecycle used:
+Soft Light originally reached `public-proof` only after implementation merged and the exact merged-main artifact was independently verified and deployed without rebuilding. Its original proof lifecycle used:
 
 - implementation source `neosmartui/neosmartui@5e999f2e62dc7727ebb74a9c79c5bd40513d6d0d`
 - merged-main Quality run `34707268277`
@@ -101,7 +116,7 @@ Soft Light reached `public-proof` only after implementation merged and the exact
 - Pages tree `24f8086b988db5aaa97c6bba44c4f8f35dcf6c95`
 - native Pages run `34707560564`
 
-The singleton public-proof cohort has since advanced as later verified Flavor work deployed. `evidence/public/flavor.soft.json` is the machine-readable authority for Soft's current cohort and retains exact implementation blob bindings. Public-proof promotion never redeploys Pages.
+The singleton public-proof cohort has since advanced as later verified Flavor work deployed. `evidence/public/flavor.soft.json` is the machine-readable authority for Soft's current cohort and retains exact Light and Dark implementation blob bindings.
 
 ## Migration provenance
 
@@ -113,4 +128,4 @@ Repository metadata for that legacy source does not declare a license. The migra
 
 ## Next lifecycle stage
 
-After this implementation PR passes exact-head Quality with the browser suite increased from 124 to 130 and merges, mandatory merged-main Quality must pass again. Only then may the exact merged-main artifact be independently verified and deployed byte-for-byte without rebuilding. Native Pages verification must confirm those exact bytes, after which a separate proof-only singleton promotion may bind the Soft Dark Theme, resolution, tokens, fragment, and deterministic Soft Dark assembler into the existing `flavor.soft` proof record. The proof promotion must not redeploy Pages.
+Soft Dark is complete through public proof. The v0.3 Flavor Engine light/dark completion sequence may now proceed contract-first to the next unfinished official Flavor dark Theme. No further Pages deployment belongs to this Soft Dark proof promotion.
