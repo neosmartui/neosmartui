@@ -7,9 +7,11 @@ Rivet is the industrial/mechanical NeoSmartUI flavor. It turns pressure, hard bo
 - Flavor ID: `flavor.rivet`
 - Flavor schema: `neosmartui/flavor@1`
 - Light Theme: `packages/themes/rivet-light/theme.json`
+- Dark Theme contract: `packages/themes/rivet-dark/theme.json`
 - Interaction model: `pressure-not-levitation`
 - Official migration maturity: `public-proof`
 - Public-proof record: `evidence/public/flavor.rivet.json`
+- Rivet Dark contract maturity: `contract-only`
 
 ## Expression contract
 
@@ -30,6 +32,18 @@ The identity palette is deliberately **adapted** from pinned Rivet design knowle
 The Theme resolves exactly the 18 shipping Core components and the exact resolved semantic dependency union: 55 token IDs. It uses the same adapter-owned component CSS as Hardline and Soft; no Core renderer fork is introduced.
 
 The Foundry exposes a dedicated `/flavors/rivet/` route and generated `rivet-theme.css` scope so Rivet can be exercised independently from the root Core Foundry while remaining byte-consistent with the same resolved bundle.
+
+## Rivet Dark contract
+
+Rivet Dark is the second concrete Theme instance of `flavor.rivet`. Its descriptor declares an authored industrial dark semantic strategy while keeping Rivet ownership, mechanical structure, sturdy typography, comfortable density, adapter-owned icons, and pressure-not-levitation interaction intact. It is not CSS inversion, filter-based dark mode, or hidden conditional values inside Rivet Light.
+
+The contract freezes Rivet Dark to the exact shipping 18-Core / 55-token semantic dependency boundary already proven by Rivet Light. Implementation must preserve the ratified mechanical laws across color modes: `3px` control/surface and `2px` annotation boundaries, `6px` control/surface and pill annotation geometry, `5px → 3px → 0px` structural depth, `0px → 2px → 5px` inward travel, `80ms / 140ms / 160ms` pressure timings, a `44px` minimum target, and an independently visible `3px` focus width/offset.
+
+Concrete Dark palette values are intentionally deferred to the implementation lifecycle. They must be authored as accessible semantic dark values under NeoSmartUI authority; the pinned legacy source is design knowledge, not a license to copy implementation bytes. Written state labels and non-color meaning remain authoritative.
+
+The existing `/flavors/rivet/` proof surface remains the canonical Flavor route. Contract work MUST NOT mutate that proven source route, add Dark runtime CSS, add a Dark Foundry fragment, add Dark browser tests, alter the existing public-proof bindings, fork Core adapters, or create a competing `flavor.rivet-dark` identity.
+
+No Pages deployment occurs from the contract branch. After this contract merges green and mandatory merged-main Quality passes, Rivet Dark implementation follows as a separate slice.
 
 ## Public-proof cohort
 
@@ -69,11 +83,11 @@ Rivet Dark follows as its own concrete Theme instance. The legacy source demonst
 ## Current exclusions
 
 - No Rivet renderer override.
-- No Rivet Dark Theme.
+- Rivet Dark is descriptor-only: no Dark `resolution.json`, `tokens.json`, runtime CSS, fragment, browser implementation tests, or public-proof binding yet.
 - No Core adapter fork.
 - No Vertical semantics inside the Flavor.
 - No deployment during public-proof promotion.
 
 ## Next lifecycle stage
 
-Rivet Light is complete through public proof. The next canonical v0.3 Flavor is Mono, which begins contract-first from the latest independently green `main`.
+Rivet Light is complete through public proof. Rivet Dark is contract-only; its implementation begins only after this contract merges green and mandatory merged-main Quality verifies the exact merge.
