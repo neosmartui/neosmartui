@@ -44,14 +44,7 @@ if (dark.motion?.model !== 'pressure-not-levitation' || dark.motion?.intensity !
 if (dark.interaction?.model !== 'pressure-not-levitation' || dark.interaction?.selection !== 'seated') fail('Soft Dark must preserve pressure and seated selection');
 if (dark.icons?.strategy !== 'adapter-owned') fail('Soft Dark must preserve adapter-owned icon ownership');
 
-for (const path of [
-  'packages/themes/soft-dark/resolution.json',
-  'packages/themes/soft-dark/tokens.json',
-  'apps/foundry/fragments/soft-dark.html',
-  'tests/browser/foundry-soft-dark.spec.mjs',
-  'tooling/validators/validate-soft-dark-theme.mjs',
-  'tooling/foundry/assemble-soft-dark.mjs'
-]) await access(resolve(root, path));
+for (const path of ['packages/themes/soft-dark/resolution.json','packages/themes/soft-dark/tokens.json','apps/foundry/fragments/soft-dark.html','tests/browser/foundry-soft-dark.spec.mjs','tooling/validators/validate-soft-dark-theme.mjs','tooling/foundry/assemble-soft-dark.mjs']) await access(resolve(root, path));
 await expectAbsent('packages/flavors/soft-dark', 'Soft Dark is a Theme of flavor.soft, not a new Flavor identity');
 await expectAbsent('apps/foundry/src/flavors/soft-dark', 'Soft Dark must extend the canonical Soft Flavor route rather than create a route fork');
 
@@ -65,30 +58,14 @@ if ([...resolution.scope].sort().join('|') !== [...lightResolution.scope].sort()
 if (new Set(lightBundle.values.map((entry) => entry.id)).size !== 55) fail('Soft Light dependency baseline drifted');
 
 const packageJson = await json('package.json');
-if (packageJson.scripts?.['build:foundry'] !== 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs') fail('Soft Dark must extend Foundry through the post-build assembler while preserving the proven shared builder');
+const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs';
+if (packageJson.scripts?.['build:foundry'] !== expectedBuild) fail('Soft Dark must remain the first proof-bound post-build assembler before the explicit Rivet Dark assembler');
 const assembler = await readFile(resolve(root, 'tooling/foundry/assemble-soft-dark.mjs'), 'utf8');
-for (const marker of [
-  'packages/themes/soft-dark/tokens.json',
-  'soft-dark-theme.css',
-  'apps/foundry/fragments/soft-dark.html',
-  'flavors/soft/index.html',
-  'Soft route is missing the Light Theme stylesheet marker required for Dark assembly',
-  'Soft route is missing the canonical return-link insertion marker required for Dark assembly'
-]) if (!assembler.includes(marker)) fail(`Soft Dark assembler missing proof-safe assembly marker: ${marker}`);
+for (const marker of ['packages/themes/soft-dark/tokens.json','soft-dark-theme.css','apps/foundry/fragments/soft-dark.html','flavors/soft/index.html','Soft route is missing the Light Theme stylesheet marker required for Dark assembly','Soft route is missing the canonical return-link insertion marker required for Dark assembly']) if (!assembler.includes(marker)) fail(`Soft Dark assembler missing proof-safe assembly marker: ${marker}`);
 
 const proof = await json('evidence/public/flavor.soft.json');
 if (proof.flavor !== 'flavor.soft') fail('Soft public-proof subject drifted');
-const requiredProofPaths = [
-  'packages/themes/soft-light/theme.json',
-  'packages/themes/soft-light/resolution.json',
-  'packages/themes/soft-light/tokens.json',
-  'apps/foundry/src/flavors/soft/index.html',
-  'packages/themes/soft-dark/theme.json',
-  'packages/themes/soft-dark/resolution.json',
-  'packages/themes/soft-dark/tokens.json',
-  'apps/foundry/fragments/soft-dark.html',
-  'tooling/foundry/assemble-soft-dark.mjs'
-];
+const requiredProofPaths = ['packages/themes/soft-light/theme.json','packages/themes/soft-light/resolution.json','packages/themes/soft-light/tokens.json','apps/foundry/src/flavors/soft/index.html','packages/themes/soft-dark/theme.json','packages/themes/soft-dark/resolution.json','packages/themes/soft-dark/tokens.json','apps/foundry/fragments/soft-dark.html','tooling/foundry/assemble-soft-dark.mjs'];
 const proofByPath = new Map(proof.implementationFiles.map((entry) => [entry.path, entry.blobSha]));
 if (proofByPath.size !== requiredProofPaths.length) fail('Soft public proof must bind exactly the Light source inputs, Dark source inputs, and deterministic Soft Dark assembler');
 for (const path of requiredProofPaths) {
@@ -98,28 +75,9 @@ for (const path of requiredProofPaths) {
   if (actual !== expected) fail(`Soft public proof is stale for ${path}: expected ${expected}, got ${actual}`);
 }
 if (proof.live.pageUrl !== 'https://neosmartui.github.io/flavors/soft/') fail('Soft public proof must retain the canonical Flavor route');
-for (const assetUrl of ['https://neosmartui.github.io/soft-theme.css', 'https://neosmartui.github.io/soft-dark-theme.css']) {
-  if (!(proof.live.assetUrls ?? []).includes(assetUrl)) fail(`Soft public proof missing live Theme asset: ${assetUrl}`);
-}
+for (const assetUrl of ['https://neosmartui.github.io/soft-theme.css', 'https://neosmartui.github.io/soft-dark-theme.css']) if (!(proof.live.assetUrls ?? []).includes(assetUrl)) fail(`Soft public proof missing live Theme asset: ${assetUrl}`);
 
 const docs = await readFile(resolve(root, 'spec/flavors/SOFT.md'), 'utf8');
-for (const marker of [
-  'Implemented dark Theme: `packages/themes/soft-dark/theme.json`',
-  'Soft Dark maturity: `public-proof`',
-  'Soft Dark public-proof status: **public-proof**',
-  'second concrete Theme instance of `flavor.soft`',
-  'not CSS inversion, filter-based dark mode, or hidden conditional values inside Soft Light',
-  'exact shipping 18-Core / 55-token semantic dependency boundary',
-  '`3px → 1.5px → 0px` structural depth',
-  '`0px → 1.5px → 3px` inward travel',
-  '`70ms / 105ms / 165ms` pressure timings',
-  '`apps/foundry/fragments/soft-dark.html`',
-  '`tooling/foundry/assemble-soft-dark.mjs`',
-  'proven Light source route remains byte-identical',
-  'Soft Dark is `public-proof`',
-  'Chromium `130/130`',
-  'Public-proof promotion does not redeploy Pages',
-  'Soft Dark is complete through public proof'
-]) if (!docs.includes(marker)) fail(`Soft Dark public-proof docs missing marker: ${marker}`);
+for (const marker of ['Implemented dark Theme: `packages/themes/soft-dark/theme.json`','Soft Dark maturity: `public-proof`','Soft Dark public-proof status: **public-proof**','second concrete Theme instance of `flavor.soft`','not CSS inversion, filter-based dark mode, or hidden conditional values inside Soft Light','exact shipping 18-Core / 55-token semantic dependency boundary','`3px → 1.5px → 0px` structural depth','`0px → 1.5px → 3px` inward travel','`70ms / 105ms / 165ms` pressure timings','`apps/foundry/fragments/soft-dark.html`','`tooling/foundry/assemble-soft-dark.mjs`','proven Light source route remains byte-identical','Soft Dark is `public-proof`','Chromium `130/130`','Public-proof promotion does not redeploy Pages','Soft Dark is complete through public proof']) if (!docs.includes(marker)) fail(`Soft Dark public-proof docs missing marker: ${marker}`);
 
-console.log('[soft-dark-contract] validated public-proof Soft Dark, pinned provenance, 18/55 boundary, proof-safe assembly, exact implementation bindings, and live Theme assets');
+console.log('[soft-dark-contract] validated public-proof Soft Dark, pinned provenance, 18/55 boundary, proof-safe assembly, exact implementation bindings, live Theme assets, and ordered downstream Rivet assembly');
