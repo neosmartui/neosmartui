@@ -80,7 +80,7 @@ for (const marker of [
   '`0px → 2px → 5px` inward travel',
   '`80ms / 140ms / 160ms` pressure timings',
   'Rivet Dark is `public-proof`',
-  'Chromium `136/136`',
+  'Chromium: `136/136`',
   'Public-proof promotion does not redeploy Pages',
   'Rivet Dark is complete through public proof',
   'NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d',
