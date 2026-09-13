@@ -7,13 +7,13 @@ Rivet is the industrial/mechanical NeoSmartUI flavor. It turns pressure, hard bo
 - Flavor ID: `flavor.rivet`
 - Flavor schema: `neosmartui/flavor@1`
 - Light Theme: `packages/themes/rivet-light/theme.json`
-- Dark Theme contract: `packages/themes/rivet-dark/theme.json`
+- Dark Theme: `packages/themes/rivet-dark/theme.json`
 - Interaction model: `pressure-not-levitation`
 - Official migration maturity: `public-proof`
 - Public-proof record: `evidence/public/flavor.rivet.json`
 - Rivet Dark contract maturity: `contract-only` (superseded contract checkpoint)
-- Rivet Dark implementation maturity: `implemented`
-- Rivet Dark public proof is not claimed yet.
+- Rivet Dark implementation maturity: `public-proof`
+- Rivet Dark public-proof status: **public-proof**
 
 ## Expression contract
 
@@ -41,15 +41,15 @@ Rivet Dark is the second concrete Theme instance of `flavor.rivet`. Its descript
 
 The original contract froze Rivet Dark to the exact shipping 18-Core / 55-token semantic dependency boundary already proven by Rivet Light. Implementation preserves the ratified mechanical laws across color modes: `3px` control/surface and `2px` annotation boundaries, `6px` control/surface and pill annotation geometry, `5px → 3px → 0px` structural depth, `0px → 2px → 5px` inward travel, `80ms / 140ms / 160ms` pressure timings, a `44px` minimum target, and an independently visible `3px` focus width/offset.
 
-Concrete Dark palette values were intentionally deferred during the contract-only checkpoint. That statement is retained as lifecycle history; the implementation below now authors those values under NeoSmartUI authority rather than copying legacy implementation bytes. Written state labels and non-color meaning remain authoritative.
+Concrete Dark palette values were intentionally deferred during the contract-only checkpoint. That statement is retained as lifecycle history; the implementation below authors those values under NeoSmartUI authority rather than copying legacy implementation bytes. Written state labels and non-color meaning remain authoritative.
 
 The existing `/flavors/rivet/` proof surface remains the canonical Flavor route. The proven source route remains byte-identical; Dark is assembled only into the generated artifact copy. No competing `flavor.rivet-dark` identity or route exists.
 
-No Pages deployment occurs from the contract branch. That contract checkpoint merged green and mandatory merged-main Quality passed before this implementation began.
+No Pages deployment occurred from the contract branch. That contract checkpoint merged green and mandatory merged-main Quality passed before implementation began.
 
 ## Rivet Dark implementation
 
-Rivet Dark now resolves through `packages/themes/rivet-dark/resolution.json` and `packages/themes/rivet-dark/tokens.json`, using the exact same 18-Core / 55-token semantic dependency surface as Rivet Light. Every non-color geometry, spacing, target, depth, travel, timing, focus-width/offset, typography, density, and disabled-opacity value is preserved value-for-value from Rivet Light.
+Rivet Dark resolves through `packages/themes/rivet-dark/resolution.json` and `packages/themes/rivet-dark/tokens.json`, using the exact same 18-Core / 55-token semantic dependency surface as Rivet Light. Every non-color geometry, spacing, target, depth, travel, timing, focus-width/offset, typography, density, and disabled-opacity value is preserved value-for-value from Rivet Light.
 
 The authored Dark palette is NeoSmartUI-owned: interactive/panel surfaces `#18171c` / `#232129`, primary/secondary content `#f6f3fa` / `#c9c3d1`, structural borders `#aaa4b2` / `#f5f1fa`, primary lavender action `#c7b5f2` with `#211c2b` content, status fills `#9ed9b0` / `#dff57a` / `#ef8a84` / `#bca8eb`, and independent focus `#cdbdf7`. Implementation validation requires at least 4.5:1 for authored text pairings and 3:1 for the focus/default-boundary non-text pairings exercised by the shared adapters.
 
@@ -57,9 +57,41 @@ Runtime assembly is proof-safe and additive. The shared proven `tooling/foundry/
 
 Six additive browser cases verify shared-adapter identity and authored palette, coherent 5→3→0 depth with 0→2→5 inward travel, non-pressable editing/static surfaces plus written state meaning, reduced motion, forced-colors/focus/Tab order, and RTL/narrow/localized containment. Existing coverage is retained unchanged.
 
-Rivet Dark public proof is not claimed yet. The implementation must merge green, pass mandatory merged-main browser evidence, have that exact artifact independently verified and deployed without rebuilding, and pass native Pages verification before `evidence/public/flavor.rivet.json` may bind any Rivet Dark implementation input. Public-proof promotion will not redeploy Pages.
+Rivet Dark is `public-proof`. The machine-readable record binds both Light and Dark Theme/resolution/token inputs, the Dark fragment, the deterministic Rivet Dark assembler, the exact merged-main browser cohort, the exact no-rebuild Pages deployment, and both live Theme assets.
 
-## Public-proof cohort
+## Rivet Dark verified public-proof cohort
+
+The implementation merged at exact source `neosmartui/neosmartui@be730284fd0c040aa6ad3be8cde6cb52acb3309a`. The original merged-main Quality run was externally stuck in GitHub Actions' scheduler before any runner step executed; after the stale run was cancelled, attempt 2 reran the same workflow/run on the same source SHA and completed green. No source commit was created to clear the scheduler incident.
+
+The authoritative public-proof cohort is:
+
+- deployed implementation source: `neosmartui/neosmartui@be730284fd0c040aa6ad3be8cde6cb52acb3309a`
+- merged-main Quality run: `34737889119` (successful attempt 2 on the same exact SHA)
+- merged-main browser artifact: `10314159095`
+- merged-main artifact SHA256: `2a4e9937917a25eb5d3bafa25aa6c7678daf2c575a1b2b57eb32e5a8f3a3064c`
+- Chromium: `136/136`
+- browser report: `136` expected, `0` skipped, `0` unexpected, `0` flaky
+- exact deployable Foundry file count: `44`
+- exact deployable artifact tree: `f8d0282852ee376c4fbf96117d0439e9b960e031`
+- Pages commit: `ef84508f5dc001b72ebec3fdb7b3deb815c29454`
+- Pages tree: `f8d0282852ee376c4fbf96117d0439e9b960e031`
+- native Pages run: `34747673153`
+- native Pages artifact: `10314896015`
+- native Pages artifact SHA256: `af942a1a60d90f6c9cd22ec77fcee3ef4ecc5a4c091e42e496f21834d5092598`
+- live route: `https://neosmartui.github.io/flavors/rivet/`
+- live Light Theme asset: `https://neosmartui.github.io/rivet-theme.css`
+- live Dark Theme asset: `https://neosmartui.github.io/rivet-dark-theme.css`
+- canonical deployment record: `https://neosmartui.github.io/deployment.json`
+
+The merged-main browser artifact was independently downloaded and hashed before deployment. Its `deployment.json` names the exact source SHA above, its browser report is clean, and its deterministic 44-file Git tree is exactly `f8d0282852ee376c4fbf96117d0439e9b960e031`. It differs from the preceding Soft Dark deployment only in the deployment record, assembled Rivet route, and new `rivet-dark-theme.css`; all other deployable target files remain byte-identical.
+
+The Pages repository final commit tree is exactly the same verified 44-file artifact tree. Native Pages run `34747673153` checked out `ef84508f5dc001b72ebec3fdb7b3deb815c29454` and used it as `build_revision`; its native artifact contains all 44 deployable Foundry files byte-for-byte identical to the merged-main artifact, plus only Jekyll's generated `assets/css/style.css`.
+
+During bootstrap publishing, an unintended empty `__noop__` commit `ec98b161efc7840c78bc1ea5a14150f58f105612` was created in the generated Pages repository by a connector invocation. It was immediately superseded without force or history rewriting by the final exact-tree commit `ef84508f5dc001b72ebec3fdb7b3deb815c29454`; the transient Pages run `34747651280` was cancelled and is not proof authority. No source repository state or verified artifact bytes were changed by that tooling incident.
+
+Public-proof promotion does not redeploy Pages. The separate proof-only source change may update evidence, lifecycle documentation, and proof validators, but must not alter runtime Theme/token/fragment/assembler/browser/workflow/Pages output.
+
+## Historical Rivet Light cohort
 
 Rivet Light reached `public-proof` only after its implementation was merged, the exact merged-main artifact was independently verified, and those exact bytes were deployed to GitHub Pages without rebuilding.
 
@@ -70,13 +102,8 @@ Rivet Light reached `public-proof` only after its implementation was merged, the
 - Pages commit: `db3b2013439c3365c900d68899cd750318e3b724`
 - Pages tree: `45d8a3a721df9dbba2794c7562e7b5c51578c0a8`
 - native Pages run: `34709962865`
-- live route: `https://neosmartui.github.io/flavors/rivet/`
-- live Theme asset: `https://neosmartui.github.io/rivet-theme.css`
-- canonical deployment record: `https://neosmartui.github.io/deployment.json`
 
-The generated Pages run metadata retained the preceding Pages SHA in its `head_sha` / `build_revision` label. That stale label is not used as proof of deployed bytes. The native build job checked out `main` and recorded `git log -1` as `db3b2013439c3365c900d68899cd750318e3b724`; its Pages artifact contains all 39 deployable Foundry files byte-identical to merged-main artifact `10302489738`, plus only Jekyll's generated `assets/css/style.css`. The public-proof live validator independently verifies the served deployment record, Rivet route, and Theme markers before promotion can merge.
-
-For historical clarity, the Rivet Light implementation phase previously used an `implemented` maturity marker and said public proof was not yet claimed. Those phase statements are superseded by the evidence-bound public-proof state above.
+The singleton public-proof cohort has since advanced as later verified Flavor work deployed. `evidence/public/flavor.rivet.json` is the machine-readable authority for Rivet's current cohort and retains exact Light and Dark implementation blob bindings.
 
 ## Migration provenance
 
@@ -88,21 +115,18 @@ Repository metadata for the pinned source does not declare a project license. Th
 
 ## Verification boundary
 
-Rivet public proof remains evidence-bound rather than declarative. Structural validation checks the singleton deployment cohort and current proven implementation blob SHAs. Live validation checks the canonical deployment record, dedicated Rivet page markers, and exact proven Theme asset markers over HTTPS. Rivet Dark implementation validation is local/CI evidence only until deployment and proof promotion complete.
+Rivet public proof remains evidence-bound rather than declarative. Structural validation checks the singleton deployment cohort and current proven implementation blob SHAs. Live validation checks the canonical deployment record, dedicated Rivet page markers, and exact proven Light and Dark Theme asset markers over HTTPS.
 
-Public-proof promotion does not redeploy Pages.
-
-Rivet Dark follows as its own concrete Theme instance. The legacy source demonstrates dark-mode intent, but NeoSmartUI MUST NOT implement dark mode as a hidden conditional mutation or inversion filter.
+Rivet Dark remains the second concrete Theme instance of the existing `flavor.rivet`; no hidden conditional mutation or inversion filter is permitted.
 
 ## Current exclusions
 
 - No Rivet renderer override.
 - No `flavor.rivet-dark` identity or separate Dark route.
-- Rivet Dark has no public-proof binding yet.
 - No Core adapter fork.
 - No Vertical semantics inside the Flavor.
-- No Pages deployment from the implementation branch.
+- No Pages deployment from the proof promotion.
 
 ## Next lifecycle stage
 
-Rivet Light is complete through public proof. Rivet Dark is implemented but not yet public proof: exact-head Quality must pass, then merge, mandatory merged-main Quality, independent merged-main artifact verification, exact-byte Pages deployment, native Pages verification, and a separate proof-only promotion follow in that order.
+Rivet Dark is complete through public proof. The v0.3 Flavor Engine light/dark completion sequence may proceed contract-first to the next unfinished official Flavor dark Theme, expected to be Mono Dark. No further Pages deployment belongs to this Rivet Dark proof promotion.
