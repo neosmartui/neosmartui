@@ -38,3 +38,13 @@ Official Flavor proof additionally verifies that the same shipping Core adapters
 Successful runs upload screenshots, the JSON Playwright report, and the exact built `dist/foundry` artifact. Failure artifacts are retained under the same workflow run.
 
 A release subject reaches `public-proof` only after its structural record, implementation blob bindings, exact-SHA browser evidence, Pages provenance, and live marker contract all pass together.
+
+## Orphaned GitHub Actions runs
+
+A mandatory merged-main verification that is orphaned by GitHub Actions before jobs instantiate does not require a new source SHA. Use the incident-only exact-SHA recovery contract in `docs/CI-INCIDENT-RECOVERY.md`.
+
+The recovery run must exercise the same canonical source SHA with byte-identical Quality workflow bytes and the same mandatory gates. Its uploaded artifact must bind that exact SHA and its archive digest must be independently verified. A recovery PR uses existing commits only, is never merged, and is closed after its evidence is preserved.
+
+For an implementation cohort, the verified recovery artifact may serve as the merged-main artifact only when every recovery invariant passes. For a proof-only promotion where the lifecycle forbids redeployment, the recovery payload excluding provenance-only `deployment.json` must additionally byte-match the already verified live Pages payload.
+
+The original orphaned run remains an incident record. Never state or imply that it passed merely because a separate recovery run succeeded.
