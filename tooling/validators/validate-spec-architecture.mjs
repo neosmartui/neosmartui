@@ -7,6 +7,7 @@ const files = [
   'spec/architecture/TAXONOMY.md',
   'spec/architecture/DEPENDENCIES.md',
   'spec/architecture/PUBLIC-PROOF.md',
+  'docs/PUBLIC-PROOF-GATE.md',
   'docs/CI-INCIDENT-RECOVERY.md'
 ];
 for (const file of files) await access(resolve(root, file));
@@ -30,10 +31,21 @@ if (!deps.includes('Core MUST NOT import a Vertical.')) throw new Error('Core/Ve
 const proof = await readFile(resolve(root, 'spec/architecture/PUBLIC-PROOF.md'), 'utf8');
 for (const marker of [
   'SOURCE ONCE. DEMONSTRATE EVERYWHERE.',
+  'Proof-bound maintenance',
+  'neosmartui/public-proof-maintenance@1',
+  'declare exactly the complete set',
+  'proof-only promotion',
   'CI scheduler incident recovery',
   'byte-identical Quality workflow',
   'closed unmerged'
 ]) if (!proof.includes(marker)) throw new Error(`Public proof law missing: ${marker}`);
+
+const proofGate = await readFile(resolve(root, 'docs/PUBLIC-PROOF-GATE.md'), 'utf8');
+for (const marker of [
+  'evidence/maintenance/<subject>.json',
+  'declared path set MUST equal the actual proof-bound mismatch set exactly',
+  'Do not redeploy after proof promotion.'
+]) if (!proofGate.includes(marker)) throw new Error(`Public proof gate missing maintenance rule: ${marker}`);
 
 const recovery = await readFile(resolve(root, 'docs/CI-INCIDENT-RECOVERY.md'), 'utf8');
 for (const marker of [
@@ -46,4 +58,4 @@ for (const marker of [
   'excluding provenance-only deployment metadata'
 ]) if (!recovery.includes(marker)) throw new Error(`CI incident recovery contract missing: ${marker}`);
 
-console.log('Spec architecture validation passed. Taxonomy, dependency direction, public-proof laws, and exact-SHA CI incident recovery are explicit.');
+console.log('Spec architecture validation passed. Taxonomy, dependency direction, public-proof maintenance, and exact-SHA CI incident recovery are explicit.');

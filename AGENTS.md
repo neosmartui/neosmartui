@@ -83,6 +83,8 @@ Permanent rule: **SOURCE ONCE. DEMONSTRATE EVERYWHERE.**
 
 Foundry, flavor pages, vertical pages, labs, Studio, registry, and agent surfaces should render shipping contracts/implementations wherever practical. Do not create preview-only lookalikes when the real system can be rendered.
 
+Already-proven implementation bytes MUST NOT drift silently. When a public-proof-bound file needs replacement while the old deployment is still live, use `neosmartui/public-proof-maintenance@1`: bind the exact active proof-record blob, link a tracking issue, declare only already-proof-bound paths, bind their old proven blobs, and require the declared path set to equal actual proof-bound drift exactly. Maintenance is never a broad skip. After verified exact deployment, the proof-only promotion refreshes the cohort/bindings and removes the satisfied maintenance records; it does not redeploy Pages.
+
 ## Work sequencing
 
 Follow `docs/DEVELOPMENT-ROADMAP.md`, but defer to the Canonical PRD if they diverge. When a slice completes, immediately choose the earliest unfinished dependency. Do not jump ahead because later work is more exciting.

@@ -15,7 +15,8 @@ const schemaFiles = [
   'resolved-token-bundle.schema.json',
   'theme-resolution.schema.json',
   'deployment-record.schema.json',
-  'public-proof.schema.json'
+  'public-proof.schema.json',
+  'public-proof-maintenance.schema.json'
 ];
 
 const parsed = new Map();
@@ -37,13 +38,19 @@ const expectedIds = new Map([
   ['resolved-token-bundle.schema.json', 'https://neosmartui.com/schemas/resolved-token-bundle@1.json'],
   ['theme-resolution.schema.json', 'https://neosmartui.com/schemas/theme-resolution@1.json'],
   ['deployment-record.schema.json', 'https://neosmartui.com/schemas/deployment-record@1.json'],
-  ['public-proof.schema.json', 'https://neosmartui.com/schemas/public-proof@1.json']
+  ['public-proof.schema.json', 'https://neosmartui.com/schemas/public-proof@1.json'],
+  ['public-proof-maintenance.schema.json', 'https://neosmartui.com/schemas/public-proof-maintenance@1.json']
 ]);
 for (const [file, id] of expectedIds) if (parsed.get(file).$id !== id) throw new Error(`${file} has unexpected $id`);
 for (const file of ['theme.schema.json', 'flavor.schema.json']) {
   const schema = parsed.get(file);
   if (!schema.required.includes('schema') || !schema.properties.schema) throw new Error(`${file} requires schema but does not permit it`);
 }
+
+const maintenance = parsed.get('public-proof-maintenance.schema.json');
+if (maintenance.properties.schema?.const !== 'neosmartui/public-proof-maintenance@1') throw new Error('public-proof maintenance schema identity drifted');
+if (maintenance.additionalProperties !== false || maintenance.oneOf?.length !== 2) throw new Error('public-proof maintenance records must remain closed and subject-exclusive');
+for (const field of ['trackingIssue', 'proofRecord', 'implementationFiles']) if (!maintenance.required.includes(field)) throw new Error(`public-proof maintenance schema must require ${field}`);
 
 const patterns = {
   component: /^(?!flavor\.|vertical\.)[a-z][a-z0-9-]*\.(?!block\.|page\.)[a-z][a-z0-9-]*$/,
@@ -70,4 +77,4 @@ for (const id of invalid) if (Object.values(patterns).some((pattern) => pattern.
 const taxonomy = await readFile(resolve(root, 'spec/architecture/TAXONOMY.md'), 'utf8');
 if (!taxonomy.includes('Commerce is a Vertical, not a Flavor.')) throw new Error('Schemas must remain aligned with corrected taxonomy.');
 
-console.log('Schema validation passed. Versioned schema identities, deployment/public-proof provenance, satisfiable Flavor/Theme contracts, and stable semantic-ID rules are coherent.');
+console.log('Schema validation passed. Versioned schema identities, deployment/public-proof/maintenance provenance, satisfiable Flavor/Theme contracts, and stable semantic-ID rules are coherent.');

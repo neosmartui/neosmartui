@@ -16,6 +16,25 @@ During development the proof host is `https://neosmartui.github.io/`. Because th
 
 When a newer green Foundry deployment replaces an older one, unchanged public-proof subjects are refreshed into the newer deployment cohort using the newer exact-SHA browser artifact and Pages provenance. Their implementation-file blob bindings remain unchanged unless the implementation itself changed. This prevents a historical proof record from being misrepresented as the lineage of the current live host. Subject-specific page URLs and generated assets are not cohort identity; source, browser evidence, Pages provenance, and the deployment-record endpoint are.
 
+## Proof-bound maintenance
+
+Already-proven implementation bytes may need maintenance while the current live deployment and its proof record remain valid. In that state, never rewrite the public-proof record early and never weaken structural proof to permit broad drift.
+
+An active maintenance record lives at `evidence/maintenance/<subject>.json` and uses `neosmartui/public-proof-maintenance@1`. It binds the exact current public-proof record blob and the exact old proven blobs for every intentionally changing proof-bound path. The declared path set MUST equal the actual proof-bound mismatch set exactly.
+
+Maintenance validation therefore fails when:
+
+- proof-bound bytes drift without a maintenance record;
+- the maintenance record declares a path not bound by the active proof;
+- the declared prior blob differs from the active proof record;
+- the proof record changed after the maintenance record was created;
+- only part of the actual mismatch set is declared;
+- a declared implementation path has not actually changed;
+- the record names an inactive/unknown subject; or
+- the record shape, tracking issue, filename, or repository-relative paths are invalid.
+
+The active public proof continues to describe the old live Pages bytes throughout implementation. After exact-head and merged-main CI, independently verify the replacement merged-main artifact, deploy those exact bytes without rebuild, verify native Pages, and only then submit a proof-only promotion that refreshes the singleton cohort/bindings and removes the maintenance record. Do not redeploy after proof promotion.
+
 ## Browser evidence
 
 The browser gate exercises the real rendered Core primitives and currently verifies:

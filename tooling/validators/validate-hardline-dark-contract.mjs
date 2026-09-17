@@ -1,11 +1,10 @@
-import { createHash } from 'node:crypto';
 import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { loadPublicProofMaintenance, validatePublicProofBindings } from './public-proof-bindings.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[hardline-dark-contract] ${message}`); };
 const json = async (path) => JSON.parse(await readFile(resolve(root, path), 'utf8'));
-const gitBlobSha = (buffer) => createHash('sha1').update(`blob ${buffer.length}\0`).update(buffer).digest('hex');
 const expectAbsent = async (path, message) => {
   try {
     await access(resolve(root, path));
@@ -54,7 +53,8 @@ for (const marker of [
   'Hardline route is missing the canonical return-link insertion marker required for Dark assembly'
 ]) if (!builder.includes(marker)) fail(`Hardline Dark builder missing proof-safe assembly marker: ${marker}`);
 
-const proof = await json('evidence/public/flavor.hardline.json');
+const proofPath = 'evidence/public/flavor.hardline.json';
+const proof = await json(proofPath);
 if (proof.flavor !== 'flavor.hardline') fail('Hardline public-proof subject drifted');
 const requiredProofPaths = [
   'packages/themes/hardline-light/theme.json',
@@ -69,12 +69,9 @@ const requiredProofPaths = [
 ];
 const proofByPath = new Map(proof.implementationFiles.map((entry) => [entry.path, entry.blobSha]));
 if (proofByPath.size !== requiredProofPaths.length) fail('Hardline public proof must bind exactly the Light source inputs, Dark source inputs, and deterministic builder');
-for (const path of requiredProofPaths) {
-  const expected = proofByPath.get(path);
-  if (!expected) fail(`Hardline public proof missing implementation binding: ${path}`);
-  const actual = gitBlobSha(await readFile(resolve(root, path)));
-  if (actual !== expected) fail(`Hardline public proof is stale for ${path}: expected ${expected}, got ${actual}`);
-}
+for (const path of requiredProofPaths) if (!proofByPath.has(path)) fail(`Hardline public proof missing implementation binding: ${path}`);
+const maintenanceRecords = await loadPublicProofMaintenance({ root, fail });
+await validatePublicProofBindings({ root, subject: 'flavor.hardline', proofPath, proof, maintenanceRecords, fail });
 if (proof.live.pageUrl !== 'https://neosmartui.github.io/flavors/hardline/') fail('Hardline public proof must retain the canonical Flavor route');
 for (const assetUrl of ['https://neosmartui.github.io/hardline-theme.css', 'https://neosmartui.github.io/hardline-dark-theme.css']) {
   if (!(proof.live.assetUrls ?? []).includes(assetUrl)) fail(`Hardline public proof missing live Theme asset: ${assetUrl}`);
@@ -98,4 +95,4 @@ for (const marker of [
   'Public-proof promotion does not redeploy Pages'
 ]) if (!docs.includes(marker)) fail(`Hardline Dark public-proof docs missing marker: ${marker}`);
 
-console.log('[hardline-dark-contract] validated public-proof Hardline Dark, proof-safe route assembly, exact implementation bindings, shared adapters, and singleton live assets');
+console.log('[hardline-dark-contract] validated public-proof Hardline Dark, proof-safe route assembly, exact maintenance-aware implementation bindings, shared adapters, and singleton live assets');
