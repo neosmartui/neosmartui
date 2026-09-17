@@ -15,3 +15,11 @@ The Foundry and Labs are architecture proof surfaces, not parallel demo implemen
 - `neosmartui/neosmartui.github.io` is generated output only and MUST NOT become a second source of truth.
 
 A public surface that diverges from shipping architecture is a defect, not merely stale documentation.
+
+## CI scheduler incident recovery
+
+A broken CI scheduler record is infrastructure drift, not permission to mutate canonical source solely to obtain another run.
+
+When a mandatory merged-main Quality run is demonstrably orphaned before job execution, NeoSmartUI MAY accept a separate exact-SHA recovery run only under the closed incident contract in `docs/CI-INCIDENT-RECOVERY.md`. Recovery MUST preserve the same canonical source SHA, byte-identical Quality workflow, mandatory validators/tests/browser coverage, and independently verified artifact provenance. The temporary recovery PR MUST use existing commits only and MUST be closed unmerged.
+
+Recovery evidence substitutes for the missing scheduler execution; it MUST NOT rewrite history or claim that the orphaned run itself passed.
