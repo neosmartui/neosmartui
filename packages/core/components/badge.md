@@ -55,7 +55,7 @@ The canonical CSS does not silently truncate essential status text. Long localiz
 
 Forced-colors/high-contrast rendering keeps text readable and preserves a perceivable Badge boundary when Theme background/tone colors are overridden. Semantic status meaning cannot disappear when custom color is unavailable.
 
-Status foreground/background pairings remain explicit. Neutral/info/success/warning use the primary readable foreground over their light surfaces, while the existing darker error role uses `color.content.inverse`.
+Status foreground/background pairings are mode-independent and follow the shipping adapter exactly. Neutral, info, success, and warning use `color.content.primary`; neutral sits on `color.surface.panel`, while info/success/warning sit on their corresponding `color.state.*` surfaces. Error uses `color.content.inverse` on `color.state.error`. Every concrete resolved Theme that includes `core.badge` MUST keep each of those authored text pairings at or above `4.5:1`.
 
 ## Token boundary
 
@@ -68,14 +68,14 @@ Badge owns compact annotation roles instead:
 - `border.annotation.width`
 - `radius.annotation`
 
-Rivet Light resolves those roles from pinned Badge knowledge at `0.55rem` inline padding, `0.15rem` block padding, a `2px` annotation border, and a `999px` pill radius. Pinned Soft supplies the exact light status palette for info (`#c9b7ff`), success (`#9be3bd`), and warning (`#f4dc78`); the already-established NeoSmartUI error role remains `#c1121f` so this slice does not mutate earlier component behavior. `color.content.inverse` resolves to white for the dark error surface, consistent with pinned Rivet's destructive Badge foreground knowledge. Every previously resolved Theme value remains unchanged.
+Rivet Light resolves those geometry roles from pinned Badge knowledge at `0.55rem` inline padding, `0.15rem` block padding, a `2px` annotation border, and a `999px` pill radius. Concrete status colors are Theme-owned values resolved in each `packages/themes/*/tokens.json` bundle; they may be re-ratified when necessary to preserve the shared Badge foreground contract and authored contrast. Legacy Soft/Rivet palette values remain migration knowledge only and are not current Theme authority. `color.content.inverse` remains the error-foreground role defined by the shared adapter.
 
 ## Migration knowledge provenance
 
 This contract and implementation are clean NeoSmartUI definitions informed by pinned legacy evidence; no legacy implementation code is copied.
 
 - Family conformance: `NeoBrutalism-shop/spec@fbf499397f4e9a52d6e25c13921fd5377799c626` — shared laws prohibit generic hover lift, require semantic-token/state documentation, and explicitly require static surfaces not to mimic interactive motion. Badge applies those family laws as a non-interactive primitive.
-- Soft capability and value evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists `Badge/status`; `src/components/badge.css` and `src/tokens.css` provide compact pill geometry and exact light info/success/warning palette knowledge. NeoSmartUI re-expresses that knowledge through its own semantic contracts rather than copying source.
+- Soft capability and value evidence: `NeoBrutalism-shop/NeoBrutal-Soft@dfed77bd159ac5c38081f7a4ca5c2229b61ffb8a` — `COMPONENTS.md` lists `Badge/status`; `src/components/badge.css` and `src/tokens.css` provide compact pill geometry and light status-palette migration knowledge. NeoSmartUI re-expresses that knowledge through its own semantic contracts and Theme-owned resolved values rather than copying source.
 - Rivet implementation knowledge: `NeoBrutalRivet/NeoBrutal-Rivet@bb4b641d35bc77c958b7345a3b7c0a134c7d802d` — `components/ui/badge.tsx` uses a neutral `span` host by default, pill geometry, and scopes hover styling to anchor-host usage; its destructive variant uses a white foreground. Repository metadata declares no license, so this is reference-only knowledge and no source code is copied.
 
 ## Maturity
