@@ -38,6 +38,7 @@ const effectiveTransitionMs = (state) => {
 };
 
 const pointerCenter = async (page, locator) => {
+  await locator.scrollIntoViewIfNeeded();
   const box = await locator.boundingBox();
   if (!box) throw new Error('tactile target has no bounding box');
   await page.mouse.move(box.x + Math.max(4, box.width / 2), box.y + Math.max(4, box.height / 2));
