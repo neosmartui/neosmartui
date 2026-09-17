@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { contrastRatio } from '../../packages/contracts/color-contrast.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[rivet-dark] ${message}`); };
@@ -43,35 +44,27 @@ const expectedColors = new Map([
   ['color.border.strong', '#f5f1fa'],
   ['color.action.primary.surface', '#c7b5f2'],
   ['color.action.primary.content', '#211c2b'],
-  ['color.state.success', '#9ed9b0'],
-  ['color.state.warning', '#dff57a'],
+  ['color.state.success', '#2e7644'],
+  ['color.state.warning', '#5e7008'],
   ['color.state.error', '#ef8a84'],
-  ['color.state.info', '#bca8eb'],
+  ['color.state.info', '#764dd6'],
   ['color.focus.ring', '#cdbdf7']
 ]);
 for (const [id, value] of expectedColors) if (dark.get(id)?.value !== value) fail(`${id} must preserve the ratified Rivet Dark palette value ${value}`);
 
-const relativeLuminance = (hex) => {
-  const channels = hex.slice(1).match(/.{2}/g).map((pair) => Number.parseInt(pair, 16) / 255).map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
-};
-const contrast = (a, b) => {
-  const [high, low] = [relativeLuminance(a), relativeLuminance(b)].sort((x, y) => y - x);
-  return (high + 0.05) / (low + 0.05);
-};
 for (const [foreground, background, label] of [
   ['#f6f3fa','#18171c','primary content on interactive surface'],
   ['#c9c3d1','#18171c','secondary content on interactive surface'],
   ['#f6f3fa','#232129','primary content on panel surface'],
   ['#211c2b','#c7b5f2','primary action content'],
-  ['#211c2b','#9ed9b0','success badge content'],
-  ['#211c2b','#dff57a','warning badge content'],
+  ['#f6f3fa','#2e7644','success badge content'],
+  ['#f6f3fa','#5e7008','warning badge content'],
   ['#211c2b','#ef8a84','error badge content'],
-  ['#211c2b','#bca8eb','info badge content']
-]) if (contrast(foreground, background) < 4.5) fail(`${label} must retain at least 4.5:1 authored contrast`);
+  ['#f6f3fa','#764dd6','info badge content']
+]) if (contrastRatio(foreground, background) < 4.5) fail(`${label} must retain at least 4.5:1 authored contrast`);
 for (const [foreground, background, label] of [
   ['#cdbdf7','#18171c','focus ring against interactive surface'],
   ['#aaa4b2','#18171c','default border against interactive surface']
-]) if (contrast(foreground, background) < 3) fail(`${label} must retain at least 3:1 non-text contrast`);
+]) if (contrastRatio(foreground, background) < 3) fail(`${label} must retain at least 3:1 non-text contrast`);
 
 console.log('[rivet-dark] validated authored 18/55 Dark resolution, exact Rivet physics, semantic industrial-dark palette, and contrast invariants');
