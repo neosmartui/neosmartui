@@ -1,0 +1,16 @@
+{
+  "$schema": "../../spec/schemas/public-proof-maintenance.schema.json",
+  "schema": "neosmartui/public-proof-maintenance@1",
+  "component": "core.combobox",
+  "trackingIssue": "https://github.com/neosmartui/neosmartui/issues/87",
+  "proofRecord": {
+    "path": "evidence/public/core.combobox.json",
+    "blobSha": "a1c071f66d5c63cb9259d03faa37c3fbbb0127b5"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/combobox.css",
+      "provenBlobSha": "e1c896eb40ad6bc5ec711b270a23e81cbb4cf68d"
+    }
+  ]
+}
