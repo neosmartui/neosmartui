@@ -35,6 +35,8 @@ jobs:
         run: npm run validate:components
       - name: Validate Flavor, Theme, and adapter resolution
         run: npm run validate:resolution
+      - name: Validate accessibility invariants
+        run: npm run validate:accessibility
       - name: Validate public-proof evidence structure
         run: npm run validate:proof
       - name: Verify claimed public proof against live HTTPS endpoints
@@ -148,9 +150,9 @@ jobs:
           grep -q -- "--ns-radius-surface: 6px;" dist/foundry/theme.css
           grep -q -- "--ns-font-weight-strong: 800;" dist/foundry/theme.css
           grep -q -- "--ns-color-content-inverse: #fffef5;" dist/foundry/theme.css
-          grep -q -- "--ns-color-state-info: #397eaf;" dist/foundry/theme.css
-          grep -q -- "--ns-color-state-success: #27865d;" dist/foundry/theme.css
-          grep -q -- "--ns-color-state-warning: #a66a13;" dist/foundry/theme.css
+          grep -q -- "--ns-color-state-info: #5397c7;" dist/foundry/theme.css
+          grep -q -- "--ns-color-state-success: #2fa371;" dist/foundry/theme.css
+          grep -q -- "--ns-color-state-warning: #c98017;" dist/foundry/theme.css
           grep -q -- "--ns-space-annotation-inline: 0.55rem;" dist/foundry/theme.css
           grep -q -- "--ns-space-annotation-block: 0.15rem;" dist/foundry/theme.css
           grep -q -- "--ns-border-annotation-width: 2px;" dist/foundry/theme.css
