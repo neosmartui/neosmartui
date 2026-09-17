@@ -81,16 +81,16 @@ test('core.alert is a passive token-backed message surface and visual tone does 
   expect(await tokenValue(page, '--ns-radius-surface')).toBe('6px');
   expect(await tokenValue(page, '--ns-depth-rest-x')).toBe('5px');
   expect(await tokenValue(page, '--ns-depth-rest-y')).toBe('5px');
-  expect(await tokenValue(page, '--ns-color-state-info')).toBe('#397eaf');
-  expect(await tokenValue(page, '--ns-color-state-success')).toBe('#27865d');
-  expect(await tokenValue(page, '--ns-color-state-warning')).toBe('#a66a13');
+  expect(await tokenValue(page, '--ns-color-state-info')).toBe('#5397c7');
+  expect(await tokenValue(page, '--ns-color-state-success')).toBe('#2fa371');
+  expect(await tokenValue(page, '--ns-color-state-warning')).toBe('#c98017');
   expect(await tokenValue(page, '--ns-color-state-error')).toBe('#b83a31');
 
   const tones = [
     ['#alert-neutral', 'Neutral · Note', 'rgb(37, 35, 43)'],
-    ['#alert-info', 'Info · Update', 'rgb(57, 126, 175)'],
-    ['#alert-success', 'Success · Complete', 'rgb(39, 134, 93)'],
-    ['#alert-warning', 'Warning · Check this', 'rgb(166, 106, 19)'],
+    ['#alert-info', 'Info · Update', 'rgb(83, 151, 199)'],
+    ['#alert-success', 'Success · Complete', 'rgb(47, 163, 113)'],
+    ['#alert-warning', 'Warning · Check this', 'rgb(201, 128, 23)'],
     ['#alert-error', 'Error · Needs correction', 'rgb(184, 58, 49)']
   ];
   for (const [selector, title, borderColor] of tones) {
