@@ -1,0 +1,20 @@
+{
+  "$schema": "../../spec/schemas/public-proof-maintenance.schema.json",
+  "schema": "neosmartui/public-proof-maintenance@1",
+  "flavor": "flavor.soft",
+  "trackingIssue": "https://github.com/neosmartui/neosmartui/issues/84",
+  "proofRecord": {
+    "path": "evidence/public/flavor.soft.json",
+    "blobSha": "5b63901c6d6fa19c580598c9b901c33c76189fcd"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/themes/soft-light/tokens.json",
+      "provenBlobSha": "f9b372b24a0b4f918bc437b60c2b09ceb037d0b1"
+    },
+    {
+      "path": "packages/themes/soft-dark/tokens.json",
+      "provenBlobSha": "0c9eeccb6557f3d88c9d29bcc346ae8103f10723"
+    }
+  ]
+}
