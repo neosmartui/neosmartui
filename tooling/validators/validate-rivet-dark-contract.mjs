@@ -1,11 +1,10 @@
-import { createHash } from 'node:crypto';
 import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { loadPublicProofMaintenance, validatePublicProofBindings } from './public-proof-bindings.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[rivet-dark-contract] ${message}`); };
 const json = async (path) => JSON.parse(await readFile(resolve(root, path), 'utf8'));
-const gitBlobSha = (buffer) => createHash('sha1').update(`blob ${buffer.length}\0`).update(buffer).digest('hex');
 
 const canonical = await readFile(resolve(root, 'docs/CANONICAL-PRD.md'), 'utf8');
 if (!canonical.includes('Hardline\n\nSoft\n\nRivet\n\nMono\n\nlight/dark')) fail('Canonical v0.3 Flavor Engine no longer requires the official Flavor set followed by light/dark completion');
@@ -29,7 +28,8 @@ if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || bundle.value
 
 for (const path of ['apps/foundry/fragments/rivet-dark.html','tests/browser/foundry-rivet-dark.spec.mjs','tooling/validators/validate-rivet-dark-theme.mjs','tooling/foundry/assemble-rivet-dark.mjs']) await access(resolve(root, path));
 
-const proof = await json('evidence/public/flavor.rivet.json');
+const proofPath = 'evidence/public/flavor.rivet.json';
+const proof = await json(proofPath);
 if (proof.flavor !== 'flavor.rivet') fail('Rivet public-proof subject drifted');
 const requiredProofPaths = [
   'packages/themes/rivet-light/theme.json',
@@ -44,12 +44,9 @@ const requiredProofPaths = [
 ];
 const proofByPath = new Map(proof.implementationFiles.map((entry) => [entry.path, entry.blobSha]));
 if (proofByPath.size !== requiredProofPaths.length) fail('Rivet public proof must bind exactly the Light source inputs, Dark source inputs, and deterministic Rivet Dark assembler');
-for (const path of requiredProofPaths) {
-  const expected = proofByPath.get(path);
-  if (!expected) fail(`Rivet public proof missing implementation binding: ${path}`);
-  const actual = gitBlobSha(await readFile(resolve(root, path)));
-  if (actual !== expected) fail(`Rivet public proof is stale for ${path}: expected ${expected}, got ${actual}`);
-}
+for (const path of requiredProofPaths) if (!proofByPath.has(path)) fail(`Rivet public proof missing implementation binding: ${path}`);
+const maintenanceRecords = await loadPublicProofMaintenance({ root, fail });
+await validatePublicProofBindings({ root, subject: 'flavor.rivet', proofPath, proof, maintenanceRecords, fail });
 if (proof.live.pageUrl !== 'https://neosmartui.github.io/flavors/rivet/') fail('Rivet public proof must retain the canonical Flavor route');
 for (const assetUrl of ['https://neosmartui.github.io/rivet-theme.css', 'https://neosmartui.github.io/rivet-dark-theme.css']) {
   if (!(proof.live.assetUrls ?? []).includes(assetUrl)) fail(`Rivet public proof missing live Theme asset: ${assetUrl}`);
@@ -87,4 +84,4 @@ for (const marker of [
   '`knowledge-only-until-reviewed`'
 ]) if (!docs.includes(marker)) fail(`Rivet Dark public-proof docs missing marker: ${marker}`);
 
-console.log('[rivet-dark-contract] validated public-proof Rivet Dark ownership, provenance, 18/55 boundary, exact implementation bindings, additive assembly, and live Theme assets');
+console.log('[rivet-dark-contract] validated public-proof Rivet Dark ownership, provenance, 18/55 boundary, exact maintenance-aware implementation bindings, additive assembly, and live Theme assets');
