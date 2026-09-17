@@ -25,12 +25,13 @@
     "validate:mono-contract": "node tooling/validators/validate-mono-contract.mjs",
     "validate:mono": "node tooling/validators/validate-mono-theme.mjs",
     "validate:resolution": "npm run validate:flavors && node tooling/validators/validate-theme-resolution.mjs && npm run validate:hardline && npm run validate:hardline-dark-contract && npm run validate:hardline-dark && npm run validate:soft && npm run validate:soft-dark-contract && npm run validate:soft-dark && npm run validate:rivet-contract && npm run validate:rivet-dark-contract && npm run validate:rivet-dark && npm run validate:rivet && npm run validate:mono-contract && npm run validate:mono",
+    "validate:accessibility": "node tooling/validators/validate-theme-status-contrast.mjs && node tooling/validators/validate-reduced-motion.mjs",
     "validate:proof": "node tooling/validators/validate-public-proof.mjs",
     "validate:proof:live": "node tooling/validators/validate-public-proof-live.mjs",
     "migration:report": "node tooling/migration/report.mjs",
     "build:foundry": "node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs",
     "serve:foundry": "node tooling/foundry/serve.mjs",
     "test:browser": "playwright test --config=playwright.config.mjs",
-    "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run validate:proof && npm run build:foundry"
+    "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run validate:accessibility && npm run validate:proof && npm run build:foundry"
   }
 }

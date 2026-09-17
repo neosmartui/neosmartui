@@ -127,7 +127,7 @@ if (values.get('radius.annotation') !== '999px') fail('Rivet Light Badge annotat
 if (values.get('color.surface.interactive') !== '#fffefb' || values.get('color.surface.panel') !== '#f8f6f1') fail('Rivet Light surfaces must preserve the implemented paper identity');
 if (values.get('color.action.primary.surface') !== '#b9a1ed' || values.get('color.action.primary.content') !== '#211c2b') fail('Rivet Light primary action must preserve the implemented lavender/ink identity');
 if (values.get('color.focus.ring') !== '#7550ac') fail('Rivet Light focus ring must preserve the implemented deep-lavender identity');
-if (values.get('color.state.info') !== '#397eaf' || values.get('color.state.success') !== '#27865d' || values.get('color.state.warning') !== '#a66a13') fail('Rivet Light status palette must preserve the implemented semantic identity');
+if (values.get('color.state.info') !== '#5397c7' || values.get('color.state.success') !== '#2fa371' || values.get('color.state.warning') !== '#c98017') fail('Rivet Light status palette must preserve the accessible semantic identity');
 if (values.get('color.state.error') !== '#b83a31') fail('Rivet Light error role must preserve the implemented semantic identity');
 if (values.get('color.content.inverse') !== '#fffef5') fail('Rivet Light inverse content must preserve the implemented paper-on-dark role');
 
@@ -147,7 +147,7 @@ if (!css.includes('--ns-border-surface-width: 3px;') || !css.includes('--ns-radi
 if (!css.includes('--ns-font-weight-strong: 800;')) fail('generated CSS does not include the strong typography role used by Card/Alert');
 if (!css.includes('--ns-space-annotation-inline: 0.55rem;') || !css.includes('--ns-space-annotation-block: 0.15rem;')) fail('generated CSS does not include Badge annotation spacing roles');
 if (!css.includes('--ns-border-annotation-width: 2px;') || !css.includes('--ns-radius-annotation: 999px;')) fail('generated CSS does not include Badge annotation geometry roles');
-if (!css.includes('--ns-color-state-info: #397eaf;') || !css.includes('--ns-color-state-success: #27865d;') || !css.includes('--ns-color-state-warning: #a66a13;') || !css.includes('--ns-color-state-error: #b83a31;')) fail('generated CSS does not include the complete implemented Rivet semantic status roles');
+if (!css.includes('--ns-color-state-info: #5397c7;') || !css.includes('--ns-color-state-success: #2fa371;') || !css.includes('--ns-color-state-warning: #c98017;') || !css.includes('--ns-color-state-error: #b83a31;')) fail('generated CSS does not include the complete accessible Rivet semantic status roles');
 if (!css.includes('--ns-color-content-inverse: #fffef5;')) fail('generated CSS does not include the implemented Rivet inverse foreground role');
 
 console.log(`[theme-resolution] validated ${flavor.id} + ${theme.name} for ${[...expectedScope].join(', ')}; exact dependency union=${requiredDependencies.size}`);

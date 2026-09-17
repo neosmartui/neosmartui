@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { contrastRatio } from '../../packages/contracts/color-contrast.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[hardline-dark] ${message}`); };
@@ -43,30 +44,23 @@ const expectedColors = new Map([
   ['color.border.strong', '#ffffff'],
   ['color.action.primary.surface', '#ffd84d'],
   ['color.action.primary.content', '#111111'],
-  ['color.state.success', '#8ee8b0'],
-  ['color.state.warning', '#ffd84d'],
+  ['color.state.success', '#19793d'],
+  ['color.state.warning', '#826600'],
   ['color.state.error', '#ff737d'],
-  ['color.state.info', '#b8a1ff'],
+  ['color.state.info', '#6e3fff'],
   ['color.focus.ring', '#8fb3ff']
 ]);
 for (const [id, value] of expectedColors) if (dark.get(id)?.value !== value) fail(`${id} must preserve the ratified Hardline Dark palette value ${value}`);
 
-const relativeLuminance = (hex) => {
-  const channels = hex.slice(1).match(/.{2}/g).map((pair) => Number.parseInt(pair, 16) / 255).map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
-};
-const contrast = (a, b) => {
-  const [high, low] = [relativeLuminance(a), relativeLuminance(b)].sort((x, y) => y - x);
-  return (high + 0.05) / (low + 0.05);
-};
 for (const [foreground, background, label] of [
   ['#f5f5f5','#141414','primary content on interactive surface'],
   ['#c9c9c9','#141414','secondary content on interactive surface'],
   ['#f5f5f5','#1d1d1d','primary content on panel surface'],
   ['#111111','#ffd84d','primary action content'],
-  ['#111111','#8ee8b0','success badge content'],
-  ['#111111','#b8a1ff','info badge content'],
+  ['#f5f5f5','#19793d','success badge content'],
+  ['#f5f5f5','#826600','warning badge content'],
+  ['#f5f5f5','#6e3fff','info badge content'],
   ['#111111','#ff737d','error badge content']
-]) if (contrast(foreground, background) < 4.5) fail(`${label} must retain at least 4.5:1 authored contrast`);
+]) if (contrastRatio(foreground, background) < 4.5) fail(`${label} must retain at least 4.5:1 authored contrast`);
 
 console.log('[hardline-dark] validated authored 18/55 Dark resolution, exact flagship physics, semantic palette, and contrast invariants');

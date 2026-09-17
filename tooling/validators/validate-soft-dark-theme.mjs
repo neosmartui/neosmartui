@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { contrastRatio } from '../../packages/contracts/color-contrast.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[soft-dark] ${message}`); };
@@ -43,35 +44,27 @@ const expectedColors = new Map([
   ['color.border.strong', '#f3ebe2'],
   ['color.action.primary.surface', '#8fb8f4'],
   ['color.action.primary.content', '#171513'],
-  ['color.state.success', '#8ed0aa'],
-  ['color.state.warning', '#e7c66c'],
+  ['color.state.success', '#30744d'],
+  ['color.state.warning', '#806315'],
   ['color.state.error', '#e88983'],
-  ['color.state.info', '#b7a4e5'],
+  ['color.state.info', '#734ecd'],
   ['color.focus.ring', '#9ec4ff']
 ]);
 for (const [id, value] of expectedColors) if (dark.get(id)?.value !== value) fail(`${id} must preserve the ratified Soft Dark palette value ${value}`);
 
-const relativeLuminance = (hex) => {
-  const channels = hex.slice(1).match(/.{2}/g).map((pair) => Number.parseInt(pair, 16) / 255).map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
-  return 0.2126 * channels[0] + 0.7152 * channels[1] + 0.0722 * channels[2];
-};
-const contrast = (a, b) => {
-  const [high, low] = [relativeLuminance(a), relativeLuminance(b)].sort((x, y) => y - x);
-  return (high + 0.05) / (low + 0.05);
-};
 for (const [foreground, background, label] of [
   ['#f7f1e8','#1e1b19','primary content on interactive surface'],
   ['#c7bfb5','#1e1b19','secondary content on interactive surface'],
   ['#f7f1e8','#292522','primary content on panel surface'],
   ['#171513','#8fb8f4','primary action content'],
-  ['#171513','#8ed0aa','success badge content'],
-  ['#171513','#e7c66c','warning badge content'],
+  ['#f7f1e8','#30744d','success badge content'],
+  ['#f7f1e8','#806315','warning badge content'],
   ['#171513','#e88983','error badge content'],
-  ['#171513','#b7a4e5','info badge content']
-]) if (contrast(foreground, background) < 4.5) fail(`${label} must retain at least 4.5:1 authored contrast`);
+  ['#f7f1e8','#734ecd','info badge content']
+]) if (contrastRatio(foreground, background) < 4.5) fail(`${label} must retain at least 4.5:1 authored contrast`);
 for (const [foreground, background, label] of [
   ['#9ec4ff','#1e1b19','focus ring against interactive surface'],
   ['#b8afa5','#1e1b19','default border against interactive surface']
-]) if (contrast(foreground, background) < 3) fail(`${label} must retain at least 3:1 non-text contrast`);
+]) if (contrastRatio(foreground, background) < 3) fail(`${label} must retain at least 3:1 non-text contrast`);
 
 console.log('[soft-dark] validated authored 18/55 Dark resolution, exact Soft physics, semantic warm-dark palette, and contrast invariants');

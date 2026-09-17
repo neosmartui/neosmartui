@@ -1,0 +1,16 @@
+{
+  "$schema": "../../spec/schemas/public-proof-maintenance.schema.json",
+  "schema": "neosmartui/public-proof-maintenance@1",
+  "component": "core.switch",
+  "trackingIssue": "https://github.com/neosmartui/neosmartui/issues/87",
+  "proofRecord": {
+    "path": "evidence/public/core.switch.json",
+    "blobSha": "bb916eab9da2b771c345730e6653dd16559ff29a"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/switch.css",
+      "provenBlobSha": "25ea10e1a84d4ebca2f79d36f4bd6bf4d857c663"
+    }
+  ]
+}

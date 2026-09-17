@@ -79,17 +79,17 @@ test('core.badge is a passive token-backed span and every tone keeps explicit te
   expect(await tokenValue(page, '--ns-space-annotation-block')).toBe('0.15rem');
   expect(await tokenValue(page, '--ns-border-annotation-width')).toBe('2px');
   expect(await tokenValue(page, '--ns-radius-annotation')).toBe('999px');
-  expect(await tokenValue(page, '--ns-color-state-info')).toBe('#397eaf');
-  expect(await tokenValue(page, '--ns-color-state-success')).toBe('#27865d');
-  expect(await tokenValue(page, '--ns-color-state-warning')).toBe('#a66a13');
+  expect(await tokenValue(page, '--ns-color-state-info')).toBe('#5397c7');
+  expect(await tokenValue(page, '--ns-color-state-success')).toBe('#2fa371');
+  expect(await tokenValue(page, '--ns-color-state-warning')).toBe('#c98017');
   expect(await tokenValue(page, '--ns-color-state-error')).toBe('#b83a31');
   expect(await tokenValue(page, '--ns-color-content-inverse')).toBe('#fffef5');
 
   const tones = [
     ['#badge-neutral', 'Neutral metadata', 'rgb(248, 246, 241)', 'rgb(34, 33, 38)'],
-    ['#badge-info', 'Info · Reference', 'rgb(57, 126, 175)', 'rgb(34, 33, 38)'],
-    ['#badge-success', 'Success · Ready', 'rgb(39, 134, 93)', 'rgb(34, 33, 38)'],
-    ['#badge-warning', 'Warning · Needs attention', 'rgb(166, 106, 19)', 'rgb(34, 33, 38)'],
+    ['#badge-info', 'Info · Reference', 'rgb(83, 151, 199)', 'rgb(34, 33, 38)'],
+    ['#badge-success', 'Success · Ready', 'rgb(47, 163, 113)', 'rgb(34, 33, 38)'],
+    ['#badge-warning', 'Warning · Needs attention', 'rgb(201, 128, 23)', 'rgb(34, 33, 38)'],
     ['#badge-error', 'Error · Failed', 'rgb(184, 58, 49)', 'rgb(255, 254, 245)']
   ];
   for (const [selector, text, background, color] of tones) {
