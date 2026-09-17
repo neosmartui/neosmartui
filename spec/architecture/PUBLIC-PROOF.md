@@ -16,6 +16,23 @@ The Foundry and Labs are architecture proof surfaces, not parallel demo implemen
 
 A public surface that diverges from shipping architecture is a defect, not merely stale documentation.
 
+## Proof-bound maintenance
+
+Public proof binds exact implementation bytes. A proven implementation that needs maintenance MUST NOT silently invalidate, rewrite, or prematurely refresh the live proof record while the old deployment is still public.
+
+An active `neosmartui/public-proof-maintenance@1` record is the only sanctioned bridge between the currently live proof and replacement source bytes. It MUST:
+
+- bind exactly one active public-proof Component or Flavor;
+- bind the exact Git blob SHA of that subject's current `evidence/public/<subject>.json` record;
+- link a repository tracking issue;
+- enumerate only paths already bound by that public-proof record;
+- bind each enumerated path to its exact old proven blob SHA; and
+- declare exactly the complete set of proof-bound implementation paths whose current source bytes differ from the active public proof.
+
+Maintenance is not an ignore flag. Undeclared proof drift still fails. Declared paths that have not drifted fail. Partial declarations fail. A stale proof-record anchor fails. Unknown or non-proof paths fail. Maintenance records for inactive subjects fail.
+
+The live public-proof record remains unchanged while replacement source is under maintenance, so it continues to describe the bytes actually deployed. Replacement source still follows exact-head CI → merge → merged-main CI → independent artifact verification → exact no-rebuild Pages deployment → native Pages verification. The later proof-only promotion refreshes the singleton cohort and affected implementation bindings, then removes all satisfied maintenance records. Proof promotion does not redeploy Pages.
+
 ## CI scheduler incident recovery
 
 A broken CI scheduler record is infrastructure drift, not permission to mutate canonical source solely to obtain another run.
