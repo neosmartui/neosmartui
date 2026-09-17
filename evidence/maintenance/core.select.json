@@ -1,0 +1,16 @@
+{
+  "$schema": "../../spec/schemas/public-proof-maintenance.schema.json",
+  "schema": "neosmartui/public-proof-maintenance@1",
+  "component": "core.select",
+  "trackingIssue": "https://github.com/neosmartui/neosmartui/issues/87",
+  "proofRecord": {
+    "path": "evidence/public/core.select.json",
+    "blobSha": "03a79d16184e346e6a5006da38fccde89687af9b"
+  },
+  "implementationFiles": [
+    {
+      "path": "packages/adapters/web/components/select.css",
+      "provenBlobSha": "0f9c9fe5b3df0b80ab25e982811c5fd73195d77b"
+    }
+  ]
+}
