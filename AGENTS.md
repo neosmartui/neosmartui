@@ -75,6 +75,8 @@ Use branch → implementation → tests → PR → exact-SHA verification → me
 
 Do not weaken or delete tests to make CI pass. Investigate the defect. Preserve exact failure details.
 
+A GitHub Actions scheduler/control-plane incident MUST NOT be worked around by creating a no-op source commit, rewriting history, or moving `main` solely to obtain another run. When a mandatory merged-main Quality run is demonstrably orphaned before jobs execute, use `docs/CI-INCIDENT-RECOVERY.md`: existing commits only, exact canonical source SHA, byte-identical Quality workflow, unchanged mandatory gates, independently verified artifact provenance, and a temporary recovery PR that is closed unmerged. Recovery evidence substitutes for the missing scheduler execution; it does not make the orphaned run successful.
+
 ## Public proof
 
 Permanent rule: **SOURCE ONCE. DEMONSTRATE EVERYWHERE.**

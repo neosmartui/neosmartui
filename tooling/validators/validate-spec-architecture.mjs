@@ -6,7 +6,8 @@ const files = [
   'spec/architecture/FOUNDATIONS.md',
   'spec/architecture/TAXONOMY.md',
   'spec/architecture/DEPENDENCIES.md',
-  'spec/architecture/PUBLIC-PROOF.md'
+  'spec/architecture/PUBLIC-PROOF.md',
+  'docs/CI-INCIDENT-RECOVERY.md'
 ];
 for (const file of files) await access(resolve(root, file));
 
@@ -27,6 +28,22 @@ const deps = await readFile(resolve(root, 'spec/architecture/DEPENDENCIES.md'), 
 if (!deps.includes('Core MUST NOT import a Vertical.')) throw new Error('Core/Vertical dependency boundary missing.');
 
 const proof = await readFile(resolve(root, 'spec/architecture/PUBLIC-PROOF.md'), 'utf8');
-if (!proof.includes('SOURCE ONCE. DEMONSTRATE EVERYWHERE.')) throw new Error('Public proof law missing.');
+for (const marker of [
+  'SOURCE ONCE. DEMONSTRATE EVERYWHERE.',
+  'CI scheduler incident recovery',
+  'byte-identical Quality workflow',
+  'closed unmerged'
+]) if (!proof.includes(marker)) throw new Error(`Public proof law missing: ${marker}`);
 
-console.log('Spec architecture validation passed. Taxonomy, dependency direction, and public-proof laws are explicit.');
+const recovery = await readFile(resolve(root, 'docs/CI-INCIDENT-RECOVERY.md'), 'utf8');
+for (const marker of [
+  'Canonical SHA is fixed',
+  'Workflow-byte continuity',
+  'Same mandatory gates',
+  'Artifact provenance',
+  'No merge of recovery PR',
+  'No false history',
+  'excluding provenance-only deployment metadata'
+]) if (!recovery.includes(marker)) throw new Error(`CI incident recovery contract missing: ${marker}`);
+
+console.log('Spec architecture validation passed. Taxonomy, dependency direction, public-proof laws, and exact-SHA CI incident recovery are explicit.');
