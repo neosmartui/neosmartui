@@ -71,7 +71,7 @@ if (values.get('color.surface.interactive') !== '#fffefb' || values.get('color.s
 if (values.get('color.content.primary') !== '#222126' || values.get('color.border.strong') !== '#25232b') fail('Rivet Light must preserve adapted ink structure');
 if (values.get('color.action.primary.surface') !== '#b9a1ed' || values.get('color.action.primary.content') !== '#211c2b') fail('Rivet Light primary action must preserve lavender/ink pairing');
 if (values.get('color.focus.ring') !== '#7550ac') fail('Rivet Light focus ring must preserve deep lavender identity');
-if (values.get('color.state.success') !== '#27865d' || values.get('color.state.warning') !== '#a66a13' || values.get('color.state.error') !== '#b83a31' || values.get('color.state.info') !== '#397eaf') fail('Rivet semantic state palette drifted');
+if (values.get('color.state.success') !== '#2fa371' || values.get('color.state.warning') !== '#c98017' || values.get('color.state.error') !== '#b83a31' || values.get('color.state.info') !== '#5397c7') fail('Rivet semantic state palette drifted');
 
 const css = renderResolvedTokenCss(contracts, bundle, { selector: '.ns-theme-rivet-light' });
 for (const dependency of requiredDependencies) if (!css.includes(`--ns-${dependency.replaceAll('.', '-')}:`)) fail(`Rivet CSS omitted ${dependency}`);
@@ -87,6 +87,9 @@ for (const marker of [
   '--ns-motion-standard-duration: 160ms;',
   '--ns-color-surface-interactive: #fffefb;',
   '--ns-color-action-primary-surface: #b9a1ed;',
+  '--ns-color-state-info: #5397c7;',
+  '--ns-color-state-success: #2fa371;',
+  '--ns-color-state-warning: #c98017;',
   '--ns-color-focus-ring: #7550ac;'
 ]) if (!css.includes(marker)) fail(`Rivet generated CSS missing marker ${marker}`);
 if (css.includes(':root {')) fail('scoped Rivet CSS must not replace the root Theme');
