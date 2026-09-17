@@ -1,11 +1,14 @@
-import { createHash } from 'node:crypto';
 import { readFile, access, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import {
+  assertNoUnclaimedMaintenance,
+  loadPublicProofMaintenance,
+  validatePublicProofBindings
+} from './public-proof-bindings.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const fail = (message) => { throw new Error(`[public-proof] ${message}`); };
 const readJson = async (path) => JSON.parse(await readFile(path, 'utf8'));
-const gitBlobSha = (buffer) => createHash('sha1').update(`blob ${buffer.length}\0`).update(buffer).digest('hex');
 
 const registry = await readJson(resolve(root, 'packages/core/component-registry.json'));
 const componentClaims = registry.components
@@ -28,7 +31,12 @@ if (claims.length === 0) {
   process.exit(0);
 }
 
+const maintenanceRecords = await loadPublicProofMaintenance({ root, fail });
+const claimedSubjects = new Set(claims.map((claim) => claim.id));
+assertNoUnclaimedMaintenance({ maintenanceRecords, claimedSubjects, fail });
+
 let singletonCohort = null;
+let maintenanceCount = 0;
 for (const claim of claims) {
   if (!claim.proofPath) fail(`${claim.id} is public-proof without an evidence record`);
   const proofPath = resolve(root, claim.proofPath);
@@ -60,12 +68,15 @@ for (const claim of claims) {
   if (singletonCohort === null) singletonCohort = cohort;
   else if (cohort !== singletonCohort) fail(`${claim.id} proof is not bound to the singleton public-proof deployment cohort`);
 
-  for (const file of proof.implementationFiles) {
-    const path = resolve(root, file.path);
-    const bytes = await readFile(path);
-    const actual = gitBlobSha(bytes);
-    if (actual !== file.blobSha) fail(`${claim.id} proof is stale for ${file.path}: expected ${file.blobSha}, got ${actual}`);
-  }
+  const binding = await validatePublicProofBindings({
+    root,
+    subject: claim.id,
+    proofPath: claim.proofPath,
+    proof,
+    maintenanceRecords,
+    fail
+  });
+  if (binding.maintenanceActive) maintenanceCount += 1;
 }
 
-console.log(`[public-proof] validated ${componentClaims.length} Core and ${flavorClaims.length} Flavor structural proof records on one singleton deployment cohort with implementation blob binding`);
+console.log(`[public-proof] validated ${componentClaims.length} Core and ${flavorClaims.length} Flavor structural proof records on one singleton deployment cohort with implementation blob binding${maintenanceCount ? ` and ${maintenanceCount} exact-set maintenance record(s)` : ''}`);
