@@ -27,6 +27,10 @@ jobs:
         run: npm run validate:spec
       - name: Validate schemas and stable IDs
         run: npm run validate:schemas
+      - name: Validate Component preview contract
+        run: npm run validate:component-preview-contract
+      - name: Validate Studio contract
+        run: npm run validate:studio-contract
       - name: Validate migration snapshots and provenance
         run: npm run validate:migration
       - name: Validate Core semantic token contracts
