@@ -18,6 +18,13 @@
     <main class="studio-grid" aria-label="NeoSmartUI Studio">
       <aside class="panel controls-panel" aria-labelledby="theme-heading">
         <div class="panel-heading"><p class="step">01</p><div><h2 id="theme-heading">Theme</h2><p>Edit one canonical Light or Dark Theme package.</p></div></div>
+        <section class="control-section" aria-labelledby="starter-heading">
+          <h3 id="starter-heading">Start from</h3>
+          <label for="starter-theme">Official Theme</label>
+          <select id="starter-theme" aria-describedby="starter-help"></select>
+          <button class="studio-button secondary" id="starter-load" type="button">Load official pair</button>
+          <p class="microcopy" id="starter-help">Loads canonical Light + Dark packages for Hardline, Soft, Rivet, or Mono. This replaces the current workspace.</p>
+        </section>
         <section class="control-section" aria-labelledby="mode-heading">
           <h3 id="mode-heading">Mode</h3>
           <div class="button-row" role="group" aria-label="Theme mode">
@@ -30,6 +37,7 @@
           <h3 id="files-heading">Import / export</h3>
           <label class="file-label" for="theme-import">Import exactly three canonical JSON files</label>
           <input id="theme-import" type="file" accept=".json,application/json" multiple />
+          <label class="check-row" for="theme-import-new"><input id="theme-import-new" type="checkbox" /> <span>Start a new workspace from this imported Theme</span></label>
           <button class="studio-button secondary" id="theme-export" type="button">Export current Theme</button>
           <p class="microcopy">Accepted: <code>theme.json</code>, <code>resolution.json</code>, <code>tokens.json</code>.</p>
         </section>
