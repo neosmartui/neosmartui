@@ -33,7 +33,7 @@
     "validate:proof": "node tooling/validators/validate-public-proof.mjs",
     "validate:proof:live": "node tooling/validators/validate-public-proof-live.mjs",
     "migration:report": "node tooling/migration/report.mjs",
-    "build:foundry": "node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs",
+    "build:foundry": "node tooling/foundry/build.mjs && node tooling/foundry/assemble-component-previews.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs",
     "serve:foundry": "node tooling/foundry/serve.mjs",
     "test:browser": "playwright test --config=playwright.config.mjs",
     "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:component-preview-contract && npm run validate:studio-contract && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run validate:accessibility && npm run validate:proof && npm run build:foundry"
