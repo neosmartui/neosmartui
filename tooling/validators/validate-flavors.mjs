@@ -171,7 +171,26 @@ if (softDark.spacing?.density !== 'comfortable' || softDark.density?.control !==
 if (softDark.motion?.model !== 'pressure-not-levitation' || softDark.motion?.intensity !== 'restrained') fail('Soft Dark must preserve restrained pressure motion');
 if (softDark.interaction?.model !== 'pressure-not-levitation' || softDark.interaction?.selection !== 'seated') fail('Soft Dark must preserve pressure and seated selection');
 if (softDark.icons?.strategy !== 'adapter-owned') fail('Soft Dark must preserve adapter-owned icons');
-await expectAbsent('packages/themes/mono-dark', 'Mono Light public proof must not prematurely implement Mono Dark');
+const monoDark = await readJson('packages/themes/mono-dark/theme.json');
+if (!sameKeys(monoDark, themeKeys)) fail('Mono Dark must expose exactly the canonical neosmartui/theme@1 fields');
+if (monoDark.schema !== 'neosmartui/theme@1' || monoDark.name !== 'Mono Dark' || monoDark.family !== 'neosmartui' || monoDark.category !== 'mono') fail('Mono Dark Theme contract identity is invalid');
+if (monoDark.color?.mode !== 'dark' || monoDark.color?.strategy !== 'editorial-monochrome-dark') fail('Mono Dark must declare authored editorial monochrome dark intent');
+if (monoDark.typography?.strategy !== monoLight.typography?.strategy) fail('Mono Dark must preserve Mono Light editorial typography strategy');
+if (monoDark.geometry?.profile !== monoLight.geometry?.profile || monoDark.border?.profile !== monoLight.border?.profile || monoDark.shadow?.model !== monoLight.shadow?.model) fail('Mono Dark must preserve Mono Light structural descriptor profile');
+if (monoDark.spacing?.density !== monoLight.spacing?.density || monoDark.density?.control !== monoLight.density?.control) fail('Mono Dark must preserve Mono Light editorial density');
+if (monoDark.motion?.model !== monoLight.motion?.model || monoDark.motion?.intensity !== monoLight.motion?.intensity) fail('Mono Dark must preserve Mono Light restrained pressure motion');
+if (monoDark.interaction?.model !== monoLight.interaction?.model || monoDark.interaction?.selection !== monoLight.interaction?.selection) fail('Mono Dark must preserve Mono Light pressure and seated selection');
+if (monoDark.icons?.strategy !== monoLight.icons?.strategy) fail('Mono Dark must preserve adapter-owned icons');
+for (const path of [
+  'packages/themes/mono-dark/resolution.json',
+  'packages/themes/mono-dark/tokens.json',
+  'apps/foundry/fragments/mono-dark.html',
+  'tests/browser/foundry-mono-dark.spec.mjs',
+  'tooling/validators/validate-mono-dark-theme.mjs',
+  'tooling/foundry/assemble-mono-dark.mjs',
+  'packages/flavors/mono-dark',
+  'apps/foundry/src/flavors/mono-dark'
+]) await expectAbsent(path, `Mono Dark contract-only stage must not add runtime implementation path: ${path}`);
 
 const hardlineDocs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
@@ -182,8 +201,8 @@ for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.so
   if (!softDocs.includes(marker)) fail(`Soft Dark contract docs missing marker: ${marker}`);
 }
 const monoDocs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
-for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `public-proof`', 'Public-proof record: `evidence/public/flavor.mono.json`', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Public-proof promotion does not redeploy Pages', 'Mono Dark follows as its own concrete Theme instance', 'Mono Light is complete through public proof']) {
+for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `public-proof`', 'Public-proof record: `evidence/public/flavor.mono.json`', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Public-proof promotion does not redeploy Pages', 'Mono Dark follows as its own concrete Theme instance', 'Mono Dark contract maturity: `contract-only`', 'authored color strategy: `editorial-monochrome-dark`', 'Mono Light is complete through public proof; Mono Dark is contract-only']) {
   if (!monoDocs.includes(marker)) fail(`Mono public-proof docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated public-proof Hardline and Soft Light, contract-only Soft Dark, existing Rivet Flavor identity, and public-proof Mono Light resolution boundary');
+console.log('[flavors] validated official Flavor identities, public-proof shipped Themes, and descriptor-only Mono Dark contract boundary');

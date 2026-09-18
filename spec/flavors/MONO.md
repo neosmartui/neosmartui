@@ -121,12 +121,40 @@ Public-proof promotion does not redeploy Pages.
 
 Mono Dark follows as its own concrete Theme instance. It MUST NOT be implemented as a hidden conditional mutation, CSS inversion filter, or implicit side effect of Mono Light.
 
+## Mono Dark contract
+
+Mono Dark is the second concrete Theme instance of the existing `flavor.mono` identity and remains on the canonical `/flavors/mono/` route.
+
+- contract Theme: `packages/themes/mono-dark/theme.json`;
+- Mono Dark contract maturity: `contract-only`;
+- color mode: `dark`;
+- authored color strategy: `editorial-monochrome-dark`;
+- typography, geometry, border, shadow, spacing, density, motion, interaction, and icon ownership remain structurally identical to Mono Light;
+- the stable shipping boundary remains 18 Core components and 55 resolved semantic token IDs once implementation is added;
+- concrete resolved palette values are intentionally deferred to implementation;
+- the existing `build:foundry` chain remains unchanged during the contract stage.
+
+Contract-only hard absences remain:
+
+- `packages/themes/mono-dark/resolution.json`;
+- `packages/themes/mono-dark/tokens.json`;
+- `apps/foundry/fragments/mono-dark.html`;
+- `tests/browser/foundry-mono-dark.spec.mjs`;
+- `tooling/validators/validate-mono-dark-theme.mjs`;
+- `tooling/foundry/assemble-mono-dark.mjs`;
+- `packages/flavors/mono-dark`;
+- `apps/foundry/src/flavors/mono-dark`.
+
+The proven Mono Light source route remains the sole source route at this stage. Mono Dark implementation must later use additive artifact assembly without mutating that proven route or the shared Foundry builder.
+
 ## Current exclusions
 
 - No Mono renderer override.
-- No Mono Dark Theme.
+- No Mono Dark resolution or resolved token bundle yet.
+- No Mono Dark fragment, assembler, implementation validator, or browser suite yet.
 - No Core adapter fork.
+- No separate Mono Dark Flavor identity or route.
 - No Vertical semantics inside the Flavor.
-- No deployment during public-proof promotion.
+- No Pages deployment from the contract-only slice.
 
-Mono Light is complete through public proof.
+Mono Light is complete through public proof; Mono Dark is contract-only.
