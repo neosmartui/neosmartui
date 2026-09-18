@@ -44,13 +44,24 @@ await expectAbsent('apps/foundry/src/flavors/mono-dark', 'Mono Dark must extend 
 
 const proof = await json('evidence/public/flavor.mono.json');
 if (proof.flavor !== 'flavor.mono') fail('existing Mono public-proof subject drifted');
-if (proof.implementationFiles.some((entry) => entry.path.includes('mono-dark') || entry.path === 'tooling/foundry/assemble-mono-dark.mjs')) fail('implemented Mono Dark must not claim public proof before deployment/native verification');
-if ((proof.live.assetUrls ?? []).some((url) => url.endsWith('/mono-dark-theme.css'))) fail('implemented Mono Dark must not claim a live Dark asset before deployment/native verification');
+const expectedProofPaths = [
+  'packages/themes/mono-light/theme.json',
+  'packages/themes/mono-light/resolution.json',
+  'packages/themes/mono-light/tokens.json',
+  'apps/foundry/src/flavors/mono/index.html',
+  'packages/themes/mono-dark/theme.json',
+  'packages/themes/mono-dark/resolution.json',
+  'packages/themes/mono-dark/tokens.json',
+  'apps/foundry/fragments/mono-dark.html',
+  'tooling/foundry/assemble-mono-dark.mjs'
+];
+if (proof.implementationFiles.map((entry) => entry.path).join('|') !== expectedProofPaths.join('|')) fail('Mono public proof must bind exactly four Light inputs plus five Dark implementation inputs');
+if ((proof.live.assetUrls ?? []).join('|') !== ['https://neosmartui.github.io/mono-theme.css','https://neosmartui.github.io/mono-dark-theme.css'].join('|')) fail('Mono public proof must bind both live Light and Dark Theme assets');
 const provenRoute = proof.implementationFiles.find((entry) => entry.path === 'apps/foundry/src/flavors/mono/index.html');
 if (!provenRoute) fail('Mono Light public proof must retain the canonical source-route binding');
 const routeBytes = await readFile(resolve(root, provenRoute.path));
 const routeBlob = createHash('sha1').update(`blob ${routeBytes.length}\0`).update(routeBytes).digest('hex');
-if (routeBlob !== provenRoute.blobSha) fail('Mono Dark implementation must keep the proven Mono Light source route byte-identical');
+if (routeBlob !== provenRoute.blobSha) fail('Mono Dark public proof must keep the proven Mono Light source route byte-identical');
 
 const packageJson = await json('package.json');
 const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
@@ -65,11 +76,11 @@ if (rivetAssembler.includes('mono-dark')) fail('Mono Dark must not mutate or ove
 
 const docs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
 for (const marker of [
-  'Mono Dark contract maturity: `contract-only` (superseded contract checkpoint)','Mono Dark implementation maturity: `implemented`','Mono Dark public proof is not claimed yet',
+  'Mono Dark contract maturity: `contract-only` (superseded contract checkpoint)','Mono Dark implementation maturity: `implemented`','Mono Dark proof maturity: `public-proof`',
   'second concrete Theme instance of the existing `flavor.mono` identity','authored color strategy: `editorial-monochrome-dark`',
   '`packages/themes/mono-dark/tokens.json`','`packages/themes/mono-dark/resolution.json`','`tooling/foundry/assemble-mono-dark.mjs`','`mono-dark-theme.css`',
   '3px → 1px → 0px structural depth','0px → 2px → 3px inward travel','65ms / 100ms / 140ms timings',
-  'proven Mono Light source route remains byte-identical','No public-proof binding or live `mono-dark-theme.css` claim yet',
-  'Mono Light remains complete through public proof; Mono Dark is implemented but not yet public proof'
+  'proven Mono Light source route remains byte-identical','live `mono-dark-theme.css` is bound by the singleton public-proof cohort',
+  'Mono Light and Mono Dark are complete through public proof'
 ]) if (!docs.includes(marker)) fail(`Mono Dark implementation docs missing marker: ${marker}`);
-console.log('[mono-dark-contract] validated implemented Mono Dark ownership, provenance, exact 18/55 boundary, byte-stable Light route, additive assembly, and no premature proof');
+console.log('[mono-dark-contract] validated public-proof Mono Dark ownership, provenance, exact 18/55 boundary, nine-file binding, live Dark asset, and additive assembly');
