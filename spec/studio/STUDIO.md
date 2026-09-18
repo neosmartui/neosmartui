@@ -2,7 +2,7 @@
 
 **Roadmap:** v0.4 NeoSmartUI Studio  
 **Contract checkpoint:** contract-only  
-**Runtime status:** no Studio application exists yet. Contract and shared Component-preview checkpoints are complete; browser-safe Theme-package validation/import-export/workspace contracts are the current implementation dependency.
+**Runtime status:** Studio initial runtime maturity: `implemented`. Contract, shared Component-preview, and shared Theme-package checkpoints are complete; the first isolated Studio shell now consumes them directly.
 
 This contract is subordinate to `docs/CANONICAL-PRD.md`. If this document and the Canonical PRD diverge, the Canonical PRD wins.
 
@@ -237,6 +237,8 @@ A normal web page must not pretend it changed a system feature when it did not.
 
 The edited Theme preview and Studio application shell are separate scopes. Draft Theme values must not restyle or break the editor controls themselves.
 
+The initial runtime uses an iframe sandbox exactly `allow-scripts`, deliberately omitting same-origin privilege so the preview has an opaque origin. Each render receives a fresh nonce-scoped CSP; preview readiness/error messages are accepted only from the active iframe window with origin `null` and the current render ID.
+
 The implementation should use an isolated preview document/iframe with the narrowest capabilities required.
 
 Security laws:
@@ -287,6 +289,8 @@ It MUST NOT create:
 
 The existing Foundry build chain must remain byte-authority unchanged by this contract checkpoint.
 
+These exclusions describe the historical contract-only checkpoint. After its green merge and the green shared dependencies, `apps/studio/` is now permitted as a separate `dist/studio` build. no Pages deployment is claimed by this runtime checkpoint.
+
 ## 14. Implementation sequence after a green contract merge
 
 After this contract merges and mandatory merged-main Quality is green:
@@ -294,12 +298,12 @@ After this contract merges and mandatory merged-main Quality is green:
 1. create the shared Component-preview substrate from the exact current Core/Foundry authority;
 2. make Foundry consume the shared preview authority without weakening public proof;
 3. introduce browser-safe shared Theme-package semantic/value validation, deterministic import/export, and ephemeral Light/Dark workspace support (**implemented before Studio runtime**);
-4. create `apps/studio/` using platform HTML/CSS/ES modules and shipping Web adapters;
-5. implement canonical Theme-package import/export and Light/Dark workspace slots;
-6. render registry-driven Core Component previews through the shared substrate;
-7. add canonical color/typography/geometry/Pressure controls;
-8. add responsive and honest accessibility/input preview status;
-9. add deterministic validation UI and browser coverage;
+4. create `apps/studio/` using platform HTML/CSS/ES modules and shipping Web adapters (**initial runtime implemented**);
+5. implement canonical Theme-package import/export and Light/Dark workspace slots (**implemented in initial runtime**);
+6. render registry-driven Core Component previews through the shared substrate (**implemented in initial runtime**);
+7. add canonical color/typography/geometry/Pressure controls (**palette, geometry, and Pressure controls implemented; typography expansion remains**);
+8. add responsive and honest accessibility/input preview status (**implemented without fake system toggles**);
+9. add deterministic validation UI and browser coverage (**implemented for the initial runtime**);
 10. keep Block/Page/Vertical modules capability-gated until their roadmap authorities exist.
 
 The implementation must preserve the permanent rules:

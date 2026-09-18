@@ -33,6 +33,8 @@ jobs:
         run: npm run validate:studio-contract
       - name: Validate Studio Theme package
         run: npm run validate:studio-theme-package
+      - name: Validate Studio runtime
+        run: npm run validate:studio-runtime
       - name: Validate migration snapshots and provenance
         run: npm run validate:migration
       - name: Validate Core semantic token contracts
@@ -230,6 +232,20 @@ jobs:
           grep -q 'data-expansion="multiple"' dist/foundry/index.html
           grep -q 'aria-controls="accordion-single-panel-a"' dist/foundry/index.html
           node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/foundry/deployment.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA) throw new Error('deployment source SHA mismatch')"
+      - name: Build Studio artifact
+        run: npm run build:studio
+      - name: Verify Studio artifact
+        run: |
+          test -f dist/studio/index.html
+          test -f dist/studio/app.mjs
+          test -f dist/studio/preview-kernel.mjs
+          test -f dist/studio/studio-data.json
+          test -f dist/studio/studio-build.json
+          test -f dist/studio/packages/core/component-registry.json
+          test -f dist/studio/packages/core/previews/button/preview.json
+          test -f dist/studio/packages/contracts/theme-package-io.mjs
+          test -f dist/studio/packages/adapters/css/resolve-theme.mjs
+          node -e "const fs=require('fs'); const d=JSON.parse(fs.readFileSync('dist/studio/studio-build.json','utf8')); if(d.sourceSha!==process.env.NEOSMARTUI_SOURCE_SHA || d.publicDeployment!==false) throw new Error('Studio build provenance mismatch')"
 
   browser:
     needs: foundation
@@ -249,6 +265,10 @@ jobs:
         run: npm run build:foundry
       - name: Run Foundry browser QA
         run: npm run test:browser
+      - name: Build Studio artifact
+        run: npm run build:studio
+      - name: Run Studio browser QA
+        run: npm run test:studio
       - name: Upload browser and deploy evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -256,6 +276,8 @@ jobs:
           name: foundry-browser-evidence-${{ env.NEOSMARTUI_SOURCE_SHA }}
           path: |
             artifacts/browser
+            artifacts/studio
             dist/foundry
+            dist/studio
           if-no-files-found: error
           retention-days: 14
