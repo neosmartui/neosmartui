@@ -151,7 +151,7 @@ Runtime assembly is additive and proof-safe. The shared proven `tooling/foundry/
 
 Seven additive Mono Dark browser behavior classes verify shared adapters and Theme identity, exact pressure physics, stable editing/informational surfaces, grayscale status semantics plus written labels, reduced motion, forced colors/focus/normal Tab order, and RTL/long-localized narrow containment. The shared rendered Badge contrast suite also includes Mono Dark.
 
-Mono Dark public proof is now evidence-bound in `evidence/public/flavor.mono.json` to the exact verified merged-main and native Pages cohort above. The record binds both live Theme assets and all nine Light + Dark implementation inputs.
+Mono Dark public proof is now evidence-bound in `evidence/public/flavor.mono.json` to the exact verified merged-main and native Pages cohort above. The record binds both live Theme assets and all nine Light + Dark implementation inputs; live `mono-dark-theme.css` is bound by the singleton public-proof cohort.
 
 ## Current exclusions
 
