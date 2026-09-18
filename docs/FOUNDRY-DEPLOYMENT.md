@@ -24,7 +24,7 @@ https://neosmartui.github.io/
 
 The Foundry root is both a product landing page and a live system index. During development it deliberately exposes only architecture that actually exists. Flavor, vertical, Studio, and Lab routes must not be hand-built lookalikes before their shipping implementations exist.
 
-Source lives under `apps/foundry/`. `npm run build:foundry` writes deterministic static output to `dist/foundry/`. Every generated artifact includes `deployment.json`, which records the canonical `neosmartui/neosmartui` source SHA.
+Source lives under `apps/foundry/`. `npm run build:foundry` writes deterministic static output to `dist/foundry/`. Studio source lives under `apps/studio/`; `npm run build:studio` writes deterministic static output to `dist/studio/`. Each public artifact carries its own `deployment.json` with the canonical `neosmartui/neosmartui` source SHA. Foundry publishes at `/`; Studio publishes at `/studio/`.
 
 Development builds MUST NOT emit a `CNAME`. The deployment repository therefore uses its native GitHub Pages hostname until the entire development roadmap is complete and a separate custom-domain milestone is intentionally started.
 
@@ -33,9 +33,9 @@ Development builds MUST NOT emit a `CNAME`. The deployment repository therefore 
 1. Pull-request CI validates repository authority, builds the Foundry from the explicit PR head SHA, and runs real Chromium browser QA.
 2. No PR or branch build pushes to the deployment repository.
 3. After merge to `main`, the same Quality workflow builds and browser-tests the exact merged SHA.
-4. The generated `dist/foundry/` tree from a green merged SHA is the only valid publish input.
+4. The generated `dist/foundry/` and `dist/studio/` trees from a green merged SHA are the only valid publish inputs for their respective public routes.
 5. The deployment repository must remain generated output only; do not hand-maintain a divergent implementation there.
-6. A live proof claim requires the public GitHub Pages endpoint's `deployment.json` to match the canonical merged source SHA.
+6. A Foundry live proof claim requires the root public `deployment.json` to match its canonical merged source SHA. Studio independently exposes `/studio/deployment.json`; do not substitute one record for the other.
 7. Failed deployment must not rewrite canonical source history.
 8. Custom-domain work begins only after the full development roadmap is complete; that later migration must preserve the same source-SHA proof contract and must not weaken GitHub Pages verification.
 
@@ -43,6 +43,6 @@ Development builds MUST NOT emit a `CNAME`. The deployment repository therefore 
 
 The preferred permanent path is a dedicated cross-repository GitHub Actions deployment using a narrowly scoped credential or GitHub App installation that can write only `neosmartui/neosmartui.github.io`.
 
-Until that credential is configured, an authorized maintainer or connected GitHub integration MAY bootstrap-publish the exact already-green `dist/foundry/` text artifact to the deployment repository. The bootstrap path MUST preserve `deployment.json`, MUST NOT edit generated files independently, and MUST be followed by a live URL/source-SHA verification before any registry entry is promoted to `public-proof`.
+Until that credential is configured, an authorized maintainer or connected GitHub integration MAY bootstrap-publish the exact already-green `dist/foundry/` and/or `dist/studio/` artifact trees to their canonical deployment paths. The bootstrap path MUST preserve each artifact's `deployment.json`, MUST NOT edit generated files independently, and MUST be followed by native Pages plus live URL/source-SHA verification. Any Foundry cohort movement still requires the normal proof-only promotion after deployment.
 
 Custom-domain configuration is intentionally excluded from every active-development milestone. After the roadmap is complete, it may be scheduled as a separate infrastructure/release milestone.

@@ -70,6 +70,7 @@ Studio consumes canonical Theme and registry authority. It must not become a com
 - Studio must reuse `packages/contracts/theme-package-io.mjs`, `theme-package-semantic.mjs`, `resolved-token-value.mjs`, `theme-workspace.mjs`, and the existing `packages/adapters/css/resolve-theme.mjs`. Do not copy validation, import/export, workspace, or token-mapping logic into the application.
 - Preview the shipping system in isolation. Studio controls must not be restyled by the draft Theme, and preview controllers must not become visual/runtime component authority.
 - The initial browser runtime keeps previews in an opaque-origin iframe sandbox with only `allow-scripts`; do not add same-origin, forms, popups, navigation, or download privileges to make a test convenient.
+- The public Studio route is `/studio/`. Publish only exact already-green merged-main `dist/studio/` bytes, preserve `/studio/deployment.json`, and never rebuild or hand-edit Studio in the Pages repository.
 
 ## Migration discipline
 

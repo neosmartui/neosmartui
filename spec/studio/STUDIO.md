@@ -291,7 +291,7 @@ It MUST NOT create:
 
 The existing Foundry build chain must remain byte-authority unchanged by this contract checkpoint.
 
-These exclusions describe the historical contract-only checkpoint. After its green merge and the green shared dependencies, `apps/studio/` is now permitted as a separate `dist/studio` build. no Pages deployment is claimed by this runtime checkpoint.
+These exclusions describe the historical contract-only checkpoint. After its green merge and the green shared dependencies, `apps/studio/` became a separate `dist/studio` build. The initial runtime checkpoint made no Pages claim; the later launch checkpoint explicitly authorizes exact-artifact publication at `/studio/` after merged-main verification.
 
 ## 14. Implementation sequence after a green contract merge
 
@@ -306,7 +306,8 @@ After this contract merges and mandatory merged-main Quality is green:
 7. add canonical color/typography/geometry/Pressure controls (**implemented across the active resolved semantic token surface, including typography, spacing/size, border/radius, coupled Pressure, motion, focus, and state opacity**);
 8. add responsive and honest accessibility/input preview status (**implemented without fake system toggles**);
 9. add deterministic validation UI and browser coverage (**implemented for the initial runtime**);
-10. keep Block/Page/Vertical modules capability-gated until their roadmap authorities exist.
+10. publish the verified Studio artifact as the public Studio surface at `/studio/` using exact merged-main bytes (**launch checkpoint**);
+11. keep Block/Page/Vertical modules capability-gated until their roadmap authorities exist.
 
 The implementation must preserve the permanent rules:
 
@@ -315,3 +316,17 @@ The implementation must preserve the permanent rules:
 **DISCOVER before inventing.**
 
 **VALIDATE before completion.**
+
+
+## 15. Public Studio deployment
+
+The canonical public Studio route is `https://neosmartui.github.io/studio/` during active development.
+
+Deployment laws:
+
+- `dist/studio/` is built and browser-tested from one exact merged `neosmartui/neosmartui` SHA;
+- only the already-green merged-main artifact may be copied to `neosmartui/neosmartui.github.io/studio/`; deployment must not rebuild or hand-edit Studio;
+- `dist/studio/deployment.json` uses `neosmartui/deployment-record@1` with `artifact: "studio"` and the exact source SHA;
+- the root Foundry `/deployment.json` and Studio `/studio/deployment.json` remain separate provenance records;
+- launching Studio must not silently move an existing Core/Flavor public-proof cohort; if Foundry bytes are deployed from a newer source SHA, the normal singleton proof-only promotion follows native Pages verification;
+- the deployment repository remains generated output only.
