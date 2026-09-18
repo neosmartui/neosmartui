@@ -2,7 +2,7 @@
 
 **Roadmap:** v0.4 NeoSmartUI Studio  
 **Contract checkpoint:** contract-only  
-**Runtime status:** no Studio application exists yet. The contract checkpoint is complete; the shared Component-preview substrate is the first implementation dependency.
+**Runtime status:** no Studio application exists yet. Contract and shared Component-preview checkpoints are complete; browser-safe Theme-package validation/import-export/workspace contracts are the current implementation dependency.
 
 This contract is subordinate to `docs/CANONICAL-PRD.md`. If this document and the Canonical PRD diverge, the Canonical PRD wins.
 
@@ -53,7 +53,7 @@ Core owns semantic token meaning. Theme remains the final concrete value-resolut
 
 Studio is a consumer of repository validation, not a bypass around it.
 
-The implementation phase must promote generic Theme-package validation into browser-safe shared contract code so CI/tooling and Studio call the same semantic rules. Official Flavor validators may retain exact official-palette/mechanics assertions; those exact-value rules are not universal custom-Theme rules.
+Generic Theme-package validation is implemented as browser-safe shared contract code so CI/tooling and Studio call the same semantic rules. Official Flavor validators retain exact official-palette/mechanics assertions; those exact-value rules are not universal custom-Theme rules.
 
 The shared Theme-package boundary must validate, at minimum:
 
@@ -66,7 +66,7 @@ The shared Theme-package boundary must validate, at minimum:
 - Pressure System coherence;
 - minimum interactive target rules when those roles are in scope.
 
-Once implemented, live preview must reuse the existing browser-safe `packages/adapters/css/resolve-theme.mjs` token-to-CSS resolver rather than adding a Studio-specific mapper.
+Shared implementation lives in `packages/contracts/json-schema-subset.mjs`, `resolved-token-value.mjs`, `theme-package-semantic.mjs`, `theme-package-io.mjs`, and `theme-workspace.mjs`. The existing `packages/adapters/css/resolve-theme.mjs` now delegates token serialization to the shared safe-value contract; Studio must reuse that resolver rather than add a Studio-specific mapper.
 
 ## 4. Capability-aware discovery
 
@@ -293,7 +293,7 @@ After this contract merges and mandatory merged-main Quality is green:
 
 1. create the shared Component-preview substrate from the exact current Core/Foundry authority;
 2. make Foundry consume the shared preview authority without weakening public proof;
-3. introduce browser-safe shared Theme-package semantic/value validation;
+3. introduce browser-safe shared Theme-package semantic/value validation, deterministic import/export, and ephemeral Light/Dark workspace support (**implemented before Studio runtime**);
 4. create `apps/studio/` using platform HTML/CSS/ES modules and shipping Web adapters;
 5. implement canonical Theme-package import/export and Light/Dark workspace slots;
 6. render registry-driven Core Component previews through the shared substrate;
