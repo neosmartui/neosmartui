@@ -64,8 +64,8 @@ const routeBlob = createHash('sha1').update(`blob ${routeBytes.length}\0`).updat
 if (routeBlob !== provenRoute.blobSha) fail('Mono Dark public proof must keep the proven Mono Light source route byte-identical');
 
 const packageJson = await json('package.json');
-const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
-if (packageJson.scripts?.['build:foundry'] !== expectedBuild) fail('Mono Dark must assemble additively after the proven builder, Soft Dark, and Rivet Dark assemblers');
+const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-component-previews.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
+if (packageJson.scripts?.['build:foundry'] !== expectedBuild) fail('Mono Dark must assemble additively after the proven builder, shared Component-preview assembly, Soft Dark, and Rivet Dark assemblers');
 if (packageJson.scripts?.['validate:mono-dark'] !== 'node tooling/validators/validate-mono-dark-theme.mjs') fail('Mono Dark implementation validator must be wired explicitly');
 const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
 const softAssembler = await readFile(resolve(root, 'tooling/foundry/assemble-soft-dark.mjs'), 'utf8');

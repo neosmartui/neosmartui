@@ -2,7 +2,7 @@
 
 **Roadmap:** v0.4 NeoSmartUI Studio  
 **Contract checkpoint:** contract-only  
-**Runtime status:** no Studio application is introduced by this checkpoint.
+**Runtime status:** no Studio application exists yet. The contract checkpoint is complete; the shared Component-preview substrate is the first implementation dependency.
 
 This contract is subordinate to `docs/CANONICAL-PRD.md`. If this document and the Canonical PRD diverge, the Canonical PRD wins.
 
@@ -273,7 +273,7 @@ Browser tests must prove behavior through real shipping adapters rather than loo
 
 ## 13. Contract checkpoint exclusions
 
-This checkpoint intentionally introduces contracts and validators only.
+The merged contract checkpoint intentionally introduced contracts and validators only. The shared Component-preview substrate is the first permitted implementation slice after that checkpoint.
 
 It MUST NOT create:
 
@@ -282,7 +282,7 @@ It MUST NOT create:
 - a public Studio route/deployment;
 - a new Theme schema;
 - a Studio Theme/token registry;
-- shared preview fixture packages yet;
+- shared preview fixture packages during the historical contract-only checkpoint;
 - a Pages deployment.
 
 The existing Foundry build chain must remain byte-authority unchanged by this contract checkpoint.

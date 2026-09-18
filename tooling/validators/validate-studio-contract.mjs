@@ -86,12 +86,14 @@ const studioPos = quality.indexOf('npm run validate:studio-contract');
 const migrationPos = quality.indexOf('npm run validate:migration');
 if (previewPos < 0 || studioPos < 0 || migrationPos < 0 || previewPos >= studioPos || studioPos >= migrationPos) fail('normal quality chain must run preview + Studio contract validation before migration');
 
-const expectedFoundryBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
-if (packageJson.scripts?.['build:foundry'] !== expectedFoundryBuild) fail('contract checkpoint must not change Foundry runtime build authority');
+const expectedFoundryBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-component-previews.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
+if (packageJson.scripts?.['build:foundry'] !== expectedFoundryBuild) fail('Studio preview substrate must assemble after the proof-bound Foundry builder and before Flavor-dark assemblers');
 
-await expectAbsent('apps/studio', 'contract checkpoint must not create apps/studio');
+await access(resolve(root, 'packages/core/previews/runtime.mjs'));
+await access(resolve(root, 'tooling/foundry/assemble-component-previews.mjs'));
+await expectAbsent('apps/studio', 'preview-substrate checkpoint must not create apps/studio');
 await expectAbsent('spec/schemas/studio-theme.schema.json', 'Studio must not create a competing Theme schema');
 await expectAbsent('packages/studio', 'contract checkpoint must not create a Studio runtime/package authority');
 await expectAbsent('packages/studio-token-registry.json', 'Studio must not create a duplicate token registry');
 
-console.log('[studio-contract] validated contract-only Studio authority, canonical three-file Theme package, capability-aware preview gating, agent laws, and unchanged Foundry runtime boundary');
+console.log('[studio-contract] validated canonical Studio authority, implemented shared Component-preview substrate, capability-aware gating, agent laws, and proof-bound Foundry builder preservation');
