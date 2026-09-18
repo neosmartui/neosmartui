@@ -2,7 +2,7 @@
 
 **Roadmap:** v0.4 NeoSmartUI Studio  
 **Contract checkpoint:** contract-only  
-**Runtime status:** Studio initial runtime maturity: `implemented`. Contract, shared Component-preview, and shared Theme-package checkpoints are complete; the first isolated Studio shell now consumes them directly.
+**Runtime status:** Studio Theme editor maturity: `implemented`. Contract, shared Component-preview, shared Theme-package, isolated runtime, and full resolved semantic-control checkpoints are complete.
 
 This contract is subordinate to `docs/CANONICAL-PRD.md`. If this document and the Canonical PRD diverge, the Canonical PRD wins.
 
@@ -301,7 +301,7 @@ After this contract merges and mandatory merged-main Quality is green:
 4. create `apps/studio/` using platform HTML/CSS/ES modules and shipping Web adapters (**initial runtime implemented**);
 5. implement canonical Theme-package import/export and Light/Dark workspace slots (**implemented in initial runtime**);
 6. render registry-driven Core Component previews through the shared substrate (**implemented in initial runtime**);
-7. add canonical color/typography/geometry/Pressure controls (**palette, geometry, and Pressure controls implemented; typography expansion remains**);
+7. add canonical color/typography/geometry/Pressure controls (**implemented across the active resolved semantic token surface, including typography, spacing/size, border/radius, coupled Pressure, motion, focus, and state opacity**);
 8. add responsive and honest accessibility/input preview status (**implemented without fake system toggles**);
 9. add deterministic validation UI and browser coverage (**implemented for the initial runtime**);
 10. keep Block/Page/Vertical modules capability-gated until their roadmap authorities exist.
