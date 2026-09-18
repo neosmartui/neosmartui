@@ -57,6 +57,19 @@ Preserve the NeoSmartUI laws:
 
 Ordinary controls must not generically move upward on hover. Pressure and exact physical values belong in Flavor/Theme tokens rather than being independently hardcoded in components.
 
+## Studio discipline
+
+Studio consumes canonical Theme and registry authority. It must not become a competing authority.
+
+- One logical editable Theme is the existing canonical package: `theme.json` + `resolution.json` + `tokens.json`.
+- Theme is data, not forked components. Studio must not invent `studio-theme.json`, a hidden fallback token layer, a Studio-only token registry, or a Studio-only runtime styling authority.
+- DISCOVER PREVIEW CAPABILITY before rendering. Component preview comes from canonical component contracts, the Core registry, shipping adapters, and the shared `neosmartui/component-preview@1` substrate.
+- Component state controls are derived only from the selected component contract. Never invent generic states or fake browser pseudo-states with lookalike CSS.
+- If Block, Page, Vertical, input-environment, or accessibility-preview capability does not yet exist as real authority, surface it as unavailable or `REGISTRY GAP`; do not manufacture a demo so the UI appears complete.
+- Studio import is untrusted data. It may accept canonical Theme JSON only; imported HTML, CSS, JavaScript, fixtures, controllers, selectors, or executable code are not Theme data.
+- Studio must reuse shared validation and the existing token-to-CSS resolver once those shared contracts are implemented. Do not copy validation or token-mapping logic into the application.
+- Preview the shipping system in isolation. Studio controls must not be restyled by the draft Theme, and preview controllers must not become visual/runtime component authority.
+
 ## Migration discipline
 
 Permanent rule: **RESTART THE ARCHITECTURE, NOT THE KNOWLEDGE.**
