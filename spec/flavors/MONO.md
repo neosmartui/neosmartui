@@ -12,7 +12,7 @@ Mono is the editorial black/white/gray NeoSmartUI flavor. It makes typography, h
 - Public-proof record: `evidence/public/flavor.mono.json`
 - Mono Dark contract maturity: `contract-only` (superseded contract checkpoint)
 - Mono Dark implementation maturity: `implemented`
-- Mono Dark public proof is not claimed yet.
+- Mono Dark proof maturity: `public-proof`.
 
 ## Canonical authority and provenance boundary
 
@@ -85,24 +85,28 @@ Mono Light deliberately keeps every resolved color role grayscale:
 
 ## Public-proof cohort
 
-Mono Light reached `public-proof` only after its implementation was merged, the exact merged-main artifact was independently verified, and those exact bytes were deployed to GitHub Pages without rebuilding.
+Mono Light and Mono Dark are one evidence-bound public-proof subject under the stable `flavor.mono` identity. Promotion occurred only after the implementation merged, mandatory merged-main Quality passed, the exact merged-main artifact was independently verified, those exact bytes were deployed without rebuilding, the native Pages artifact matched every deployable source byte, and live HTTPS exposed the Dark route and Theme asset.
 
-- deployed source: `neosmartui/neosmartui@75fe02594bf1395275f1b4c611bcb4b1d8b1999c`
-- merged-main Quality run: `34713187736`
-- merged-main browser artifact: `10304495336`
-- merged-main artifact SHA-256: `b1e8213ced0a774b59347cadd27312c4f857b1de8d1ff6a1acd95023b5724e4d`
-- Chromium: `118/118`
-- deployable Foundry files: `41`
-- Pages commit: `c493bb58fcae679c16bf374775be1523ed50a28c`
-- Pages tree: `6423aef0f9b9be2088812143925b4a97c852c101`
-- native Pages run: `34713466334`
+- deployed source: `neosmartui/neosmartui@3c110fe3059d13a4030d1543948d8207faf380a9`
+- merged-main Quality run: `35300370653`
+- merged-main browser artifact: `10529716708`
+- merged-main artifact SHA-256: `afb40f8371a538875ca63409d513dd4a61da7877bc79978fa7d7537ad550fc25`
+- Chromium: `154/154`
+- deployable Foundry files: `45`
+- Pages commit: `ce4c1af21945205c31228b4064504b4d75cd68d5`
+- Pages tree: `16ba5ee884448faf1ff4ee1a1191df2b7f050ded`
+- native Pages run: `35301098350`
+- native Pages artifact: `10529692595`
+- native Pages artifact SHA-256: `080c3680f82d000ea76c21045f26381924269494f66d4e975543ff130f7c3da3`
+- native verification: all `45/45` deployable Foundry files matched merged-main artifact bytes; only Jekyll-generated `assets/css/style.css` was additional
 - live route: `https://neosmartui.github.io/flavors/mono/`
-- live Theme asset: `https://neosmartui.github.io/mono-theme.css`
+- live Light Theme asset: `https://neosmartui.github.io/mono-theme.css`
+- live Dark Theme asset: `https://neosmartui.github.io/mono-dark-theme.css`
 - canonical deployment record: `https://neosmartui.github.io/deployment.json`
 
-The Pages tree was constructed directly from the independently verified merged-main artifact. Its Git tree SHA exactly matches the deterministic Git tree of all 41 `dist/foundry` files, proving that the deployment used the merged-main artifact bytes without a local or PR rebuild.
+The singleton `flavor.mono` public-proof record binds exactly nine implementation inputs: four proven Light inputs plus the Dark descriptor, resolution, 55-token bundle, fragment, and additive Mono Dark assembler. No second Flavor identity or route exists.
 
-For historical clarity, the implementation phase previously used an `implemented` maturity marker and said public proof was not yet claimed. Those phase statements are superseded by the evidence-bound public-proof state above.
+Public-proof promotion does not redeploy Pages.
 
 ## Browser and accessibility evidence boundary
 
@@ -147,7 +151,7 @@ Runtime assembly is additive and proof-safe. The shared proven `tooling/foundry/
 
 Seven additive Mono Dark browser behavior classes verify shared adapters and Theme identity, exact pressure physics, stable editing/informational surfaces, grayscale status semantics plus written labels, reduced motion, forced colors/focus/normal Tab order, and RTL/long-localized narrow containment. The shared rendered Badge contrast suite also includes Mono Dark.
 
-Mono Dark public proof is not claimed yet. `evidence/public/flavor.mono.json` remains bound only to the currently deployed Mono Light cohort until this implementation merges green, mandatory merged-main Quality passes, that exact merged-main artifact is independently verified and deployed without rebuilding, and native Pages verification succeeds.
+Mono Dark public proof is now evidence-bound in `evidence/public/flavor.mono.json` to the exact verified merged-main and native Pages cohort above. The record binds both live Theme assets and all nine Light + Dark implementation inputs.
 
 ## Current exclusions
 
@@ -155,7 +159,7 @@ Mono Dark public proof is not claimed yet. `evidence/public/flavor.mono.json` re
 - No Core adapter fork.
 - No separate Mono Dark Flavor identity or route.
 - No Vertical semantics inside the Flavor.
-- No public-proof binding or live `mono-dark-theme.css` claim yet.
-- No Pages deployment from the implementation branch.
+- No second Mono Flavor identity or Dark route.
+- No redeploy is permitted after this proof-only promotion.
 
-Mono Light remains complete through public proof; Mono Dark is implemented but not yet public proof.
+Mono Light and Mono Dark are complete through public proof.

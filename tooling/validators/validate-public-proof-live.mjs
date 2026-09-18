@@ -46,7 +46,22 @@ const liveMarkers = new Map([
     'Shared <code>core.button</code> · Dark',
     'Shared <code>core.input</code> · Dark'
   ]],
-  ['flavor.mono', ['Mono Light', 'ns-theme-mono-light', 'Editorial pressure, shared semantics', 'Shared <code>core.button</code>', 'Shared <code>core.input</code>']],
+  ['flavor.mono', [
+    'Mono Light',
+    'ns-theme-mono-light',
+    'Editorial pressure, shared semantics',
+    'Shared <code>core.button</code>',
+    'Shared <code>core.input</code>',
+    'mono-dark-theme.css',
+    'ns-theme-mono-dark',
+    'Mono Dark',
+    'Concrete Dark Theme',
+    'Shared <code>core.button</code> · Dark',
+    'Shared <code>core.input</code> · Dark',
+    'Shared <code>core.card</code> · Dark',
+    'Shared <code>core.badge</code> · Dark',
+    'Written status labels remain authoritative'
+  ]],
   ['flavor.rivet', [
     'Rivet Light',
     'ns-theme-rivet-light',
@@ -108,6 +123,47 @@ const hardlineDarkAssetMarkers = [
   '--ns-color-focus-ring: #8fb3ff;',
   '--ns-focus-ring-width: 3px;',
   '--ns-focus-ring-offset: 3px;'
+];
+
+const monoDarkAssetMarkers = [
+  '.ns-theme-mono-dark {',
+  '--ns-color-surface-interactive: #151515;',
+  '--ns-color-surface-panel: #202020;',
+  '--ns-color-content-primary: #f2f2f2;',
+  '--ns-color-content-secondary: #c4c4c4;',
+  '--ns-color-content-inverse: #111111;',
+  '--ns-color-border-default: #9a9a9a;',
+  '--ns-color-border-strong: #f2f2f2;',
+  '--ns-color-action-primary-surface: #f2f2f2;',
+  '--ns-color-action-primary-content: #111111;',
+  '--ns-color-state-success: #606060;',
+  '--ns-color-state-warning: #585858;',
+  '--ns-color-state-error: #d0d0d0;',
+  '--ns-color-state-info: #686868;',
+  '--ns-border-control-width: 2px;',
+  '--ns-border-surface-width: 2px;',
+  '--ns-border-annotation-width: 2px;',
+  '--ns-radius-control: 0px;',
+  '--ns-radius-surface: 0px;',
+  '--ns-radius-annotation: 0px;',
+  '--ns-size-control-minimum: 44px;',
+  '--ns-depth-rest-x: 3px;',
+  '--ns-depth-rest-y: 3px;',
+  '--ns-depth-hover-x: 1px;',
+  '--ns-depth-hover-y: 1px;',
+  '--ns-depth-active-x: 0px;',
+  '--ns-depth-active-y: 0px;',
+  '--ns-press-hover-x: 2px;',
+  '--ns-press-hover-y: 2px;',
+  '--ns-press-active-x: 3px;',
+  '--ns-press-active-y: 3px;',
+  '--ns-motion-press-duration: 65ms;',
+  '--ns-motion-release-duration: 100ms;',
+  '--ns-motion-standard-duration: 140ms;',
+  '--ns-color-focus-ring: #ffffff;',
+  '--ns-focus-ring-width: 3px;',
+  '--ns-focus-ring-offset: 3px;',
+  '--ns-font-family-body: ui-serif, Georgia, serif;'
 ];
 
 const rivetDarkAssetMarkers = [
@@ -215,9 +271,11 @@ for (const claim of claims) {
     const markersForAsset =
       claim.id === 'flavor.hardline' && assetUrl === 'https://neosmartui.github.io/hardline-dark-theme.css'
         ? hardlineDarkAssetMarkers
-        : claim.id === 'flavor.rivet' && assetUrl === 'https://neosmartui.github.io/rivet-dark-theme.css'
-          ? rivetDarkAssetMarkers
-          : claim.id === 'flavor.soft' && assetUrl === 'https://neosmartui.github.io/soft-dark-theme.css'
+        : claim.id === 'flavor.mono' && assetUrl === 'https://neosmartui.github.io/mono-dark-theme.css'
+          ? monoDarkAssetMarkers
+          : claim.id === 'flavor.rivet' && assetUrl === 'https://neosmartui.github.io/rivet-dark-theme.css'
+            ? rivetDarkAssetMarkers
+            : claim.id === 'flavor.soft' && assetUrl === 'https://neosmartui.github.io/soft-dark-theme.css'
             ? softDarkAssetMarkers
             : assetMarkers.get(claim.id) ?? [];
     for (const marker of markersForAsset) if (!asset.includes(marker)) throw new Error(`[public-proof-live] ${claim.id} live asset ${assetUrl} missing ${marker}`);
