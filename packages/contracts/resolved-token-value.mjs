@@ -2,7 +2,7 @@ const scalarDimension = '(?:0|\\d+(?:\\.\\d+)?(?:px|rem|vw))';
 const dimensionPattern = new RegExp('^(?:' + scalarDimension + '|clamp\\(' + scalarDimension + ', ' + scalarDimension + '(?: [+-] ' + scalarDimension + ')?, ' + scalarDimension + '\\))$');
 const durationPattern = /^(?:\d+(?:\.\d+)?)ms$/;
 const colorPattern = /^#[0-9a-f]{6}$/;
-const fontFamilyPart = '(?:"[A-Za-z0-9 _-]+"|\\'[A-Za-z0-9 _-]+\\'|[A-Za-z][A-Za-z0-9 _-]*)';
+const fontFamilyPart = "(?:\"[A-Za-z0-9 _-]+\"|'[A-Za-z0-9 _-]+'|[A-Za-z][A-Za-z0-9 _-]*)";
 const fontFamilyPattern = new RegExp('^' + fontFamilyPart + '(?:,\\s*' + fontFamilyPart + ')*$');
 
 const tokenError = (type, value, id, detail) => {
