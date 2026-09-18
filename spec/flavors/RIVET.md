@@ -51,7 +51,7 @@ No Pages deployment occurred from the contract branch. That contract checkpoint 
 
 Rivet Dark resolves through `packages/themes/rivet-dark/resolution.json` and `packages/themes/rivet-dark/tokens.json`, using the exact same 18-Core / 55-token semantic dependency surface as Rivet Light. Every non-color geometry, spacing, target, depth, travel, timing, focus-width/offset, typography, density, and disabled-opacity value is preserved value-for-value from Rivet Light.
 
-The authored Dark palette is NeoSmartUI-owned: interactive/panel surfaces `#18171c` / `#232129`, primary/secondary content `#f6f3fa` / `#c9c3d1`, structural borders `#aaa4b2` / `#f5f1fa`, primary lavender action `#c7b5f2` with `#211c2b` content, status fills `#9ed9b0` / `#dff57a` / `#ef8a84` / `#bca8eb`, and independent focus `#cdbdf7`. Implementation validation requires at least 4.5:1 for authored text pairings and 3:1 for the focus/default-boundary non-text pairings exercised by the shared adapters.
+The authored Dark palette is NeoSmartUI-owned: interactive/panel surfaces `#18171c` / `#232129`, primary/secondary content `#f6f3fa` / `#c9c3d1`, structural borders `#aaa4b2` / `#f5f1fa`, primary lavender action `#c7b5f2` with `#211c2b` content, status fills `#2e7644` / `#5e7008` / `#ef8a84` / `#764dd6`, and independent focus `#cdbdf7`. Implementation validation requires at least 4.5:1 for authored text pairings and 3:1 for the focus/default-boundary non-text pairings exercised by the shared adapters.
 
 Runtime assembly is proof-safe and additive. The shared proven `tooling/foundry/build.mjs` remains unchanged, the proven Soft Dark assembler remains unchanged, and `tooling/foundry/assemble-rivet-dark.mjs` runs afterward. It emits scoped `rivet-dark-theme.css` and injects the separate `apps/foundry/fragments/rivet-dark.html` fragment into the generated copy of `/flavors/rivet/`. The already-proven Rivet Light source route is not mutated.
 
@@ -59,11 +59,11 @@ Six additive browser cases verify shared-adapter identity and authored palette, 
 
 Rivet Dark is `public-proof`. The machine-readable record binds both Light and Dark Theme/resolution/token inputs, the Dark fragment, the deterministic Rivet Dark assembler, the exact merged-main browser cohort, the exact no-rebuild Pages deployment, and both live Theme assets.
 
-## Rivet Dark verified public-proof cohort
+## Rivet Dark public-proof cohorts
 
 The implementation merged at exact source `neosmartui/neosmartui@be730284fd0c040aa6ad3be8cde6cb52acb3309a`. The original merged-main Quality run was externally stuck in GitHub Actions' scheduler before any runner step executed; after the stale run was cancelled, attempt 2 reran the same workflow/run on the same source SHA and completed green. No source commit was created to clear the scheduler incident.
 
-The authoritative public-proof cohort is:
+The initial Rivet Dark public-proof cohort was:
 
 - deployed implementation source: `neosmartui/neosmartui@be730284fd0c040aa6ad3be8cde6cb52acb3309a`
 - merged-main Quality run: `34737889119` (successful attempt 2 on the same exact SHA)
@@ -104,6 +104,8 @@ Rivet Light reached `public-proof` only after its implementation was merged, the
 - native Pages run: `34709962865`
 
 The singleton public-proof cohort has since advanced as later verified Flavor work deployed. `evidence/public/flavor.rivet.json` is the machine-readable authority for Rivet's current cohort and retains exact Light and Dark implementation blob bindings.
+
+The current accessibility-maintenance refresh is proven from merged source `fb2b401f67723f5274f1bd3699be97877fc88c86`, merged-main Quality run `35249742761`, browser artifact `10509631176`, merged-main artifact SHA-256 `73340f8d70d6f68985b866ad5232137deb77e905e0435b50f3dbd4b0d20a4f54`, Chromium `146/146` with zero skipped, unexpected, or flaky tests, exact Pages commit `4c576231efd8ff479f67e748001ff43914216a76`, Pages tree `c037e76d9b288a081ad11dda17d12c2b432d9d1d`, native Pages run `35295432975`, native Pages artifact `10527333013`, and native artifact SHA-256 `6ed44ab59ffa12ccff640d6c7a638dd01cc98447c805bd3422cc0efdb0d03420`. All 44 deployable Foundry files in the native artifact are byte-identical to merged-main evidence; the only extra native artifact file is Jekyll-generated `assets/css/style.css`. Public-proof promotion does not redeploy Pages.
 
 ## Migration provenance
 
