@@ -289,7 +289,7 @@ It MUST NOT create:
 
 The existing Foundry build chain must remain byte-authority unchanged by this contract checkpoint.
 
-These exclusions describe the historical contract-only checkpoint. After its green merge and the green shared dependencies, `apps/studio/` is now permitted as a separate `dist/studio` build. No Pages deployment is claimed by this runtime checkpoint.
+These exclusions describe the historical contract-only checkpoint. After its green merge and the green shared dependencies, `apps/studio/` is now permitted as a separate `dist/studio` build. no Pages deployment is claimed by this runtime checkpoint.
 
 ## 14. Implementation sequence after a green contract merge
 
