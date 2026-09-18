@@ -67,7 +67,7 @@ Studio consumes canonical Theme and registry authority. It must not become a com
 - Component state controls are derived only from the selected component contract. Never invent generic states or fake browser pseudo-states with lookalike CSS.
 - If Block, Page, Vertical, input-environment, or accessibility-preview capability does not yet exist as real authority, surface it as unavailable or `REGISTRY GAP`; do not manufacture a demo so the UI appears complete.
 - Studio import is untrusted data. It may accept canonical Theme JSON only; imported HTML, CSS, JavaScript, fixtures, controllers, selectors, or executable code are not Theme data.
-- Studio must reuse shared validation and the existing token-to-CSS resolver once those shared contracts are implemented. Do not copy validation or token-mapping logic into the application.
+- Studio must reuse `packages/contracts/theme-package-io.mjs`, `theme-package-semantic.mjs`, `resolved-token-value.mjs`, `theme-workspace.mjs`, and the existing `packages/adapters/css/resolve-theme.mjs`. Do not copy validation, import/export, workspace, or token-mapping logic into the application.
 - Preview the shipping system in isolation. Studio controls must not be restyled by the draft Theme, and preview controllers must not become visual/runtime component authority.
 
 ## Migration discipline

@@ -10,6 +10,7 @@
     "validate:schemas": "node tooling/validators/validate-schemas.mjs",
     "validate:component-preview-contract": "node tooling/validators/validate-component-preview-contract.mjs",
     "validate:studio-contract": "node tooling/validators/validate-studio-contract.mjs",
+    "validate:studio-theme-package": "node tooling/validators/validate-studio-theme-package.mjs",
     "validate:migration": "node tooling/validators/validate-migration.mjs",
     "validate:tokens": "node tooling/validators/validate-core-tokens.mjs",
     "validate:components": "node tooling/validators/validate-core-components.mjs",
@@ -36,6 +37,6 @@
     "build:foundry": "node tooling/foundry/build.mjs && node tooling/foundry/assemble-component-previews.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs",
     "serve:foundry": "node tooling/foundry/serve.mjs",
     "test:browser": "playwright test --config=playwright.config.mjs",
-    "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:component-preview-contract && npm run validate:studio-contract && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run validate:accessibility && npm run validate:proof && npm run build:foundry"
+    "quality": "npm run validate:foundation && npm run validate:spec && npm run validate:schemas && npm run validate:component-preview-contract && npm run validate:studio-contract && npm run validate:studio-theme-package && npm run validate:migration && npm run validate:tokens && npm run validate:components && npm run validate:resolution && npm run validate:accessibility && npm run validate:proof && npm run build:foundry"
   }
 }

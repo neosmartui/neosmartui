@@ -31,6 +31,8 @@ jobs:
         run: npm run validate:component-preview-contract
       - name: Validate Studio contract
         run: npm run validate:studio-contract
+      - name: Validate Studio Theme package
+        run: npm run validate:studio-theme-package
       - name: Validate migration snapshots and provenance
         run: npm run validate:migration
       - name: Validate Core semantic token contracts

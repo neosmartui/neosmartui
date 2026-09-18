@@ -1,12 +1,9 @@
+import { serializeResolvedTokenValue } from '../../contracts/resolved-token-value.mjs';
+
 const cssName = (id) => `--ns-${id.replaceAll('.', '-')}`;
 
 export function serializeTokenValue(type, value) {
-  if (type === 'cubicBezier') {
-    if (!Array.isArray(value) || value.length !== 4 || value.some((part) => typeof part !== 'number')) throw new Error(`Invalid cubicBezier value: ${JSON.stringify(value)}`);
-    return `cubic-bezier(${value.join(', ')})`;
-  }
-  if (typeof value === 'number' || typeof value === 'string') return String(value);
-  throw new Error(`Unsupported ${type} token value: ${JSON.stringify(value)}`);
+  return serializeResolvedTokenValue(type, value);
 }
 
 export function renderResolvedTokenCss(registry, bundle, { selector = ':root' } = {}) {
