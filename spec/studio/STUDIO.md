@@ -183,6 +183,8 @@ Studio therefore uses an ephemeral workspace with optional `light` and `dark` sl
 
 Studio must not assume arbitrary imported Light/Dark Themes are mechanically paired unless that relationship is explicitly established in the current workspace.
 
+The human starter workflow exposes the four current official canonical Theme pairs — Hardline, Soft, Rivet, and Mono — directly from `packages/themes`. Loading an official starter explicitly replaces the ephemeral workspace with that canonical Light/Dark pair. Existing or community canonical Theme packages remain data imports; starting a new workspace from an imported Theme is an explicit user action and may begin with only the imported mode.
+
 ## 9. Import and export boundary
 
 Studio import is untrusted **data only**.
@@ -299,7 +301,7 @@ After this contract merges and mandatory merged-main Quality is green:
 2. make Foundry consume the shared preview authority without weakening public proof;
 3. introduce browser-safe shared Theme-package semantic/value validation, deterministic import/export, and ephemeral Light/Dark workspace support (**implemented before Studio runtime**);
 4. create `apps/studio/` using platform HTML/CSS/ES modules and shipping Web adapters (**initial runtime implemented**);
-5. implement canonical Theme-package import/export and Light/Dark workspace slots (**implemented in initial runtime**);
+5. implement canonical Theme-package import/export, Light/Dark workspace slots, official Hardline/Soft/Rivet/Mono starters, and explicit new-workspace import for existing/community Themes (**implemented**);
 6. render registry-driven Core Component previews through the shared substrate (**implemented in initial runtime**);
 7. add canonical color/typography/geometry/Pressure controls (**implemented across the active resolved semantic token surface, including typography, spacing/size, border/radius, coupled Pressure, motion, focus, and state opacity**);
 8. add responsive and honest accessibility/input preview status (**implemented without fake system toggles**);

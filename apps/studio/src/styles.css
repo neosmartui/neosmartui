@@ -10,3 +10,5 @@
 @media(max-width:1100px){.studio-grid{grid-template-columns:18rem minmax(0,1fr)}.inspector-panel{grid-column:1/-1;border-left:0;border-top:var(--shell-border) solid var(--shell-ink)}}@media(max-width:760px){.topbar{align-items:flex-start;flex-direction:column}.studio-grid{display:block}.controls-panel,.inspector-panel{border:0;border-bottom:var(--shell-border) solid var(--shell-ink)}.workspace-header{align-items:flex-start;flex-direction:column}.preview-stage{min-height:30rem;padding:.5rem}.preview-device,.preview-device iframe{min-height:28rem}}@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.001ms!important;animation-duration:.001ms!important;animation-iteration-count:1!important}}
 
 .token-row input[data-token-type="cubicBezier"]{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.75rem}.controls-panel{align-self:start}
+
+.check-row{display:flex;align-items:flex-start;gap:.55rem;font-weight:750!important}.check-row input{width:20px;height:20px;min-height:20px;margin:.1rem 0 0;flex:none}.control-section select{cursor:pointer}
