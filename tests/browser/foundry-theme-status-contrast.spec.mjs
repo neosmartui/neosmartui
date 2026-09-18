@@ -8,7 +8,8 @@ const themes = [
   { label: 'Soft Light', route: '/flavors/soft/', selector: '.ns-theme-soft-light' },
   { label: 'Soft Dark', route: '/flavors/soft/', selector: '.ns-theme-soft-dark' },
   { label: 'Rivet Dark', route: '/flavors/rivet/', selector: '.ns-theme-rivet-dark' },
-  { label: 'Mono Light', route: '/flavors/mono/', selector: '.ns-theme-mono-light' }
+  { label: 'Mono Light', route: '/flavors/mono/', selector: '.ns-theme-mono-light' },
+  { label: 'Mono Dark', route: '/flavors/mono/', selector: '.ns-theme-mono-dark' }
 ];
 const tones = ['neutral', 'info', 'success', 'warning', 'error'];
 

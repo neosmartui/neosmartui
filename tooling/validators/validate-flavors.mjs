@@ -181,16 +181,22 @@ if (monoDark.spacing?.density !== monoLight.spacing?.density || monoDark.density
 if (monoDark.motion?.model !== monoLight.motion?.model || monoDark.motion?.intensity !== monoLight.motion?.intensity) fail('Mono Dark must preserve Mono Light restrained pressure motion');
 if (monoDark.interaction?.model !== monoLight.interaction?.model || monoDark.interaction?.selection !== monoLight.interaction?.selection) fail('Mono Dark must preserve Mono Light pressure and seated selection');
 if (monoDark.icons?.strategy !== monoLight.icons?.strategy) fail('Mono Dark must preserve adapter-owned icons');
-for (const path of [
-  'packages/themes/mono-dark/resolution.json',
-  'packages/themes/mono-dark/tokens.json',
-  'apps/foundry/fragments/mono-dark.html',
-  'tests/browser/foundry-mono-dark.spec.mjs',
-  'tooling/validators/validate-mono-dark-theme.mjs',
-  'tooling/foundry/assemble-mono-dark.mjs',
-  'packages/flavors/mono-dark',
-  'apps/foundry/src/flavors/mono-dark'
-]) await expectAbsent(path, `Mono Dark contract-only stage must not add runtime implementation path: ${path}`);
+const monoDarkResolution = await readJson('packages/themes/mono-dark/resolution.json');
+const monoDarkBundle = await readJson('packages/themes/mono-dark/tokens.json');
+if (monoDarkResolution.schema !== 'neosmartui/theme-resolution@1' || monoDarkResolution.flavor !== 'flavor.mono' || monoDarkResolution.theme !== 'Mono Dark' || monoDarkResolution.bundle !== 'tokens.json') fail('Mono Dark resolution identity is invalid');
+if (monoDarkBundle.schema !== 'neosmartui/resolved-token-bundle@1' || monoDarkBundle.flavor !== 'flavor.mono' || monoDarkBundle.theme !== 'Mono Dark') fail('Mono Dark bundle identity is invalid');
+if (monoDarkResolution.scope.length !== 18 || monoDarkBundle.scope.length !== 18 || monoDarkBundle.values.length !== 55 || new Set(monoDarkBundle.values.map((entry) => entry.id)).size !== 55) fail('implemented Mono Dark must preserve exact 18/55 resolution');
+if ([...monoDarkResolution.scope].sort().join('|') !== [...monoResolution.scope].sort().join('|')) fail('Mono Dark must preserve Mono Light Core scope');
+const monoDarkValues = toMap(monoDarkBundle.values);
+for (const [id,lightEntry] of monoValues) if (!id.startsWith('color.') && JSON.stringify(monoDarkValues.get(id)?.value) !== JSON.stringify(lightEntry.value)) fail(`Mono Dark must preserve Mono Light non-color invariant ${id}`);
+for (const entry of monoDarkBundle.values) {
+  if (!entry.id.startsWith('color.')) continue;
+  const match = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(entry.value);
+  if (!match || match[1].toLowerCase() !== match[2].toLowerCase() || match[2].toLowerCase() !== match[3].toLowerCase()) fail(`Mono Dark color ${entry.id} must remain grayscale`);
+}
+for (const path of ['apps/foundry/fragments/mono-dark.html','tests/browser/foundry-mono-dark.spec.mjs','tooling/validators/validate-mono-dark-theme.mjs','tooling/foundry/assemble-mono-dark.mjs']) await access(resolve(root, path));
+await expectAbsent('packages/flavors/mono-dark', 'Mono Dark must remain a Theme of flavor.mono');
+await expectAbsent('apps/foundry/src/flavors/mono-dark', 'Mono Dark must extend the canonical Mono route rather than create a route fork');
 
 const hardlineDocs = await readFile(resolve(root, 'spec/flavors/HARDLINE.md'), 'utf8');
 for (const marker of ['flagship/default NeoSmartUI flavor', '`flavor.hardline`', 'square or zero-radius geometry', 'MUST NOT introduce hover lift', 'MUST NOT own Button/Dialog/Product/Checkout/Billing behavior', 'Maturity: `public-proof`', '`packages/themes/hardline-light/tokens.json`', '`packages/themes/hardline-light/resolution.json`', 'Dark mode follows as its own concrete Theme instance']) {
@@ -201,8 +207,8 @@ for (const marker of ['calm application-oriented NeoSmartUI flavor', '`flavor.so
   if (!softDocs.includes(marker)) fail(`Soft Dark contract docs missing marker: ${marker}`);
 }
 const monoDocs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
-for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `public-proof`', 'Public-proof record: `evidence/public/flavor.mono.json`', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Public-proof promotion does not redeploy Pages', 'Mono Dark follows as its own concrete Theme instance', 'Mono Dark contract maturity: `contract-only`', 'authored color strategy: `editorial-monochrome-dark`', 'Mono Light is complete through public proof; Mono Dark is contract-only']) {
+for (const marker of ['editorial black/white/gray NeoSmartUI flavor', '`flavor.mono`', 'Official migration maturity: `public-proof`', 'Public-proof record: `evidence/public/flavor.mono.json`', 'no dedicated legacy Mono repository or Mono implementation artifact', '`packages/themes/mono-light/tokens.json`', '`packages/themes/mono-light/resolution.json`', 'exact resolved semantic dependency union: **55 token IDs**', '`3px → 1px → 0`', 'MUST NOT introduce generic hover lift', 'Public-proof promotion does not redeploy Pages', 'Mono Dark follows as its own concrete Theme instance', 'Mono Dark contract maturity: `contract-only` (superseded contract checkpoint)', 'Mono Dark implementation maturity: `implemented`', 'Mono Dark public proof is not claimed yet', 'authored color strategy: `editorial-monochrome-dark`', '`packages/themes/mono-dark/tokens.json`', '`tooling/foundry/assemble-mono-dark.mjs`', 'Mono Light remains complete through public proof; Mono Dark is implemented but not yet public proof']) {
   if (!monoDocs.includes(marker)) fail(`Mono public-proof docs missing marker: ${marker}`);
 }
 
-console.log('[flavors] validated official Flavor identities, public-proof shipped Themes, and descriptor-only Mono Dark contract boundary');
+console.log('[flavors] validated official Flavor identities, public-proof shipped Themes, and implemented not-yet-proven Mono Dark exact 18/55 boundary');

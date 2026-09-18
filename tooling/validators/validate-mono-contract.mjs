@@ -1,4 +1,5 @@
 import { access, readFile, readdir } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
@@ -64,16 +65,14 @@ for (const [path, expected] of [
   const actual = path.split('.').reduce((value, key) => value?.[key], dark);
   if (actual !== expected) fail(`Mono Dark contract descriptor drifted at ${path}`);
 }
-for (const path of [
-  'packages/themes/mono-dark/resolution.json',
-  'packages/themes/mono-dark/tokens.json',
-  'apps/foundry/fragments/mono-dark.html',
-  'tests/browser/foundry-mono-dark.spec.mjs',
-  'tooling/validators/validate-mono-dark-theme.mjs',
-  'tooling/foundry/assemble-mono-dark.mjs',
-  'packages/flavors/mono-dark',
-  'apps/foundry/src/flavors/mono-dark'
-]) await expectAbsent(path, `Mono Dark contract-only stage must not add runtime implementation path: ${path}`);
+const darkResolution = await json('packages/themes/mono-dark/resolution.json');
+const darkBundle = await json('packages/themes/mono-dark/tokens.json');
+if (darkResolution.schema !== 'neosmartui/theme-resolution@1' || darkResolution.flavor !== 'flavor.mono' || darkResolution.theme !== 'Mono Dark' || darkResolution.bundle !== 'tokens.json') fail('Mono Dark resolution identity is invalid');
+if (darkBundle.schema !== 'neosmartui/resolved-token-bundle@1' || darkBundle.flavor !== 'flavor.mono' || darkBundle.theme !== 'Mono Dark') fail('Mono Dark resolved bundle identity is invalid');
+if (darkResolution.scope.length !== 18 || darkBundle.scope.length !== 18 || darkBundle.values.length !== 55 || new Set(darkBundle.values.map((entry) => entry.id)).size !== 55) fail('implemented Mono Dark must preserve exact 18/55 resolution');
+for (const path of ['apps/foundry/fragments/mono-dark.html','tests/browser/foundry-mono-dark.spec.mjs','tooling/validators/validate-mono-dark-theme.mjs','tooling/foundry/assemble-mono-dark.mjs']) await access(resolve(root, path));
+await expectAbsent('packages/flavors/mono-dark', 'Mono Dark must remain a Theme of flavor.mono, not a new Flavor identity');
+await expectAbsent('apps/foundry/src/flavors/mono-dark', 'Mono Dark must extend the canonical Mono route rather than create a route fork');
 
 const resolution = await json('packages/themes/mono-light/resolution.json');
 const bundle = await json('packages/themes/mono-light/tokens.json');
@@ -83,6 +82,18 @@ if (resolution.scope.length !== 18 || bundle.scope.length !== 18 || [...resoluti
 if (bundle.values.length !== 55 || new Set(bundle.values.map((entry) => entry.id)).size !== 55) fail('public-proof Mono Light must resolve exactly 55 unique semantic dependencies');
 
 for (const path of ['apps/foundry/src/flavors/mono/index.html', 'tests/browser/foundry-mono-light.spec.mjs', 'tooling/validators/validate-mono-theme.mjs', 'evidence/public/flavor.mono.json']) await access(resolve(root, path));
+if ([...darkResolution.scope].sort().join('|') !== [...resolution.scope].sort().join('|')) fail('Mono Dark must preserve Mono Light Core scope');
+if ([...new Set(darkBundle.values.map((entry) => entry.id))].sort().join('|') !== [...new Set(bundle.values.map((entry) => entry.id))].sort().join('|')) fail('Mono Dark must preserve the exact Mono Light dependency set');
+
+const proof = await json('evidence/public/flavor.mono.json');
+if (proof.flavor !== 'flavor.mono') fail('Mono public-proof subject drifted');
+if (proof.implementationFiles.some((entry) => entry.path.includes('mono-dark') || entry.path === 'tooling/foundry/assemble-mono-dark.mjs')) fail('implemented Mono Dark must not mutate public proof before deployment/native verification');
+if ((proof.live.assetUrls ?? []).some((url) => url.endsWith('/mono-dark-theme.css'))) fail('implemented Mono Dark must not claim a live Dark asset before deployment/native verification');
+const provenRoute = proof.implementationFiles.find((entry) => entry.path === 'apps/foundry/src/flavors/mono/index.html');
+if (!provenRoute) fail('Mono Light public proof must retain the canonical source-route binding');
+const routeBytes = await readFile(resolve(root, provenRoute.path));
+const routeBlob = createHash('sha1').update(`blob ${routeBytes.length}\0`).update(routeBytes).digest('hex');
+if (routeBlob !== provenRoute.blobSha) fail('Mono Dark implementation must keep the proven Mono Light source route byte-identical');
 
 const docs = await readFile(resolve(root, 'spec/flavors/MONO.md'), 'utf8');
 for (const marker of [
@@ -102,10 +113,13 @@ for (const marker of [
   'Public proof remains evidence-bound rather than declarative',
   'Public-proof promotion does not redeploy Pages',
   'Mono Dark follows as its own concrete Theme instance',
-  'Mono Dark contract maturity: `contract-only`',
+  'Mono Dark contract maturity: `contract-only` (superseded contract checkpoint)',
+  'Mono Dark implementation maturity: `implemented`',
+  'Mono Dark public proof is not claimed yet',
   'authored color strategy: `editorial-monochrome-dark`',
-  'the existing `build:foundry` chain remains unchanged during the contract stage',
-  'Mono Light is complete through public proof; Mono Dark is contract-only'
+  '`packages/themes/mono-dark/tokens.json`',
+  '`tooling/foundry/assemble-mono-dark.mjs`',
+  'Mono Light remains complete through public proof; Mono Dark is implemented but not yet public proof'
 ]) if (!docs.includes(marker)) fail(`Mono public-proof docs missing marker: ${marker}`);
 
-console.log('[mono-contract] validated public-proof Mono Light plus descriptor-only Mono Dark contract, canonical provenance, 18/55 boundary, and no runtime/renderer fork');
+console.log('[mono-contract] validated public-proof Mono Light provenance/18-55 boundary plus implemented, not-yet-proven Mono Dark with byte-stable Light route');

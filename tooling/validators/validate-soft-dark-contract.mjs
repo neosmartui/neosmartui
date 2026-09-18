@@ -52,8 +52,8 @@ if ([...resolution.scope].sort().join('|') !== [...lightResolution.scope].sort()
 if (new Set(lightBundle.values.map((entry) => entry.id)).size !== 55) fail('Soft Light dependency baseline drifted');
 
 const packageJson = await json('package.json');
-const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs';
-if (packageJson.scripts?.['build:foundry'] !== expectedBuild) fail('Soft Dark must remain the first proof-bound post-build assembler before the explicit Rivet Dark assembler');
+const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
+if (packageJson.scripts?.['build:foundry'] !== expectedBuild) fail('Soft Dark must remain the first proof-bound post-build assembler before the explicit Rivet and Mono Dark assemblers');
 const assembler = await readFile(resolve(root, 'tooling/foundry/assemble-soft-dark.mjs'), 'utf8');
 for (const marker of ['packages/themes/soft-dark/tokens.json','soft-dark-theme.css','apps/foundry/fragments/soft-dark.html','flavors/soft/index.html','Soft route is missing the Light Theme stylesheet marker required for Dark assembly','Soft route is missing the canonical return-link insertion marker required for Dark assembly']) if (!assembler.includes(marker)) fail(`Soft Dark assembler missing proof-safe assembly marker: ${marker}`);
 
