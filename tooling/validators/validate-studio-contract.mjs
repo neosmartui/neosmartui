@@ -81,12 +81,14 @@ const packageJson = await json('package.json');
 if (packageJson.scripts?.['validate:component-preview-contract'] !== 'node tooling/validators/validate-component-preview-contract.mjs') fail('component-preview contract validator is not wired');
 if (packageJson.scripts?.['validate:studio-contract'] !== 'node tooling/validators/validate-studio-contract.mjs') fail('Studio contract validator is not wired');
 if (packageJson.scripts?.['validate:studio-theme-package'] !== 'node tooling/validators/validate-studio-theme-package.mjs') fail('Studio Theme-package validator is not wired');
+if (packageJson.scripts?.['validate:studio-runtime'] !== 'node tooling/validators/validate-studio-runtime.mjs') fail('Studio runtime validator is not wired');
 const quality = packageJson.scripts?.quality ?? '';
 const previewPos = quality.indexOf('npm run validate:component-preview-contract');
 const studioPos = quality.indexOf('npm run validate:studio-contract');
 const themePackagePos = quality.indexOf('npm run validate:studio-theme-package');
+const runtimePos = quality.indexOf('npm run validate:studio-runtime');
 const migrationPos = quality.indexOf('npm run validate:migration');
-if (previewPos < 0 || studioPos < 0 || themePackagePos < 0 || migrationPos < 0 || previewPos >= studioPos || studioPos >= themePackagePos || themePackagePos >= migrationPos) fail('normal quality chain must run preview + Studio contract + Theme-package validation before migration');
+if (previewPos < 0 || studioPos < 0 || themePackagePos < 0 || runtimePos < 0 || migrationPos < 0 || previewPos >= studioPos || studioPos >= themePackagePos || themePackagePos >= runtimePos || runtimePos >= migrationPos) fail('normal quality chain must run preview + Studio contract + Theme-package + runtime validation before migration');
 
 const expectedFoundryBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-component-previews.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
 if (packageJson.scripts?.['build:foundry'] !== expectedFoundryBuild) fail('Studio preview substrate must assemble after the proof-bound Foundry builder and before Flavor-dark assemblers');
@@ -94,9 +96,9 @@ if (packageJson.scripts?.['build:foundry'] !== expectedFoundryBuild) fail('Studi
 await access(resolve(root, 'packages/core/previews/runtime.mjs'));
 await access(resolve(root, 'tooling/foundry/assemble-component-previews.mjs'));
 for (const path of ['packages/contracts/json-schema-subset.mjs','packages/contracts/resolved-token-value.mjs','packages/contracts/theme-package-semantic.mjs','packages/contracts/theme-package-io.mjs','packages/contracts/theme-workspace.mjs']) await access(resolve(root, path));
-await expectAbsent('apps/studio', 'preview-substrate checkpoint must not create apps/studio');
+for (const path of ['apps/studio/src/index.html','apps/studio/src/app.mjs','apps/studio/src/preview-kernel.mjs','tooling/studio/build.mjs','tests/studio/studio-runtime.spec.mjs']) await access(resolve(root, path));
 await expectAbsent('spec/schemas/studio-theme.schema.json', 'Studio must not create a competing Theme schema');
 await expectAbsent('packages/studio', 'contract checkpoint must not create a Studio runtime/package authority');
 await expectAbsent('packages/studio-token-registry.json', 'Studio must not create a duplicate token registry');
 
-console.log('[studio-contract] validated canonical Studio authority, shared Component-preview substrate, shared Theme-package validation/I-O/workspace contracts, capability-aware gating, and proof-bound Foundry preservation');
+console.log('[studio-contract] validated canonical Studio authority, shared preview/Theme-package contracts, initial isolated Studio runtime, capability-aware gating, and proof-bound Foundry preservation');
