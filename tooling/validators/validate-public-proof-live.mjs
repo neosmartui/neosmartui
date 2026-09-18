@@ -79,10 +79,10 @@ const liveMarkers = new Map([
 ]);
 
 const assetMarkers = new Map([
-  ['flavor.hardline', ['.ns-theme-hardline-light {', '--ns-radius-control: 0px;', '--ns-depth-rest-x: 4px;', '--ns-depth-hover-x: 2px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 4px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']],
-  ['flavor.mono', ['.ns-theme-mono-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 0px;', '--ns-radius-annotation: 0px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 65ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #111111;', '--ns-font-family-body: ui-serif, Georgia, serif;']],
-  ['flavor.rivet', ['.ns-theme-rivet-light {', '--ns-border-control-width: 3px;', '--ns-radius-control: 6px;', '--ns-depth-rest-x: 5px;', '--ns-depth-hover-x: 3px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 5px;', '--ns-motion-press-duration: 80ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #b9a1ed;']],
-  ['flavor.soft', ['.ns-theme-soft-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 8px;', '--ns-radius-surface: 12px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1.5px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;']]
+  ['flavor.hardline', ['.ns-theme-hardline-light {', '--ns-radius-control: 0px;', '--ns-depth-rest-x: 4px;', '--ns-depth-hover-x: 2px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 4px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-state-success: #8ee8b0;', '--ns-color-state-warning: #ffd84d;', '--ns-color-state-error: #c1121f;', '--ns-color-state-info: #b8a1ff;']],
+  ['flavor.mono', ['.ns-theme-mono-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 0px;', '--ns-radius-annotation: 0px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 65ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #111111;', '--ns-font-family-body: ui-serif, Georgia, serif;', '--ns-color-state-success: #d9d9d9;', '--ns-color-state-warning: #bdbdbd;', '--ns-color-state-error: #1f1f1f;', '--ns-color-state-info: #e5e5e5;']],
+  ['flavor.rivet', ['.ns-theme-rivet-light {', '--ns-border-control-width: 3px;', '--ns-radius-control: 6px;', '--ns-depth-rest-x: 5px;', '--ns-depth-hover-x: 3px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 5px;', '--ns-motion-press-duration: 80ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-action-primary-surface: #b9a1ed;', '--ns-color-state-success: #2fa371;', '--ns-color-state-warning: #c98017;', '--ns-color-state-error: #b83a31;', '--ns-color-state-info: #5397c7;']],
+  ['flavor.soft', ['.ns-theme-soft-light {', '--ns-border-control-width: 2px;', '--ns-radius-control: 8px;', '--ns-radius-surface: 12px;', '--ns-depth-rest-x: 3px;', '--ns-depth-hover-x: 1.5px;', '--ns-depth-active-x: 0px;', '--ns-press-active-x: 3px;', '--ns-motion-press-duration: 70ms;', '--ns-size-control-minimum: 44px;', '--ns-focus-ring-width: 3px;', '--ns-color-state-success: #9fdab9;', '--ns-color-state-warning: #edd278;', '--ns-color-state-error: #cb3226;', '--ns-color-state-info: #c4b3ef;']]
 ]);
 
 const hardlineDarkAssetMarkers = [
@@ -92,6 +92,10 @@ const hardlineDarkAssetMarkers = [
   '--ns-color-content-primary: #f5f5f5;',
   '--ns-color-action-primary-surface: #ffd84d;',
   '--ns-color-action-primary-content: #111111;',
+  '--ns-color-state-success: #19793d;',
+  '--ns-color-state-warning: #826600;',
+  '--ns-color-state-error: #ff737d;',
+  '--ns-color-state-info: #6e3fff;',
   '--ns-radius-control: 0px;',
   '--ns-depth-rest-x: 4px;',
   '--ns-depth-hover-x: 2px;',
@@ -117,10 +121,10 @@ const rivetDarkAssetMarkers = [
   '--ns-color-border-strong: #f5f1fa;',
   '--ns-color-action-primary-surface: #c7b5f2;',
   '--ns-color-action-primary-content: #211c2b;',
-  '--ns-color-state-success: #9ed9b0;',
-  '--ns-color-state-warning: #dff57a;',
+  '--ns-color-state-success: #2e7644;',
+  '--ns-color-state-warning: #5e7008;',
   '--ns-color-state-error: #ef8a84;',
-  '--ns-color-state-info: #bca8eb;',
+  '--ns-color-state-info: #764dd6;',
   '--ns-border-control-width: 3px;',
   '--ns-border-surface-width: 3px;',
   '--ns-border-annotation-width: 2px;',
@@ -153,6 +157,10 @@ const softDarkAssetMarkers = [
   '--ns-color-content-primary: #f7f1e8;',
   '--ns-color-action-primary-surface: #8fb8f4;',
   '--ns-color-action-primary-content: #171513;',
+  '--ns-color-state-success: #30744d;',
+  '--ns-color-state-warning: #806315;',
+  '--ns-color-state-error: #e88983;',
+  '--ns-color-state-info: #734ecd;',
   '--ns-border-control-width: 2px;',
   '--ns-radius-control: 8px;',
   '--ns-radius-surface: 12px;',

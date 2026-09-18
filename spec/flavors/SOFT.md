@@ -75,7 +75,7 @@ The authored Soft Dark semantic palette is NeoSmartUI-owned and independently co
 - primary content `#f7f1e8` and secondary content `#c7bfb5`;
 - default/strong boundaries `#b8afa5` / `#f3ebe2`;
 - softened-blue primary action `#8fb8f4` with dark content `#171513`;
-- success `#8ed0aa`, warning `#e7c66c`, error `#e88983`, and info `#b7a4e5` with explicit written labels;
+- success `#30744d`, warning `#806315`, error `#e88983`, and info `#734ecd` with explicit written labels;
 - focus ring `#9ec4ff` independent of action color.
 
 The dedicated validator requires at least 4.5:1 for text/content pairings and at least 3:1 for focus/boundary non-text contrast. Status meaning remains written and semantic; color is never the only carrier of meaning.
@@ -84,7 +84,7 @@ The proven Light source route remains byte-identical. `tooling/foundry/assemble-
 
 Soft Dark is `public-proof`. The machine-readable record binds both Light and Dark implementation inputs, the deterministic Soft Dark assembler, the exact merged-main browser cohort, the exact no-rebuild Pages deployment, and both live Theme assets.
 
-The verified Soft Dark public-proof cohort is:
+The initial verified Soft Dark public-proof cohort was:
 
 - deployed implementation source `neosmartui/neosmartui@20b32bba63f5882b17193eaca093e315c214ccd6`;
 - merged-main Quality run `34721447129`;
@@ -117,6 +117,8 @@ Soft Light originally reached `public-proof` only after implementation merged an
 - native Pages run `34707560564`
 
 The singleton public-proof cohort has since advanced as later verified Flavor work deployed. `evidence/public/flavor.soft.json` is the machine-readable authority for Soft's current cohort and retains exact Light and Dark implementation blob bindings.
+
+The current accessibility-maintenance refresh is proven from merged source `fb2b401f67723f5274f1bd3699be97877fc88c86`, Quality run `35249742761`, browser artifact `10509631176` with Chromium `146/146`, exact Pages commit `4c576231efd8ff479f67e748001ff43914216a76`, Pages tree `c037e76d9b288a081ad11dda17d12c2b432d9d1d`, and native Pages run `35295432975`. Public-proof promotion records this already-deployed singleton and does not redeploy Pages.
 
 ## Migration provenance
 

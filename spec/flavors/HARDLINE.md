@@ -73,7 +73,7 @@ The Dark Theme is deliberately resolved rather than inverted:
 - default / strong boundary: `#d8d8d8` / `#ffffff`;
 - flagship primary action: `#ffd84d` with `#111111` content;
 - focus keyline: `#8fb3ff`;
-- success / warning / error / info: `#8ee8b0` / `#ffd84d` / `#ff737d` / `#b8a1ff`.
+- success / warning / error / info: `#19793d` / `#826600` / `#ff737d` / `#6e3fff`.
 
 The dedicated Theme validator requires at least `4.5:1` authored contrast for primary and secondary text, action content, and the state badge pairings used by shared Core adapters. Written labels remain authoritative for status meaning, so color is never the only state signal.
 
@@ -104,3 +104,5 @@ The proof record retains the concrete Light Theme, Light resolution, Light resol
 The live gate verifies the canonical `/flavors/hardline/` route contains both `.ns-theme-hardline-light` and `.ns-theme-hardline-dark` surfaces, retains the existing Light pressure markers, exposes the authored Dark section, and serves both `hardline-theme.css` and `hardline-dark-theme.css` with their independent scoped token markers.
 
 The current singleton proof cohort binds all 18 Core records plus the 4 Flavor records to the same merged-main browser evidence and the same native Pages deployment. Public-proof promotion does not redeploy Pages; it records and verifies the already-deployed singleton.
+
+The accessibility-maintenance refresh is proven from merged source `fb2b401f67723f5274f1bd3699be97877fc88c86`, Quality run `35249742761`, browser artifact `10509631176` with Chromium `146/146`, exact Pages commit `4c576231efd8ff479f67e748001ff43914216a76`, Pages tree `c037e76d9b288a081ad11dda17d12c2b432d9d1d`, and native Pages run `35295432975`. The refresh changes only proof-declared accessibility implementation bytes and keeps the canonical Hardline route and shared adapter architecture intact.
