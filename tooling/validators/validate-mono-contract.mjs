@@ -45,7 +45,35 @@ const flavorDirs = (await readdir(resolve(root, 'packages/flavors'), { withFileT
 if (flavorDirs.join(',') !== 'hardline,mono,rivet,soft') fail(`Mono public proof expects exactly four official Flavor manifests; got ${flavorDirs.join(',')}`);
 
 for (const extension of ['css', 'mjs', 'js', 'tsx', 'jsx']) await expectAbsent(`packages/flavors/mono/index.${extension}`, `Mono public proof must not add renderer override index.${extension}`);
-await expectAbsent('packages/themes/mono-dark', 'Mono Light public proof must not prematurely implement Mono Dark');
+const dark = await json('packages/themes/mono-dark/theme.json');
+if (dark.schema !== 'neosmartui/theme@1' || dark.name !== 'Mono Dark' || dark.family !== 'neosmartui' || dark.category !== 'mono') fail('Mono Dark contract Theme identity is invalid');
+if (dark.color?.mode !== 'dark' || dark.color?.strategy !== 'editorial-monochrome-dark') fail('Mono Dark contract must declare authored editorial monochrome dark intent');
+for (const [path, expected] of [
+  ['typography.strategy', 'editorial-type-led'],
+  ['geometry.profile', 'editorial-structured'],
+  ['border.profile', 'print-keyline'],
+  ['shadow.model', 'crisp-monochrome-depth'],
+  ['spacing.density', 'editorial'],
+  ['density.control', 'comfortable'],
+  ['motion.model', 'pressure-not-levitation'],
+  ['motion.intensity', 'restrained'],
+  ['interaction.model', 'pressure-not-levitation'],
+  ['interaction.selection', 'seated'],
+  ['icons.strategy', 'adapter-owned']
+]) {
+  const actual = path.split('.').reduce((value, key) => value?.[key], dark);
+  if (actual !== expected) fail(`Mono Dark contract descriptor drifted at ${path}`);
+}
+for (const path of [
+  'packages/themes/mono-dark/resolution.json',
+  'packages/themes/mono-dark/tokens.json',
+  'apps/foundry/fragments/mono-dark.html',
+  'tests/browser/foundry-mono-dark.spec.mjs',
+  'tooling/validators/validate-mono-dark-theme.mjs',
+  'tooling/foundry/assemble-mono-dark.mjs',
+  'packages/flavors/mono-dark',
+  'apps/foundry/src/flavors/mono-dark'
+]) await expectAbsent(path, `Mono Dark contract-only stage must not add runtime implementation path: ${path}`);
 
 const resolution = await json('packages/themes/mono-light/resolution.json');
 const bundle = await json('packages/themes/mono-light/tokens.json');
@@ -74,7 +102,10 @@ for (const marker of [
   'Public proof remains evidence-bound rather than declarative',
   'Public-proof promotion does not redeploy Pages',
   'Mono Dark follows as its own concrete Theme instance',
-  'Mono Light is complete through public proof'
+  'Mono Dark contract maturity: `contract-only`',
+  'authored color strategy: `editorial-monochrome-dark`',
+  'the existing `build:foundry` chain remains unchanged during the contract stage',
+  'Mono Light is complete through public proof; Mono Dark is contract-only'
 ]) if (!docs.includes(marker)) fail(`Mono public-proof docs missing marker: ${marker}`);
 
-console.log('[mono-contract] validated public-proof Mono Light ownership, canonical provenance boundary, 18/55 resolution, and no dark/renderer fork');
+console.log('[mono-contract] validated public-proof Mono Light plus descriptor-only Mono Dark contract, canonical provenance, 18/55 boundary, and no runtime/renderer fork');
