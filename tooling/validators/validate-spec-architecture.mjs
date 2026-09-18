@@ -8,7 +8,8 @@ const files = [
   'spec/architecture/DEPENDENCIES.md',
   'spec/architecture/PUBLIC-PROOF.md',
   'docs/PUBLIC-PROOF-GATE.md',
-  'docs/CI-INCIDENT-RECOVERY.md'
+  'docs/CI-INCIDENT-RECOVERY.md',
+  'spec/studio/STUDIO.md'
 ];
 for (const file of files) await access(resolve(root, file));
 
@@ -40,6 +41,16 @@ for (const marker of [
   'closed unmerged'
 ]) if (!proof.includes(marker)) throw new Error(`Public proof law missing: ${marker}`);
 
+const studio = await readFile(resolve(root, 'spec/studio/STUDIO.md'), 'utf8');
+for (const marker of [
+  'ONE LOGICAL THEME, THREE CANONICAL FILES.',
+  'Theme is data, not forked components.',
+  'CAPABILITY ABSENCE IS NOT A PREVIEW.',
+  'neosmartui/component-preview@1',
+  'SOURCE ONCE. DEMONSTRATE EVERYWHERE.',
+  'REGISTRY GAP'
+]) if (!studio.includes(marker)) throw new Error(`Studio architecture missing: ${marker}`);
+
 const proofGate = await readFile(resolve(root, 'docs/PUBLIC-PROOF-GATE.md'), 'utf8');
 for (const marker of [
   'evidence/maintenance/<subject>.json',
@@ -58,4 +69,4 @@ for (const marker of [
   'excluding provenance-only deployment metadata'
 ]) if (!recovery.includes(marker)) throw new Error(`CI incident recovery contract missing: ${marker}`);
 
-console.log('Spec architecture validation passed. Taxonomy, dependency direction, public-proof maintenance, and exact-SHA CI incident recovery are explicit.');
+console.log('Spec architecture validation passed. Taxonomy, dependency direction, Studio one-source/capability laws, public-proof maintenance, and exact-SHA CI incident recovery are explicit.');

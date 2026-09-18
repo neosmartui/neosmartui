@@ -6,6 +6,7 @@ const schemaFiles = [
   'stable-id.schema.json',
   'component.schema.json',
   'component-registry.schema.json',
+  'component-preview.schema.json',
   'block.schema.json',
   'page.schema.json',
   'theme.schema.json',
@@ -29,6 +30,7 @@ for (const file of schemaFiles) {
 const expectedIds = new Map([
   ['component.schema.json', 'https://neosmartui.com/schemas/component@1.json'],
   ['component-registry.schema.json', 'https://neosmartui.com/schemas/component-registry@1.json'],
+  ['component-preview.schema.json', 'https://neosmartui.com/schemas/component-preview@1.json'],
   ['block.schema.json', 'https://neosmartui.com/schemas/block@1.json'],
   ['page.schema.json', 'https://neosmartui.com/schemas/page@1.json'],
   ['theme.schema.json', 'https://neosmartui.com/schemas/theme@1.json'],
@@ -46,6 +48,13 @@ for (const file of ['theme.schema.json', 'flavor.schema.json']) {
   const schema = parsed.get(file);
   if (!schema.required.includes('schema') || !schema.properties.schema) throw new Error(`${file} requires schema but does not permit it`);
 }
+
+const componentPreview = parsed.get('component-preview.schema.json');
+if (componentPreview.properties.schema?.const !== 'neosmartui/component-preview@1') throw new Error('component preview schema identity drifted');
+for (const field of ['schema','component','fixture','controller','fixtureComponents','defaultState','resetStrategy','stateRealization','renderers']) {
+  if (!componentPreview.required.includes(field)) throw new Error(`component preview schema must require ${field}`);
+}
+if (componentPreview.properties.resetStrategy?.const !== 'remount') throw new Error('component preview reset strategy must remain deterministic remount');
 
 const maintenance = parsed.get('public-proof-maintenance.schema.json');
 if (maintenance.properties.schema?.const !== 'neosmartui/public-proof-maintenance@1') throw new Error('public-proof maintenance schema identity drifted');
@@ -77,4 +86,4 @@ for (const id of invalid) if (Object.values(patterns).some((pattern) => pattern.
 const taxonomy = await readFile(resolve(root, 'spec/architecture/TAXONOMY.md'), 'utf8');
 if (!taxonomy.includes('Commerce is a Vertical, not a Flavor.')) throw new Error('Schemas must remain aligned with corrected taxonomy.');
 
-console.log('Schema validation passed. Versioned schema identities, deployment/public-proof/maintenance provenance, satisfiable Flavor/Theme contracts, and stable semantic-ID rules are coherent.');
+console.log('Schema validation passed. Versioned schema identities including component-preview@1, deployment/public-proof/maintenance provenance, satisfiable Flavor/Theme contracts, and stable semantic-ID rules are coherent.');
