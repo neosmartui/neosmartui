@@ -56,13 +56,15 @@ try { await access(resolve(root, 'packages/flavors/rivet-dark')); fail('Rivet Da
 try { await access(resolve(root, 'apps/foundry/src/flavors/rivet-dark')); fail('Rivet Dark must extend the canonical Rivet route, not create a route fork'); } catch (error) { if (error?.message?.startsWith('[rivet-dark-contract]')) throw error; if (error?.code !== 'ENOENT') throw error; }
 
 const packageJson = await json('package.json');
-const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs';
-if (packageJson.scripts['build:foundry'] !== expectedBuild) fail('Rivet Dark must assemble additively after the proven builder and Soft Dark assembler');
+const expectedBuild = 'node tooling/foundry/build.mjs && node tooling/foundry/assemble-soft-dark.mjs && node tooling/foundry/assemble-rivet-dark.mjs && node tooling/foundry/assemble-mono-dark.mjs';
+if (packageJson.scripts['build:foundry'] !== expectedBuild) fail('Rivet Dark must remain the second proof-bound post-build assembler before Mono Dark');
 if (packageJson.scripts['validate:rivet-dark'] !== 'node tooling/validators/validate-rivet-dark-theme.mjs') fail('Rivet Dark implementation validator must be wired explicitly');
 const builder = await readFile(resolve(root, 'tooling/foundry/build.mjs'), 'utf8');
 const softAssembler = await readFile(resolve(root, 'tooling/foundry/assemble-soft-dark.mjs'), 'utf8');
+const rivetAssembler = await readFile(resolve(root, 'tooling/foundry/assemble-rivet-dark.mjs'), 'utf8');
 if (builder.includes('rivet-dark')) fail('Rivet Dark must not mutate the shared proven builder');
 if (softAssembler.includes('rivet-dark')) fail('Rivet Dark must not mutate or overload the proven Soft Dark assembler');
+if (rivetAssembler.includes('mono-dark')) fail('Mono Dark must not mutate or overload the proven Rivet Dark assembler');
 
 const docs = await readFile(resolve(root, 'spec/flavors/RIVET.md'), 'utf8');
 for (const marker of [

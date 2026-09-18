@@ -10,6 +10,9 @@ Mono is the editorial black/white/gray NeoSmartUI flavor. It makes typography, h
 - Interaction model: `pressure-not-levitation`
 - Official migration maturity: `public-proof`
 - Public-proof record: `evidence/public/flavor.mono.json`
+- Mono Dark contract maturity: `contract-only` (superseded contract checkpoint)
+- Mono Dark implementation maturity: `implemented`
+- Mono Dark public proof is not claimed yet.
 
 ## Canonical authority and provenance boundary
 
@@ -121,40 +124,38 @@ Public-proof promotion does not redeploy Pages.
 
 Mono Dark follows as its own concrete Theme instance. It MUST NOT be implemented as a hidden conditional mutation, CSS inversion filter, or implicit side effect of Mono Light.
 
-## Mono Dark contract
+## Mono Dark implementation
 
-Mono Dark is the second concrete Theme instance of the existing `flavor.mono` identity and remains on the canonical `/flavors/mono/` route.
+Mono Dark is the second concrete Theme instance of the existing `flavor.mono` identity and remains on the canonical `/flavors/mono/` route. The earlier descriptor-only contract checkpoint is preserved as lifecycle history; this implementation now realizes that contract without changing Flavor identity or the proven Mono Light source route.
 
-- contract Theme: `packages/themes/mono-dark/theme.json`;
-- Mono Dark contract maturity: `contract-only`;
+- descriptor: `packages/themes/mono-dark/theme.json`;
+- resolution: `packages/themes/mono-dark/resolution.json`;
+- exact 55-token bundle: `packages/themes/mono-dark/tokens.json`;
+- implementation maturity: `implemented`;
 - color mode: `dark`;
 - authored color strategy: `editorial-monochrome-dark`;
-- typography, geometry, border, shadow, spacing, density, motion, interaction, and icon ownership remain structurally identical to Mono Light;
-- the stable shipping boundary remains 18 Core components and 55 resolved semantic token IDs once implementation is added;
-- concrete resolved palette values are intentionally deferred to implementation;
-- the existing `build:foundry` chain remains unchanged during the contract stage.
+- exact Core scope: **18 components**;
+- generated scoped CSS: `mono-dark-theme.css` under `.ns-theme-mono-dark`;
+- canonical route remains `/flavors/mono/`;
+- no `flavor.mono-dark` identity and no separate Dark route.
 
-Contract-only hard absences remain:
+Every non-color token is preserved value-for-value from Mono Light: 2px print keylines, square geometry, 3px → 1px → 0px structural depth, 0px → 2px → 3px inward travel, 65ms / 100ms / 140ms timings, 44px minimum targets, 3px focus width/offset, editorial spacing, `ui-serif, Georgia, serif`, and 400 / 700 / 800 typography weights.
 
-- `packages/themes/mono-dark/resolution.json`;
-- `packages/themes/mono-dark/tokens.json`;
-- `apps/foundry/fragments/mono-dark.html`;
-- `tests/browser/foundry-mono-dark.spec.mjs`;
-- `tooling/validators/validate-mono-dark-theme.mjs`;
-- `tooling/foundry/assemble-mono-dark.mjs`;
-- `packages/flavors/mono-dark`;
-- `apps/foundry/src/flavors/mono-dark`.
+The authored Dark palette stays strictly grayscale: interactive/panel surfaces `#151515` / `#202020`, primary/secondary content `#f2f2f2` / `#c4c4c4`, structural borders `#9a9a9a` / `#f2f2f2`, primary action `#f2f2f2` with `#111111` content, success/warning/error/info state surfaces `#606060` / `#585858` / `#d0d0d0` / `#686868`, and independent focus `#ffffff`. Validation retains at least 4.5:1 for authored text/status pairings and at least 3:1 for focus/default-boundary non-text pairings. Written state labels remain authoritative.
 
-The proven Mono Light source route remains the sole source route at this stage. Mono Dark implementation must later use additive artifact assembly without mutating that proven route or the shared Foundry builder.
+Runtime assembly is additive and proof-safe. The shared proven `tooling/foundry/build.mjs`, the existing Soft Dark assembler, and the existing Rivet Dark assembler remain unchanged. `tooling/foundry/assemble-mono-dark.mjs` runs last, emits `mono-dark-theme.css`, and injects `apps/foundry/fragments/mono-dark.html` into only the generated copy of the canonical Mono route. The proven Mono Light source route remains byte-identical.
+
+Seven additive Mono Dark browser behavior classes verify shared adapters and Theme identity, exact pressure physics, stable editing/informational surfaces, grayscale status semantics plus written labels, reduced motion, forced colors/focus/normal Tab order, and RTL/long-localized narrow containment. The shared rendered Badge contrast suite also includes Mono Dark.
+
+Mono Dark public proof is not claimed yet. `evidence/public/flavor.mono.json` remains bound only to the currently deployed Mono Light cohort until this implementation merges green, mandatory merged-main Quality passes, that exact merged-main artifact is independently verified and deployed without rebuilding, and native Pages verification succeeds.
 
 ## Current exclusions
 
 - No Mono renderer override.
-- No Mono Dark resolution or resolved token bundle yet.
-- No Mono Dark fragment, assembler, implementation validator, or browser suite yet.
 - No Core adapter fork.
 - No separate Mono Dark Flavor identity or route.
 - No Vertical semantics inside the Flavor.
-- No Pages deployment from the contract-only slice.
+- No public-proof binding or live `mono-dark-theme.css` claim yet.
+- No Pages deployment from the implementation branch.
 
-Mono Light is complete through public proof; Mono Dark is contract-only.
+Mono Light remains complete through public proof; Mono Dark is implemented but not yet public proof.

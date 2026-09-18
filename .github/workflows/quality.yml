@@ -55,6 +55,7 @@ jobs:
           test -f dist/foundry/soft-theme.css
           test -f dist/foundry/flavors/soft/index.html
           test -f dist/foundry/mono-theme.css
+          test -f dist/foundry/mono-dark-theme.css
           test -f dist/foundry/flavors/mono/index.html
           test -f dist/foundry/button.css
           test -f dist/foundry/checkbox.css
@@ -132,6 +133,16 @@ jobs:
           grep -q -- "--ns-font-family-body: ui-serif, Georgia, serif;" dist/foundry/mono-theme.css
           grep -q -- "Mono Light" dist/foundry/flavors/mono/index.html
           grep -q -- "ns-theme-mono-light" dist/foundry/flavors/mono/index.html
+          grep -q -- ".ns-theme-mono-dark {" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-color-surface-interactive: #151515;" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-color-content-primary: #f2f2f2;" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-color-action-primary-surface: #f2f2f2;" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-color-state-info: #686868;" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-color-focus-ring: #ffffff;" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-depth-hover-y: 1px;" dist/foundry/mono-dark-theme.css
+          grep -q -- "--ns-press-active-y: 3px;" dist/foundry/mono-dark-theme.css
+          grep -q -- "Mono Dark" dist/foundry/flavors/mono/index.html
+          grep -q -- "ns-theme-mono-dark" dist/foundry/flavors/mono/index.html
           grep -q -- "--ns-depth-hover-y: 3px;" dist/foundry/theme.css
           grep -q -- "--ns-color-surface-interactive: #fffefb;" dist/foundry/theme.css
           grep -q -- "--ns-color-surface-panel: #f8f6f1;" dist/foundry/theme.css
