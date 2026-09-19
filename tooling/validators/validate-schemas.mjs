@@ -56,6 +56,9 @@ for (const field of ['schema','component','fixture','controller','fixtureCompone
 }
 if (componentPreview.properties.resetStrategy?.const !== 'remount') throw new Error('component preview reset strategy must remain deterministic remount');
 
+const deploymentRecord = parsed.get('deployment-record.schema.json');
+if (JSON.stringify(deploymentRecord.properties.artifact?.enum) !== JSON.stringify(['foundry','studio'])) throw new Error('deployment record artifact authority must permit exactly Foundry and Studio');
+
 const maintenance = parsed.get('public-proof-maintenance.schema.json');
 if (maintenance.properties.schema?.const !== 'neosmartui/public-proof-maintenance@1') throw new Error('public-proof maintenance schema identity drifted');
 if (maintenance.additionalProperties !== false || maintenance.oneOf?.length !== 2) throw new Error('public-proof maintenance records must remain closed and subject-exclusive');

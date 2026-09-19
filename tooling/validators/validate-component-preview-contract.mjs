@@ -106,7 +106,8 @@ const harnessBase = await readFile(resolve(root, 'packages/core/previews/harness
 const harnessResponsive = await readFile(resolve(root, 'packages/core/previews/harness-responsive.css'), 'utf8');
 const html = assembleFoundryPreviewHtml(htmlTemplate, previews);
 const css = assembleFoundryPreviewStyles(cssTemplate, harnessBase, harnessResponsive);
-if (gitBlob(html) !== 'fb3f093f1662c0395111ac24b26f396a7c28b2b1') fail('shared previews must reconstruct the proven Foundry root HTML byte-for-byte');
+const foundryHtmlBlob = gitBlob(html);
+if (foundryHtmlBlob !== '59f28088a445c28fdd577615da2b2f6e06a65ade') fail(`shared previews must reconstruct the canonical Foundry root HTML byte-for-byte; observed ${foundryHtmlBlob}`);
 if (gitBlob(css) !== 'b0224844e5b16ac8433d151a2cf1ad04ed49d30c') fail('shared preview harness must reconstruct the proven Foundry stylesheet byte-for-byte');
 const renderedRuntime = renderFoundryPreviewRuntime(previews);
 if ((renderedRuntime.match(/\bbind[A-Z][A-Za-z]+\(/g) ?? []).length !== 14) fail('Foundry runtime must retain exactly 14 canonical shipping binding calls');

@@ -9,6 +9,6 @@
     "schema": {"const": "neosmartui/deployment-record@1"},
     "sourceRepository": {"const": "neosmartui/neosmartui"},
     "sourceSha": {"anyOf": [{"pattern": "^[0-9a-f]{40}$"}, {"const": "local-unpinned"}]},
-    "artifact": {"const": "foundry"}
+    "artifact": {"enum": ["foundry", "studio"]}
   }
 }
